@@ -3,6 +3,11 @@ import matrix, cholesky, qr, lu#, eigen, svd
 
 export matrix, cholesky, qr, lu
 
+template newData() =
+   newSeq(result.data, result.m)
+   for i in 0 ..< result.m:
+      newSeq(result.data[i], result.n)
+
 proc t*(m: Matrix): Matrix =
    ## Matrix transpose
    result.m = m.n
@@ -53,36 +58,36 @@ proc normF*(m: Matrix): float =
       for j in 0 ..< m.n:
          result = hypot(result, m.data[i][j])
 
-proc solve(a, b: Matrix): Matrix =
+proc solve*(a, b: Matrix): Matrix =
    ## Solve ``A*X = B``,
    ## returns solution if A is square, least squares solution otherwise
    ## parameter ``b``: the right hand side
-   if m == n:
+   if a.m == a.n:
       lu(a).solve(b)
    else:
       qr(a).solve(b)
 
-proc solveTranspose(a, b: Matrix): Matrix =
+proc solveTranspose*(a, b: Matrix): Matrix =
    ## Solve ``X*A = B``, which is also ``A'*X' = B'``,
    ## returns solution if A is square, least squares solution otherwise.
    ## parameter ``b``: the right hand side
-   t(m).solve(b.t())
+   t(a).solve(b.t())
 
-proc inverse(m: Matrix): Matrix =
+proc inverse*(m: Matrix): Matrix =
    ## Matrix inverse or pseudoinverse,
    ## returns inverse(A) if A is square, pseudoinverse otherwise.
    solve(m, identity(m.m, m.m))
 
-proc det(m: Matrix): float =
+proc det*(m: Matrix): float =
    ## Matrix determinant
    lu(m).det()
 
-# proc rank(m: Matrix): int =
+# proc rank*(m: Matrix): int =
 #    ## Matrix rank,
 #    ## returns effective numerical rank, obtained from SVD.
 #    svd(m).rank()
 
-# proc cond(m: Matrix): float =
+# proc cond*(m: Matrix): float =
 #    ## Matrix condition (2 norm),
 #    ## returns ratio of largest to smallest singular value.
 #    svd(m).cond()

@@ -7,13 +7,14 @@
 ## returns a partial decomposition and sets an internal flag that may
 ## be queried by the isSPD() method.
 import math
+import matrix
 
-template newCholData() =
+template newData() =
    newSeq(result.data, result.n)
    for i in 0 ..< result.n:
       newSeq(result.data[i], result.n)
 
-type CholeskyDecomposition = object
+type CholeskyDecomposition* = object
    # internal array storage.
    data: seq[seq[float]]
    # matrix dimension.
@@ -26,8 +27,8 @@ proc chol*(m: Matrix): CholeskyDecomposition =
    ## Structure to access L and isspd flag.
    ## param  Square, symmetric matrix.
    result.n = m.m
-   newCholData()
-   result.isspd = m.n == n
+   newData()
+   result.isspd = m.n == result.n
    # Main loop.
    for j in 0 ..< result.n:
       var l_rowj = result.data[j]
@@ -37,13 +38,14 @@ proc chol*(m: Matrix): CholeskyDecomposition =
          var s = 0.0
          for i in 0 ..< k:
             s += l_rowk[i] * l_rowj[i]
-         l_rowj[k] = s = (m.data[j][k] - s) / result.data[k][k]
+         s = (m.data[j][k] - s) / result.data[k][k]
+         l_rowj[k] = s
          d = d + s * s
          result.isspd = result.isspd and m.data[k][j] == m.data[j][k]
       d = m.data[j][j] - d
       result.isspd = result.isspd and d > 0.0
       result.data[j][j] = sqrt(max(d, 0.0))
-      for k in j + 1 ..< n:
+      for k in j + 1 ..< result.n:
          result.data[j][k] = 0.0
 
 proc isSPD*(c: CholeskyDecomposition): bool =
@@ -72,8 +74,8 @@ proc solve*(c: CholeskyDecomposition, b: Matrix): Matrix =
    for k in 0 ..< result.m:
       for j in 0 ..< result.n:
          for i in 0 ..< k:
-	         result.data[k][j] -= result.data[i][j] * c.data[k][i]
-	      result.data[k][j] /= c.data[k][k]
+            result.data[k][j] -= result.data[i][j] * c.data[k][i]
+         result.data[k][j] /= c.data[k][k]
 
    ## Solve L'*X = Y
    for k in countdown(result.m - 1, 0):

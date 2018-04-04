@@ -9,6 +9,12 @@
 ## singular, so the constructor will never fail.  The primary use of the
 ## LU decomposition is in the solution of square systems of simultaneous
 ## linear equations.  This will fail if isNonsingular() returns false.
+import matrix
+
+template newData() =
+   newSeq(result.data, result.m)
+   for i in 0 ..< result.m:
+      newSeq(result.data[i], result.n)
 
 type LUDecomposition* = object
    # Array for internal storage of decomposition.
@@ -29,7 +35,7 @@ proc lu*(a: Matrix): LUDecomposition =
    result.n = a.n
    newSeq(result.piv, result.m)
    for i in 0 ..< result.m:
-      piv[i] = i
+      result.piv[i] = i
    result.pivsign = 1
    var lu_rowi: seq[float]
    var lu_colj = newSeq[float](result.m)
@@ -55,24 +61,24 @@ proc lu*(a: Matrix): LUDecomposition =
 
       # Find pivot and exchange if necessary.
       var p = j
-      for i in j + 1 ..< m:
+      for i in j + 1 ..< result.m:
          if abs(lu_colj[i]) > abs(lu_colj[p]):
             p = i
       if p != j:
          for k in 0 ..< result.n:
             swap(result.lu[p][k], result.lu[j][k])
-         swap(piv[p], piv[j])
+         swap(result.piv[p], result.piv[j])
          result.pivsign = -result.pivsign
 
       # Compute multipliers.
-      if j < m and result.lu[j][j] != 0.0:
+      if j < result.m and result.lu[j][j] != 0.0:
          for i in j + 1 ..< result.m:
             result.lu[i][j] /= result.lu[j][j]
 
 proc isNonsingular*(l: LUDecomposition): bool =
    ## Is the matrix nonsingular?
    ## returns true if U, and hence A, is nonsingular.
-   for j in 0 ..< n:
+   for j in 0 ..< l.n:
       if l.lu[j][j] == 0:
          return false
    return true
@@ -94,7 +100,7 @@ proc getU*(l: LUDecomposition): Matrix =
    result.m = l.n
    result.n = l.n
    newData()
-   for i in 0 ..< l.n
+   for i in 0 ..< l.n:
       for j in 0 ..< l.n:
          if i <= j:
             result.data[i][j] = l.lu[i][j]
@@ -106,14 +112,14 @@ proc getPivot*(l: LUDecomposition): seq[int] =
 ## Return pivot permutation vector as a one-dimensional double array
 proc getFloatPivot*(l: LUDecomposition): seq[float] =
    result = newSeq[float](l.m)
-   for i in 0 ..< m:
-      result[i] = l.piv[i]
+   for i in 0 ..< l.m:
+      result[i] = float(l.piv[i])
 
-proc det*(l: LUDecomposition) =
+proc det*(l: LUDecomposition): float =
    ## Determinant
-   assert(m == n, "Matrix must be square.")
-   result = pivsign
-   for j in 0 ..< n:
+   assert(l.m == l.n, "Matrix must be square.")
+   result = float(l.pivsign)
+   for j in 0 ..< l.n:
       result *= l.lu[j][j]
 
 proc solve*(l: LUDecomposition, b: Matrix): Matrix =
@@ -129,18 +135,18 @@ proc solve*(l: LUDecomposition, b: Matrix): Matrix =
    newData()
    for i in 0 ..< result.m:
       for j in 0 ..< result.n:
-         result.data[i][j] = m.data[r[i]][j]   
+         result.data[i][j] = b.data[l.piv[i]][j]   
 
    # Solve L*Y = B(piv,:)
-   for k in 0 ..< n:
-      for i in k + 1 ..< n:
-         for j in 0 ..< nx:
+   for k in 0 ..< l.n:
+      for i in k + 1 ..< l.n:
+         for j in 0 ..< result.n:
             result.data[i][j] -= result.data[k][j] * l.lu[i][k]
 
    # Solve U*X = Y
-   for k in countdow(n - 1, 0):
-      for j in 0 ..< nx:
+   for k in countdown(l.n - 1, 0):
+      for j in 0 ..< result.n:
          result.data[k][j] /= l.lu[k][k]
       for i in 0 ..< k:
-         for j in 0 ..< nx:
+         for j in 0 ..< result.n:
             result.data[i][j] -= result.data[k][j] * l.lu[i][k]

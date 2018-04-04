@@ -10,6 +10,12 @@
 ## of simultaneous linear equations.  This will fail if isFullRank()
 ## returns false.
 import math
+import matrix
+
+template newData() =
+   newSeq(result.data, result.m)
+   for i in 0 ..< result.m:
+      newSeq(result.data[i], result.n)
 
 type QRDecomposition* = object
    # Array for internal storage of decomposition.
@@ -27,7 +33,7 @@ proc qr*(m: Matrix): QRDecomposition =
    result.data = m.data
    result.m = m.m
    result.n = m.n
-   newSeq(result.rDiag, n)
+   newSeq(result.rDiag, result.n)
 
    # Main loop.
    for k in 0 ..< result.n:
@@ -61,7 +67,7 @@ proc isFullRank*(q: QRDecomposition): bool =
          return false
    return true
 
-proc getH*(c: QRDecomposition): Matrix =
+proc getH*(q: QRDecomposition): Matrix =
    ## Return the Householder vectors.
    ## Returns Lower trapezoidal matrix whose columns define the reflections.
    result.m = q.m
@@ -89,17 +95,17 @@ proc getQ*(q: QRDecomposition): Matrix =
    result.m = q.m
    result.n = q.n
    newData()
-   for k in countdown(n - 1, 0):
-      for i in 0 ..< m:
+   for k in countdown(result.n - 1, 0):
+      for i in 0 ..< result.m:
          result.data[i][k] = 0.0
       result.data[k][k] = 1.0
-      for j in k ..< n:
+      for j in k ..< result.n:
          if q.data[k][k] != 0:
             var s = 0.0
-            for i in k ..< m:
+            for i in k ..< result.m:
                s += q.data[i][k] * result.data[i][j]
             s = -s / q.data[k][k]
-            for i in k ..< m:
+            for i in k ..< result.m:
                result.data[i][j] += s * q.data[i][k]
 
 proc solve*(q: QRDecomposition, b: Matrix): Matrix =
@@ -124,7 +130,7 @@ proc solve*(q: QRDecomposition, b: Matrix): Matrix =
          for i in k ..< q.m:
             x[i][j] += s * q.data[i][k]
    # Solve R*X = Y
-   for k in countdown(n - 1, 0):
+   for k in countdown(result.n - 1, 0):
       for j in 0 ..< b.n:
          x[k][j] /= q.rDiag[k]
       for i in 0 ..< k:

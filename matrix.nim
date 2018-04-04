@@ -13,7 +13,7 @@ template newData() =
 
 type Matrix* = object
    # Array for internal storage of elements.
-   data: seq[seq[float]]
+   data*: seq[seq[float]]
    # Row and column dimensions.
    m*, n*: int
 
