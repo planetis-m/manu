@@ -10,6 +10,7 @@
 ## The singular value decompostion always exists, so the constructor will
 ## never fail.  The matrix condition number and the effective numerical
 ## rank can be computed from this decomposition.
+import matrix
 
 type SingularValueDecomposition* = object
    # Arrays for internal storage of U and V.

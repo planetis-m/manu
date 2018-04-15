@@ -6,10 +6,10 @@
 ##
 ## The test is designed to run to completion and give a summary of any implementation errors
 ## encountered. The final output should be:
-## ..code-block::
-##      TestMatrix completed.
-##      Total errors reported: n1
-##      Total warning reported: n2
+## .. code-block::
+##   TestMatrix completed.
+##   Total errors reported: n1
+##   Total warning reported: n2
 ##
 ## If the test does not run to completion, this indicates that there is a 
 ## substantial problem within the implementation that was not anticipated in the test design.  
@@ -63,10 +63,6 @@ proc try_warning(count: var int, s, e: string) =
    # Print appropriate messages for unsuccessful outcome try
    echo(">    ", s, "*** warning ***\n>      Message: ", e)
    inc(count)
-
-proc echo(x: seq[float], w, d: int) =
-   # Print a row vector.
-   echo matrix(x, 1)
 
 # main
 
@@ -130,7 +126,7 @@ proc main() =
       tmp = A[raggedr, raggedc]
    except AssertionError as e:
       try_success("Catch ragged input to default constructor... ", e.msg)
-   except IndexError as e:
+   except IndexError:
       try_failure(errorCount, "Catch ragged input to constructor... ",
                   "exception not thrown in construction...ArrayIndexOutOfBoundsException thrown later")
 #    try:
@@ -139,7 +135,7 @@ proc main() =
 #       tmp = A[raggedr, raggedc]
 #    except AssertionError as e:
 #       try_success("Catch ragged input to constructWithCopy... ", e.msg)
-#    except IndexError as e:
+#    except IndexError:
 #       try_failure(errorCount, "Catch ragged input to constructWithCopy... ","exception not thrown in construction...ArrayIndexOutOfBoundsException thrown later")
 
    A = matrix(columnwise, validld)
@@ -160,9 +156,9 @@ proc main() =
 #    avals[0][0] = columnwise[0]
    I = matrix(ivals)
    try:
-      check(I, identity(3,4))
+      check(I, identity(3, 4))
       try_success("identity... ", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount, "identity... ", "identity Matrix not successfully created")
 
    # Access Methods:
@@ -191,31 +187,31 @@ proc main() =
 #    try:
 #       check(barray, avals)
 #       try_success("getArrayCopy... ", "")
-#    except ValueError as e:
+#    except ValueError:
 #       try_failure(errorCount,"getArrayCopy... ","data not successfully (deep) copied")
 
    var bpacked = B.getColumnPacked()
    try:
       check(bpacked, columnwise)
       try_success("getColumnPacked... ", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"getColumnPacked... ","data not successfully (deep) copied by columns")
    bpacked = B.getRowPacked()
    try:
       check(bpacked, rowwise)
       try_success("getRowPacked... ", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"getRowPacked... ","data not successfully (deep) copied by rows")
    try:
       tmp = B[B.rowDimension, B.columnDimension-1]
       try_failure(errorCount, "get(int,int)... ","OutOfBoundsException expected but not thrown")
-   except IndexError as e:
+   except IndexError:
       try:
          tmp = B[B.rowDimension-1, B.columnDimension]
          try_failure(errorCount,"get(int,int)... ","OutOfBoundsException expected but not thrown")
-      except IndexError as e1:
+      except IndexError:
          try_success("get(int,int)... OutofBoundsException... ", "")
-   except AssertionError as e1:
+   except AssertionError:
       try_failure(errorCount,"get(int,int)... ","OutOfBoundsException expected but not thrown")
    try:
       if B[B.rowDimension-1, B.columnDimension-1] != 
@@ -223,101 +219,101 @@ proc main() =
          try_failure(errorCount,"get(int,int)... ","Matrix entry (i,j) not successfully retreived")
       else:
          try_success("get(int,int)... ", "")
-   except IndexError as e:
+   except IndexError:
       try_failure(errorCount,"get(int,int)... ","Unexpected ArrayIndexOutOfBoundsException")
    SUB = matrix(subavals)
    try:
       M = B[ib .. ie+B.rowDimension+1, jb .. je]
       try_failure(errorCount,"getMatrix(int,int,int,int)... ","ArrayIndexOutOfBoundsException expected but not thrown")
-   except IndexError as e:
+   except IndexError:
       try:
          M = B[ib .. ie, jb .. je+B.columnDimension+1]
          try_failure(errorCount,"getMatrix(int,int,int,int)... ","ArrayIndexOutOfBoundsException expected but not thrown")
-      except IndexError as e1:
+      except IndexError:
          try_success("getMatrix(int,int,int,int)... ArrayIndexOutOfBoundsException... ", "")
-   except AssertionError as e1:
+   except AssertionError:
       try_failure(errorCount,"getMatrix(int,int,int,int)... ","ArrayIndexOutOfBoundsException expected but not thrown")
    try:
       M = B[ib .. ie, jb .. je]
       try:
          check(SUB, M)
          try_success("getMatrix(int,int,int,int)... ", "")
-      except ValueError as e:
+      except ValueError:
          try_failure(errorCount,"getMatrix(int,int,int,int)... ","submatrix not successfully retreived")
-   except IndexError as e:
+   except IndexError:
       try_failure(errorCount,"getMatrix(int,int,int,int)... ","Unexpected ArrayIndexOutOfBoundsException")
    try:
       M = B[ib .. ie, badcolumnindexset]
       try_failure(errorCount,"getMatrix(int,int,int[])... ","ArrayIndexOutOfBoundsException expected but not thrown")
-   except IndexError as e:
+   except IndexError:
       try:
          M = B[ib .. ie+B.rowDimension+1, columnindexset]
          try_failure(errorCount,"getMatrix(int,int,int[])... ","ArrayIndexOutOfBoundsException expected but not thrown")
-      except IndexError as e1:
+      except IndexError:
          try_success("getMatrix(int,int,int[])... ArrayIndexOutOfBoundsException... ", "")
-   except AssertionError as e1:
+   except AssertionError:
       try_failure(errorCount,"getMatrix(int,int,int[])... ","ArrayIndexOutOfBoundsException expected but not thrown")
    try:
       M = B[ib .. ie, columnindexset]
       try:
          check(SUB, M)
          try_success("getMatrix(int,int,int[])... ", "")
-      except ValueError as e:
+      except ValueError:
          try_failure(errorCount,"getMatrix(int,int,int[])... ","submatrix not successfully retreived")
-   except IndexError as e:
+   except IndexError:
       try_failure(errorCount,"getMatrix(int,int,int[])... ","Unexpected ArrayIndexOutOfBoundsException")
    try:
       M = B[badrowindexset, jb .. je]
       try_failure(errorCount,"getMatrix(int[],int,int)... ","ArrayIndexOutOfBoundsException expected but not thrown")
-   except IndexError as e:
+   except IndexError:
       try:
          M = B[rowindexset, jb .. je+B.columnDimension+1]
          try_failure(errorCount,"getMatrix(int[],int,int)... ","ArrayIndexOutOfBoundsException expected but not thrown")
-      except IndexError as e1:
+      except IndexError:
          try_success("getMatrix(int[],int,int)... ArrayIndexOutOfBoundsException... ", "")
-   except AssertionError as e1:
+   except AssertionError:
       try_failure(errorCount,"getMatrix(int[],int,int)... ","ArrayIndexOutOfBoundsException expected but not thrown")
    try:
       M = B[rowindexset, jb .. je]
       try:
          check(SUB, M)
          try_success("getMatrix(int[],int,int)... ", "")
-      except ValueError as e:
+      except ValueError:
          try_failure(errorCount,"getMatrix(int[],int,int)... ","submatrix not successfully retreived")
-   except IndexError as e:
+   except IndexError:
       try_failure(errorCount,"getMatrix(int[],int,int)... ","Unexpected ArrayIndexOutOfBoundsException")
    try:
       M = B[badrowindexset, columnindexset]
       try_failure(errorCount,"getMatrix(int[],int[])... ","ArrayIndexOutOfBoundsException expected but not thrown")
-   except IndexError as e:
+   except IndexError:
       try:
          M = B[rowindexset, badcolumnindexset]
          try_failure(errorCount,"getMatrix(int[],int[])... ","ArrayIndexOutOfBoundsException expected but not thrown")
-      except IndexError as e1:
+      except IndexError:
          try_success("getMatrix(int[],int[])... ArrayIndexOutOfBoundsException... ", "")
-   except AssertionError as e1:
+   except AssertionError:
       try_failure(errorCount,"getMatrix(int[],int[])... ","ArrayIndexOutOfBoundsException expected but not thrown")
    try:
       M = B[rowindexset, columnindexset]
       try:
          check(SUB, M)
          try_success("getMatrix(int[],int[])... ", "")
-      except ValueError as e:
+      except ValueError:
          try_failure(errorCount,"getMatrix(int[],int[])... ","submatrix not successfully retreived")
-   except IndexError as e:
+   except IndexError:
       try_failure(errorCount,"getMatrix(int[],int[])... ","Unexpected ArrayIndexOutOfBoundsException")
 
    # Various set methods:
    try:
       B[B.rowDimension,B.columnDimension-1] = 0.0
       try_failure(errorCount,"set(int,int,double)... ","OutOfBoundsException expected but not thrown")
-   except IndexError as e:
+   except IndexError:
       try:
          B[B.rowDimension-1,B.columnDimension] = 0.0
          try_failure(errorCount,"set(int,int,double)... ","OutOfBoundsException expected but not thrown")
-      except IndexError as e1:
+      except IndexError:
          try_success("set(int,int,double)... OutofBoundsException... ", "")
-   except AssertionError as e1:
+   except AssertionError:
       try_failure(errorCount,"set(int,int,double)... ","OutOfBoundsException expected but not thrown")
    try:
       B[ib, jb] = 0.0
@@ -325,45 +321,45 @@ proc main() =
       try:
          check(tmp, 0.0)
          try_success("set(int,int,double)... ", "")
-      except ValueError as e:
+      except ValueError:
          try_failure(errorCount,"set(int,int,double)... ","Matrix element not successfully set")
-   except IndexError as e1:
+   except IndexError:
       try_failure(errorCount,"set(int,int,double)... ","Unexpected ArrayIndexOutOfBoundsException")
    M = matrix(2, 3)
    try:
       B[ib .. ie+B.rowDimension+1, jb .. je] = M
       try_failure(errorCount,"setMatrix(int,int,int,int,Matrix)... ","ArrayIndexOutOfBoundsException expected but not thrown")
-   except IndexError as e:
+   except IndexError:
       try:
          B[ib .. ie, jb .. je+B.columnDimension+1] = M
          try_failure(errorCount,"setMatrix(int,int,int,int,Matrix)... ","ArrayIndexOutOfBoundsException expected but not thrown")
-      except IndexError as e1:
+      except IndexError:
          try_success("setMatrix(int,int,int,int,Matrix)... ArrayIndexOutOfBoundsException... ", "")
-   except AssertionError as e1:
+   except AssertionError:
       try_failure(errorCount,"setMatrix(int,int,int,int,Matrix)... ","ArrayIndexOutOfBoundsException expected but not thrown")
    try:
       B[ib .. ie, jb .. je] = M
       try:
          check(M - B[ib .. ie, jb .. je], M)
          try_success("setMatrix(int,int,int,int,Matrix)... ", "")
-      except ValueError as e:
+      except ValueError:
          try_failure(errorCount,"setMatrix(int,int,int,int,Matrix)... ","submatrix not successfully set")
 
       B[ib .. ie, jb .. je] = SUB
-   except IndexError as e1:
+   except IndexError:
       try_failure(errorCount,"setMatrix(int,int,int,int,Matrix)... ","Unexpected ArrayIndexOutOfBoundsException")
 
    try:
       B[ib .. ie+B.rowDimension+1, columnindexset] = M
       try_failure(errorCount,"setMatrix(int,int,int[],Matrix)... ","ArrayIndexOutOfBoundsException expected but not thrown")
-   except IndexError as e:
+   except IndexError:
       try:
          B[ib .. ie, badcolumnindexset] = M
          try_failure(errorCount,"setMatrix(int,int,int[],Matrix)... ","ArrayIndexOutOfBoundsException expected but not thrown")
-      except IndexError as e1:
+      except IndexError:
          try_success("setMatrix(int,int,int[],Matrix)... ArrayIndexOutOfBoundsException... ", "")
 
-   except AssertionError as e1:
+   except AssertionError:
       try_failure(errorCount,"setMatrix(int,int,int[],Matrix)... ","ArrayIndexOutOfBoundsException expected but not thrown")
 
    try:
@@ -371,45 +367,45 @@ proc main() =
       try:
          check(M - B[ib .. ie, columnindexset], M)
          try_success("setMatrix(int,int,int[],Matrix)... ", "")
-      except ValueError as e:
+      except ValueError:
          try_failure(errorCount,"setMatrix(int,int,int[],Matrix)... ","submatrix not successfully set")
       B[ib .. ie, jb .. je] = SUB
-   except IndexError as e1:
+   except IndexError:
       try_failure(errorCount,"setMatrix(int,int,int[],Matrix)... ", "Unexpected ArrayIndexOutOfBoundsException")
    try:
       B[rowindexset, jb .. je+B.columnDimension+1] = M
       try_failure(errorCount,"setMatrix(int[],int,int,Matrix)... ","ArrayIndexOutOfBoundsException expected but not thrown")
-   except IndexError as e:
+   except IndexError:
       try:
          B[badrowindexset, jb .. je] = M
          try_failure(errorCount,"setMatrix(int[],int,int,Matrix)... ","ArrayIndexOutOfBoundsException expected but not thrown")
-      except IndexError as e1:
+      except IndexError:
          try_success("setMatrix(int[],int,int,Matrix)... ArrayIndexOutOfBoundsException... ", "")
 
-   except AssertionError as e1:
+   except AssertionError:
       try_failure(errorCount,"setMatrix(int[],int,int,Matrix)... ","ArrayIndexOutOfBoundsException expected but not thrown")
    try:
       B[rowindexset, jb .. je] = M
       try:
          check(M - B[rowindexset, jb .. je], M)
          try_success("setMatrix(int[],int,int,Matrix)... ", "")
-      except ValueError as e:
+      except ValueError:
          try_failure(errorCount,"setMatrix(int[],int,int,Matrix)... ","submatrix not successfully set")
       B[ib .. ie, jb .. je] = SUB
-   except IndexError as e1:
+   except IndexError:
       try_failure(errorCount,"setMatrix(int[],int,int,Matrix)... ","Unexpected ArrayIndexOutOfBoundsException")
    
    try:
       B[rowindexset, badcolumnindexset] = M
       try_failure(errorCount,"setMatrix(int[],int[],Matrix)... ","ArrayIndexOutOfBoundsException expected but not thrown")
-   except IndexError as e:
+   except IndexError:
       try:
          B[badrowindexset, columnindexset] = M
          try_failure(errorCount,"setMatrix(int[],int[],Matrix)... ","ArrayIndexOutOfBoundsException expected but not thrown")
-      except IndexError as e1:
+      except IndexError:
          try_success("setMatrix(int[],int[],Matrix)... ArrayIndexOutOfBoundsException... ", "")
 
-   except AssertionError as e1:
+   except AssertionError:
       try_failure(errorCount,"setMatrix(int[],int[],Matrix)... ","ArrayIndexOutOfBoundsException expected but not thrown")
    
    try:
@@ -417,9 +413,9 @@ proc main() =
       try:
          check(M - B[rowindexset, columnindexset], M)
          try_success("setMatrix(int[],int[],Matrix)... ", "")
-      except ValueError as e:
+      except ValueError:
          try_failure(errorCount,"setMatrix(int[],int[],Matrix)... ","submatrix not successfully set")
-   except IndexError as e1:
+   except IndexError:
       try_failure(errorCount,"setMatrix(int[],int[],Matrix)... ","Unexpected ArrayIndexOutOfBoundsException")
 
    # Array-like methods:
@@ -430,7 +426,7 @@ proc main() =
    try:
       S = A - S
       try_failure(errorCount,"minus conformance check... ","nonconformance not raised")
-   except AssertionError as e:
+   except AssertionError:
       try_success("minus conformance check... ", "")
    if (A - R).norm1() != 0.0:
       try_failure(errorCount,"minus... ","(difference of identical Matrices is nonzero,\nSubsequent use of minus should be suspect)")
@@ -442,7 +438,7 @@ proc main() =
    try:
       A -= S
       try_failure(errorCount,"minusEquals conformance check... ","nonconformance not raised")
-   except AssertionError as e:
+   except AssertionError:
       try_success("minusEquals conformance check... ", "")
    if (A - Z).norm1() != 0.0:
       try_failure(errorCount,"minusEquals... ","(difference of identical Matrices is nonzero,\nSubsequent use of minus should be suspect)")
@@ -454,30 +450,30 @@ proc main() =
    try:
       S = A + S
       try_failure(errorCount,"plus conformance check... ","nonconformance not raised")
-   except AssertionError as e:
+   except AssertionError:
       try_success("plus conformance check... ", "")
    try:
       check(C + B, A)
       try_success("plus... ", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"plus... ","(C = A - B, but C + B != A)")
    C = A - B
    C += B
    try:
       A += S
       try_failure(errorCount,"plusEquals conformance check... ","nonconformance not raised")
-   except AssertionError as e:
+   except AssertionError:
       try_success("plusEquals conformance check... ", "")
    try:
       check(C, A)
       try_success("plusEquals... ", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"plusEquals... ","(C = A - B, but C = C + B != A)")
    A = -R
    try:
       check(A + R, Z)
       try_success("uminus... ", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"uminus... ","(-A + A != zeros)")
    A = R #.copy()
    O = matrix(A.rowDimension,A.columnDimension, 1.0)
@@ -485,70 +481,70 @@ proc main() =
    try:
       S = A .\ S
       try_failure(errorCount,"arrayLeftDivide conformance check... ","nonconformance not raised")
-   except AssertionError as e:
+   except AssertionError:
       try_success("arrayLeftDivide conformance check... ", "")
    try:
       check(C, O)
       try_success("arrayLeftDivide... ", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"arrayLeftDivide... ","(M.\\M != ones)")
    try:
       A .\= S
       try_failure(errorCount,"arrayLeftDivideEquals conformance check... ","nonconformance not raised")
-   except AssertionError as e:
+   except AssertionError:
       try_success("arrayLeftDivideEquals conformance check... ", "")
    A .\= R
    try:
       check(A,O)
       try_success("arrayLeftDivideEquals... ", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"arrayLeftDivideEquals... ","(M.\\M != ones)")
    A = R #.copy()
    try:
       C = A ./ S
       try_failure(errorCount,"arrayRightDivide conformance check... ","nonconformance not raised")
-   except AssertionError as e:
+   except AssertionError:
       try_success("arrayRightDivide conformance check... ", "")
    C = A ./ R
    try:
       check(C, O)
       try_success("arrayRightDivide... ", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"arrayRightDivide... ","(M./M != ones)")
    try:
       A ./= S
       try_failure(errorCount,"arrayRightDivideEquals conformance check... ","nonconformance not raised")
-   except AssertionError as e:
+   except AssertionError:
       try_success("arrayRightDivideEquals conformance check... ", "")
    A ./= R
    try:
       check(A, O)
       try_success("arrayRightDivideEquals... ", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"arrayRightDivideEquals... ","(M./M != ones)")
    A = R #.copy()
-   B = randMatrix(A.rowDimension,A.columnDimension)
+   B = randMatrix(A.rowDimension, A.columnDimension)
    try:
-      S = A * S
-      try_failure(errorCount,"arrayTimes conformance check... ","nonconformance not raised")
-   except AssertionError as e:
+      S = A .* S
+      try_failure(errorCount, "arrayTimes conformance check... ","nonconformance not raised")
+   except AssertionError:
       try_success("arrayTimes conformance check... ", "")
-   C = A * B
+   C = A .* B
    try:
       check(C ./ B, A)
       try_success("arrayTimes... ", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"arrayTimes... ","(A = R, C = A.*B, but C./B != A)")
    try:
       A .*= S
       try_failure(errorCount,"arrayTimesEquals conformance check... ","nonconformance not raised")
-   except AssertionError as e:
+   except AssertionError:
       try_success("arrayTimesEquals conformance check... ", "")
    A .*= B
    try:
       check(A ./ B, R)
       try_success("arrayTimesEquals... ", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"arrayTimesEquals... ","(A = R, A = A.*B, but A./B != R)")
 
    # LA methods:
@@ -578,44 +574,43 @@ proc main() =
    try:
       check(A.transpose(), T)
       try_success("transpose...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"transpose()...","transpose unsuccessful")
-   A = A.transpose()
    try:
       check(A.norm1(), columnsummax)
       try_success("norm1...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"norm1()...", "incorrect norm calculation")
    try:
       check(A.normInf(),rowsummax)
       try_success("normInf()...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"normInf()...","incorrect norm calculation")
    try:
       check(A.normF(), sqrt(sumofsquares))
       try_success("normF...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"normF()...","incorrect norm calculation")
    try:
       check(A.trace(), sumofdiagonals)
       try_success("trace()...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"trace()...","incorrect trace calculation")
    try:
       check(A[0 .. A.rowDimension-1, 0 .. A.rowDimension-1].det(), 0.0)
       try_success("det()...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"det()...","incorrect determinant calculation")
    SQ = matrix(square)
    try:
       check(A * A.transpose(), SQ)
       try_success("times(Matrix)...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"times(Matrix)...","incorrect Matrix-Matrix product calculation")
    try:
       check(A * 0.0, Z)
       try_success("times(double)...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"times(double)...","incorrect Matrix-scalar product calculation")
    A = matrix(columnwise, 4)
    let QR = A.qr()
@@ -623,28 +618,28 @@ proc main() =
    try:
       check(A, QR.getQ() * R)
       try_success("QRDecomposition...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"QRDecomposition...","incorrect QR decomposition calculation")
-   var SVD = A.svd()
-   try:
-      check(A, SVD.getU() * SVD.getS() * SVD.getV().transpose())
-      try_success("SingularValueDecomposition...", "")
-   except ValueError as e:
-      try_failure(errorCount,"SingularValueDecomposition...","incorrect singular value decomposition calculation")
-   DEF = matrix(rankdef)
-   try:
-      check(DEF.rank(), min(DEF.rowDimension,DEF.columnDimension)-1)
-      try_success("rank()...", "")
-   except ValueError as e:
-      try_failure(errorCount,"rank()...","incorrect rank calculation")
-   B = matrix(condmat)
-   SVD = B.svd()
-   let singularvalues = SVD.getSingularValues()
-   try:
-      check(B.cond(), singularvalues[0] / singularvalues[min(B.rowDimension,B.columnDimension)-1])
-      try_success("cond()...", "")
-   except ValueError as e:
-      try_failure(errorCount,"cond()...","incorrect condition number calculation")
+#    var SVD = A.svd()
+#    try:
+#       check(A, SVD.getU() * SVD.getS() * SVD.getV().transpose())
+#       try_success("SingularValueDecomposition...", "")
+#    except ValueError:
+#       try_failure(errorCount,"SingularValueDecomposition...","incorrect singular value decomposition calculation")
+#    DEF = matrix(rankdef)
+#    try:
+#       check(DEF.rank(), min(DEF.rowDimension,DEF.columnDimension)-1)
+#       try_success("rank()...", "")
+#    except ValueError:
+#       try_failure(errorCount,"rank()...","incorrect rank calculation")
+#    B = matrix(condmat)
+#    SVD = B.svd()
+#    let singularvalues = SVD.getSingularValues()
+#    try:
+#       check(B.cond(), singularvalues[0] / singularvalues[min(B.rowDimension,B.columnDimension)-1])
+#       try_success("cond()...", "")
+#    except ValueError:
+#       try_failure(errorCount,"cond()...","incorrect condition number calculation")
    let n = A.columnDimension
    A = A[0 .. n-1, 0 .. n-1]
    A[0, 0] = 0.0
@@ -652,13 +647,13 @@ proc main() =
    try:
       check(A[LU.getPivot(), 0 .. n-1], LU.getL() * LU.getU())
       try_success("LUDecomposition...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"LUDecomposition...","incorrect LU decomposition calculation")
    X = A.inverse()
    try:
       check(A * X, identity(3,3))
       try_success("inverse()...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"inverse()...","incorrect inverse calculation")
    O = matrix(SUB.rowDimension,1,1.0)
    SOL = matrix(sqSolution)
@@ -676,39 +671,39 @@ proc main() =
    try:
       check(A, L * L.transpose())
       try_success("CholeskyDecomposition...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"CholeskyDecomposition...","incorrect Cholesky decomposition calculation")
    X = Chol.solve(identity(3,3))
    try:
       check(A * X, identity(3,3))
       try_success("CholeskyDecomposition solve()...", "")
-   except ValueError as e:
+   except ValueError:
       try_failure(errorCount,"CholeskyDecomposition solve()...","incorrect Choleskydecomposition solve calculation")
-   var Eig = A.eig()
-   var D = Eig.getD()
-   var V = Eig.getV()
-   try:
-      check(A * V, V * D)
-      try_success("EigenvalueDecomposition (symmetric)...", "")
-   except ValueError as e:
-      try_failure(errorCount, "EigenvalueDecomposition (symmetric)...", "incorrect symmetric Eigenvalue decomposition calculation")
-   A = matrix(evals))
-   Eig = A.eig()
-   D = Eig.getD()
-   V = Eig.getV()
-   try:
-      check(A * V, V * D)
-      try_success("EigenvalueDecomposition (nonsymmetric)...", "")
-   except ValueError as e:
-      try_failure(errorCount,"EigenvalueDecomposition (nonsymmetric)...","incorrect nonsymmetric Eigenvalue decomposition calculation")
-   try:
-      echo("\nTesting Eigenvalue; If this hangs, we've failed")
-      let bA = matrix(badeigs)
-      let bEig = bA.eig()
-      try_success("EigenvalueDecomposition (hang)...", "")
-   except ValueError as e:
-      try_failure(errorCount,"EigenvalueDecomposition (hang)...",
-                  "incorrect termination")
+#    var Eig = A.eig()
+#    var D = Eig.getD()
+#    var V = Eig.getV()
+#    try:
+#       check(A * V, V * D)
+#       try_success("EigenvalueDecomposition (symmetric)...", "")
+#    except ValueError:
+#       try_failure(errorCount, "EigenvalueDecomposition (symmetric)...", "incorrect symmetric Eigenvalue decomposition calculation")
+#    A = matrix(evals))
+#    Eig = A.eig()
+#    D = Eig.getD()
+#    V = Eig.getV()
+#    try:
+#       check(A * V, V * D)
+#       try_success("EigenvalueDecomposition (nonsymmetric)...", "")
+#    except ValueError:
+#       try_failure(errorCount,"EigenvalueDecomposition (nonsymmetric)...","incorrect nonsymmetric Eigenvalue decomposition calculation")
+#    try:
+#       echo("\nTesting Eigenvalue; If this hangs, we've failed")
+#       let bA = matrix(badeigs)
+#       let bEig = bA.eig()
+#       try_success("EigenvalueDecomposition (hang)...", "")
+#    except ValueError:
+#       try_failure(errorCount,"EigenvalueDecomposition (hang)...",
+#                   "incorrect termination")
 
    echo("\nTestMatrix completed.")
    echo("Total errors reported: ", errorCount)

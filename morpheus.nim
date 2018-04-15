@@ -1,5 +1,4 @@
 import matrix, cholesky, qr, lu#, eigen, svd
-
 export matrix, cholesky, qr, lu
 
 # proc norm2*(m: Matrix): float =

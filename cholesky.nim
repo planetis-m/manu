@@ -6,8 +6,7 @@
 ## If the matrix is not symmetric or positive definite, the constructor
 ## returns a partial decomposition and sets an internal flag that may
 ## be queried by the isSPD() method.
-import math
-import matrix
+import math, matrix
 
 template newData() =
    newSeq(result.data, result.n)
