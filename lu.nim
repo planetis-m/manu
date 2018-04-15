@@ -37,7 +37,6 @@ proc lu*(a: Matrix): LUDecomposition =
    for i in 0 ..< result.m:
       result.piv[i] = i
    result.pivsign = 1
-   var lu_rowi: seq[float]
    var lu_colj = newSeq[float](result.m)
 
    # Outer loop.
@@ -49,15 +48,15 @@ proc lu*(a: Matrix): LUDecomposition =
 
       # Apply previous transformations.
       for i in 0 ..< result.m:
-         lu_rowi = result.lu[i]
+         var lu_rowi = unsafeAddr result.lu[i]
 
          # Most of the time is spent in the following dot product.
          let kmax = min(i, j)
          var s = 0.0
          for k in 0 ..< kmax:
             s += lu_rowi[k] * lu_colj[k]
-         lu_rowi[j] -= s
          lu_colj[i] -= s
+         lu_rowi[j] = lu_colj[i]
 
       # Find pivot and exchange if necessary.
       var p = j
@@ -79,10 +78,10 @@ proc isNonsingular*(l: LUDecomposition): bool =
    ## Is the matrix nonsingular?
    ## returns true if U, and hence A, is nonsingular.
    for j in 0 ..< l.n:
-      if l.lu[j][j] == 0:
+      if l.lu[j][j] == 0.0:
          return false
    return true
-   
+
 proc getL*(l: LUDecomposition): Matrix =
    ## Return lower triangular factor
    result.m = l.m

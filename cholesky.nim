@@ -1,7 +1,7 @@
 ## Cholesky Decomposition.
 ##
 ## For a symmetric, positive definite matrix A, the Cholesky decomposition
-## s an lower triangular matrix L so that A = L*L'.
+## is an lower triangular matrix L so that A = L*L'.
 ##
 ## If the matrix is not symmetric or positive definite, the constructor
 ## returns a partial decomposition and sets an internal flag that may
@@ -27,10 +27,10 @@ proc chol*(m: Matrix): CholeskyDecomposition =
    ## param  Square, symmetric matrix.
    result.n = m.m
    newData()
-   result.isspd = m.n == result.n
+   result.isspd = m.n == m.m
    # Main loop.
    for j in 0 ..< result.n:
-      var l_rowj = result.data[j]
+      var l_rowj = unsafeAddr result.data[j]
       var d = 0.0
       for k in 0 ..< j:
          var l_rowk = result.data[k]
