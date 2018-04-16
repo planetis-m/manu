@@ -9,7 +9,8 @@
 ## QR decomposition is in the least squares solution of nonsquare systems
 ## of simultaneous linear equations.  This will fail if isFullRank()
 ## returns false.
-import math, matrix
+import math
+import "./matrix"
 
 template newData() =
    newSeq(result.data, result.m)
@@ -27,7 +28,7 @@ type QRDecomposition* = object
 proc qr*(m: Matrix): QRDecomposition =
    ## QR Decomposition, computed by Householder reflections.
    ## Structure to access R and the Householder vectors and compute Q.
-   ## parameter a: Rectangular matrix
+   ## parameter ``a``: Rectangular matrix
 
    result.data = m.data
    result.m = m.m
@@ -78,7 +79,7 @@ proc getH*(q: QRDecomposition): Matrix =
             result.data[i][j] = q.data[i][j]
 
 proc getR*(q: QRDecomposition): Matrix =
-   ## Return the upper triangular factor
+   ## Return the upper triangular factor.
    result.m = q.n
    result.n = q.n
    newData()
@@ -90,7 +91,7 @@ proc getR*(q: QRDecomposition): Matrix =
             result.data[i][j] = q.rDiag[i]
             
 proc getQ*(q: QRDecomposition): Matrix =
-   ## Generate and return the (economy-sized) orthogonal factor
+   ## Generate and return the (economy-sized) orthogonal factor.
    result.m = q.m
    result.n = q.n
    newData()
@@ -110,7 +111,7 @@ proc getQ*(q: QRDecomposition): Matrix =
 proc solve*(q: QRDecomposition, b: Matrix): Matrix =
    ## Least squares solution of ``A*X = B``,
    ## returns ``X`` that minimizes the two norm of ``Q*R*X-B``.
-   ## parameter b: A Matrix with as many rows as A and any number of columns.
+   ## parameter ``b``: A Matrix with as many rows as A and any number of columns.
    assert(b.m == q.m, "Matrix row dimensions must agree.")
    assert(q.isFullRank(), "Matrix is rank deficient.")
 

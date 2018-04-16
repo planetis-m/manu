@@ -6,7 +6,8 @@
 ## If the matrix is not symmetric or positive definite, the constructor
 ## returns a partial decomposition and sets an internal flag that may
 ## be queried by the isSPD() method.
-import math, matrix
+import math
+import "./matrix"
 
 template newData() =
    newSeq(result.data, result.n)
@@ -24,7 +25,7 @@ type CholeskyDecomposition* = object
 proc chol*(m: Matrix): CholeskyDecomposition =
    ## Cholesky algorithm for symmetric and positive definite matrix.
    ## Structure to access L and isspd flag.
-   ## param  Square, symmetric matrix.
+   ## parameter ``m``: Square, symmetric matrix.
    result.n = m.m
    newData()
    result.isspd = m.n == m.m
@@ -60,7 +61,7 @@ proc getL*(c: CholeskyDecomposition): Matrix =
 proc solve*(c: CholeskyDecomposition, b: Matrix): Matrix =
    ## Solve ``A*X = B``,
    ## returns X so that ``L*L'*X = B``
-   ## param b:  A Matrix with as many rows as A and any number of columns.
+   ## parameter ``b``:  A Matrix with as many rows as A and any number of columns.
    assert(b.m == c.n, "Matrix row dimensions must agree.")
    assert(c.isspd, "Matrix is not symmetric positive definite.")
 
@@ -76,7 +77,7 @@ proc solve*(c: CholeskyDecomposition, b: Matrix): Matrix =
             result.data[k][j] -= result.data[i][j] * c.data[k][i]
          result.data[k][j] /= c.data[k][k]
 
-   ## Solve L'*X = Y
+   # Solve L'*X = Y
    for k in countdown(result.m - 1, 0):
       for j in 0 ..< result.n:
          for i in k + 1 ..< result.m:

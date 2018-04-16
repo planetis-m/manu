@@ -9,7 +9,7 @@
 ## singular, so the constructor will never fail.  The primary use of the
 ## LU decomposition is in the solution of square systems of simultaneous
 ## linear equations.  This will fail if isNonsingular() returns false.
-import matrix
+import "./matrix"
 
 template newData() =
    newSeq(result.data, result.m)
@@ -108,8 +108,8 @@ proc getPivot*(l: LUDecomposition): seq[int] =
    ## Return pivot permutation vector
    l.piv
 
-## Return pivot permutation vector as a one-dimensional double array
 proc getFloatPivot*(l: LUDecomposition): seq[float] =
+   ## Return pivot permutation vector as a one-dimensional double array
    result = newSeq[float](l.m)
    for i in 0 ..< l.m:
       result[i] = float(l.piv[i])
@@ -122,8 +122,8 @@ proc det*(l: LUDecomposition): float =
       result *= l.lu[j][j]
 
 proc solve*(l: LUDecomposition, b: Matrix): Matrix =
-   ## Solve ``A*X = B``
-   ## param ``B``: A Matrix with as many rows as A and any number of columns.
+   ## Solve ``A*X = B``.
+   ## parameter ``B``: A Matrix with as many rows as A and any number of columns.
    ## returns X so that ``L*U*X = B(piv,:)``
    assert(b.m == l.m, "Matrix row dimensions must agree.")
    assert(l.isNonsingular, "Matrix is singular.")

@@ -10,7 +10,8 @@
 ## The singular value decompostion always exists, so the constructor will
 ## never fail.  The matrix condition number and the effective numerical
 ## rank can be computed from this decomposition.
-import math, matrix
+import math
+import "./matrix"
 
 type SingularValueDecomposition* = object
    # Arrays for internal storage of U and V.
@@ -22,7 +23,7 @@ type SingularValueDecomposition* = object
 
 proc svd*(m: Matrix): SingularValueDecomposition =
    ## Construct the singular value decomposition
-   ##  Structure to access U, S and V.
+   ## Structure to access U, S and V.
 
    # Derived from LINPACK code.
    # Initialize.
@@ -339,12 +340,12 @@ proc getV*(s: SingularValueDecomposition): Matrix =
    result.data = s.v
 
 proc getSingularValues*(s: SingularValueDecomposition): seq[float] =
-   ## Return the one-dimensional array of singular values
+   ## Return the one-dimensional array of singular values.
    ## returns diagonal of S.
    result = s.s
 
 proc getS*(s: SingularValueDecomposition): Matrix =
-   ## Return the diagonal matrix of singular values
+   ## Return the diagonal matrix of singular values.
    result.m = s.n
    result.n = s.n
    newData()
@@ -354,17 +355,17 @@ proc getS*(s: SingularValueDecomposition): Matrix =
       result.data[i][i] = s.s[i]
 
 proc norm2*(s: SingularValueDecomposition): float =
-   ## Two norm
+   ## Two norm.
    ## returns max(S)
    result = s.s[0]
 
 proc cond*(s: SingularValueDecomposition): float =
-   ## Two norm condition number
-   ## return max(S)/min(S)
+   ## Two norm condition number.
+   ## returns max(S)/min(S)
    s.s[0] / s.s[min(s.m, s.n) - 1]
 
 proc rank*(s: SingularValueDecomposition): int =
-   ## Effective numerical matrix rank
+   ## Effective numerical matrix rank.
    ## returns Number of nonnegligible singular values.
    let eps = pow(2.0, -52.0)
    let tol = float(max(s.m, s.n)) * s.s[0] * eps

@@ -1232,7 +1232,6 @@ function main() {
     </select>
   </div>
   <ul class="simple simple-toc" id="toc-list">
-<li><a class="reference" id="morpheus-nim-matrix-module_toc" href="#morpheus-nim-matrix-module">Morpheus - Nim Matrix module.</a></li>
 <li>
   <a class="reference reference-toplevel" href="#6" id="56">Imports</a>
   <ul class="simple simple-toc-section">
@@ -1343,25 +1342,7 @@ function main() {
   </div>
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
-  <p class="module-desc"><blockquote><p>
-<h1><a class="toc-backref" id="morpheus-nim-matrix-module" href="#morpheus-nim-matrix-module">Morpheus - Nim Matrix module.</a></h1><p>The Matrix object provides the fundamental operations of numerical linear algebra. Various constructors create Matrices from two dimensional arrays of double precision floating point numbers. Various &quot;gets&quot; and &quot;sets&quot; provide access to submatrices and matrix elements.  Several methods implement basic matrix arithmetic, including matrix addition and multiplication, matrix norms, and element-by-element array operations. Methods for reading and printing matrices are also included. All the operations in this version of the Matrix Object involve real matrices. Complex matrices may be handled in a future version.</p>
-<p>Five fundamental matrix decompositions, which consist of pairs or triples of matrices, permutation vectors, and the like, produce results in five decomposition classes.  These decompositions are accessed by the Matrix class to compute solutions of simultaneous linear equations, determinants, inverses and other matrix functions.  The five decompositions are:</p>
-<ul class="simple"><li>Cholesky Decomposition of symmetric, positive definite matrices.</li>
-<li>LU Decomposition of rectangular matrices.</li>
-<li>QR Decomposition of rectangular matrices.</li>
-<li>Singular Value Decomposition of rectangular matrices.</li>
-<li>Eigenvalue Decomposition of both symmetric and nonsymmetric square matrices.</li>
-</ul>
-<p><strong>Example of use:</strong></p>
-<pre class="listing"><span class="Keyword">import</span> <span class="Identifier">morpheus</span>
-<span class="Comment"># Solve a linear system A x = b and compute the residual norm, ||b - A x||.</span>
-<span class="Keyword">let</span> <span class="Identifier">vals</span> <span class="Operator">=</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="Operator">@</span><span class="Punctuation">[</span><span class="FloatNumber">1.0</span><span class="Punctuation">,</span> <span class="FloatNumber">2.0</span><span class="Punctuation">,</span> <span class="FloatNumber">3.0</span><span class="Punctuation">]</span><span class="Punctuation">,</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="FloatNumber">4.0</span><span class="Punctuation">,</span> <span class="FloatNumber">5.0</span><span class="Punctuation">,</span> <span class="FloatNumber">6.0</span><span class="Punctuation">]</span><span class="Punctuation">,</span> <span class="Operator">@</span><span class="Punctuation">[</span><span class="FloatNumber">7.0</span><span class="Punctuation">,</span> <span class="FloatNumber">8.0</span><span class="Punctuation">,</span> <span class="FloatNumber">10.0</span><span class="Punctuation">]</span><span class="Punctuation">]</span>
-<span class="Keyword">let</span> <span class="Identifier">A</span> <span class="Operator">=</span> <span class="Identifier">matrix</span><span class="Punctuation">(</span><span class="Identifier">vals</span><span class="Punctuation">)</span>
-<span class="Keyword">let</span> <span class="Identifier">b</span> <span class="Operator">=</span> <span class="Identifier">randMatrix</span><span class="Punctuation">(</span><span class="DecNumber">3</span><span class="Punctuation">,</span> <span class="DecNumber">1</span><span class="Punctuation">)</span>
-<span class="Keyword">let</span> <span class="Identifier">x</span> <span class="Operator">=</span> <span class="Identifier">A</span><span class="Operator">.</span><span class="Identifier">solve</span><span class="Punctuation">(</span><span class="Identifier">b</span><span class="Punctuation">)</span>
-<span class="Keyword">let</span> <span class="Identifier">r</span> <span class="Operator">=</span> <span class="Identifier">A</span> <span class="Operator">*</span> <span class="Identifier">x</span> <span class="Operator">-</span> <span class="Identifier">b</span>
-<span class="Keyword">let</span> <span class="Identifier">rnorm</span> <span class="Operator">=</span> <span class="Identifier">r</span><span class="Operator">.</span><span class="Identifier">normInf</span><span class="Punctuation">(</span><span class="Punctuation">)</span></pre></p></blockquote>
-</p>
+  <p class="module-desc"></p>
   <div class="section" id="6">
 <h1><a class="toc-backref" href="#6">Imports</a></h1>
 <dl class="item">
@@ -1602,7 +1583,7 @@ Generate matrix with random elements, returns an m-by-n matrix with uniformly di
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-16 17:37:41 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-16 18:03:26 UTC</small>
       </div>
     </div>
   </div>

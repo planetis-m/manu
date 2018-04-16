@@ -2,6 +2,8 @@
 
 This is a port of the NIST JAMA library to Nim.
 
+API documentation is [here](https://rawgit.com/notTito/morpheus/master/htmldocs/morpheus.html)
+
 ## Example of use
 
 ```nim
