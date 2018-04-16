@@ -27,7 +27,8 @@
 ## **Example of use:**
 ##
 ## .. code-block:: nim
-##    ## Solve a linear system A x = b and compute the residual norm, ||b - A x||.
+##    import morpheus
+##    # Solve a linear system A x = b and compute the residual norm, ||b - A x||.
 ##    let vals = @[@[1.0, 2.0, 3.0], @[4.0, 5.0, 6.0], @[7.0, 8.0, 10.0]]
 ##    let A = matrix(vals)
 ##    let b = randMatrix(3, 1)
@@ -327,7 +328,7 @@ proc `*`*(a, b: Matrix): Matrix =
       for k in 0 ..< a.n:
          b_colj[k] = b.data[k][j]
       for i in 0 ..< a.m:
-         var a_rowi = a.data[i]
+         var a_rowi = unsafeAddr a.data[i]
          var s = 0.0
          for k in 0 ..< a.n:
             s += a_rowi[k] * b_colj[k]

@@ -30,7 +30,7 @@ proc chol*(m: Matrix): CholeskyDecomposition =
    result.isspd = m.n == m.m
    # Main loop.
    for j in 0 ..< result.n:
-      var l_rowj = unsafeAddr result.data[j]
+      var l_rowj = addr result.data[j]
       var d = 0.0
       for k in 0 ..< j:
          var l_rowk = result.data[k]

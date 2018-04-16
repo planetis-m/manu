@@ -1,10 +1,10 @@
-import matrix, cholesky, qr, lu#, eigen, svd
-export matrix, cholesky, qr, lu
+import matrix, cholesky, qr, lu, svd#, eigen
+export matrix, cholesky, qr, lu, svd#, eigen
 
-# proc norm2*(m: Matrix): float =
-#    ## Two norm,
-#    ## returns maximum singular value.
-#    svd(m).norm2())
+proc norm2*(m: Matrix): float =
+   ## Two norm,
+   ## returns maximum singular value.
+   svd(m).norm2()
 
 proc solve*(a, b: Matrix): Matrix =
    ## Solve ``A*X = B``,
@@ -30,12 +30,12 @@ proc det*(m: Matrix): float =
    ## Matrix determinant
    lu(m).det()
 
-# proc rank*(m: Matrix): int =
-#    ## Matrix rank,
-#    ## returns effective numerical rank, obtained from SVD.
-#    svd(m).rank()
+proc rank*(m: Matrix): int =
+   ## Matrix rank,
+   ## returns effective numerical rank, obtained from SVD.
+   svd(m).rank()
 
-# proc cond*(m: Matrix): float =
-#    ## Matrix condition (2 norm),
-#    ## returns ratio of largest to smallest singular value.
-#    svd(m).cond()
+proc cond*(m: Matrix): float =
+   ## Matrix condition (2 norm),
+   ## returns ratio of largest to smallest singular value.
+   svd(m).cond()

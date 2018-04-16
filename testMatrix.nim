@@ -21,9 +21,9 @@ import math, morpheus
 proc check(x, y: float) =
    # Check magnitude of difference of scalars.
    let eps = pow(2.0, -52.0)
-   if x == 0 and abs(y) < 10 * eps: return
-   if y == 0 and abs(x) < 10 * eps: return
-   if abs(x-y) > 10 * eps * max(abs(x), abs(y)):
+   if x == 0.0 and abs(y) < 10.0 * eps: return
+   if y == 0.0 and abs(x) < 10.0 * eps: return
+   if abs(x-y) > 10.0 * eps * max(abs(x), abs(y)):
       raise newException(ValueError, "The difference x-y is too large: x = " & $x & "  y = " & $y)
 
 proc check(x, y: seq[float]) =
@@ -37,10 +37,13 @@ proc check(x, y: seq[float]) =
 proc check(X, Y: Matrix) =
    # Check norm of difference of Matrices.
    let eps = pow(2.0, -52.0)
-   if X.norm1() == 0.0 and Y.norm1() < 10 * eps: return
-   if Y.norm1() == 0.0 and X.norm1() < 10 * eps: return
-   if norm1(X - Y) > 1000 * eps * max(X.norm1(), Y.norm1()):
-      raise newException(ValueError, "The norm of (X-Y) is too large: " & $(X - Y).norm1())
+   let x_norm1 = X.norm1()
+   let y_norm1 = Y.norm1()
+   let xmiy_norm1 = norm1(X - Y)
+   if x_norm1 == 0.0 and y_norm1 < 10.0 * eps: return
+   if y_norm1 == 0.0 and x_norm1 < 10.0 * eps: return
+   if xmiy_norm1 > 1000.0 * eps * max(x_norm1, y_norm1):
+      raise newException(ValueError, "The norm of (X-Y) is too large: " & $xmiy_norm1)
 
 proc check(x, y: seq[seq[float]]) =
    # Check norm of difference of arrays.
@@ -86,8 +89,8 @@ proc main() =
    let square = @[@[166.0, 188.0, 210.0], @[188.0, 214.0, 240.0], @[210.0, 240.0, 270.0]]
    let sqSolution = @[@[13.0], @[15.0]]
    let condmat = @[@[1.0, 3.0], @[7.0, 9.0]]
-   let badeigs = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 1], [0, 0, 0, 1, 0],
-      [1, 1, 0, 0, 1], [1, 0, 1, 0, 1]]
+   let badeigs = @[@[0.0, 0, 0, 0, 0], @[0.0, 0, 0, 0, 1], @[0.0, 0, 0, 1, 0],
+      @[1.0, 1, 0, 0, 1], @[1.0, 0, 1, 0, 1]]
    let
       rows = 3
       cols = 4
@@ -620,26 +623,26 @@ proc main() =
       try_success("QRDecomposition...", "")
    except ValueError:
       try_failure(errorCount,"QRDecomposition...","incorrect QR decomposition calculation")
-#    var SVD = A.svd()
-#    try:
-#       check(A, SVD.getU() * SVD.getS() * SVD.getV().transpose())
-#       try_success("SingularValueDecomposition...", "")
-#    except ValueError:
-#       try_failure(errorCount,"SingularValueDecomposition...","incorrect singular value decomposition calculation")
-#    DEF = matrix(rankdef)
-#    try:
-#       check(DEF.rank(), min(DEF.rowDimension,DEF.columnDimension)-1)
-#       try_success("rank()...", "")
-#    except ValueError:
-#       try_failure(errorCount,"rank()...","incorrect rank calculation")
-#    B = matrix(condmat)
-#    SVD = B.svd()
-#    let singularvalues = SVD.getSingularValues()
-#    try:
-#       check(B.cond(), singularvalues[0] / singularvalues[min(B.rowDimension,B.columnDimension)-1])
-#       try_success("cond()...", "")
-#    except ValueError:
-#       try_failure(errorCount,"cond()...","incorrect condition number calculation")
+   var SVD = A.svd()
+   try:
+      check(A, SVD.getU() * SVD.getS() * SVD.getV().transpose())
+      try_success("SingularValueDecomposition...", "")
+   except ValueError:
+      try_failure(errorCount,"SingularValueDecomposition...","incorrect singular value decomposition calculation")
+   DEF = matrix(rankdef)
+   try:
+      check(float(DEF.rank()), float(min(DEF.rowDimension,DEF.columnDimension)-1))
+      try_success("rank()...", "")
+   except ValueError:
+      try_failure(errorCount,"rank()...","incorrect rank calculation")
+   B = matrix(condmat)
+   SVD = B.svd()
+   let singularvalues = SVD.getSingularValues()
+   try:
+      check(B.cond(), singularvalues[0] / singularvalues[min(B.rowDimension,B.columnDimension)-1])
+      try_success("cond()...", "")
+   except ValueError:
+      try_failure(errorCount,"cond()...","incorrect condition number calculation")
    let n = A.columnDimension
    A = A[0 .. n-1, 0 .. n-1]
    A[0, 0] = 0.0

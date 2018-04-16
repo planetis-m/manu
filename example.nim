@@ -1,4 +1,7 @@
-import math, times, strformat, morpheus
+import math, times, strutils, morpheus
+
+template ff(f: float, prec: int = 3): string =
+   formatFloat(f, ffDecimal, prec)
 
 template swap(a, b) =
    let t = b
@@ -64,23 +67,23 @@ proc main() =
    var buf = ""
    for n in 3 .. 32:
       buf.setLen(0)
-      buf.add(&"{n:7}")
+      buf.add(align($n, 7))
 
       let M = magic(n)
       let t = int(M.trace())
-      buf.add(&"{t:10}")
+      buf.add(align($t, 10))
 
       let E =
          eig((M + M.transpose()) * 0.5)
       let d = E.getRealEigenvalues()
-      buf.add(&"{d[n-1]:14.3}")
+      buf.add(align(ff(d[n-1]), 14))
 
       let r = M.rank()
-      buf.add(&"{r:7}")
+      buf.add(align($r, 7))
 
       let c = M.cond()
       if c < 1.0 / eps:
-         buf.add(&"{c:12.3}")
+         buf.add(align(ff(c, 12))
       else:
          buf.add("         Inf")
 
@@ -90,14 +93,14 @@ proc main() =
       let p = LU.getPivot()
       var R = L * U - M[p, 0 .. n-1]
       var res = R.norm1() / (float(n) * eps)
-      buf.add(&"{res:12.3}")
+      buf.add(align(ff(res, 12))
 
       let QR = qr(M)
       let Q = QR.getQ()
       R = QR.getR()
       R = Q * R - M
       res = R.norm1() / (float(n) * eps)
-      buf.add(&"{res:12.3}")
+      buf.add(align(ff(res, 12))
 
       echo buf
 

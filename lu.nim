@@ -48,7 +48,7 @@ proc lu*(a: Matrix): LUDecomposition =
 
       # Apply previous transformations.
       for i in 0 ..< result.m:
-         var lu_rowi = unsafeAddr result.lu[i]
+         var lu_rowi = addr result.lu[i]
 
          # Most of the time is spent in the following dot product.
          let kmax = min(i, j)
