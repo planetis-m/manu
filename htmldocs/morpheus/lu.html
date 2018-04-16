@@ -1280,11 +1280,11 @@ function main() {
   <p class="module-desc"><p>LU Decomposition.</p>
 <p>For an m-by-n matrix A with m &gt;= n, the LU decomposition is an m-by-n unit lower triangular matrix L, an n-by-n upper triangular matrix U, and a permutation vector piv of length m so that A(piv,:) = L*U. If m &lt; n, then L is m-by-m and U is m-by-n.</p>
 <p>The LU decompostion with pivoting always exists, even if the matrix is singular, so the constructor will never fail.  The primary use of the LU decomposition is in the solution of square systems of simultaneous linear equations.  This will fail if isNonsingular() returns false.</p>
-Return pivot permutation vector as a one-dimensional double array</p>
+</p>
   <div class="section" id="6">
 <h1><a class="toc-backref" href="#6">Imports</a></h1>
 <dl class="item">
-<a class="reference external" href="matrix.html">matrix</a>
+<a class="reference external" href="./matrix.html">./matrix</a>
 </dl></div>
 <div class="section" id="7">
 <h1><a class="toc-backref" href="#7">Types</a></h1>
@@ -1330,7 +1330,7 @@ Return pivot permutation vector
 </dd>
 <dt id="getFloatPivot"><a name="getFloatPivot,LUDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">getFloatPivot</span><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <span class="Identifier">LUDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-
+Return pivot permutation vector as a one-dimensional double array
 
 </dd>
 <dt id="det"><a name="det,LUDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">det</span><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <span class="Identifier">LUDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
@@ -1340,7 +1340,7 @@ Determinant
 </dd>
 <dt id="solve"><a name="solve,LUDecomposition,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">solve</span><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <span class="Identifier">LUDecomposition</span><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt> param <tt class="docutils literal"><span class="pre">B</span></tt>: A Matrix with as many rows as A and any number of columns. returns X so that <tt class="docutils literal"><span class="pre">L*U*X = B(piv,:)</span></tt>
+Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>. parameter <tt class="docutils literal"><span class="pre">B</span></tt>: A Matrix with as many rows as A and any number of columns. returns X so that <tt class="docutils literal"><span class="pre">L*U*X = B(piv,:)</span></tt>
 
 </dd>
 
@@ -1353,7 +1353,7 @@ Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt> param <
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-16 18:03:26 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-16 18:50:00 UTC</small>
       </div>
     </div>
   </div>

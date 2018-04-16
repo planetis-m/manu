@@ -1,9 +1,9 @@
 mode = ScriptMode.Verbose
 
 packageName   = "morpheus"
-version       = "0.9.2"
+version       = "0.9.3"
 author        = "Antonis Geralis"
-description   = "Nim Matrix module"
+description   = "Nim Matrix library"
 license       = "MIT"
 skipDirs = @["tests", "htmldocs", "examples"]
 

@@ -1280,7 +1280,7 @@ function main() {
   <div class="section" id="6">
 <h1><a class="toc-backref" href="#6">Imports</a></h1>
 <dl class="item">
-<a class="reference external" href="math.html">math</a>, <a class="reference external" href="matrix.html">matrix</a>
+<a class="reference external" href="math.html">math</a>, <a class="reference external" href="./matrix.html">./matrix</a>
 </dl></div>
 <div class="section" id="7">
 <h1><a class="toc-backref" href="#7">Types</a></h1>
@@ -1301,7 +1301,7 @@ function main() {
 <dl class="item">
 <dt id="qr"><a name="qr,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">qr</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-QR Decomposition, computed by Householder reflections. Structure to access R and the Householder vectors and compute Q. parameter a: Rectangular matrix
+QR Decomposition, computed by Householder reflections. Structure to access R and the Householder vectors and compute Q. parameter <tt class="docutils literal"><span class="pre">a</span></tt>: Rectangular matrix
 
 </dd>
 <dt id="isFullRank"><a name="isFullRank,QRDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">isFullRank</span><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
@@ -1316,17 +1316,17 @@ Return the Householder vectors. Returns Lower trapezoidal matrix whose columns d
 </dd>
 <dt id="getR"><a name="getR,QRDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">getR</span><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Return the upper triangular factor
+Return the upper triangular factor.
 
 </dd>
 <dt id="getQ"><a name="getQ,QRDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">getQ</span><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Generate and return the (economy-sized) orthogonal factor
+Generate and return the (economy-sized) orthogonal factor.
 
 </dd>
 <dt id="solve"><a name="solve,QRDecomposition,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">solve</span><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B</span></tt>, returns <tt class="docutils literal"><span class="pre">X</span></tt> that minimizes the two norm of <tt class="docutils literal"><span class="pre">Q*R*X-B</span></tt>. parameter b: A Matrix with as many rows as A and any number of columns.
+Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B</span></tt>, returns <tt class="docutils literal"><span class="pre">X</span></tt> that minimizes the two norm of <tt class="docutils literal"><span class="pre">Q*R*X-B</span></tt>. parameter <tt class="docutils literal"><span class="pre">b</span></tt>: A Matrix with as many rows as A and any number of columns.
 
 </dd>
 
@@ -1339,7 +1339,7 @@ Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-16 18:03:26 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-16 18:50:00 UTC</small>
       </div>
     </div>
   </div>

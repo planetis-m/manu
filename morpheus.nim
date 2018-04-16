@@ -1,21 +1,21 @@
-## Morpheus - Nim Matrix module.
+## Morpheus - Nim Matrix library
 ## =============================
 ##
-## The Matrix object provides the fundamental operations of numerical
+## The morpheus module provides the fundamental operations of numerical
 ## linear algebra. Various constructors create Matrices from two dimensional
 ## arrays of double precision floating point numbers. Various "gets" and
 ## "sets" provide access to submatrices and matrix elements.  Several methods 
 ## implement basic matrix arithmetic, including matrix addition and
 ## multiplication, matrix norms, and element-by-element array operations.
 ## Methods for reading and printing matrices are also included. All the
-## operations in this version of the Matrix Object involve real matrices.
+## operations in this version of the Matrix object involve real matrices.
 ## Complex matrices may be handled in a future version.
 ##
 ## Five fundamental matrix decompositions, which consist of pairs or triples
 ## of matrices, permutation vectors, and the like, produce results in five
-## decomposition classes.  These decompositions are accessed by the Matrix
-## class to compute solutions of simultaneous linear equations, determinants,
-## inverses and other matrix functions.  The five decompositions are:
+## decomposition classes. These decompositions are accessed by the morpheus
+## module to compute solutions of simultaneous linear equations, determinants,
+## inverses and other matrix functions. The five decompositions are:
 ##
 ## - Cholesky Decomposition of symmetric, positive definite matrices.
 ## - LU Decomposition of rectangular matrices.

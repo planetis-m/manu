@@ -1,4 +1,4 @@
-# Morpheus - Nim Matrix module.
+# Morpheus — Nim Matrix library
 
 This is a port of the NIST JAMA library to Nim.
 

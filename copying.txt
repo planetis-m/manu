@@ -1,4 +1,4 @@
-Morpheus - Nim Matrix module
+Morpheus - Nim Matrix library
 
 (c) Copyright 2018 Antonis Geralis. All rights reserved.
 
