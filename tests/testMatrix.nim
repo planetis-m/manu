@@ -631,9 +631,9 @@ proc main() =
       try_failure(errorCount,"SingularValueDecomposition...","incorrect singular value decomposition calculation")
    DEF = matrix(rankdef)
    try:
-      check(float(DEF.rank()), float(min(DEF.rowDimension,DEF.columnDimension)-1))
+      assert(DEF.rank() == min(DEF.rowDimension,DEF.columnDimension)-1)
       try_success("rank()...", "")
-   except ValueError:
+   except AssertionError:
       try_failure(errorCount,"rank()...","incorrect rank calculation")
    B = matrix(condmat)
    SVD = B.svd()
