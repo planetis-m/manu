@@ -1,5 +1,5 @@
-import "./morpheus" / [matrix, cholesky, qr, lu, svd]#, eigen
-export "./morpheus" / [matrix, cholesky, qr, lu, svd]#, eigen
+import "./morpheus" / [matrix, cholesky, qr, lu, svd] #, eigen
+export matrix, cholesky, qr, lu, svd #, eigen
 
 proc norm2*(m: Matrix): float =
    ## Two norm,

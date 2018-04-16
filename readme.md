@@ -19,7 +19,7 @@ This is a port of the NIST JAMA library to Nim.
 - Port the EigenValueDecomposition class
 
 ## Copyright Notice
-From original JAMA code:
+From the original JAMA code:
 
 > This software is a cooperative product of The MathWorks and the National 
 > Institute of Standards and Technology (NIST) which has been released to the 

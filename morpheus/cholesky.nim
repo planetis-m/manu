@@ -59,7 +59,7 @@ proc getL*(c: CholeskyDecomposition): Matrix =
 
 proc solve*(c: CholeskyDecomposition, b: Matrix): Matrix =
    ## Solve ``A*X = B``,
-   ## returns X so that L*L'*X = B
+   ## returns X so that ``L*L'*X = B``
    ## param b:  A Matrix with as many rows as A and any number of columns.
    assert(b.m == c.n, "Matrix row dimensions must agree.")
    assert(c.isspd, "Matrix is not symmetric positive definite.")
