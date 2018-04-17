@@ -20,7 +20,7 @@ proc matrix(data: seq[float], m: int): MatrixB =
    result.n = if m != 0: data.len div m else: 0
    result.data = data
 
-proc `*`(a, b: MatrixB): MatrixB =
+proc multiply(a, b: MatrixB): MatrixB =
    result.m = a.m
    result.n = b.n
    newSeq(result.data, result.m * result.n)
@@ -45,18 +45,7 @@ proc randomMatrix(m, n: Natural): MatrixA =
       for j in 0 ..< n:
          result.data[i][j] = rand(maxVal).float
 
-proc stdMatrixProduct(a, b: MatrixA): MatrixA =
-   result.m = a.m
-   result.n = b.n
-   newData()
-   for i in 0 ..< b.n:
-      for j in 0 ..< a.m:
-         var s = 0.0
-         for k in 0 ..< a.n:
-            s += a.data[i][k] * b.data[k][j]
-         result.data[i][j] = s
-
-proc `*`(a, b: MatrixA): MatrixA =
+proc multiply(a, b: MatrixA): MatrixA =
    result.m = a.m
    result.n = b.n
    newData()
@@ -80,21 +69,21 @@ proc getRowPacked(m: MatrixA): seq[float] =
 
 proc main() =
    const n = 1000
-   let A = randomMatrix(n, n)
-   let B = randomMatrix(n, n)
-   let a = matrix(A.getRowPacked(), n)
-   let b = matrix(B.getRowPacked(), n)
+   let a = randomMatrix(n, n)
+   let b = randomMatrix(n, n)
+   let d = matrix(a.getRowPacked(), n)
+   let e = matrix(b.getRowPacked(), n)
    block:
       # time Jama version
       let start = epochTime()
-      let C =  A * B
+      let c =  multiply(a, b)
       let duration = epochTime() - start
-      echo formatFloat(duration, ffDecimal, 3), "us naive - algorithm"
+      echo formatFloat(duration, ffDecimal, 3), " us naive storage - optimized ijk algorithm"
    block:
       # time standard ijk
       let start = epochTime()
-      let c = a * b
+      let f = multiply(d, e)
       let duration = epochTime() - start
-      echo formatFloat(duration, ffDecimal, 3), "us packed - standard"
+      echo formatFloat(duration, ffDecimal, 3), " us packed storage - ijk algorithm"
 
 main()
