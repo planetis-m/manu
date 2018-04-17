@@ -1540,32 +1540,32 @@ Matrix transpose
 </dd>
 <dt id="identity"><a name="identity,int,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">identity</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">n</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Generate identity matrix, returns An m-by-n matrix with ones on the diagonal and zeros elsewhere.
+Generate identity matrix, return: An m-by-n matrix with ones on the diagonal and zeros elsewhere.
 
 </dd>
 <dt id="norm1"><a name="norm1,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">norm1</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-One norm, returns maximum column sum.
+One norm, return: maximum column sum
 
 </dd>
 <dt id="normInf"><a name="normInf,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">normInf</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Infinity norm, returns maximum row sum.
+Infinity norm, return: maximum row sum
 
 </dd>
 <dt id="normF"><a name="normF,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">normF</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Frobenius norm, returns sqrt of sum of squares of all elements.
+Frobenius norm, return: sqrt of sum of squares of all elements.
 
 </dd>
 <dt id="trace"><a name="trace,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">trace</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Matrix trace, returns the sum of the diagonal elements.
+Matrix trace, return: the sum of the diagonal elements
 
 </dd>
 <dt id="randMatrix"><a name="randMatrix,int,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">randMatrix</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">n</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Generate matrix with random elements, returns an m-by-n matrix with uniformly distributed random elements.
+Generate matrix with random elements, return: an m-by-n matrix with uniformly distributed random elements.
 
 </dd>
 <dt id="$"><a name="$,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">`$`</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
@@ -1583,7 +1583,7 @@ Generate matrix with random elements, returns an m-by-n matrix with uniformly di
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-16 18:50:00 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-17 21:59:05 UTC</small>
       </div>
     </div>
   </div>

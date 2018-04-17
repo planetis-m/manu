@@ -69,7 +69,7 @@ proc isFullRank*(q: QRDecomposition): bool =
 
 proc getH*(q: QRDecomposition): Matrix =
    ## Return the Householder vectors.
-   ## Returns Lower trapezoidal matrix whose columns define the reflections.
+   ## return: Lower trapezoidal matrix whose columns define the reflections.
    result.m = q.m
    result.n = q.n
    newData()
@@ -110,8 +110,8 @@ proc getQ*(q: QRDecomposition): Matrix =
 
 proc solve*(q: QRDecomposition, b: Matrix): Matrix =
    ## Least squares solution of ``A*X = B``,
-   ## returns ``X`` that minimizes the two norm of ``Q*R*X-B``.
    ## parameter ``b``: A Matrix with as many rows as A and any number of columns.
+   ## return: ``X`` that minimizes the two norm of ``Q*R*X-B``
    assert(b.m == q.m, "Matrix row dimensions must agree.")
    assert(q.isFullRank(), "Matrix is rank deficient.")
 

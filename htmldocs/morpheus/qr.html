@@ -1311,7 +1311,7 @@ Is the matrix full rank?
 </dd>
 <dt id="getH"><a name="getH,QRDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">getH</span><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Return the Householder vectors. Returns Lower trapezoidal matrix whose columns define the reflections.
+Return the Householder vectors. return: Lower trapezoidal matrix whose columns define the reflections.
 
 </dd>
 <dt id="getR"><a name="getR,QRDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">getR</span><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
@@ -1326,7 +1326,7 @@ Generate and return the (economy-sized) orthogonal factor.
 </dd>
 <dt id="solve"><a name="solve,QRDecomposition,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">solve</span><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B</span></tt>, returns <tt class="docutils literal"><span class="pre">X</span></tt> that minimizes the two norm of <tt class="docutils literal"><span class="pre">Q*R*X-B</span></tt>. parameter <tt class="docutils literal"><span class="pre">b</span></tt>: A Matrix with as many rows as A and any number of columns.
+Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B</span></tt>, parameter <tt class="docutils literal"><span class="pre">b</span></tt>: A Matrix with as many rows as A and any number of columns. return: <tt class="docutils literal"><span class="pre">X</span></tt> that minimizes the two norm of <tt class="docutils literal"><span class="pre">Q*R*X-B</span></tt>
 
 </dd>
 
@@ -1339,7 +1339,7 @@ Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-16 18:50:00 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-17 21:59:05 UTC</small>
       </div>
     </div>
   </div>

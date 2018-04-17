@@ -93,20 +93,20 @@ proc main() =
       let p = LU.getPivot()
       var R = L * U - M[p, 0 .. n-1]
       var res = R.norm1() / (float(n) * eps)
-      buf.add(align(ff(res, 12))
+      buf.add(align(ff(res), 12))
 
       let QR = qr(M)
       let Q = QR.getQ()
       R = QR.getR()
       R = Q * R - M
       res = R.norm1() / (float(n) * eps)
-      buf.add(align(ff(res, 12))
+      buf.add(align(ff(res), 12))
 
       echo buf
 
    let stop_time = epochTime()
    let etime = (stop_time - start_time) / 1000.0
-   echo("\nElapsed Time = ", &"{etime:12.3}", " seconds")
+   echo("\nElapsed Time = ", align(ff(etime), 12), " seconds")
    echo("Adios")
 
 main()

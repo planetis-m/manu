@@ -31,22 +31,22 @@ proc chol*(m: Matrix): CholeskyDecomposition =
    result.isspd = m.n == m.m
    # Main loop.
    for j in 0 ..< result.n:
-      var l_rowj = addr result.data[j]
+      var lRowj = addr result.data[j]
       var d = 0.0
       for k in 0 ..< j:
-         var l_rowk = result.data[k]
+         var lRowk = addr result.data[k]
          var s = 0.0
          for i in 0 ..< k:
-            s += l_rowk[i] * l_rowj[i]
+            s += lRowk[i] * lRowj[i]
          s = (m.data[j][k] - s) / result.data[k][k]
-         l_rowj[k] = s
+         lRowj[k] = s
          d = d + s * s
          result.isspd = result.isspd and m.data[k][j] == m.data[j][k]
       d = m.data[j][j] - d
       result.isspd = result.isspd and d > 0.0
       result.data[j][j] = sqrt(max(d, 0.0))
-      for k in j + 1 ..< result.n:
-         result.data[j][k] = 0.0
+      # for k in j + 1 ..< result.n:
+      #    result.data[j][k] = 0.0
 
 proc isSPD*(c: CholeskyDecomposition): bool =
    ## Is the matrix symmetric and positive definite?
@@ -60,8 +60,8 @@ proc getL*(c: CholeskyDecomposition): Matrix =
 
 proc solve*(c: CholeskyDecomposition, b: Matrix): Matrix =
    ## Solve ``A*X = B``,
-   ## returns X so that ``L*L'*X = B``
    ## parameter ``b``:  A Matrix with as many rows as A and any number of columns.
+   ## return: X so that ``L*L'*X = B``
    assert(b.m == c.n, "Matrix row dimensions must agree.")
    assert(c.isspd, "Matrix is not symmetric positive definite.")
 

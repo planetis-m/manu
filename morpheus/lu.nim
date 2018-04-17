@@ -6,9 +6,9 @@
 ## If m < n, then L is m-by-m and U is m-by-n.
 ##
 ## The LU decompostion with pivoting always exists, even if the matrix is
-## singular, so the constructor will never fail.  The primary use of the
+## singular, so the constructor will never fail. The primary use of the
 ## LU decomposition is in the solution of square systems of simultaneous
-## linear equations.  This will fail if isNonsingular() returns false.
+## linear equations. This will fail if isNonsingular() returns false.
 import "./matrix"
 
 template newData() =
@@ -37,31 +37,31 @@ proc lu*(a: Matrix): LUDecomposition =
    for i in 0 ..< result.m:
       result.piv[i] = i
    result.pivsign = 1
-   var lu_colj = newSeq[float](result.m)
+   var luColj = newSeq[float](result.m)
 
    # Outer loop.
    for j in 0 ..< result.n:
 
       # Make a copy of the j-th column to localize references.
       for i in 0 ..< result.m:
-         lu_colj[i] = result.lu[i][j]
+         luColj[i] = result.lu[i][j]
 
       # Apply previous transformations.
       for i in 0 ..< result.m:
-         var lu_rowi = addr result.lu[i]
+         var luRowi = addr result.lu[i]
 
          # Most of the time is spent in the following dot product.
          let kmax = min(i, j)
          var s = 0.0
          for k in 0 ..< kmax:
-            s += lu_rowi[k] * lu_colj[k]
-         lu_colj[i] -= s
-         lu_rowi[j] = lu_colj[i]
+            s += luRowi[k] * luColj[k]
+         luColj[i] -= s
+         luRowi[j] = luColj[i]
 
       # Find pivot and exchange if necessary.
       var p = j
       for i in j + 1 ..< result.m:
-         if abs(lu_colj[i]) > abs(lu_colj[p]):
+         if abs(luColj[i]) > abs(luColj[p]):
             p = i
       if p != j:
          for k in 0 ..< result.n:
@@ -76,14 +76,14 @@ proc lu*(a: Matrix): LUDecomposition =
 
 proc isNonsingular*(l: LUDecomposition): bool =
    ## Is the matrix nonsingular?
-   ## returns true if U, and hence A, is nonsingular.
+   ## return: true if U, and hence A, is nonsingular.
    for j in 0 ..< l.n:
       if l.lu[j][j] == 0.0:
          return false
    return true
 
 proc getL*(l: LUDecomposition): Matrix =
-   ## Return lower triangular factor
+   ## Return lower triangular factor.
    result.m = l.m
    result.n = l.n
    newData()
@@ -95,7 +95,7 @@ proc getL*(l: LUDecomposition): Matrix =
             result.data[i][j] = 1.0
 
 proc getU*(l: LUDecomposition): Matrix =
-   ## Return upper triangular factor
+   ## Return upper triangular factor.
    result.m = l.n
    result.n = l.n
    newData()
@@ -105,11 +105,11 @@ proc getU*(l: LUDecomposition): Matrix =
             result.data[i][j] = l.lu[i][j]
 
 proc getPivot*(l: LUDecomposition): seq[int] =
-   ## Return pivot permutation vector
+   ## Return pivot permutation vector.
    l.piv
 
 proc getFloatPivot*(l: LUDecomposition): seq[float] =
-   ## Return pivot permutation vector as a one-dimensional double array
+   ## Return pivot permutation vector as a one-dimensional double array.
    result = newSeq[float](l.m)
    for i in 0 ..< l.m:
       result[i] = float(l.piv[i])
@@ -124,7 +124,7 @@ proc det*(l: LUDecomposition): float =
 proc solve*(l: LUDecomposition, b: Matrix): Matrix =
    ## Solve ``A*X = B``.
    ## parameter ``B``: A Matrix with as many rows as A and any number of columns.
-   ## returns X so that ``L*U*X = B(piv,:)``
+   ## return: X so that ``L*U*X = B(piv,:)``
    assert(b.m == l.m, "Matrix row dimensions must agree.")
    assert(l.isNonsingular, "Matrix is singular.")
 

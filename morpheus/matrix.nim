@@ -285,15 +285,15 @@ proc `*`*(a, b: Matrix): Matrix =
    result.m = a.m
    result.n = b.n
    newData()
-   var b_colj = newSeq[float](a.n)
+   var bColj = newSeq[float](a.n)
    for j in 0 ..< b.n:
       for k in 0 ..< a.n:
-         b_colj[k] = b.data[k][j]
+         bColj[k] = b.data[k][j]
       for i in 0 ..< a.m:
-         var a_rowi = unsafeAddr a.data[i]
+         var aRowi = unsafeAddr a.data[i]
          var s = 0.0
          for k in 0 ..< a.n:
-            s += a_rowi[k] * b_colj[k]
+            s += aRowi[k] * bColj[k]
          result.data[i][j] = s
 
 proc transpose*(m: Matrix): Matrix =
@@ -307,7 +307,7 @@ proc transpose*(m: Matrix): Matrix =
 
 proc identity*(m, n: int): Matrix =
    ## Generate identity matrix,
-   ## returns An m-by-n matrix with ones on the diagonal and zeros elsewhere.
+   ## return: An m-by-n matrix with ones on the diagonal and zeros elsewhere.
    result.m = m
    result.n = n
    newData()
@@ -318,7 +318,7 @@ proc identity*(m, n: int): Matrix =
 
 proc norm1*(m: Matrix): float =
    ## One norm,
-   ## returns maximum column sum.
+   ## return: maximum column sum
    for j in 0 ..< m.n:
       var s = 0.0
       for i in 0 ..< m.m:
@@ -327,7 +327,7 @@ proc norm1*(m: Matrix): float =
 
 proc normInf*(m: Matrix): float =
    ## Infinity norm,
-   ## returns maximum row sum.
+   ## return: maximum row sum
    for i in 0 ..< m.m:
       var s = 0.0
       for j in 0 ..< m.n:
@@ -336,20 +336,20 @@ proc normInf*(m: Matrix): float =
 
 proc normF*(m: Matrix): float =
    ## Frobenius norm,
-   ## returns sqrt of sum of squares of all elements.
+   ## return: sqrt of sum of squares of all elements.
    for i in 0 ..< m.m:
       for j in 0 ..< m.n:
          result = hypot(result, m.data[i][j])
 
 proc trace*(m: Matrix): float =
    ## Matrix trace,
-   ## returns the sum of the diagonal elements.
+   ## return: the sum of the diagonal elements
    for i in 0 ..< min(m.m, m.n):
       result += m.data[i][i]
 
 proc randMatrix*(m, n: int): Matrix =
    ## Generate matrix with random elements,
-   ## returns an m-by-n matrix with uniformly distributed random elements.
+   ## return: an m-by-n matrix with uniformly distributed random elements.
    result.m = m
    result.n = n
    newData()

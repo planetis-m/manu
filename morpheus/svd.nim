@@ -341,7 +341,7 @@ proc getV*(s: SingularValueDecomposition): Matrix =
 
 proc getSingularValues*(s: SingularValueDecomposition): seq[float] =
    ## Return the one-dimensional array of singular values.
-   ## returns diagonal of S.
+   ## return: diagonal of S
    result = s.s
 
 proc getS*(s: SingularValueDecomposition): Matrix =
@@ -356,17 +356,17 @@ proc getS*(s: SingularValueDecomposition): Matrix =
 
 proc norm2*(s: SingularValueDecomposition): float =
    ## Two norm.
-   ## returns max(S)
+   ## return: max(S)
    result = s.s[0]
 
 proc cond*(s: SingularValueDecomposition): float =
    ## Two norm condition number.
-   ## returns max(S)/min(S)
+   ## return: max(S)/min(S)
    s.s[0] / s.s[min(s.m, s.n) - 1]
 
 proc rank*(s: SingularValueDecomposition): int =
    ## Effective numerical matrix rank.
-   ## returns Number of nonnegligible singular values.
+   ## return: Number of nonnegligible singular values.
    let eps = pow(2.0, -52.0)
    let tol = float(max(s.m, s.n)) * s.s[0] * eps
    for i in 0 ..< s.s.len:
