@@ -379,23 +379,23 @@ proc columnFormat(s: seq[float]): seq[string] =
 proc `$`*(m: Matrix): string =
    let t = getColumnPacked(m)
    var cols = newSeq[string](m.m * m.n)
-   for i in countup(0, high(t), m.n):
-      cols[i ..< i + m.n] = columnFormat(t[i ..< i + m.n])
+   for i in countup(0, high(t), m.m):
+      cols[i ..< i + m.m] = columnFormat(t[i ..< i + m.m])
    result = ""
-   for j in 0 ..< m.n:
-      if j == 0:
+   for i in 0 ..< m.m:
+      if i == 0:
          result.add "⎡"
-      elif j == m.n - 1:
+      elif i == m.m - 1:
          result.add "⎣"
       else:
          result.add "⎢"
-      for i in 0 ..< m.m:
-         if i != 0:
+      for j in 0 ..< m.n:
+         if j != 0:
             result.add "  "
          result.add cols[i + j * m.m]
-      if j == 0:
+      if i == 0:
          result.add "⎤\n"
-      elif j == m.n - 1:
+      elif i == m.m - 1:
          result.add "⎦"
       else:
          result.add "⎥\n"
