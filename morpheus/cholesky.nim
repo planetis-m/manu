@@ -15,11 +15,11 @@ template newData() =
       newSeq(result.data[i], result.n)
 
 type CholeskyDecomposition* = object
-   # internal array storage.
+   # Array for internal storage of decomposition.
    data: seq[seq[float]]
-   # matrix dimension.
+   # Row and column dimension (square matrix).
    n: int
-   # is symmetric and positive definite flag.
+   # Symmetric and positive definite flag.
    isspd: bool
 
 proc chol*(m: Matrix): CholeskyDecomposition =

@@ -41,6 +41,12 @@ proc matrix*(data: seq[seq[float]]): Matrix =
          assert(data[i].len == result.n, "All rows must have the same length.")
    result.data = data
 
+proc matrix*(data: seq[seq[float]], m, n: int): Matrix =
+   ## Construct a matrix quickly without checking arguments.
+   result.m = m
+   result.n = n
+   result.data = data
+
 proc matrix*(data: seq[float], m: int): Matrix =
    ## Construct a matrix from a one-dimensional packed array.
    ## ``data`` is a one-dimensional array of float, packed by columns (ala Fortran).
@@ -371,10 +377,10 @@ proc columnFormat(s: seq[float]): seq[string] =
       result[i] = spaces(maxLenLeft  - lenLeft[i]) & result[i]
 
 proc `$`*(m: Matrix): string =
-   var cols: seq[seq[string]]
-   newSeq(cols, m.m)
-   for i in 0 ..< m.m:
-      cols[i] = columnFormat(m.data[i])
+   let t = getColumnPacked(m)
+   var cols = newSeq[string](m.m * m.n)
+   for i in countup(0, high(t), m.n):
+      cols[i ..< i + m.n] = columnFormat(t[i ..< i + m.n])
    result = ""
    for j in 0 ..< m.n:
       if j == 0:
@@ -386,10 +392,10 @@ proc `$`*(m: Matrix): string =
       for i in 0 ..< m.m:
          if i != 0:
             result.add "  "
-         result.add cols[i][j]
+         result.add cols[i + j * m.m]
       if j == 0:
          result.add "⎤\n"
       elif j == m.n - 1:
-         result.add "⎦\n"
+         result.add "⎦"
       else:
          result.add "⎥\n"

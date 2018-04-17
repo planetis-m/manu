@@ -1257,6 +1257,8 @@ function main() {
     title="matrix(m, n: int; s: float): Matrix"><wbr />matrix<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
   <li><a class="reference" href="#matrix,seq[seq[float]]"
     title="matrix(data: seq[seq[float]]): Matrix"><wbr />matrix<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
+  <li><a class="reference" href="#matrix,seq[seq[float]],int,int"
+    title="matrix(data: seq[seq[float]]; m, n: int): Matrix"><wbr />matrix<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
   <li><a class="reference" href="#matrix,seq[float],int"
     title="matrix(data: seq[float]; m: int): Matrix"><wbr />matrix<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
   <li><a class="reference" href="#getArray,Matrix"
@@ -1377,6 +1379,11 @@ Construct an m-by-n constant matrix.
 <dt id="matrix"><a name="matrix,seq[seq[float]]"></a><pre><span class="Keyword">proc</span> <span class="Identifier">matrix</span><span class="Other">(</span><span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 Construct a matrix from a 2-D array.
+
+</dd>
+<dt id="matrix"><a name="matrix,seq[seq[float]],int,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">matrix</span><span class="Other">(</span><span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">n</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+Construct a matrix quickly without checking arguments.
 
 </dd>
 <dt id="matrix"><a name="matrix,seq[float],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">matrix</span><span class="Other">(</span><span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
@@ -1583,7 +1590,7 @@ Generate matrix with random elements, return: an m-by-n matrix with uniformly di
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-17 21:59:05 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-18 01:14:06 UTC</small>
       </div>
     </div>
   </div>
