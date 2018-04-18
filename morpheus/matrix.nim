@@ -365,28 +365,12 @@ proc randMatrix*(m, n: int): Matrix =
 
 proc columnFormat(s: seq[float]): seq[string] =
    result = newSeq[string](s.len)
-   for i, v in s:
-      result[i] = formatEng(v)
-   var lenLeft = newSeq[int](s.len)
-   var maxLenLeft = 0
-   var lenRight = newSeq[int](s.len)
-   var maxLenRight = 0
-   for i, f in result:
-      let p = f.find('.')
-      let m = f.find('e')
-      if p != -1:
-         lenLeft[i] = p
-         lenRight[i] = len(f) - p - 1
-      elif p == -1 and m != -1:
-         lenLeft[i] = m
-         lenRight[i] = len(f) - m - 1
-      else:
-         lenLeft[i] = len(f)
-         lenRight[i] = -1
-      maxLenLeft = max(maxLenLeft, lenLeft[i])
-      maxLenRight = max(maxLenRight, lenRight[i])
-   for i in 0 ..< s.len:
-      result[i] = spaces(maxLenLeft  - lenLeft[i]) & result[i] & spaces(maxLenRight - lenRight[i])
+   var maxLen = 0
+   for i, f in s:
+      result[i] = formatEng(f)
+      maxLen = max(maxLen, result[i].len)
+   for i, f in result.mpairs:
+      f = spaces(maxLen - f.len) & result[i]
 
 proc `$`*(m: Matrix): string =
    var cols: seq[seq[string]]
