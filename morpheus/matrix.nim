@@ -377,10 +377,13 @@ proc columnFormat(s: seq[float]): seq[string] =
       result[i] = spaces(maxLenLeft  - lenLeft[i]) & result[i]
 
 proc `$`*(m: Matrix): string =
-   let t = getColumnPacked(m)
-   var cols = newSeq[string](m.m * m.n)
-   for i in countup(0, high(t), m.m):
-      cols[i ..< i + m.m] = columnFormat(t[i ..< i + m.m])
+   var cols: seq[seq[string]]
+   newSeq(cols, m.n)
+   var mColj = newSeq[float](m.m)
+   for j in 0 ..< m.n:
+      for i in 0 ..< m.m:
+         mColj[i] = m.data[i][j]
+      cols[j] = columnFormat(mColj)
    result = ""
    for i in 0 ..< m.m:
       if i == 0:
@@ -392,7 +395,7 @@ proc `$`*(m: Matrix): string =
       for j in 0 ..< m.n:
          if j != 0:
             result.add "  "
-         result.add cols[i + j * m.m]
+         result.add cols[j][i]
       if i == 0:
          result.add "⎤\n"
       elif i == m.m - 1:
