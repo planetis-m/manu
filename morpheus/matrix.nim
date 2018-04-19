@@ -13,7 +13,7 @@ template newData() =
 
 type Matrix* = object
    # Array for internal storage of elements.
-   data*: seq[seq[float]]
+   data: seq[seq[float]]
    # Row and column dimensions.
    m*, n*: int
 
@@ -88,6 +88,14 @@ proc columnDimension*(m: Matrix): int =
 proc `[]`*(m: Matrix, i, j: int): float =
    ## Get a single element.
    m.data[i][j]
+
+proc `[]`*(m: var Matrix, i, j: int): var float =
+   ## Get a single element.
+   m.data[i][j]
+
+proc mgetRow*(m: var Matrix, i: int): var seq[float] =
+   ## Used internally to avoid copies
+   m.data[i]
 
 proc `[]`*(m: Matrix, r, c: Slice[int]): Matrix =
    ## Get a submatrix,

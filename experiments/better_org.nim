@@ -26,7 +26,11 @@ proc matrix(data: seq[seq[float]]): Matrix =
    result.n = data[0].len
    result.data = data
 
-proc `[]`(m: Matrix, i, j: int): var float =
+proc `[]`(m: Matrix, i, j: int): float =
+   ## Get a single element.
+   m.data[i][j]
+
+proc `[]`(m: var Matrix, i, j: int): var float =
    ## Get a single element.
    m.data[i][j]
 
@@ -34,8 +38,8 @@ proc `[]=`(m: var Matrix, i, j: int, s: float) =
    ## Set a single element.
    m.data[i][j] = s
 
-proc mRow(m: var Matrix, i: int): var seq[float] =
-   result = m.data[i]
+proc mgetRow(m: var Matrix, i: int): var seq[float] =
+   m.data[i]
 
 proc chol(m: Matrix): CholeskyDecomposition =
    let n = m.m
@@ -43,10 +47,10 @@ proc chol(m: Matrix): CholeskyDecomposition =
    result.isspd = m.n == m.m
    # Main loop.
    for j in 0 ..< n:
-      var lRowj = result.l.mRow(j)
+      var lRowj = result.l.mgetRow(j)
       var d = 0.0
       for k in 0 ..< j:
-         var lRowk = result.l.mRow(k)
+         var lRowk = result.l.mgetRow(k)
          var s = 0.0
          for i in 0 ..< k:
             s += lRowk[i] * lRowj[i]
