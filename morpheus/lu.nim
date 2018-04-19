@@ -11,45 +11,35 @@
 ## linear equations. This will fail if isNonsingular() returns false.
 import "./matrix"
 
-template newData() =
-   newSeq(result.data, result.m)
-   for i in 0 ..< result.m:
-      newSeq(result.data[i], result.n)
-
 type LUDecomposition* = object
    # Array for internal storage of decomposition.
-   lu: seq[seq[float]]
-   # Row and column dimensions, and pivot sign.
-   m, n, pivsign: int
+   lu: Matrix
    # Internal storage of pivot vector.
    piv: seq[int]
+   # Pivot sign.
+   pivsign: int
 
 proc lu*(a: Matrix): LUDecomposition =
    ## LU Decomposition
    ## Structure to access L, U and piv.
    ## param ``a``: Rectangular matrix
-
    # Use a "left-looking", dot-product, Crout/Doolittle algorithm.
-   result.lu = a.data
-   result.m = a.m
-   result.n = a.n
-   newSeq(result.piv, result.m)
-   for i in 0 ..< result.m:
+   let m = a.m
+   let n = a.n
+   result.lu = a
+   result.piv = newSeq[int](m)
+   for i in 0 ..< m:
       result.piv[i] = i
    result.pivsign = 1
-   var luColj = newSeq[float](result.m)
-
+   var luColj = newSeq[float](m)
    # Outer loop.
-   for j in 0 ..< result.n:
-
+   for j in 0 ..< n:
       # Make a copy of the j-th column to localize references.
-      for i in 0 ..< result.m:
-         luColj[i] = result.lu[i][j]
-
+      for i in 0 ..< m:
+         luColj[i] = result.lu[i, j]
       # Apply previous transformations.
-      for i in 0 ..< result.m:
-         var luRowi = addr result.lu[i]
-
+      for i in 0 ..< m:
+         var luRowi = result.lu.mgetRow(i)
          # Most of the time is spent in the following dot product.
          let kmax = min(i, j)
          var s = 0.0
@@ -57,52 +47,50 @@ proc lu*(a: Matrix): LUDecomposition =
             s += luRowi[k] * luColj[k]
          luColj[i] -= s
          luRowi[j] = luColj[i]
-
       # Find pivot and exchange if necessary.
       var p = j
-      for i in j + 1 ..< result.m:
+      for i in j + 1 ..< m:
          if abs(luColj[i]) > abs(luColj[p]):
             p = i
       if p != j:
-         for k in 0 ..< result.n:
-            swap(result.lu[p][k], result.lu[j][k])
+         for k in 0 ..< n:
+            swap(result.lu[p, k], result.lu[j, k])
          swap(result.piv[p], result.piv[j])
          result.pivsign = -result.pivsign
-
       # Compute multipliers.
-      if j < result.m and result.lu[j][j] != 0.0:
-         for i in j + 1 ..< result.m:
-            result.lu[i][j] /= result.lu[j][j]
+      if j < m and result.lu[j, j] != 0.0:
+         for i in j + 1 ..< m:
+            result.lu[i, j] /= result.lu[j, j]
 
 proc isNonsingular*(l: LUDecomposition): bool =
    ## Is the matrix nonsingular?
    ## return: true if U, and hence A, is nonsingular.
-   for j in 0 ..< l.n:
-      if l.lu[j][j] == 0.0:
+   for j in 0 ..< l.lu.n:
+      if l.lu[j, j] == 0.0:
          return false
    return true
 
 proc getL*(l: LUDecomposition): Matrix =
    ## Return lower triangular factor.
-   result.m = l.m
-   result.n = l.n
-   newData()
-   for i in 0 ..< l.m:
-      for j in 0 ..< l.n:
+   let m = l.lu.m
+   let n = l.lu.n
+   result = matrix(m, n)
+   for i in 0 ..< m:
+      for j in 0 ..< n:
          if i > j:
-            result.data[i][j] = l.lu[i][j]
+            result[i, j] = l.lu[i, j]
          elif i == j:
-            result.data[i][j] = 1.0
+            result[i, j] = 1.0
 
 proc getU*(l: LUDecomposition): Matrix =
    ## Return upper triangular factor.
-   result.m = l.n
-   result.n = l.n
-   newData()
-   for i in 0 ..< l.n:
-      for j in 0 ..< l.n:
+   let m = l.lu.m
+   let n = l.lu.n
+   result = matrix(m, n)
+   for i in 0 ..< n:
+      for j in 0 ..< n:
          if i <= j:
-            result.data[i][j] = l.lu[i][j]
+            result[i, j] = l.lu[i, j]
 
 proc getPivot*(l: LUDecomposition): seq[int] =
    ## Return pivot permutation vector.
@@ -110,42 +98,38 @@ proc getPivot*(l: LUDecomposition): seq[int] =
 
 proc getFloatPivot*(l: LUDecomposition): seq[float] =
    ## Return pivot permutation vector as a one-dimensional double array.
-   result = newSeq[float](l.m)
-   for i in 0 ..< l.m:
+   let m = l.lu.m
+   result = newSeq[float](m)
+   for i in 0 ..< m:
       result[i] = float(l.piv[i])
 
 proc det*(l: LUDecomposition): float =
    ## Determinant
-   assert(l.m == l.n, "Matrix must be square.")
+   assert(l.lu.m == l.lu.n, "Matrix must be square.")
    result = float(l.pivsign)
-   for j in 0 ..< l.n:
-      result *= l.lu[j][j]
+   for j in 0 ..< l.lu.n:
+      result *= l.lu[j, j]
 
 proc solve*(l: LUDecomposition, b: Matrix): Matrix =
    ## Solve ``A*X = B``.
    ## parameter ``B``: A Matrix with as many rows as A and any number of columns.
    ## return: X so that ``L*U*X = B(piv,:)``
-   assert(b.m == l.m, "Matrix row dimensions must agree.")
+   let m = l.lu.m
+   let n = l.lu.n
+   let nx = b.n
+   assert(b.m == m, "Matrix row dimensions must agree.")
    assert(l.isNonsingular, "Matrix is singular.")
-
    # Copy right hand side with pivoting
-   result.m = l.piv.len
-   result.n = b.n
-   newData()
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result.data[i][j] = b.data[l.piv[i]][j]   
-
+   result = b[l.piv, 0 ..< nx]
    # Solve L*Y = B(piv,:)
-   for k in 0 ..< l.n:
-      for i in k + 1 ..< l.n:
-         for j in 0 ..< result.n:
-            result.data[i][j] -= result.data[k][j] * l.lu[i][k]
-
+   for k in 0 ..< n:
+      for i in k + 1 ..< n:
+         for j in 0 ..< nx:
+            result[i, j] -= result[k, j] * l.lu[i, k]
    # Solve U*X = Y
-   for k in countdown(l.n - 1, 0):
-      for j in 0 ..< result.n:
-         result.data[k][j] /= l.lu[k][k]
+   for k in countdown(n - 1, 0):
+      for j in 0 ..< nx:
+         result[k, j] /= l.lu[k, k]
       for i in 0 ..< k:
-         for j in 0 ..< result.n:
-            result.data[i][j] -= result.data[k][j] * l.lu[i][k]
+         for j in 0 ..< nx:
+            result[i, j] -= result[k, j] * l.lu[i, k]

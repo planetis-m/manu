@@ -12,132 +12,115 @@
 import math
 import "./matrix"
 
-template newData() =
-   newSeq(result.data, result.m)
-   for i in 0 ..< result.m:
-      newSeq(result.data[i], result.n)
-
 type QRDecomposition* = object
    # Array for internal storage of decomposition.
-   data: seq[seq[float]]
-   # Row and column dimensions.
-   m, n: int
+   qr: Matrix
    # Array for internal storage of diagonal of R.
    rDiag: seq[float]
 
-proc qr*(m: Matrix): QRDecomposition =
+proc qr*(a: Matrix): QRDecomposition =
    ## QR Decomposition, computed by Householder reflections.
    ## Structure to access R and the Householder vectors and compute Q.
    ## parameter ``a``: Rectangular matrix
-
-   result.data = m.data
-   result.m = m.m
-   result.n = m.n
-   newSeq(result.rDiag, result.n)
-
+   result.qr = a
+   let m = a.m
+   let n = a.n
+   result.rDiag = newSeq[float](n)
    # Main loop.
-   for k in 0 ..< result.n:
+   for k in 0 ..< n:
       # Compute 2-norm of k-th column without under/overflow.
       var nrm = 0.0
-      for i in k ..< result.m:
-         nrm = hypot(nrm, result.data[i][k])
-
+      for i in k ..< m:
+         nrm = hypot(nrm, result.qr[i, k])
       if nrm != 0.0:
          # Form k-th Householder vector.
-         if result.data[k][k] < 0:
+         if result.qr[k, k] < 0:
             nrm = -nrm
-         for i in k ..< result.m:
-            result.data[i][k] /= nrm
-         result.data[k][k] += 1.0
-
+         for i in k ..< m:
+            result.qr[i, k] /= nrm
+         result.qr[k, k] += 1.0
          # Apply transformation to remaining columns.
-         for j in k + 1 ..< result.n:
+         for j in k + 1 ..< n:
             var s = 0.0
-            for i in k ..< result.m:
-               s += result.data[i][k] * result.data[i][j]
-            s = -s / result.data[k][k]
-            for i in k ..< result.m:
-               result.data[i][j] += s * result.data[i][k]
+            for i in k ..< m:
+               s += result.qr[i, k] * result.qr[i, j]
+            s = -s / result.qr[k, k]
+            for i in k ..< m:
+               result.qr[i, j] += s * result.qr[i, k]
       result.rDiag[k] = -nrm
 
 proc isFullRank*(q: QRDecomposition): bool =
    ## Is the matrix full rank?
-   for j in 0 ..< q.n:
-      if q.rDiag[j] == 0:
+   for d in q.rDiag:
+      if d == 0.0:
          return false
    return true
 
 proc getH*(q: QRDecomposition): Matrix =
    ## Return the Householder vectors.
    ## return: Lower trapezoidal matrix whose columns define the reflections.
-   result.m = q.m
-   result.n = q.n
-   newData()
-   for i in 0 ..< q.m:
-      for j in 0 ..< q.n:
+   let m = q.qr.m
+   let n = q.qr.n
+   result = matrix(m, n)
+   for i in 0 ..< m:
+      for j in 0 ..< n:
          if i >= j:
-            result.data[i][j] = q.data[i][j]
+            result[i, j] = q.qr[i, j]
 
 proc getR*(q: QRDecomposition): Matrix =
    ## Return the upper triangular factor.
-   result.m = q.n
-   result.n = q.n
-   newData()
-   for i in 0 ..< q.n:
-      for j in 0 ..< q.n:
+   let n = q.qr.n
+   result = matrix(n, n)
+   for i in 0 ..< n:
+      for j in 0 ..< n:
          if i < j:
-            result.data[i][j] = q.data[i][j]
+            result[i, j] = q.qr[i, j]
          elif i == j:
-            result.data[i][j] = q.rDiag[i]
-            
+            result[i, j] = q.rDiag[i]
+
 proc getQ*(q: QRDecomposition): Matrix =
    ## Generate and return the (economy-sized) orthogonal factor.
-   result.m = q.m
-   result.n = q.n
-   newData()
-   for k in countdown(result.n - 1, 0):
-      for i in 0 ..< result.m:
-         result.data[i][k] = 0.0
-      result.data[k][k] = 1.0
-      for j in k ..< result.n:
-         if q.data[k][k] != 0:
+   let m = q.qr.m
+   let n = q.qr.n
+   result = matrix(m, n)
+   for k in countdown(n - 1, 0):
+      for i in 0 ..< m:
+         result[i, k] = 0.0
+      result[k, k] = 1.0
+      for j in k ..< n:
+         if q.qr[k, k] != 0.0:
             var s = 0.0
-            for i in k ..< result.m:
-               s += q.data[i][k] * result.data[i][j]
-            s = -s / q.data[k][k]
-            for i in k ..< result.m:
-               result.data[i][j] += s * q.data[i][k]
+            for i in k ..< m:
+               s += q.qr[i, k] * result[i, j]
+            s = -s / q.qr[k, k]
+            for i in k ..< m:
+               result[i, j] += s * q.qr[i, k]
 
 proc solve*(q: QRDecomposition, b: Matrix): Matrix =
    ## Least squares solution of ``A*X = B``,
    ## parameter ``b``: A Matrix with as many rows as A and any number of columns.
    ## return: ``X`` that minimizes the two norm of ``Q*R*X-B``
-   assert(b.m == q.m, "Matrix row dimensions must agree.")
+   let m = q.qr.m
+   let n = q.qr.n
+   let nx = b.n
+   assert(b.m == m, "Matrix row dimensions must agree.")
    assert(q.isFullRank(), "Matrix is rank deficient.")
-
    # Copy right hand side
-   result.m = q.n
-   result.n = b.n
-   var x = b.data
-
+   var x = b
    # Compute Y = transpose(Q)*B
-   for k in 0 ..< q.n:
-      for j in 0 ..< b.n:
+   for k in 0 ..< n:
+      for j in 0 ..< nx:
          var s = 0.0 
-         for i in k ..< q.m:
-            s += q.data[i][k] * x[i][j]
-         s = -s / q.data[k][k]
-         for i in k ..< q.m:
-            x[i][j] += s * q.data[i][k]
+         for i in k ..< m:
+            s += q.qr[i, k] * x[i, j]
+         s = -s / q.qr[k, k]
+         for i in k ..< m:
+            x[i, j] += s * q.qr[i, k]
    # Solve R*X = Y
-   for k in countdown(result.n - 1, 0):
-      for j in 0 ..< b.n:
-         x[k][j] /= q.rDiag[k]
+   for k in countdown(n - 1, 0):
+      for j in 0 ..< nx:
+         x[k, j] /= q.rDiag[k]
       for i in 0 ..< k:
-         for j in 0 ..< b.n:
-            x[i][j] -= x[k][j] * q.data[i][k]
-
-   newData()
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result.data[i][j] = x[i][j]
+         for j in 0 ..< nx:
+            x[i, j] -= x[k, j] * q.qr[i, k]
+   x[0 ..< n, 0 ..< nx]
