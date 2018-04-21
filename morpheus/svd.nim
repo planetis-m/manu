@@ -17,7 +17,9 @@ type SingularValueDecomposition* = object
    # Arrays for internal storage of U and V.
    u, v: Matrix
    # Array for internal storage of singular values.
-   s: seq[float]
+   sv: seq[float]
+
+{.this: s.}
 
 proc svd*(a: Matrix): SingularValueDecomposition =
    ## Construct the singular value decomposition
@@ -28,7 +30,7 @@ proc svd*(a: Matrix): SingularValueDecomposition =
    let m = a.m
    let n = a.n
    let nu = min(m, n)
-   result.s = newSeq[float](min(m + 1, n))
+   result.sv = newSeq[float](min(m + 1, n))
    result.u = matrix(m, nu)
    result.v = matrix(n, n)
    var e = newSeq[float](n)
@@ -42,20 +44,20 @@ proc svd*(a: Matrix): SingularValueDecomposition =
    for k in 0 ..< max(nct, nrt):
       if k < nct:
          # Compute the transformation for the k-th column and
-         # place the k-th diagonal in s[k].
+         # place the k-th diagonal in sv[k].
          # Compute 2-norm of k-th column without under/overflow.
-         result.s[k] = 0
+         result.sv[k] = 0
          for i in k ..< m:
-            result.s[k] = hypot(result.s[k], a[i, k])
-         if result.s[k] != 0.0:
+            result.sv[k] = hypot(result.sv[k], a[i, k])
+         if result.sv[k] != 0.0:
             if a[k, k] < 0.0:
-               result.s[k] = -result.s[k]
+               result.sv[k] = -result.sv[k]
             for i in k ..< m:
-               a[i, k] /= result.s[k]
+               a[i, k] /= result.sv[k]
             a[k, k] += 1.0
-         result.s[k] = -result.s[k]
+         result.sv[k] = -result.sv[k]
       for j in k + 1 ..< n:
-         if k < nct and result.s[k] != 0.0:
+         if k < nct and result.sv[k] != 0.0:
             # Apply the transformation.
             var t = 0.0
             for i in k ..< m:
@@ -104,9 +106,9 @@ proc svd*(a: Matrix): SingularValueDecomposition =
    # Set up the final bidiagonal matrix or order p.
    var p = min(n, m + 1)
    if nct < n:
-      result.s[nct] = a[nct, nct]
+      result.sv[nct] = a[nct, nct]
    if m < p:
-      result.s[p - 1] = 0.0
+      result.sv[p - 1] = 0.0
    if nrt + 1 < p:
       e[nrt] = a[nrt, p - 1]
    e[p - 1] = 0.0
@@ -117,7 +119,7 @@ proc svd*(a: Matrix): SingularValueDecomposition =
             result.u[i, j] = 0.0
          result.u[j, j] = 1.0
       for k in countdown(nct - 1, 0):
-         if result.s[k] != 0.0:
+         if result.sv[k] != 0.0:
             for j in k + 1 ..< nu:
                var t = 0.0
                for i in k ..< m:
@@ -169,7 +171,7 @@ proc svd*(a: Matrix): SingularValueDecomposition =
       var k = p - 2
       while k >= 0:
          if abs(e[k]) <=
-               tiny + eps * (abs(result.s[k]) + abs(result.s[k + 1])):
+               tiny + eps * (abs(result.sv[k]) + abs(result.sv[k + 1])):
             e[k] = 0.0
             break
          k.dec
@@ -181,8 +183,8 @@ proc svd*(a: Matrix): SingularValueDecomposition =
             var t = 0.0
             if ks != p: t += abs(e[ks])
             if ks != k + 1: t += abs(e[ks-1])
-            if abs(result.s[ks]) <= tiny + eps * t:
-               result.s[ks] = 0.0
+            if abs(result.sv[ks]) <= tiny + eps * t:
+               result.sv[ks] = 0.0
                break
             ks.dec
          if ks == k:
@@ -200,10 +202,10 @@ proc svd*(a: Matrix): SingularValueDecomposition =
          var f = e[p - 2]
          e[p-2] = 0.0
          for j in countdown(p-2, k):
-            var t = hypot(result.s[j], f)
-            let cs = result.s[j] / t
+            var t = hypot(result.sv[j], f)
+            let cs = result.sv[j] / t
             let sn = f / t
-            result.s[j] = t
+            result.sv[j] = t
             if j != k:
                f = -sn * e[j - 1]
                e[j - 1] = cs * e[j - 1]
@@ -217,10 +219,10 @@ proc svd*(a: Matrix): SingularValueDecomposition =
          var f = e[k - 1]
          e[k - 1] = 0.0
          for j in k ..< p:
-            var t = hypot(result.s[j], f)
-            let cs = result.s[j] / t
+            var t = hypot(result.sv[j], f)
+            let cs = result.sv[j] / t
             let sn = f / t
-            result.s[j] = t
+            result.sv[j] = t
             f = -sn * e[j]
             e[j] = cs * e[j]
             if wantu:
@@ -232,12 +234,12 @@ proc svd*(a: Matrix): SingularValueDecomposition =
       of 3:
          # Calculate the shift.
          let scale = max(max(max(max(
-                  abs(result.s[p - 1]), abs(result.s[p - 2])), abs(e[p - 2])), 
-                  abs(result.s[k])), abs(e[k]))
-         let sp = result.s[p-1] / scale
-         let spm1 = result.s[p-2] / scale
+                  abs(result.sv[p - 1]), abs(result.sv[p - 2])), abs(e[p - 2])), 
+                  abs(result.sv[k])), abs(e[k]))
+         let sp = result.sv[p-1] / scale
+         let spm1 = result.sv[p-2] / scale
          let epm1 = e[p-2] / scale
-         let sk = result.s[k] / scale
+         let sk = result.sv[k] / scale
          let ek = e[k] / scale
          let b = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / 2.0
          let c = (sp * epm1) * (sp * epm1)
@@ -256,10 +258,10 @@ proc svd*(a: Matrix): SingularValueDecomposition =
             var sn = g / t
             if j != k:
                e[j-1] = t
-            f = cs * result.s[j] + sn * e[j]
-            e[j] = cs * e[j] - sn * result.s[j]
-            g = sn * result.s[j + 1]
-            result.s[j + 1] = cs * result.s[j + 1]
+            f = cs * result.sv[j] + sn * e[j]
+            e[j] = cs * e[j] - sn * result.sv[j]
+            g = sn * result.sv[j + 1]
+            result.sv[j + 1] = cs * result.sv[j + 1]
             if wantv:
                for i in 0 ..< n:
                   t = cs * result.v[i, j] + sn * result.v[i, j + 1]
@@ -268,9 +270,9 @@ proc svd*(a: Matrix): SingularValueDecomposition =
             t = hypot(f, g)
             cs = f / t
             sn = g / t
-            result.s[j] = t
-            f = cs * e[j] + sn * result.s[j + 1]
-            result.s[j + 1] = -sn * e[j] + cs * result.s[j + 1]
+            result.sv[j] = t
+            f = cs * e[j] + sn * result.sv[j + 1]
+            result.sv[j + 1] = -sn * e[j] + cs * result.sv[j + 1]
             g = sn * e[j + 1]
             e[j + 1] = cs * e[j + 1]
             if wantu and j < m - 1:
@@ -283,16 +285,16 @@ proc svd*(a: Matrix): SingularValueDecomposition =
       # Convergence.
       of 4:
          # Make the singular values positive.
-         if result.s[k] <= 0.0:
-            result.s[k] = if result.s[k] < 0.0: -result.s[k] else: 0.0
+         if result.sv[k] <= 0.0:
+            result.sv[k] = if result.sv[k] < 0.0: -result.sv[k] else: 0.0
             if wantv:
                for i in 0 .. pp:
                   result.v[i, k] = -result.v[i, k]
          # Order the singular values.
          while k < pp:
-            if result.s[k] >= result.s[k + 1]:
+            if result.sv[k] >= result.sv[k + 1]:
                break
-            swap(result.s[k+1], result.s[k])
+            swap(result.sv[k+1], result.sv[k])
             if wantv and k < n - 1:
                for i in 0 ..< n:
                   swap(result.v[i, k + 1], result.v[i, k])
@@ -306,41 +308,40 @@ proc svd*(a: Matrix): SingularValueDecomposition =
 
 proc getU*(s: SingularValueDecomposition): Matrix =
    ## Return the left singular vectors
-   s.u
+   u
 
 proc getV*(s: SingularValueDecomposition): Matrix =
    ## Return the right singular vectors
-   s.v
+   v
 
 proc getSingularValues*(s: SingularValueDecomposition): seq[float] =
    ## Return the one-dimensional array of singular values.
    ## return: diagonal of S
-   s.s
+   sv
 
 proc getS*(s: SingularValueDecomposition): Matrix =
    ## Return the diagonal matrix of singular values.
-   let n = s.v.m
-   result = matrix(n, n)
-   for i in 0 ..< n:
-      # for j in 0 ..< s.n:
+   result = matrix(v.m, v.m)
+   for i in 0 ..< v.m:
+      # for j in 0 ..< n:
       #    result.data[i, j] = 0.0
-      result[i, i] = s.s[i]
+      result[i, i] = sv[i]
 
 proc norm2*(s: SingularValueDecomposition): float =
    ## Two norm.
    ## return: max(S)
-   s.s[0]
+   sv[0]
 
 proc cond*(s: SingularValueDecomposition): float =
    ## Two norm condition number.
    ## return: max(S)/min(S)
-   s.s[0] / s.s[^1]
+   sv[0] / sv[^1]
 
 proc rank*(s: SingularValueDecomposition): int =
    ## Effective numerical matrix rank.
    ## return: Number of nonnegligible singular values.
    let eps = pow(2.0, -52.0)
-   let tol = float(max(s.u.m, s.v.m)) * s.s[0] * eps
-   for d in s.s:
+   let tol = float(max(u.m, v.m)) * sv[0] * eps
+   for d in sv:
       if d > tol:
          result.inc

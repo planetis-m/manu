@@ -5,9 +5,9 @@
 ## A = Q*R.
 ##
 ## The QR decompostion always exists, even if the matrix does not have
-## full rank, so the constructor will never fail.  The primary use of the
+## full rank, so the constructor will never fail. The primary use of the
 ## QR decomposition is in the least squares solution of nonsquare systems
-## of simultaneous linear equations.  This will fail if isFullRank()
+## of simultaneous linear equations. This will fail if isFullRank()
 ## returns false.
 import math
 import "./matrix"
@@ -17,6 +17,8 @@ type QRDecomposition* = object
    qr: Matrix
    # Array for internal storage of diagonal of R.
    rDiag: seq[float]
+
+{.this: q.}
 
 proc qr*(a: Matrix): QRDecomposition =
    ## QR Decomposition, computed by Householder reflections.
@@ -51,7 +53,7 @@ proc qr*(a: Matrix): QRDecomposition =
 
 proc isFullRank*(q: QRDecomposition): bool =
    ## Is the matrix full rank?
-   for d in q.rDiag:
+   for d in rDiag:
       if d == 0.0:
          return false
    return true
@@ -59,68 +61,60 @@ proc isFullRank*(q: QRDecomposition): bool =
 proc getH*(q: QRDecomposition): Matrix =
    ## Return the Householder vectors.
    ## return: Lower trapezoidal matrix whose columns define the reflections.
-   let m = q.qr.m
-   let n = q.qr.n
-   result = matrix(m, n)
-   for i in 0 ..< m:
-      for j in 0 ..< n:
+   result = matrix(qr.m, qr.n)
+   for i in 0 ..< qr.m:
+      for j in 0 ..< qr.n:
          if i >= j:
-            result[i, j] = q.qr[i, j]
+            result[i, j] = qr[i, j]
 
 proc getR*(q: QRDecomposition): Matrix =
    ## Return the upper triangular factor.
-   let n = q.qr.n
-   result = matrix(n, n)
-   for i in 0 ..< n:
-      for j in 0 ..< n:
+   result = matrix(qr.n, qr.n)
+   for i in 0 ..< qr.n:
+      for j in 0 ..< qr.n:
          if i < j:
-            result[i, j] = q.qr[i, j]
+            result[i, j] = qr[i, j]
          elif i == j:
-            result[i, j] = q.rDiag[i]
+            result[i, j] = rDiag[i]
 
 proc getQ*(q: QRDecomposition): Matrix =
    ## Generate and return the (economy-sized) orthogonal factor.
-   let m = q.qr.m
-   let n = q.qr.n
-   result = matrix(m, n)
-   for k in countdown(n - 1, 0):
-      for i in 0 ..< m:
+   result = matrix(qr.m, qr.n)
+   for k in countdown(qr.n - 1, 0):
+      for i in 0 ..< qr.m:
          result[i, k] = 0.0
       result[k, k] = 1.0
-      for j in k ..< n:
-         if q.qr[k, k] != 0.0:
+      for j in k ..< qr.n:
+         if qr[k, k] != 0.0:
             var s = 0.0
-            for i in k ..< m:
-               s += q.qr[i, k] * result[i, j]
-            s = -s / q.qr[k, k]
-            for i in k ..< m:
-               result[i, j] += s * q.qr[i, k]
+            for i in k ..< qr.m:
+               s += qr[i, k] * result[i, j]
+            s = -s / qr[k, k]
+            for i in k ..< qr.m:
+               result[i, j] += s * qr[i, k]
 
 proc solve*(q: QRDecomposition, b: Matrix): Matrix =
    ## Least squares solution of ``A*X = B``,
    ## parameter ``b``: A Matrix with as many rows as A and any number of columns.
    ## return: ``X`` that minimizes the two norm of ``Q*R*X-B``
-   let m = q.qr.m
-   let n = q.qr.n
-   let nx = b.n
-   assert(b.m == m, "Matrix row dimensions must agree.")
-   assert(q.isFullRank(), "Matrix is rank deficient.")
+   assert(b.m == qr.m, "Matrix row dimensions must agree.")
+   assert(isFullRank(), "Matrix is rank deficient.")
    # Copy right hand side
    var x = b
    # Compute Y = transpose(Q)*B
-   for k in 0 ..< n:
-      for j in 0 ..< nx:
+   for k in 0 ..< qr.n:
+      for j in 0 ..< b.n:
          var s = 0.0 
-         for i in k ..< m:
-            s += q.qr[i, k] * x[i, j]
-         s = -s / q.qr[k, k]
-         for i in k ..< m:
-            x[i, j] += s * q.qr[i, k]
+         for i in k ..< qr.m:
+            s += qr[i, k] * x[i, j]
+         s = -s / qr[k, k]
+         for i in k ..< qr.m:
+            x[i, j] += s * qr[i, k]
    # Solve R*X = Y
-   for k in countdown(n - 1, 0):
-      for j in 0 ..< nx:
-         x[k, j] /= q.rDiag[k]
+   for k in countdown(qr.n - 1, 0):
+      for j in 0 ..< b.n:
+         x[k, j] /= rDiag[k]
       for i in 0 ..< k:
-         for j in 0 ..< nx:
-            x[i, j] -= x[k, j] * q.qr[i, k]
-   x[0 ..< n, 0 ..< nx]
+         for j in 0 ..< b.n:
+            x[i, j] -= x[k, j] * qr[i, k]
+   x[0 ..< qr.n, 0 ..< b.n]

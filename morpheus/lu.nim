@@ -19,6 +19,8 @@ type LUDecomposition* = object
    # Pivot sign.
    pivsign: int
 
+{.this: l.}
+
 proc lu*(a: Matrix): LUDecomposition =
    ## LU Decomposition
    ## Structure to access L, U and piv.
@@ -65,71 +67,63 @@ proc lu*(a: Matrix): LUDecomposition =
 proc isNonsingular*(l: LUDecomposition): bool =
    ## Is the matrix nonsingular?
    ## return: true if U, and hence A, is nonsingular.
-   for j in 0 ..< l.lu.n:
-      if l.lu[j, j] == 0.0:
+   for j in 0 ..< lu.n:
+      if lu[j, j] == 0.0:
          return false
    return true
 
 proc getL*(l: LUDecomposition): Matrix =
    ## Return lower triangular factor.
-   let m = l.lu.m
-   let n = l.lu.n
-   result = matrix(m, n)
-   for i in 0 ..< m:
-      for j in 0 ..< n:
+   result = matrix(lu.m, lu.n)
+   for i in 0 ..< lu.m:
+      for j in 0 ..< lu.n:
          if i > j:
-            result[i, j] = l.lu[i, j]
+            result[i, j] = lu[i, j]
          elif i == j:
             result[i, j] = 1.0
 
 proc getU*(l: LUDecomposition): Matrix =
    ## Return upper triangular factor.
-   let m = l.lu.m
-   let n = l.lu.n
-   result = matrix(m, n)
-   for i in 0 ..< n:
-      for j in 0 ..< n:
+   result = matrix(lu.n, lu.n)
+   for i in 0 ..< lu.n:
+      for j in 0 ..< lu.n:
          if i <= j:
-            result[i, j] = l.lu[i, j]
+            result[i, j] = lu[i, j]
 
 proc getPivot*(l: LUDecomposition): seq[int] {.inline.} =
    ## Return pivot permutation vector.
-   l.piv
+   piv
 
 proc getFloatPivot*(l: LUDecomposition): seq[float] =
    ## Return pivot permutation vector as a one-dimensional double array.
-   let m = l.lu.m
-   result = newSeq[float](m)
-   for i in 0 ..< m:
-      result[i] = float(l.piv[i])
+   result = newSeq[float](lu.m)
+   for i in 0 ..< lu.m:
+      result[i] = float(piv[i])
 
 proc det*(l: LUDecomposition): float =
    ## Determinant
-   assert(l.lu.m == l.lu.n, "Matrix must be square.")
-   result = float(l.pivsign)
-   for j in 0 ..< l.lu.n:
-      result *= l.lu[j, j]
+   assert(lu.m == lu.n, "Matrix must be square.")
+   result = float(pivsign)
+   for j in 0 ..< lu.n:
+      result *= lu[j, j]
 
 proc solve*(l: LUDecomposition, b: Matrix): Matrix =
    ## Solve ``A*X = B``.
    ## parameter ``B``: A Matrix with as many rows as A and any number of columns.
    ## return: X so that ``L*U*X = B(piv,:)``
-   let m = l.lu.m
-   let n = l.lu.n
-   let nx = b.n
-   assert(b.m == m, "Matrix row dimensions must agree.")
+   assert(b.m == lu.m, "Matrix row dimensions must agree.")
    assert(l.isNonsingular, "Matrix is singular.")
    # Copy right hand side with pivoting
-   result = b[l.piv, 0 ..< nx]
+   result = b[piv, 0 ..< b.n]
    # Solve L*Y = B(piv,:)
-   for k in 0 ..< n:
-      for i in k + 1 ..< n:
-         for j in 0 ..< nx:
-            result[i, j] -= result[k, j] * l.lu[i, k]
+   for k in 0 ..< lu.n:
+      for i in k + 1 ..< lu.n:
+         for j in 0 ..< b.n:
+            result[i, j] -= result[k, j] * lu[i, k]
    # Solve U*X = Y
-   for k in countdown(n - 1, 0):
-      for j in 0 ..< nx:
-         result[k, j] /= l.lu[k, k]
+   for k in countdown(lu.n - 1, 0):
+      for j in 0 ..< b.n:
+         result[k, j] /= lu[k, k]
       for i in 0 ..< k:
-         for j in 0 ..< nx:
-            result[i, j] -= result[k, j] * l.lu[i, k]
+         for j in 0 ..< b.n:
+            result[i, j] -= result[k, j] * lu[i, k]
