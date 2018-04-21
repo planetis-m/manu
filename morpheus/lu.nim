@@ -39,7 +39,7 @@ proc lu*(a: Matrix): LUDecomposition =
          luColj[i] = result.lu[i, j]
       # Apply previous transformations.
       for i in 0 ..< m:
-         var luRowi = result.lu.mgetRow(i)
+         var luRowi = addr result.lu.mgetRow(i)
          # Most of the time is spent in the following dot product.
          let kmax = min(i, j)
          var s = 0.0
@@ -92,7 +92,7 @@ proc getU*(l: LUDecomposition): Matrix =
          if i <= j:
             result[i, j] = l.lu[i, j]
 
-proc getPivot*(l: LUDecomposition): seq[int] =
+proc getPivot*(l: LUDecomposition): seq[int] {.inline.} =
    ## Return pivot permutation vector.
    l.piv
 

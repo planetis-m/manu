@@ -16,15 +16,18 @@ type CholeskyDecomposition* = object
    isspd: bool
 
 proc chol*(a: Matrix): CholeskyDecomposition =
+   ## Cholesky algorithm for symmetric and positive definite matrix.
+   ## Structure to access L and isspd flag.
+   ## parameter ``m``: Square, symmetric matrix.
    let n = a.m
    result.l = matrix(n, n)
    result.isspd = a.n == a.m
    # Main loop.
    for j in 0 ..< n:
-      var lRowj = result.l.mgetRow(j)
+      var lRowj = addr result.l.mgetRow(j)
       var d = 0.0
       for k in 0 ..< j:
-         var lRowk = result.l.mgetRow(k)
+         var lRowk = addr result.l.mgetRow(k)
          var s = 0.0
          for i in 0 ..< k:
             s += lRowk[i] * lRowj[i]
