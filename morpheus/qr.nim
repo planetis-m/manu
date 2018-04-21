@@ -104,7 +104,7 @@ proc solve*(q: QRDecomposition, b: Matrix): Matrix =
    # Compute Y = transpose(Q)*B
    for k in 0 ..< qr.n:
       for j in 0 ..< b.n:
-         var s = 0.0 
+         var s = 0.0
          for i in k ..< qr.m:
             s += qr[i, k] * x[i, j]
          s = -s / qr[k, k]

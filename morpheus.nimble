@@ -5,20 +5,20 @@ version       = "0.9.5"
 author        = "Antonis Geralis"
 description   = "Nim Matrix library"
 license       = "MIT"
-skipDirs = @["tests", "htmldocs", "examples"]
+skipDirs = @["tests", "htmldocs", "examples", "experiments"]
 
 requires "nim >= 0.18.0"
 
---forceBuild
+switch forceBuild
 
 proc configForTests() =
-  --hints: off
-  --linedir: on
-  --stacktrace: on
-  --linetrace: on
-  --debuginfo
-  --path: "."
-  --run
+  switch hints, off
+  switch linedir, on
+  switch stacktrace, on
+  switch linetrace, on
+  switch debuginfo
+  switch path, "."
+  switch run
 
 task test, "run tests":
   configForTests()
@@ -26,6 +26,6 @@ task test, "run tests":
 
 task docs, "generate documentation":
   exec("mkdir -p htmldocs/morpheus")
-  --project
-  --docSeeSrcUrl: "https://github.com/notTito/morpheus/blob/master"
+  switch project
+  switch docSeeSrcUrl, "https://github.com/notTito/morpheus/blob/master"
   setCommand "doc", "morpheus.nim"

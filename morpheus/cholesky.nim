@@ -26,10 +26,10 @@ proc chol*(a: Matrix): CholeskyDecomposition =
    result.isspd = a.n == a.m
    # Main loop.
    for j in 0 ..< n:
-      var lRowj = addr result.l.mgetRow(j)
+      var lRowj = result.l.rowAddr(j)
       var d = 0.0
       for k in 0 ..< j:
-         var lRowk = addr result.l.mgetRow(k)
+         var lRowk = result.l.rowAddr(k)
          var s = 0.0
          for i in 0 ..< k:
             s += lRowk[i] * lRowj[i]

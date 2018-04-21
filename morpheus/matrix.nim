@@ -77,25 +77,25 @@ proc getRowPacked*(m: Matrix): seq[float] =
       for j in 0 ..< m.n:
          result[i * m.n + j] = m.data[i][j]
 
-proc rowDimension*(m: Matrix): int =
+proc rowDimension*(m: Matrix): int {.inline.} =
    ## Get row dimension.
    m.m
 
-proc columnDimension*(m: Matrix): int =
+proc columnDimension*(m: Matrix): int {.inline.} =
    ## Get column dimension.
    m.n
 
-proc `[]`*(m: Matrix, i, j: int): float =
+proc `[]`*(m: Matrix, i, j: int): float {.inline.} =
    ## Get a single element.
    m.data[i][j]
 
-proc `[]`*(m: var Matrix, i, j: int): var float =
+proc `[]`*(m: var Matrix, i, j: int): var float {.inline.} =
    ## Get a single element.
    m.data[i][j]
 
-proc mgetRow*(m: var Matrix, i: int): var seq[float] =
+proc rowAddr*(m: var Matrix, i: int): ptr seq[float] =
    ## Used internally to avoid copies
-   m.data[i]
+   m.data[i].addr
 
 proc `[]`*(m: Matrix, r, c: Slice[int]): Matrix =
    ## Get a submatrix,
@@ -378,7 +378,7 @@ proc columnFormat(s: seq[float]): seq[string] =
       result[i] = formatEng(f)
       maxLen = max(maxLen, result[i].len)
    for i, f in result.mpairs:
-      f = spaces(maxLen - f.len) & result[i]
+      f = spaces(maxLen - f.len) & f
 
 proc `$`*(m: Matrix): string =
    var cols: seq[seq[string]]

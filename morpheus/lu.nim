@@ -41,7 +41,7 @@ proc lu*(a: Matrix): LUDecomposition =
          luColj[i] = result.lu[i, j]
       # Apply previous transformations.
       for i in 0 ..< m:
-         var luRowi = addr result.lu.mgetRow(i)
+         var luRowi = result.lu.rowAddr(i)
          # Most of the time is spent in the following dot product.
          let kmax = min(i, j)
          var s = 0.0

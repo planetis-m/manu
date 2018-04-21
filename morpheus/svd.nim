@@ -29,8 +29,9 @@ proc svd*(a: Matrix): SingularValueDecomposition =
    var a = a
    let m = a.m
    let n = a.n
+   # assert(m >= n) and nu = n
    let nu = min(m, n)
-   result.sv = newSeq[float](min(m + 1, n))
+   result.sv = newSeq[float](min(m + 1, n)) # n<=m so n is min
    result.u = matrix(m, nu)
    result.v = matrix(n, n)
    var e = newSeq[float](n)
@@ -153,12 +154,18 @@ proc svd*(a: Matrix): SingularValueDecomposition =
    # Main iteration loop for the singular values.
    let pp = p - 1
    var iter = 0
-   let eps = pow(2.0, -52.0)
-   let tiny = pow(2.0, -966.0)
+   var eps = pow(2.0, -52.0) # mantissa length (bits) in float64
+   var tiny = pow(2.0, -966.0)
    while p > 0:
+      var k = p - 2
       var kase = 0
       # Here is where a test for too many iterations would go.
-
+      if iter == 500 or iter == 750:
+         # echo("Svd taking a long time: making convergence criterion less exact.")
+         eps = pow(0.8, eps)
+         tiny = pow(0.8, tiny)
+      assert(iter < 1000,
+             "Svd not converging on matrix of size " & $m & " by " & $n)
       # This section of the program inspects for
       # negligible elements in the s and e arrays.  On
       # completion the variables kase and k are set as follows.
@@ -168,7 +175,6 @@ proc svd*(a: Matrix): SingularValueDecomposition =
       # kase = 3     if e[k-1] is negligible, k<p, and
       #              s(k), ..., s(p) are not negligible (qr step).
       # kase = 4     if e(p-1) is negligible (convergence).
-      var k = p - 2
       while k >= 0:
          if abs(e[k]) <=
                tiny + eps * (abs(result.sv[k]) + abs(result.sv[k + 1])):
@@ -200,8 +206,8 @@ proc svd*(a: Matrix): SingularValueDecomposition =
       # Deflate negligible s(p).
       of 1:
          var f = e[p - 2]
-         e[p-2] = 0.0
-         for j in countdown(p-2, k):
+         e[p - 2] = 0.0
+         for j in countdown(p - 2, k):
             var t = hypot(result.sv[j], f)
             let cs = result.sv[j] / t
             let sn = f / t
@@ -236,9 +242,9 @@ proc svd*(a: Matrix): SingularValueDecomposition =
          let scale = max(max(max(max(
                   abs(result.sv[p - 1]), abs(result.sv[p - 2])), abs(e[p - 2])), 
                   abs(result.sv[k])), abs(e[k]))
-         let sp = result.sv[p-1] / scale
-         let spm1 = result.sv[p-2] / scale
-         let epm1 = e[p-2] / scale
+         let sp = result.sv[p - 1] / scale
+         let spm1 = result.sv[p - 2] / scale
+         let epm1 = e[p - 2] / scale
          let sk = result.sv[k] / scale
          let ek = e[k] / scale
          let b = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / 2.0
@@ -257,7 +263,7 @@ proc svd*(a: Matrix): SingularValueDecomposition =
             var cs = f / t
             var sn = g / t
             if j != k:
-               e[j-1] = t
+               e[j - 1] = t
             f = cs * result.sv[j] + sn * e[j]
             e[j] = cs * e[j] - sn * result.sv[j]
             g = sn * result.sv[j + 1]
@@ -294,7 +300,7 @@ proc svd*(a: Matrix): SingularValueDecomposition =
          while k < pp:
             if result.sv[k] >= result.sv[k + 1]:
                break
-            swap(result.sv[k+1], result.sv[k])
+            swap(result.sv[k + 1], result.sv[k])
             if wantv and k < n - 1:
                for i in 0 ..< n:
                   swap(result.v[i, k + 1], result.v[i, k])
@@ -321,9 +327,9 @@ proc getSingularValues*(s: SingularValueDecomposition): seq[float] {.inline.} =
 
 proc getS*(s: SingularValueDecomposition): Matrix =
    ## Return the diagonal matrix of singular values.
-   result = matrix(v.m, v.m)
+   result = matrix(v.m, v.n)
    for i in 0 ..< v.m:
-      # for j in 0 ..< n:
+      # for j in 0 ..< v.n:
       #    result.data[i, j] = 0.0
       result[i, i] = sv[i]
 
