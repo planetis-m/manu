@@ -306,15 +306,15 @@ proc svd*(a: Matrix): SingularValueDecomposition =
          p.dec
       else: discard
 
-proc getU*(s: SingularValueDecomposition): Matrix =
+proc getU*(s: SingularValueDecomposition): Matrix {.inline.} =
    ## Return the left singular vectors
    u
 
-proc getV*(s: SingularValueDecomposition): Matrix =
+proc getV*(s: SingularValueDecomposition): Matrix {.inline.} =
    ## Return the right singular vectors
    v
 
-proc getSingularValues*(s: SingularValueDecomposition): seq[float] =
+proc getSingularValues*(s: SingularValueDecomposition): seq[float] {.inline.} =
    ## Return the one-dimensional array of singular values.
    ## return: diagonal of S
    sv
@@ -327,12 +327,12 @@ proc getS*(s: SingularValueDecomposition): Matrix =
       #    result.data[i, j] = 0.0
       result[i, i] = sv[i]
 
-proc norm2*(s: SingularValueDecomposition): float =
+proc norm2*(s: SingularValueDecomposition): float {.inline.} =
    ## Two norm.
    ## return: max(S)
    sv[0]
 
-proc cond*(s: SingularValueDecomposition): float =
+proc cond*(s: SingularValueDecomposition): float {.inline.} =
    ## Two norm condition number.
    ## return: max(S)/min(S)
    sv[0] / sv[^1]
