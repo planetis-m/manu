@@ -1,77 +1,151 @@
-import math, morpheus/matrix
+import math, random, times, strutils
+
+type
+   AnyMatrix {.explain.} = concept m, var mvar, type M
+      M.m is int
+      M.n is int
+      m[int, int] is float
+      mvar[int, int] = float
+
+   MatrixA = object
+      data: seq[seq[float]]
+      m, n: int
+
+   MatrixB = object
+      data: seq[float]
+      m, n: int
+
+   CholeskyDecomposition[AnyMatrix] = object
+      # triangular factor
+      l: AnyMatrix
+      # is symmetric and positive definite flag.
+      isspd: bool
+
+proc `[]`(m: MatrixA, i, j: int): float {.inline.} =
+   m.data[i][j]
+
+proc `[]`(m: var MatrixA, i, j: int): var float {.inline.} =
+   m.data[i][j]
+
+proc `[]=`(m: var MatrixA, i, j: int, v: float) {.inline.} =
+   m.data[i][j] = v
+
+proc rowAddr(m: var MatrixA, i: int): ptr seq[float] =
+   m.data[i].addr
 
 template newData() =
-   newSeq(result.data, result.n)
-   for i in 0 ..< result.n:
+   newSeq(result.data, result.m)
+   for i in 0 ..< result.m:
       newSeq(result.data[i], result.n)
 
-type CholeskyDecomposition = object
-   data: seq[seq[float]]
-   n: int
-   isspd: bool
-
-proc cholL(m: Matrix): CholeskyDecomposition =
-   result.n = m.m
+proc matrixA(m, n: int): MatrixA =
+   ## Construct an m-by-n matrix of zeros. 
+   result.m = m
+   result.n = n
    newData()
-   result.isspd = m.n == m.m
+
+proc randomMatrix(m, n: Natural): MatrixA =
+   const maxVal = 1000
+   result.m = m
+   result.n = n
+   newData()
+   for i in 0 ..< m:
+      for j in 0 ..< n:
+         result.data[i][j] = rand(maxVal).float
+
+proc getRowPacked(m: MatrixA): seq[float] =
+   ## Make a one-dimensional row packed copy of the internal array.
+   newSeq(result, m.m * m.n)
+   for i in 0 ..< m.m:
+      for j in 0 ..< m.n:
+         result[i * m.n + j] = m.data[i][j]
+
+proc getColumnPacked(m: MatrixA): seq[float] =
+   ## Make a one-dimensional column packed copy of the internal array.
+   newSeq(result, m.m * m.n)
+   for i in 0 ..< m.m:
+      for j in 0 ..< m.n:
+         result[i + j * m.m] = m.data[i][j]
+
+proc `[]`(m: MatrixB, i, j: int): float {.inline.} =
+   m.data[i * m.n + j]
+
+proc `[]`(m: var MatrixB, i, j: int): var float {.inline.} =
+   m.data[i * m.n + j]
+
+proc `[]=`(m: var MatrixB, i, j: int, v: float) {.inline.} =
+   m.data[i * m.n + j] = v
+
+proc matrixB(m, n: int): MatrixB =
+   ## Construct an m-by-n matrix of zeros. 
+   result.m = m
+   result.n = n
+   newSeq(result.data, m * n)
+
+proc matrix(data: seq[float], m: int): MatrixB =
+   result.m = m
+   result.n = if m != 0: data.len div m else: 0
+   result.data = data
+
+proc cholL(a: AnyMatrix): CholeskyDecomposition[AnyMatrix] =
+   ## Cholesky algorithm for symmetric and positive definite matrix.
+   ## Structure to access L and isspd flag.
+   ## parameter ``m``: Square, symmetric matrix.
+   let n = a.m
+   result.l = matrixA(n, n)
+   result.isspd = a.n == a.m
    # Main loop.
-   for j in 0 ..< result.n:
-      var lRowj = addr result.data[j]
+   for j in 0 ..< n:
+      var lRowj = result.l.rowAddr(j)
       var d = 0.0
       for k in 0 ..< j:
-         var lRowk = addr result.data[k]
+         var lRowk = result.l.rowAddr(k)
          var s = 0.0
          for i in 0 ..< k:
-            s = s + lRowk[i] * lRowj[i]
-         s = (m.data[j][k] - s) / result.data[k][k]
+            s += lRowk[i] * lRowj[i]
+         s = (a[j, k] - s) / result.l[k, k]
          lRowj[k] = s
          d = d + s * s
-         result.isspd = result.isspd and m.data[k][j] == m.data[j][k]
-
-      d = m.data[j][j] - d
+         result.isspd = result.isspd and a[k, j] == a[j, k]
+      d = a[j, j] - d
       result.isspd = result.isspd and d > 0.0
-      result.data[j][j] = sqrt(max(d, 0.0))
+      result.l[j, j] = sqrt(max(d, 0.0))
 
-proc cholR(m: Matrix): CholeskyDecomposition =
+proc cholR(a: MatrixB): CholeskyDecomposition[MatrixB] =
    # Initialize.
-   result.n = m.m
-   newData()
-   result.isspd = m.n == m.m
+   let n = a.m
+   result.l = matrixB(n, n)
+   result.isspd = a.n == a.m
    # Main loop.
-   for j in 0 ..< result.n:
+   for j in 0 ..< n:
       var d = 0.0
       for k in 0 ..< j:
-         var s = m.data[k][j]
+         var s = a[k, j]
          for i in 0 ..< k:
-            s = s - result.data[i][k] * result.data[i][j]
-         s = s / result.data[k][k]
-         result.data[k][j] = s
+            s = s - result.l[i, k] * result.l[i, j]
+         s = s / result.l[k, k]
+         result.l[k, j] = s
          d = d + s * s
-         result.isspd = result.isspd and m.data[k][j] == m.data[j][k] 
-
-      d = m.data[j][j] - d
+         result.isspd = result.isspd and a[k, j] == a[j, k] 
+      d = a[j, j] - d
       result.isspd = result.isspd and d > 0.0
-      result.data[j][j] = sqrt(max(d, 0.0))
+      result.l[j, j] = sqrt(max(d, 0.0))
 
-proc getFactor(c: CholeskyDecomposition): Matrix =
-   result.data = c.data
-   result.m = c.n
-   result.n = c.n
+proc main() =
+   const n = 1000
+   let a = randomMatrix(n, n)
+   let b = matrix(a.getRowPacked(), n)
+   block:
+      # time Jama version
+      let start = epochTime()
+      let c = chol(a)
+      let duration = epochTime() - start
+      echo formatFloat(duration, ffDecimal, 3), " us naive storage"
+   block:
+      # time standard ijk
+      let start = epochTime()
+      let c = chol(b)
+      let duration = epochTime() - start
+      echo formatFloat(duration, ffDecimal, 3), " us packed storage"
 
-proc check(a, b: Matrix) =
-   let eps = pow(2.0, -52.0)
-   let x_norm1 = a.norm1()
-   let y_norm1 = b.norm1()
-   let xmiy_norm1 = norm1(a - b)
-   if x_norm1 == 0.0 and y_norm1 < 10.0 * eps: return
-   if y_norm1 == 0.0 and x_norm1 < 10.0 * eps: return
-   if xmiy_norm1 > 1000.0 * eps * max(x_norm1, y_norm1):
-      raise newException(AssertionError, "The norm of (a-b) is too large: " & $xmiy_norm1)
-
-let
-   columnwise = @[25.0, 15, -5, 15, 18, 0, -5, 0, 11]
-   mat = matrix(columnwise, 3)
-   l = cholL(mat).getFactor
-   r = cholR(mat).getFactor
-
-check(l * l.transpose, r.transpose * r)
+main()
