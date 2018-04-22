@@ -1299,7 +1299,9 @@ function main() {
 <dl class="item">
 <dt id="qr"><a name="qr,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">qr</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-QR Decomposition, computed by Householder reflections. Structure to access R and the Householder vectors and compute Q. parameter <tt class="docutils literal"><span class="pre">a</span></tt>: Rectangular matrix
+<p>QR Decomposition, computed by Householder reflections. Structure to access R and the Householder vectors and compute Q.</p>
+<p>parameter <tt class="docutils literal"><span class="pre">a</span></tt>: Rectangular matrix</p>
+
 
 </dd>
 <dt id="isFullRank"><a name="isFullRank,QRDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">isFullRank</span><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
@@ -1309,7 +1311,9 @@ Is the matrix full rank?
 </dd>
 <dt id="getH"><a name="getH,QRDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">getH</span><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Return the Householder vectors. return: Lower trapezoidal matrix whose columns define the reflections.
+<p>Return the Householder vectors.</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: Lower trapezoidal matrix whose columns define the reflections.</p>
+
 
 </dd>
 <dt id="getR"><a name="getR,QRDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">getR</span><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
@@ -1324,7 +1328,10 @@ Generate and return the (economy-sized) orthogonal factor.
 </dd>
 <dt id="solve"><a name="solve,QRDecomposition,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">solve</span><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <span class="Identifier">QRDecomposition</span><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B</span></tt>, parameter <tt class="docutils literal"><span class="pre">b</span></tt>: A Matrix with as many rows as A and any number of columns. return: <tt class="docutils literal"><span class="pre">X</span></tt> that minimizes the two norm of <tt class="docutils literal"><span class="pre">Q*R*X-B</span></tt>
+Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B</span></tt>,<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">b</span></tt>: A Matrix with as many rows as A and any number of columns.</li>
+<li><tt class="docutils literal"><span class="pre">return</span></tt>: <tt class="docutils literal"><span class="pre">X</span></tt> that minimizes the two norm of <tt class="docutils literal"><span class="pre">Q*R*X-B</span></tt></li>
+</ul>
+
 
 </dd>
 
@@ -1337,7 +1344,7 @@ Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-21 16:25:59 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-22 20:11:23 UTC</small>
       </div>
     </div>
   </div>

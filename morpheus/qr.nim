@@ -23,6 +23,7 @@ type QRDecomposition* = object
 proc qr*(a: Matrix): QRDecomposition =
    ## QR Decomposition, computed by Householder reflections.
    ## Structure to access R and the Householder vectors and compute Q.
+   ##
    ## parameter ``a``: Rectangular matrix
    result.qr = a
    let m = a.m
@@ -60,7 +61,8 @@ proc isFullRank*(q: QRDecomposition): bool =
 
 proc getH*(q: QRDecomposition): Matrix =
    ## Return the Householder vectors.
-   ## return: Lower trapezoidal matrix whose columns define the reflections.
+   ##
+   ## ``return``: Lower trapezoidal matrix whose columns define the reflections.
    result = matrix(qr.m, qr.n)
    for i in 0 ..< qr.m:
       for j in 0 ..< qr.n:
@@ -95,8 +97,9 @@ proc getQ*(q: QRDecomposition): Matrix =
 
 proc solve*(q: QRDecomposition, b: Matrix): Matrix =
    ## Least squares solution of ``A*X = B``,
-   ## parameter ``b``: A Matrix with as many rows as A and any number of columns.
-   ## return: ``X`` that minimizes the two norm of ``Q*R*X-B``
+   ##
+   ## - parameter ``b``: A Matrix with as many rows as A and any number of columns.
+   ## - ``return``: ``X`` that minimizes the two norm of ``Q*R*X-B``
    assert(b.m == qr.m, "Matrix row dimensions must agree.")
    assert(isFullRank(), "Matrix is rank deficient.")
    # Copy right hand side

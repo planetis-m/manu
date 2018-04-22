@@ -104,7 +104,7 @@ proc main() =
    block:
       # time standard ijk
       let start = epochTime()
-      let c = luGauss(b)
+      let c = luGauss(a)
       let duration = epochTime() - start
       echo formatFloat(duration, ffDecimal, 3), " us packed storage"
 

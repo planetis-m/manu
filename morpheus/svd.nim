@@ -23,7 +23,8 @@ type SingularValueDecomposition* = object
 
 proc svd*(a: Matrix): SingularValueDecomposition =
    ## Construct the singular value decomposition
-   ## Structure to access U, S and V.
+   ##
+   ## ``return``: Structure to access U, S and V.
    # Derived from LINPACK code.
    # Initialize.
    var a = a
@@ -322,7 +323,8 @@ proc getV*(s: SingularValueDecomposition): Matrix {.inline.} =
 
 proc getSingularValues*(s: SingularValueDecomposition): seq[float] {.inline.} =
    ## Return the one-dimensional array of singular values.
-   ## return: diagonal of S
+   ##
+   ## ``return``: diagonal of S
    sv
 
 proc getS*(s: SingularValueDecomposition): Matrix =
@@ -335,17 +337,20 @@ proc getS*(s: SingularValueDecomposition): Matrix =
 
 proc norm2*(s: SingularValueDecomposition): float {.inline.} =
    ## Two norm.
-   ## return: max(S)
+   ##
+   ## ``return``: max(S)
    sv[0]
 
 proc cond*(s: SingularValueDecomposition): float {.inline.} =
    ## Two norm condition number.
-   ## return: max(S)/min(S)
+   ##
+   ## ``return``: max(S)/min(S)
    sv[0] / sv[^1]
 
 proc rank*(s: SingularValueDecomposition): int =
    ## Effective numerical matrix rank.
-   ## return: Number of nonnegligible singular values.
+   ##
+   ## ``return``: Number of nonnegligible singular values.
    let eps = pow(2.0, -52.0)
    let tol = float(max(u.m, v.m)) * sv[0] * eps
    for d in sv:

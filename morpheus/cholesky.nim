@@ -20,21 +20,20 @@ type CholeskyDecomposition* = object
 proc chol*(a: Matrix): CholeskyDecomposition =
    ## Cholesky algorithm for symmetric and positive definite matrix.
    ## Structure to access L and isspd flag.
+   ##
    ## parameter ``m``: Square, symmetric matrix.
    let n = a.m
    result.l = matrix(n, n)
    result.isspd = a.n == a.m
    # Main loop.
    for j in 0 ..< n:
-      var lRowj = result.l.rowAddr(j)
       var d = 0.0
       for k in 0 ..< j:
-         var lRowk = result.l.rowAddr(k)
          var s = 0.0
          for i in 0 ..< k:
-            s += lRowk[i] * lRowj[i]
+            s += result.l[k, i] * result.l[j, i]
          s = (a[j, k] - s) / result.l[k, k]
-         lRowj[k] = s
+         result.l[j, k] = s
          d = d + s * s
          result.isspd = result.isspd and a[k, j] == a[j, k]
       d = a[j, j] - d
@@ -53,8 +52,9 @@ proc getL*(c: CholeskyDecomposition): Matrix {.inline.} =
 
 proc solve*(c: CholeskyDecomposition, b: Matrix): Matrix =
    ## Solve ``A*X = B``,
-   ## parameter ``b``:  A Matrix with as many rows as A and any number of columns.
-   ## return: X so that ``L*L'*X = B``
+   ##
+   ## - parameter ``b``:  A Matrix with as many rows as A and any number of columns.
+   ## - ``return``: X so that ``L*L'*X = B``
    assert(b.m == l.n, "Matrix row dimensions must agree.")
    assert(isspd, "Matrix is not symmetric positive definite.")
    # Copy right hand side.

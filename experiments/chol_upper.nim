@@ -87,7 +87,7 @@ proc main() =
    block:
       # time standard ijk
       let start = epochTime()
-      let c = cholL(b)
+      let c = cholR(b)
       let duration = epochTime() - start
       echo formatFloat(duration, ffDecimal, 3), " us packed storage"
 

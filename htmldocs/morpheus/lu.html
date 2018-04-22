@@ -1254,6 +1254,8 @@ function main() {
   <ul class="simple simple-toc-section">
       <li><a class="reference" href="#lu,Matrix"
     title="lu(a: Matrix): LUDecomposition"><wbr />lu<span class="attachedType" style="visibility:hidden">LUDecomposition</span></a></li>
+  <li><a class="reference" href="#luGauss,Matrix"
+    title="luGauss(a: Matrix): LUDecomposition"><wbr />lu<wbr />Gauss<span class="attachedType" style="visibility:hidden">LUDecomposition</span></a></li>
   <li><a class="reference" href="#isNonsingular,LUDecomposition"
     title="isNonsingular(l: LUDecomposition): bool"><wbr />is<wbr />Nonsingular<span class="attachedType" style="visibility:hidden">LUDecomposition</span></a></li>
   <li><a class="reference" href="#getL,LUDecomposition"
@@ -1305,12 +1307,26 @@ function main() {
 <dl class="item">
 <dt id="lu"><a name="lu,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">lu</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">LUDecomposition</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-LU Decomposition Structure to access L, U and piv. param <tt class="docutils literal"><span class="pre">a</span></tt>: Rectangular matrix
+<p>LU Decomposition Structure to access L, U and piv.</p>
+<p>parameter <tt class="docutils literal"><span class="pre">a</span></tt>: Rectangular matrix</p>
+
+
+</dd>
+<dt id="luGauss"><a name="luGauss,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">luGauss</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">LUDecomposition</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dd>
+<p>LU Decomposition, computed by Gaussian elimination.</p>
+<p>This constructor computes L and U with the &quot;daxpy&quot;-based elimination algorithm used in LINPACK and MATLAB.</p>
+<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">A</span></tt>: Rectangular matrix</li>
+<li><tt class="docutils literal"><span class="pre">return</span></tt>: Structure to access L, U and piv.</li>
+</ul>
+
 
 </dd>
 <dt id="isNonsingular"><a name="isNonsingular,LUDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">isNonsingular</span><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <span class="Identifier">LUDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Is the matrix nonsingular? return: true if U, and hence A, is nonsingular.
+<p>Is the matrix nonsingular?</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: true if U, and hence A, is nonsingular.</p>
+
 
 </dd>
 <dt id="getL"><a name="getL,LUDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">getL</span><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <span class="Identifier">LUDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
@@ -1340,7 +1356,10 @@ Determinant
 </dd>
 <dt id="solve"><a name="solve,LUDecomposition,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">solve</span><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <span class="Identifier">LUDecomposition</span><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>. parameter <tt class="docutils literal"><span class="pre">B</span></tt>: A Matrix with as many rows as A and any number of columns. return: X so that <tt class="docutils literal"><span class="pre">L*U*X = B(piv,:)</span></tt>
+Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>.<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">B</span></tt>: A Matrix with as many rows as A and any number of columns.</li>
+<li><tt class="docutils literal"><span class="pre">return</span></tt>: X so that <tt class="docutils literal"><span class="pre">L*U*X = B(piv,:)</span></tt></li>
+</ul>
+
 
 </dd>
 
@@ -1353,7 +1372,7 @@ Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>. parame
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-21 16:25:59 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-22 20:11:23 UTC</small>
       </div>
     </div>
   </div>

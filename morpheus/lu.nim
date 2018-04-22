@@ -24,7 +24,8 @@ type LUDecomposition* = object
 proc lu*(a: Matrix): LUDecomposition =
    ## LU Decomposition
    ## Structure to access L, U and piv.
-   ## param ``a``: Rectangular matrix
+   ##
+   ## parameter ``a``: Rectangular matrix
    # Use a "left-looking", dot-product, Crout/Doolittle algorithm.
    let m = a.m
    let n = a.n
@@ -41,14 +42,13 @@ proc lu*(a: Matrix): LUDecomposition =
          luColj[i] = result.lu[i, j]
       # Apply previous transformations.
       for i in 0 ..< m:
-         var luRowi = result.lu.rowAddr(i)
          # Most of the time is spent in the following dot product.
          let kmax = min(i, j)
          var s = 0.0
          for k in 0 ..< kmax:
-            s += luRowi[k] * luColj[k]
+            s += result.lu[i, k] * luColj[k]
          luColj[i] -= s
-         luRowi[j] = luColj[i]
+         result.lu[i, j] = luColj[i]
       # Find pivot and exchange if necessary.
       var p = j
       for i in j + 1 ..< m:
@@ -64,9 +64,46 @@ proc lu*(a: Matrix): LUDecomposition =
          for i in j + 1 ..< m:
             result.lu[i, j] /= result.lu[j, j]
 
+proc luGauss*(a: Matrix): LUDecomposition =
+   ## LU Decomposition, computed by Gaussian elimination.
+   ##
+   ## This constructor computes L and U with the "daxpy"-based elimination
+   ## algorithm used in LINPACK and MATLAB.
+   ##
+   ## - parameter ``A``: Rectangular matrix
+   ## - ``return``: Structure to access L, U and piv.
+   # Initialize.
+   let m = a.m
+   let n = a.n
+   result.lu = a
+   result.piv = newSeq[int](m)
+   for i in 0 ..< m:
+      result.piv[i] = i
+   result.pivsign = 1
+   # Main loop.
+   for k in 0 ..< n:
+      # Find pivot.
+      var p = k
+      for i in k + 1 ..< m:
+         if abs(result.lu[i, k]) > abs(result.lu[p, k]):
+            p = i
+      # Exchange if necessary.
+      if p != k:
+         for j in 0 ..< n:
+            swap(result.lu[p, j], result.lu[k, j])
+         swap(result.piv[p], result.piv[k])
+         result.pivsign = -result.pivsign
+      # Compute multipliers and eliminate k-th column.
+      if result.lu[k, k] != 0.0:
+         for i in k + 1 ..< m:
+            result.lu[i, k] /= result.lu[k, k]
+            for j in k + 1 ..< n:
+               result.lu[i, j] -= result.lu[i, k] * result.lu[k, j]
+
 proc isNonsingular*(l: LUDecomposition): bool =
    ## Is the matrix nonsingular?
-   ## return: true if U, and hence A, is nonsingular.
+   ##
+   ## ``return``: true if U, and hence A, is nonsingular.
    for j in 0 ..< lu.n:
       if lu[j, j] == 0.0:
          return false
@@ -109,8 +146,9 @@ proc det*(l: LUDecomposition): float =
 
 proc solve*(l: LUDecomposition, b: Matrix): Matrix =
    ## Solve ``A*X = B``.
-   ## parameter ``B``: A Matrix with as many rows as A and any number of columns.
-   ## return: X so that ``L*U*X = B(piv,:)``
+   ##
+   ## - parameter ``B``: A Matrix with as many rows as A and any number of columns.
+   ## - ``return``: X so that ``L*U*X = B(piv,:)``
    assert(b.m == lu.m, "Matrix row dimensions must agree.")
    assert(l.isNonsingular, "Matrix is singular.")
    # Copy right hand side with pivoting

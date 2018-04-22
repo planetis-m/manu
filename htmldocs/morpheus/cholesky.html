@@ -1295,7 +1295,9 @@ function main() {
 <dl class="item">
 <dt id="chol"><a name="chol,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">chol</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">CholeskyDecomposition</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Cholesky algorithm for symmetric and positive definite matrix. Structure to access L and isspd flag. parameter <tt class="docutils literal"><span class="pre">m</span></tt>: Square, symmetric matrix.
+<p>Cholesky algorithm for symmetric and positive definite matrix. Structure to access L and isspd flag.</p>
+<p>parameter <tt class="docutils literal"><span class="pre">m</span></tt>: Square, symmetric matrix.</p>
+
 
 </dd>
 <dt id="isSPD"><a name="isSPD,CholeskyDecomposition"></a><pre><span class="Keyword">proc</span> <span class="Identifier">isSPD</span><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <span class="Identifier">CholeskyDecomposition</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
@@ -1310,7 +1312,10 @@ Return triangular factor.
 </dd>
 <dt id="solve"><a name="solve,CholeskyDecomposition,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">solve</span><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <span class="Identifier">CholeskyDecomposition</span><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>, parameter <tt class="docutils literal"><span class="pre">b</span></tt>:  A Matrix with as many rows as A and any number of columns. return: X so that <tt class="docutils literal"><span class="pre">L*L'*X = B</span></tt>
+Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>,<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">b</span></tt>:  A Matrix with as many rows as A and any number of columns.</li>
+<li><tt class="docutils literal"><span class="pre">return</span></tt>: X so that <tt class="docutils literal"><span class="pre">L*L'*X = B</span></tt></li>
+</ul>
+
 
 </dd>
 
@@ -1323,7 +1328,7 @@ Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>, parame
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-21 16:25:59 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-22 20:11:23 UTC</small>
       </div>
     </div>
   </div>

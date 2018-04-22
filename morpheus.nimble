@@ -1,7 +1,7 @@
 mode = ScriptMode.Verbose
 
 packageName   = "morpheus"
-version       = "0.9.5"
+version       = "1.0"
 author        = "Antonis Geralis"
 description   = "Nim Matrix library"
 license       = "MIT"
