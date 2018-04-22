@@ -39,13 +39,15 @@ export matrix, cholesky, qr, lu, svd #, eigen
 
 proc norm2*(m: Matrix): float =
    ## Two norm
-   ## return: maximum singular value.
+   ##
+   ## ``return``: maximum singular value.
    svd(m).norm2()
 
 proc solve*(a, b: Matrix): Matrix =
    ## Solve ``A*X = B``,
-   ## parameter ``b``: the right hand side
-   ## return: solution if A is square, least squares solution otherwise.
+   ##
+   ## - parameter ``b``: the right hand side
+   ## - ``return``: solution if A is square, least squares solution otherwise.
    if a.m == a.n:
       lu(a).solve(b)
    else:
@@ -53,13 +55,15 @@ proc solve*(a, b: Matrix): Matrix =
 
 proc solveTranspose*(a, b: Matrix): Matrix =
    ## Solve ``X*A = B``, which is also ``A'*X' = B'``,
-   ## parameter ``b``: the right hand side
-   ## return: solution if A is square, least squares solution otherwise.
+   ##
+   ## - parameter ``b``: the right hand side
+   ## - ``return``: solution if A is square, least squares solution otherwise.
    transpose(a).solve(b.transpose())
 
 proc inverse*(m: Matrix): Matrix =
    ## Matrix inverse or pseudoinverse,
-   ## return: inverse(A) if A is square, pseudoinverse otherwise.
+   ##
+   ## ``return``: inverse(A) if A is square, pseudoinverse otherwise.
    solve(m, identity(m.m, m.m))
 
 proc det*(m: Matrix): float =
@@ -68,10 +72,12 @@ proc det*(m: Matrix): float =
 
 proc rank*(m: Matrix): int =
    ## Matrix rank,
-   ## return: effective numerical rank, obtained from SVD.
+   ##
+   ## ``return``: effective numerical rank, obtained from SVD.
    svd(m).rank()
 
 proc cond*(m: Matrix): float =
    ## Matrix condition (2 norm),
-   ## return: ratio of largest to smallest singular value.
+   ##
+   ## ``return``: ratio of largest to smallest singular value.
    svd(m).cond()

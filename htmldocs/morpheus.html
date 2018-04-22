@@ -1293,22 +1293,32 @@ function main() {
 <dl class="item">
 <dt id="norm2"><a name="norm2,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">norm2</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Two norm return: maximum singular value.
+<p>Two norm</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: maximum singular value.</p>
+
 
 </dd>
 <dt id="solve"><a name="solve,Matrix,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">solve</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>, parameter <tt class="docutils literal"><span class="pre">b</span></tt>: the right hand side return: solution if A is square, least squares solution otherwise.
+Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>,<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">b</span></tt>: the right hand side</li>
+<li><tt class="docutils literal"><span class="pre">return</span></tt>: solution if A is square, least squares solution otherwise.</li>
+</ul>
+
 
 </dd>
 <dt id="solveTranspose"><a name="solveTranspose,Matrix,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">solveTranspose</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Solve <tt class="docutils literal"><span class="pre">X*A = B</span></tt>, which is also <tt class="docutils literal"><span class="pre">A'*X' = B'</span></tt>, parameter <tt class="docutils literal"><span class="pre">b</span></tt>: the right hand side return: solution if A is square, least squares solution otherwise.
+Solve <tt class="docutils literal"><span class="pre">X*A = B</span></tt>, which is also <tt class="docutils literal"><span class="pre">A'*X' = B'</span></tt>,<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">b</span></tt>: the right hand side</li>
+<li><tt class="docutils literal"><span class="pre">return</span></tt>: solution if A is square, least squares solution otherwise.</li>
+</ul>
+
 
 </dd>
 <dt id="inverse"><a name="inverse,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">inverse</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Matrix inverse or pseudoinverse, return: inverse(A) if A is square, pseudoinverse otherwise.
+<p>Matrix inverse or pseudoinverse,</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: inverse(A) if A is square, pseudoinverse otherwise.</p>
+
 
 </dd>
 <dt id="det"><a name="det,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">det</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
@@ -1318,12 +1328,16 @@ Matrix determinant
 </dd>
 <dt id="rank"><a name="rank,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">rank</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Matrix rank, return: effective numerical rank, obtained from SVD.
+<p>Matrix rank,</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: effective numerical rank, obtained from SVD.</p>
+
 
 </dd>
 <dt id="cond"><a name="cond,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">cond</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Matrix condition (2 norm), return: ratio of largest to smallest singular value.
+<p>Matrix condition (2 norm),</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: ratio of largest to smallest singular value.</p>
+
 
 </dd>
 
@@ -1336,7 +1350,7 @@ Matrix condition (2 norm), return: ratio of largest to smallest singular value.
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-22 20:11:23 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-22 20:19:22 UTC</small>
       </div>
     </div>
   </div>
