@@ -1,14 +1,7 @@
-import random, times, strutils
+import times, strutils
+import matrix_versions
 
 type
-   MatrixA = object
-      data: seq[seq[float]]
-      m, n: int
-
-   MatrixB = object
-      data: seq[float]
-      m, n: int
-
    LUDecomposition[T] = object
       # Array for internal storage of decomposition.
       lu: T
@@ -16,53 +9,6 @@ type
       piv: seq[int]
       # Pivot sign.
       pivsign: int
-
-proc `[]`(m: MatrixA, i, j: int): float {.inline.} =
-   m.data[i][j]
-
-proc `[]`(m: var MatrixA, i, j: int): var float {.inline.} =
-   m.data[i][j]
-
-proc `[]=`(m: var MatrixA, i, j: int, v: float) {.inline.} =
-   m.data[i][j] = v
-
-proc rowAddr(m: var MatrixA, i: int): ptr seq[float] =
-   m.data[i].addr
-
-template newData() =
-   newSeq(result.data, result.m)
-   for i in 0 ..< result.m:
-      newSeq(result.data[i], result.n)
-
-proc randomMatrix(m, n: Natural): MatrixA =
-   const maxVal = 1000
-   result.m = m
-   result.n = n
-   newData()
-   for i in 0 ..< m:
-      for j in 0 ..< n:
-         result.data[i][j] = rand(maxVal).float
-
-proc getRowPacked(m: MatrixA): seq[float] =
-   ## Make a one-dimensional row packed copy of the internal array.
-   newSeq(result, m.m * m.n)
-   for i in 0 ..< m.m:
-      for j in 0 ..< m.n:
-         result[i * m.n + j] = m.data[i][j]
-
-proc `[]`(m: MatrixB, i, j: int): float {.inline.} =
-   m.data[i * m.n + j]
-
-proc `[]`(m: var MatrixB, i, j: int): var float {.inline.} =
-   m.data[i * m.n + j]
-
-proc `[]=`(m: var MatrixB, i, j: int, v: float) {.inline.} =
-   m.data[i * m.n + j] = v
-
-proc matrix(data: seq[float], m: int): MatrixB =
-   result.m = m
-   result.n = if m != 0: data.len div m else: 0
-   result.data = data
 
 proc lu(a: MatrixA): LUDecomposition[MatrixA] =
    ## LU Decomposition
@@ -107,7 +53,7 @@ proc lu(a: MatrixA): LUDecomposition[MatrixA] =
          for i in j + 1 ..< m:
             result.lu[i, j] /= result.lu[j, j]
 
-proc lu(a: MatrixB): LUDecomposition[MatrixB] =
+proc luGauss[T](a: T): LUDecomposition[T] =
    ## LU Decomposition, computed by Gaussian elimination.
    ##
    ## This constructor computes L and U with the "daxpy"-based elimination
@@ -158,7 +104,7 @@ proc main() =
    block:
       # time standard ijk
       let start = epochTime()
-      let c = lu(b)
+      let c = luGauss(b)
       let duration = epochTime() - start
       echo formatFloat(duration, ffDecimal, 3), " us packed storage"
 
