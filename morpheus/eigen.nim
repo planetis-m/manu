@@ -9,7 +9,7 @@
 ## with the real eigenvalues in 1-by-1 blocks and any complex eigenvalues,
 ## lambda + i * mu, in 2-by-2 blocks, [lambda, mu; -mu, lambda].  The
 ## columns of V represent the eigenvectors in the sense that A*V = V*D,
-## i.e. A.times(V) equals V.times(D).  The matrix V may be badly
+## i.e. A.times(V) equals V.times(D). The matrix V may be badly
 ## conditioned, or even singular, so the validity of the equation
 ## A = V*D*inverse(V) depends upon V.cond().
 import "./matrix", math
@@ -23,10 +23,6 @@ type EigenvalueDecomposition* = object
    d, e: seq[float]
    # Working storage for nonsymmetric algorithm.
    ort: seq[float]
-   # Row and column dimension (square matrix).
-   n: int
-   # Symmetry flag.
-   issymmetric: bool
 
 {.this: ei.}
 
@@ -37,6 +33,7 @@ proc tred2(ei: var EigenvalueDecomposition) =
    # Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
    # Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
    # Fortran subroutine in EISPACK.
+   let n = d.len
    for j in 0 ..< n:
       d[j] = v[n - 1, j]
    # Householder reduction to tridiagonal form.
@@ -119,6 +116,7 @@ proc tql2(ei: var EigenvalueDecomposition) =
    # Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
    # Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
    # Fortran subroutine in EISPACK.
+   let n = d.len
    for i in 1 ..< n:
       e[i - 1] = e[i]
    e[n - 1] = 0.0
@@ -207,6 +205,7 @@ proc orthes(ei: var EigenvalueDecomposition) =
    # by Martin and Wilkinson, Handbook for Auto. Comp.,
    # Vol.ii-Linear Algebra, and the corresponding
    # Fortran subroutines in EISPACK.
+   let n = d.len
    let low = 0
    let high = n - 1
    for m in low + 1 .. high - 1:
@@ -286,7 +285,7 @@ proc hqr2(ei: var EigenvalueDecomposition) =
    # Fortran subroutine in EISPACK.
 
    # Initialize   
-   let nn = ei.n
+   let nn = d.len
    var n = nn - 1
    let low = 0
    let high = nn - 1
@@ -601,8 +600,8 @@ proc eig*(a: Matrix): EigenvalueDecomposition =
    ##
    ## - ``return``: Structure to access D and V.
    ## - parameter ``a``: Square matrix
+   # assert(a.n == a.m and a.n >= 1)
    let n = a.n
-   result.n = n
    result.d = newSeq[float](n)
    result.e = newSeq[float](n)
    var issymmetric = true
@@ -613,7 +612,6 @@ proc eig*(a: Matrix): EigenvalueDecomposition =
          if not issymmetric:
             break
          issymmetric = a[i, j] == a[j, i]
-   result.issymmetric = issymmetric
    if issymmetric:
       result.v = a
       # Tridiagonalize.
@@ -647,6 +645,7 @@ proc getImagEigenvalues*(ei: EigenvalueDecomposition): seq[float] {.inline.} =
 
 proc getD*(ei: EigenvalueDecomposition): Matrix =
    ## Return the block diagonal eigenvalue matrix
+   let n = d.len
    result = matrix(n, n)
    for i in 0 ..< n:
       # for j in 0 ..< n:
