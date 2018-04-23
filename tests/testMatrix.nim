@@ -14,7 +14,7 @@
 ## If the test does not run to completion, this indicates that there is a 
 ## substantial problem within the implementation that was not anticipated in the test design.  
 ## The stopping point should give an indication of where the problem exists.
-import math, morpheus, testutils
+import math, "../morpheus", "./testutils"
 
 # main
 
@@ -430,7 +430,8 @@ proc main() =
    except AssertionError:
       try_success("minus conformance check... ", "")
    if (A - R).norm1() != 0.0:
-      try_failure(errorCount,"minus... ","(difference of identical Matrices is nonzero,\nSubsequent use of minus should be suspect)")
+      try_failure(errorCount,"minus... ",
+                  "(difference of identical Matrices is nonzero,\nSubsequent use of minus should be suspect)")
    else:
       try_success("minus... ", "")
    A = R #.copy()
@@ -442,7 +443,8 @@ proc main() =
    except AssertionError:
       try_success("minusEquals conformance check... ", "")
    if (A - Z).norm1() != 0.0:
-      try_failure(errorCount,"minusEquals... ","(difference of identical Matrices is nonzero,\nSubsequent use of minus should be suspect)")
+      try_failure(errorCount,"minusEquals... ",
+                  "(difference of identical Matrices is nonzero,\nSubsequent use of minus should be suspect)")
    else:
       try_success("minusEquals... ", "")
    A = R #.copy()

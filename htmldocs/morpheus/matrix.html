@@ -1390,12 +1390,14 @@ Construct a matrix quickly without checking arguments.
 </dd>
 <dt id="matrix"><a name="matrix,seq[float],int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">matrix</span><span class="Other">(</span><span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Construct a matrix from a one-dimensional packed array. <tt class="docutils literal"><span class="pre">data</span></tt> is a one-dimensional array of float, packed by columns (ala Fortran). Array length must be a multiple of <tt class="docutils literal"><span class="pre">m</span></tt>.
+<p>Construct a matrix from a one-dimensional packed array.</p>
+<p>parameter <tt class="docutils literal"><span class="pre">data</span></tt>: one-dimensional array of float, packed by columns (ala Fortran). Array length must be a multiple of <tt class="docutils literal"><span class="pre">m</span></tt>.</p>
+
 
 </dd>
 <dt id="randMatrix"><a name="randMatrix,int,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">randMatrix</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">n</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-<p>Generate matrix with random elements,</p>
+<p>Generate matrix with random elements.</p>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: an m-by-n matrix with uniformly distributed random elements.</p>
 
 
@@ -1609,7 +1611,7 @@ Matrix transpose
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-23 14:31:43 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-23 15:51:55 UTC</small>
       </div>
     </div>
   </div>

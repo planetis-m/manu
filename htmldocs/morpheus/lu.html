@@ -1316,7 +1316,7 @@ function main() {
 <dd>
 <p>LU Decomposition, computed by Gaussian elimination.</p>
 <p>This constructor computes L and U with the &quot;daxpy&quot;-based elimination algorithm used in LINPACK and MATLAB.</p>
-<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">A</span></tt>: Rectangular matrix</li>
+<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">a</span></tt>: Rectangular matrix</li>
 <li><tt class="docutils literal"><span class="pre">return</span></tt>: Structure to access L, U and piv.</li>
 </ul>
 
@@ -1356,7 +1356,7 @@ Determinant
 </dd>
 <dt id="solve"><a name="solve,LUDecomposition,Matrix"></a><pre><span class="Keyword">proc</span> <span class="Identifier">solve</span><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <span class="Identifier">LUDecomposition</span><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
-Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>.<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">B</span></tt>: A Matrix with as many rows as A and any number of columns.</li>
+Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>.<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">b</span></tt>: A Matrix with as many rows as A and any number of columns.</li>
 <li><tt class="docutils literal"><span class="pre">return</span></tt>: X so that <tt class="docutils literal"><span class="pre">L*U*X = B(piv,:)</span></tt></li>
 </ul>
 
@@ -1372,7 +1372,7 @@ Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>.<ul cla
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-23 14:31:43 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-23 15:51:55 UTC</small>
       </div>
     </div>
   </div>

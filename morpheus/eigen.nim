@@ -181,7 +181,7 @@ proc tql2(ei: var EigenvalueDecomposition) =
             e[l] = s * p
             d[l] = c * p
             # Check for convergence.
-         if abs(e[l]) <= eps * tst1: break
+            if abs(e[l]) <= eps * tst1: break
       d[l] = d[l] + f
       e[l] = 0.0
    # Sort eigenvalues and corresponding vectors.
@@ -601,13 +601,15 @@ proc eig*(a: Matrix): EigenvalueDecomposition =
    ##
    ## - ``return``: Structure to access D and V.
    ## - parameter ``a``: Square matrix
-   result.n = a.n
-   result.d = newSeq[float](result.n)
-   result.e = newSeq[float](result.n)
+   let n = a.n
+   result.n = n
+   result.v = matrix(n, n)
+   result.d = newSeq[float](n)
+   result.e = newSeq[float](n)
    result.issymmetric = true
-   for j in 0 ..< result.n:
+   for j in 0 ..< n:
       if not result.issymmetric: break
-      for i in 0 ..< result.n:
+      for i in 0 ..< n:
          if not result.issymmetric: break
          result.issymmetric = a[i, j] == a[j, i]
    if result.issymmetric:
@@ -618,7 +620,7 @@ proc eig*(a: Matrix): EigenvalueDecomposition =
       result.tql2()
    else:
       result.h = a
-      result.ort = newSeq[float](result.n)
+      result.ort = newSeq[float](n)
       # Reduce to Hessenberg form.
       result.orthes()
       # Reduce Hessenberg to real Schur form.

@@ -44,7 +44,7 @@ proc norm2*(m: Matrix): float =
    svd(m).norm2()
 
 proc solve*(a, b: Matrix): Matrix =
-   ## Solve ``A*X = B``,
+   ## Solve ``A*X = B``
    ##
    ## - parameter ``b``: the right hand side
    ## - ``return``: solution if A is square, least squares solution otherwise.
@@ -54,14 +54,14 @@ proc solve*(a, b: Matrix): Matrix =
       qr(a).solve(b)
 
 proc solveTranspose*(a, b: Matrix): Matrix =
-   ## Solve ``X*A = B``, which is also ``A'*X' = B'``,
+   ## Solve ``X*A = B``, which is also ``A'*X' = B'``
    ##
    ## - parameter ``b``: the right hand side
    ## - ``return``: solution if A is square, least squares solution otherwise.
    transpose(a).solve(b.transpose())
 
 proc inverse*(m: Matrix): Matrix =
-   ## Matrix inverse or pseudoinverse,
+   ## Matrix inverse or pseudoinverse
    ##
    ## ``return``: inverse(A) if A is square, pseudoinverse otherwise.
    solve(m, identity(m.m, m.m))
@@ -71,13 +71,13 @@ proc det*(m: Matrix): float =
    lu(m).det()
 
 proc rank*(m: Matrix): int =
-   ## Matrix rank,
+   ## Matrix rank
    ##
    ## ``return``: effective numerical rank, obtained from SVD.
    svd(m).rank()
 
 proc cond*(m: Matrix): float =
-   ## Matrix condition (2 norm),
+   ## Matrix condition (2 norm)
    ##
    ## ``return``: ratio of largest to smallest singular value.
    svd(m).cond()

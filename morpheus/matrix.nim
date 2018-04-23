@@ -49,7 +49,8 @@ proc matrix*(data: seq[seq[float]], m, n: int): Matrix =
 
 proc matrix*(data: seq[float], m: int): Matrix =
    ## Construct a matrix from a one-dimensional packed array.
-   ## ``data`` is a one-dimensional array of float, packed by columns (ala Fortran).
+   ##
+   ## parameter ``data``: one-dimensional array of float, packed by columns (ala Fortran).
    ## Array length must be a multiple of ``m``.
    let n = if m != 0: data.len div m else: 0
    result.m = m
@@ -61,7 +62,7 @@ proc matrix*(data: seq[float], m: int): Matrix =
          result.data[i * n + j] = data[i + j * m]
 
 proc randMatrix*(m, n: int): Matrix =
-   ## Generate matrix with random elements,
+   ## Generate matrix with random elements.
    ##
    ## ``return``: an m-by-n matrix with uniformly distributed random elements.
    result.m = m

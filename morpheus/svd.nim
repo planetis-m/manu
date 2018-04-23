@@ -21,7 +21,7 @@ type SingularValueDecomposition* = object
 {.this: sv.}
 
 proc svd*(a: Matrix): SingularValueDecomposition =
-   ## Construct the singular value decomposition
+   ## Construct the singular value decomposition.
    ##
    ## ``return``: Structure to access U, S and V.
    # Derived from LINPACK code.

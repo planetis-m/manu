@@ -70,7 +70,7 @@ proc luGauss*(a: Matrix): LUDecomposition =
    ## This constructor computes L and U with the "daxpy"-based elimination
    ## algorithm used in LINPACK and MATLAB.
    ##
-   ## - parameter ``A``: Rectangular matrix
+   ## - parameter ``a``: Rectangular matrix
    ## - ``return``: Structure to access L, U and piv.
    # Initialize.
    let m = a.m
@@ -147,7 +147,7 @@ proc det*(l: LUDecomposition): float =
 proc solve*(l: LUDecomposition, b: Matrix): Matrix =
    ## Solve ``A*X = B``.
    ##
-   ## - parameter ``B``: A Matrix with as many rows as A and any number of columns.
+   ## - parameter ``b``: A Matrix with as many rows as A and any number of columns.
    ## - ``return``: X so that ``L*U*X = B(piv,:)``
    assert(b.m == lu.m, "Matrix row dimensions must agree.")
    assert(l.isNonsingular, "Matrix is singular.")
