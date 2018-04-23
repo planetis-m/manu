@@ -88,7 +88,7 @@ proc getColumnPacked*(m: Matrix): seq[float] =
 
 proc getRowPacked*(m: Matrix): seq[float] {.inline.} =
    ## Copy the internal one-dimensional row packed array.
-   result = m.data
+   m.data
 
 proc rowDimension*(m: Matrix): int {.inline.} =
    ## Get row dimension.

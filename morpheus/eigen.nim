@@ -280,10 +280,10 @@ proc cdiv(xr, xi, yr, yi: float): tuple[re, im: float] =
 proc hqr2(ei: var EigenvalueDecomposition) =
    # Nonsymmetric reduction from Hessenberg to real Schur form.
    #
-   #  This is derived from the Algol procedure hqr2,
-   #  by Martin and Wilkinson, Handbook for Auto. Comp.,
-   #  Vol.ii-Linear Algebra, and the corresponding
-   #  Fortran subroutine in EISPACK.
+   # This is derived from the Algol procedure hqr2,
+   # by Martin and Wilkinson, Handbook for Auto. Comp.,
+   # Vol.ii-Linear Algebra, and the corresponding
+   # Fortran subroutine in EISPACK.
 
    # Initialize   
    let nn = ei.n
@@ -603,16 +603,18 @@ proc eig*(a: Matrix): EigenvalueDecomposition =
    ## - parameter ``a``: Square matrix
    let n = a.n
    result.n = n
-   result.v = matrix(n, n)
    result.d = newSeq[float](n)
    result.e = newSeq[float](n)
-   result.issymmetric = true
+   var issymmetric = true
    for j in 0 ..< n:
-      if not result.issymmetric: break
+      if not issymmetric:
+         break
       for i in 0 ..< n:
-         if not result.issymmetric: break
-         result.issymmetric = a[i, j] == a[j, i]
-   if result.issymmetric:
+         if not issymmetric:
+            break
+         issymmetric = a[i, j] == a[j, i]
+   result.issymmetric = issymmetric
+   if issymmetric:
       result.v = a
       # Tridiagonalize.
       result.tred2()
@@ -620,6 +622,7 @@ proc eig*(a: Matrix): EigenvalueDecomposition =
       result.tql2()
    else:
       result.h = a
+      result.v = matrix(n, n)
       result.ort = newSeq[float](n)
       # Reduce to Hessenberg form.
       result.orthes()

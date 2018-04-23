@@ -3,11 +3,6 @@ import math, times, strutils, morpheus
 template ff(f: float, prec: int = 3): string =
    formatFloat(f, ffDecimal, prec)
 
-template swap(a, b) =
-   let t = b
-   b = a
-   a = t
-
 proc magic(n: int): Matrix =
    var m = matrix(n, n)
    # Odd order
@@ -83,7 +78,7 @@ proc main() =
 
       let c = M.cond()
       if c < 1.0 / eps:
-         buf.add(align(ff(c, 12))
+         buf.add(align(ff(c), 12))
       else:
          buf.add("         Inf")
 
