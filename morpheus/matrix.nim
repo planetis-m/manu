@@ -54,7 +54,7 @@ proc matrix*(data: seq[float], m: int): Matrix =
    let n = if m != 0: data.len div m else: 0
    result.m = m
    result.n = n
-   assert result.m * result.n == data.len, "Array length must be a multiple of m."
+   assert(result.m * result.n == data.len, "Array length must be a multiple of m.")
    result.data = newSeq[float](data.len)
    for i in 0 ..< m:
       for j in 0 ..< n:
@@ -307,7 +307,7 @@ proc `*`*(a, b: Matrix): Matrix =
    result.m = a.m
    result.n = b.n
    result.data = newSeq[float](result.m * result.n)
-   var bColj = newSeq[float](a.n)
+   var bColj = newSeq[float](b.m)
    for j in 0 ..< b.n:
       for k in 0 ..< a.n:
          bColj[k] = b[k, j]

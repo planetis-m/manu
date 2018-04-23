@@ -9,8 +9,7 @@
 ## QR decomposition is in the least squares solution of nonsquare systems
 ## of simultaneous linear equations. This will fail if isFullRank()
 ## returns false.
-import math
-import "./matrix"
+import "./matrix", math
 
 type QRDecomposition* = object
    # Array for internal storage of decomposition.

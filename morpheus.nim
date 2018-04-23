@@ -34,8 +34,8 @@
 ##    let x = A.solve(b)
 ##    let r = A * x - b
 ##    let rnorm = r.normInf()
-import "./morpheus" / [matrix, cholesky, qr, lu, svd] #, eigen
-export matrix, cholesky, qr, lu, svd #, eigen
+import "./morpheus" / [matrix, cholesky, qr, lu, svd, eigen]
+export matrix, cholesky, qr, lu, svd, eigen
 
 proc norm2*(m: Matrix): float =
    ## Two norm

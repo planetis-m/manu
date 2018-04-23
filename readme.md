@@ -17,10 +17,8 @@ API documentation is [here](https://rawgit.com/notTito/morpheus/master/htmldocs/
    let rnorm = r.normInf()
 ```
 
-## Todo
-- Port the EigenValueDecomposition class
-
 ## Copyright Notice
+
 From the original JAMA code:
 
 > This software is a cooperative product of The MathWorks and the National 
