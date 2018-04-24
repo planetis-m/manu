@@ -29,7 +29,7 @@ proc svd*(a: Matrix): SingularValueDecomposition =
    var a = a
    let m = a.m
    let n = a.n
-   # assert(m >= n) and nu = n
+   # assert(m >= n, "SVD only works for m >= n") and set nu = n
    let nu = min(m, n)
    result.s = newSeq[float](min(m + 1, n)) # n<=m so n is min
    result.u = matrix(m, nu)
@@ -330,8 +330,8 @@ proc getS*(sv: SingularValueDecomposition): Matrix =
    ## Return the diagonal matrix of singular values.
    result = matrix(v.m, v.n)
    for i in 0 ..< v.m:
-      # for j in 0 ..< v.n:
-      #    result.data[i, j] = 0.0
+      for j in 0 ..< v.n:
+         result[i, j] = 0.0
       result[i, i] = s[i]
 
 proc norm2*(sv: SingularValueDecomposition): float {.inline.} =

@@ -67,6 +67,8 @@ proc getH*(q: QRDecomposition): Matrix =
       for j in 0 ..< qr.n:
          if i >= j:
             result[i, j] = qr[i, j]
+         else:
+            result[i, j] = 0.0
 
 proc getR*(q: QRDecomposition): Matrix =
    ## Return the upper triangular factor.
@@ -77,6 +79,8 @@ proc getR*(q: QRDecomposition): Matrix =
             result[i, j] = qr[i, j]
          elif i == j:
             result[i, j] = rDiag[i]
+         else:
+            result[i, j] = 0.0
 
 proc getQ*(q: QRDecomposition): Matrix =
    ## Generate and return the (economy-sized) orthogonal factor.
@@ -95,7 +99,7 @@ proc getQ*(q: QRDecomposition): Matrix =
                result[i, j] += s * qr[i, k]
 
 proc solve*(q: QRDecomposition, b: Matrix): Matrix =
-   ## Least squares solution of ``A*X = B``,
+   ## Least squares solution of ``A*X = B``
    ##
    ## - parameter ``b``: A Matrix with as many rows as A and any number of columns.
    ## - ``return``: ``X`` that minimizes the two norm of ``Q*R*X-B``

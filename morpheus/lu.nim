@@ -118,6 +118,8 @@ proc getL*(l: LUDecomposition): Matrix =
             result[i, j] = lu[i, j]
          elif i == j:
             result[i, j] = 1.0
+         else:
+            result[i, j] = 0.0
 
 proc getU*(l: LUDecomposition): Matrix =
    ## Return upper triangular factor.
@@ -126,6 +128,8 @@ proc getU*(l: LUDecomposition): Matrix =
       for j in 0 ..< lu.n:
          if i <= j:
             result[i, j] = lu[i, j]
+         else:
+            result[i, j] = 0.0
 
 proc getPivot*(l: LUDecomposition): seq[int] {.inline.} =
    ## Return pivot permutation vector.

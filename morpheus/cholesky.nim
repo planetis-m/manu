@@ -21,6 +21,7 @@ proc chol*(a: Matrix): CholeskyDecomposition =
    ## Structure to access L and isspd flag.
    ##
    ## parameter ``m``: Square, symmetric matrix.
+   # assert(a.n == a.m and a.n >= 1)
    let n = a.m
    result.l = matrix(n, n)
    result.isspd = a.n == a.m
@@ -38,8 +39,8 @@ proc chol*(a: Matrix): CholeskyDecomposition =
       d = a[j, j] - d
       result.isspd = result.isspd and d > 0.0
       result.l[j, j] = sqrt(max(d, 0.0))
-#       for k in j + 1 ..< n:
-#          result.l[j, k] = 0.0
+      for k in j + 1 ..< n:
+         result.l[j, k] = 0.0
 
 proc isSPD*(c: CholeskyDecomposition): bool {.inline.} =
    ## Is the matrix symmetric and positive definite?
@@ -50,7 +51,7 @@ proc getL*(c: CholeskyDecomposition): Matrix {.inline.} =
    l
 
 proc solve*(c: CholeskyDecomposition, b: Matrix): Matrix =
-   ## Solve ``A*X = B``,
+   ## Solve ``A*X = B``
    ##
    ## - parameter ``b``:  A Matrix with as many rows as A and any number of columns.
    ## - ``return``: X so that ``L*L'*X = B``

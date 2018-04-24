@@ -33,7 +33,7 @@ proc tred2(ei: var EigenvalueDecomposition) =
    # Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
    # Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
    # Fortran subroutine in EISPACK.
-   let n = d.len
+   let n = v.n
    for j in 0 ..< n:
       d[j] = v[n - 1, j]
    # Householder reduction to tridiagonal form.
@@ -116,7 +116,7 @@ proc tql2(ei: var EigenvalueDecomposition) =
    # Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
    # Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
    # Fortran subroutine in EISPACK.
-   let n = d.len
+   let n = v.n
    for i in 1 ..< n:
       e[i - 1] = e[i]
    e[n - 1] = 0.0
@@ -205,7 +205,7 @@ proc orthes(ei: var EigenvalueDecomposition) =
    # by Martin and Wilkinson, Handbook for Auto. Comp.,
    # Vol.ii-Linear Algebra, and the corresponding
    # Fortran subroutines in EISPACK.
-   let n = d.len
+   let n = v.n
    let low = 0
    let high = n - 1
    for m in low + 1 .. high - 1:
@@ -285,7 +285,7 @@ proc hqr2(ei: var EigenvalueDecomposition) =
    # Fortran subroutine in EISPACK.
 
    # Initialize   
-   let nn = d.len
+   let nn = v.n
    var n = nn - 1
    let low = 0
    let high = nn - 1
@@ -391,19 +391,19 @@ proc hqr2(ei: var EigenvalueDecomposition) =
             w = -0.4375 * s * s
          # MATLAB's new ad hoc shift
          if iter == 30:
-               s = (y - x) / 2.0
-               s = s * s + w
-               if s > 0:
-                  s = sqrt(s)
-                  if y < x:
-                     s = -s
-                  s = x - w / ((y - x) / 2.0 + s)
-                  for i in low .. n:
-                     h[i, i] -= s
-                  exshift += s
-                  w = 0.964
-                  y = w
-                  x = y
+            s = (y - x) / 2.0
+            s = s * s + w
+            if s > 0:
+               s = sqrt(s)
+               if y < x:
+                  s = -s
+               s = x - w / ((y - x) / 2.0 + s)
+               for i in low .. n:
+                  h[i, i] -= s
+               exshift += s
+               w = 0.964
+               y = w
+               x = y
          iter.inc # (Could check iteration count here.)
          # Look for two consecutive small sub-diagonal elements
          var m = n - 2
@@ -438,7 +438,7 @@ proc hqr2(ei: var EigenvalueDecomposition) =
                r = if notlast: h[k+2, k - 1] else: 0.0
                x = abs(p) + abs(q) + abs(r)
                if x == 0.0:
-                     continue
+                  continue
                p = p / x
                q = q / x
                r = r / x
@@ -460,25 +460,24 @@ proc hqr2(ei: var EigenvalueDecomposition) =
                for j in k ..< nn:
                   p = h[k, j] + q * h[k + 1, j]
                   if notlast:
-                     p = p + r * h[k+2, j]
-                     h[k+2, j] = h[k+2, j] - p * z
+                     p = p + r * h[k + 2, j]
+                     h[k + 2, j] = h[k + 2, j] - p * z
                   h[k, j] = h[k, j] - p * x
                   h[k + 1, j] = h[k + 1, j] - p * y
                # Column modification
                for i in 0 .. min(n, k + 3):
                   p = x * h[i, k] + y * h[i, k + 1]
                   if notlast:
-                     p = p + z * h[i, k+2]
-                     h[i, k+2] = h[i, k+2] - p * r
-
+                     p = p + z * h[i, k + 2]
+                     h[i, k+2] = h[i, k + 2] - p * r
                   h[i, k] = h[i, k] - p
                   h[i, k + 1] = h[i, k + 1] - p * q
                # Accumulate transformations
                for i in low .. high:
                   p = x * v[i, k] + y * v[i, k + 1]
                   if notlast:
-                     p = p + z * v[i, k+2]
-                     v[i, k+2] = v[i, k+2] - p * r
+                     p = p + z * v[i, k + 2]
+                     v[i, k + 2] = v[i, k + 2] - p * r
                   v[i, k] = v[i, k] - p
                   v[i, k + 1] = v[i, k + 1] - p * q
             # (s != 0)
@@ -565,7 +564,7 @@ proc hqr2(ei: var EigenvalueDecomposition) =
                   vi = (d[i] - p) * 2.0 * q
                   if vr == 0.0 and vi == 0.0:
                      vr = eps * norm * (abs(w) + abs(q) +
-                           abs(x) + abs(y) + abs(z))
+                          abs(x) + abs(y) + abs(z))
                   let (cdivr, cdivi) = cdiv(x * r - z * ra + q * sa, x * s - z * sa - q * ra, vr, vi)
                   h[i, n - 1] = cdivr
                   h[i, n] = cdivi
@@ -596,10 +595,10 @@ proc hqr2(ei: var EigenvalueDecomposition) =
          v[i, j] = z
 
 proc eig*(a: Matrix): EigenvalueDecomposition =
-   ## Check for symmetry, then construct the eigenvalue decomposition
+   ## Check for symmetry, then construct the eigenvalue decomposition.
    ##
-   ## - ``return``: Structure to access D and V.
    ## - parameter ``a``: Square matrix
+   ## - ``return``: Structure to access D and V.
    # assert(a.n == a.m and a.n >= 1)
    let n = a.n
    result.d = newSeq[float](n)
@@ -645,11 +644,11 @@ proc getImagEigenvalues*(ei: EigenvalueDecomposition): seq[float] {.inline.} =
 
 proc getD*(ei: EigenvalueDecomposition): Matrix =
    ## Return the block diagonal eigenvalue matrix
-   let n = d.len
+   let n = v.n
    result = matrix(n, n)
    for i in 0 ..< n:
-      # for j in 0 ..< n:
-      #    result[i, j] = 0.0
+      for j in 0 ..< n:
+         result[i, j] = 0.0
       result[i, i] = d[i]
       if e[i] > 0:
          result[i, i + 1] = e[i]
