@@ -1,6 +1,6 @@
 # Morpheus — Nim Matrix library
 
-This is a port of the NIST JAMA library to Nim.
+This is a port of the NIST [JAMA](https://math.nist.gov/javanumerics/jama/) library to Nim.
 
 API documentation is [here](https://rawgit.com/notTito/morpheus/master/htmldocs/morpheus.html)
 
@@ -16,6 +16,13 @@ API documentation is [here](https://rawgit.com/notTito/morpheus/master/htmldocs/
    let r = A * x - b
    let rnorm = r.normInf()
 ```
+
+## Feature improvements
+- Add more tests
+- Incorporate usefull additions from [Apache Commons Math](https://github.com/apache/commons-math)
+
+## License
+MIT
 
 ## Copyright Notice
 

@@ -136,7 +136,7 @@ proc tql2(ei: var EigenvalueDecomposition) =
       if m > l:
          var iter = 0
          while true:
-            iter = iter + 1  # (Could check iteration count here.)
+            iter.inc  # (Could check iteration count here.)
             # Compute implicit shift
             var g = d[l]
             var p = (d[l + 1] - g) / (2.0 * e[l])

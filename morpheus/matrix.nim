@@ -53,9 +53,9 @@ proc matrix*(data: seq[float], m: int): Matrix =
    ## parameter ``data``: one-dimensional array of float, packed by columns (ala Fortran).
    ## Array length must be a multiple of ``m``.
    let n = if m != 0: data.len div m else: 0
+   assert(m * n == data.len, "Array length must be a multiple of m.")
    result.m = m
    result.n = n
-   assert(result.m * result.n == data.len, "Array length must be a multiple of m.")
    result.data = newSeqUninitialized[float](data.len)
    for i in 0 ..< m:
       for j in 0 ..< n:

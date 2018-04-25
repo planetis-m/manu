@@ -9,6 +9,10 @@ type
       data: seq[float]
       m*, n*: int
 
+   MatrixC* = object
+      data: seq[float]
+      m*, n*: int
+
 proc `[]`*(m: MatrixA, i, j: int): float {.inline.} =
    m.data[i][j]
 
@@ -67,13 +71,33 @@ proc `[]`*(m: var MatrixB, i, j: int): var float {.inline.} =
 proc `[]=`*(m: var MatrixB, i, j: int, v: float) {.inline.} =
    m.data[i * m.n + j] = v
 
+proc `[]`*(m: MatrixC, i, j: int): float {.inline.} =
+   m.data[i + j * m.m]
+
+proc `[]`*(m: var MatrixC, i, j: int): var float {.inline.} =
+   m.data[i + j * m.m]
+
+proc `[]=`*(m: var MatrixC, i, j: int, v: float) {.inline.} =
+   m.data[i + j * m.m] = v
+
 proc matrixB*(m, n: int): MatrixB =
    ## Construct an m-by-n matrix of zeros. 
    result.m = m
    result.n = n
    newSeq(result.data, m * n)
 
-proc matrix*(data: seq[float], m: int): MatrixB =
+proc matrixB*(data: seq[float], m: int): MatrixB =
+   result.m = m
+   result.n = if m != 0: data.len div m else: 0
+   result.data = data
+
+proc matrixC*(m, n: int): MatrixC =
+   ## Construct an m-by-n matrix of zeros. 
+   result.m = m
+   result.n = n
+   result.data = newSeqUninitialized[float](m * n)
+
+proc matrixC*(data: seq[float], m: int): MatrixC =
    result.m = m
    result.n = if m != 0: data.len div m else: 0
    result.data = data
