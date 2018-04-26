@@ -281,6 +281,12 @@ proc `*=`*(m: var Matrix, s: float) =
       for j in 0 ..< m.n:
          m[i, j] = s * m[i, j]
 
+template `*`*(s: float, m: Matrix): Matrix = m * s
+
+template `/`*(m: Matrix, s: float): Matrix = m * (1 / s)
+
+template `/=`*(m: var Matrix, s: float) = m *= (1 / s)
+
 proc `*`*(a, b: Matrix): Matrix =
    ## Linear algebraic matrix multiplication, ``A * B``
    assert(b.m == a.n, "Matrix inner dimensions must agree.")
@@ -302,13 +308,13 @@ proc transpose*(m: Matrix): Matrix =
       for j in 0 ..< m.n:
          result[j, i] = m[i, j]
 
-proc identity*(m, n: int): Matrix =
+proc identity*(m: int): Matrix =
    ## Generate identity matrix.
    ##
-   ## ``return``: An m-by-n matrix with ones on the diagonal and zeros elsewhere.
-   result = matrix(m, n)
+   ## ``return``: An m-by-m matrix with ones on the diagonal and zeros elsewhere.
+   result = matrix(m, m)
    for i in 0 ..< m:
-      for j in 0 ..< n:
+      for j in 0 ..< m:
          if i == j:
             result[i, j] = 1.0
          else:

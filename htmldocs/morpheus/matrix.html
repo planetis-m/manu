@@ -1325,8 +1325,8 @@ function main() {
     title="`*`(a, b: Matrix): Matrix"><wbr />`*`<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
   <li><a class="reference" href="#transpose,Matrix"
     title="transpose(m: Matrix): Matrix"><wbr />transpose<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
-  <li><a class="reference" href="#identity,int,int"
-    title="identity(m, n: int): Matrix"><wbr />identity<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
+  <li><a class="reference" href="#identity,int"
+    title="identity(m: int): Matrix"><wbr />identity<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
   <li><a class="reference" href="#norm1,Matrix"
     title="norm1(m: Matrix): float"><wbr />norm1<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
   <li><a class="reference" href="#normInf,Matrix"
@@ -1337,6 +1337,18 @@ function main() {
     title="trace(m: Matrix): float"><wbr />trace<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
   <li><a class="reference" href="#$,Matrix"
     title="`$`(m: Matrix): string"><wbr />`$`<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
+
+  </ul>
+</li>
+<li>
+  <a class="reference reference-toplevel" href="#18" id="68">Templates</a>
+  <ul class="simple simple-toc-section">
+      <li><a class="reference" href="#*.t,float,Matrix"
+    title="`*`(s: float; m: Matrix): Matrix"><wbr />`*`<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
+  <li><a class="reference" href="#/.t,Matrix,float"
+    title="`&#x2F;`(m: Matrix; s: float): Matrix"><wbr />`/`<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
+  <li><a class="reference" href="#/=.t,Matrix,float"
+    title="`&#x2F;=`(m: var Matrix; s: float)"><wbr />`/=`<span class="attachedType" style="visibility:hidden">Matrix</span></a></li>
 
   </ul>
 </li>
@@ -1561,10 +1573,10 @@ Linear algebraic matrix multiplication, <tt class="docutils literal"><span class
 Matrix transpose
 
 </dd>
-<dt id="identity"><a name="identity,int,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">identity</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">n</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
+<dt id="identity"><a name="identity,int"></a><pre><span class="Keyword">proc</span> <span class="Identifier">identity</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span> <span class="Other pragmabegin">{.</span><div class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></div><span class="Other pragmaend">.}</span></pre></dt>
 <dd>
 <p>Generate identity matrix.</p>
-<p><tt class="docutils literal"><span class="pre">return</span></tt>: An m-by-n matrix with ones on the diagonal and zeros elsewhere.</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: An m-by-m matrix with ones on the diagonal and zeros elsewhere.</p>
 
 
 </dd>
@@ -1603,6 +1615,26 @@ Matrix transpose
 </dd>
 
 </dl></div>
+<div class="section" id="18">
+<h1><a class="toc-backref" href="#18">Templates</a></h1>
+<dl class="item">
+<dt id="*"><a name="*.t,float,Matrix"></a><pre><span class="Keyword">template</span> <span class="Identifier">`*`</span><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span></pre></dt>
+<dd>
+
+
+</dd>
+<dt id="/"><a name="/.t,Matrix,float"></a><pre><span class="Keyword">template</span> <span class="Identifier">`/`</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">Matrix</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">Matrix</span></pre></dt>
+<dd>
+
+
+</dd>
+<dt id="/="><a name="/=.t,Matrix,float"></a><pre><span class="Keyword">template</span> <span class="Identifier">`/=`</span><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">Matrix</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
+<dd>
+
+
+</dd>
+
+</dl></div>
 
   </div>
 </div>
@@ -1611,7 +1643,7 @@ Matrix transpose
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2018-04-25 17:11:12 UTC</small>
+        <small>Made with Nim. Generated: 2018-04-26 22:42:07 UTC</small>
       </div>
     </div>
   </div>

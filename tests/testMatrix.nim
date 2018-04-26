@@ -32,7 +32,7 @@ proc main() =
    var rvals = @[@[2.0, 5.0, 8.0, 11.0], @[3.0, 6.0, 9.0, 12.0]]
    rvals.add @[1.0, 4.0, 7.0]
    let pvals = @[@[4.0, 1.0, 1.0], @[1.0, 2.0, 3.0], @[1.0, 3.0, 6.0]]
-   let ivals = @[@[1.0, 0.0, 0.0, 0.0], @[0.0, 1.0, 0.0, 0.0], @[0.0, 0.0, 1.0, 0.0]]
+   let ivals = @[@[1.0, 0.0, 0.0], @[0.0, 1.0, 0.0], @[0.0, 0.0, 1.0]]
    let evals = 
       @[@[0.0, 1.0, 0.0, 0.0], @[1.0, 0.0, 2.0e-7,0.0], @[0.0, -2.0e-7,0.0, 1.0], @[0.0, 0.0, 1.0, 0.0]]
    let square = @[@[166.0, 188.0, 210.0], @[188.0, 214.0, 240.0], @[210.0, 240.0, 270.0]]
@@ -110,7 +110,7 @@ proc main() =
 #    avals[0][0] = columnwise[0]
    I = matrix(ivals)
    try:
-      check(I, identity(3, 4))
+      check(I, identity(3))
       try_success("identity... ", "")
    except ValueError:
       try_failure(errorCount, "identity... ",
@@ -658,7 +658,7 @@ proc main() =
       try_failure(errorCount,"LUDecomposition...","incorrect LU decomposition calculation")
    X = A.inverse()
    try:
-      check(A * X, identity(3,3))
+      check(A * X, identity(3))
       try_success("inverse()...", "")
    except ValueError:
       try_failure(errorCount,"inverse()...","incorrect inverse calculation")
@@ -681,9 +681,9 @@ proc main() =
    except ValueError:
       try_failure(errorCount,"CholeskyDecomposition...",
                   "incorrect Cholesky decomposition calculation")
-   X = Chol.solve(identity(3,3))
+   X = Chol.solve(identity(3))
    try:
-      check(A * X, identity(3,3))
+      check(A * X, identity(3))
       try_success("CholeskyDecomposition solve()...", "")
    except ValueError:
       try_failure(errorCount,"CholeskyDecomposition solve()...",

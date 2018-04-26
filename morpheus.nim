@@ -64,7 +64,7 @@ proc inverse*(m: Matrix): Matrix =
    ## Matrix inverse or pseudoinverse
    ##
    ## ``return``: inverse(A) if A is square, pseudoinverse otherwise.
-   solve(m, identity(m.m, m.m))
+   solve(m, identity(m.m))
 
 proc det*(m: Matrix): float =
    ## Matrix determinant
