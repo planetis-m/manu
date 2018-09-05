@@ -18,8 +18,6 @@ type SingularValueDecomposition* = object
    # Array for internal storage of singular values.
    s: seq[float]
 
-{.this: sv.}
-
 proc svd*(a: Matrix): SingularValueDecomposition =
    ## Construct the singular value decomposition.
    ##
@@ -314,44 +312,44 @@ proc svd*(a: Matrix): SingularValueDecomposition =
 
 proc getU*(sv: SingularValueDecomposition): Matrix {.inline.} =
    ## Return the left singular vectors
-   u
+   sv.u
 
 proc getV*(sv: SingularValueDecomposition): Matrix {.inline.} =
    ## Return the right singular vectors
-   v
+   sv.v
 
 proc getSingularValues*(sv: SingularValueDecomposition): seq[float] {.inline.} =
    ## Return the one-dimensional array of singular values.
    ##
    ## ``return``: diagonal of S
-   s
+   sv.s
 
 proc getS*(sv: SingularValueDecomposition): Matrix =
    ## Return the diagonal matrix of singular values.
-   result = matrix(v.m, v.n)
-   for i in 0 ..< v.m:
-      for j in 0 ..< v.n:
+   result = matrix(sv.v.m, sv.v.n)
+   for i in 0 ..< sv.v.m:
+      for j in 0 ..< sv.v.n:
          result[i, j] = 0.0
-      result[i, i] = s[i]
+      result[i, i] = sv.s[i]
 
 proc norm2*(sv: SingularValueDecomposition): float {.inline.} =
    ## Two norm.
    ##
    ## ``return``: max(S)
-   s[0]
+   sv.s[0]
 
 proc cond*(sv: SingularValueDecomposition): float {.inline.} =
    ## Two norm condition number.
    ##
    ## ``return``: max(S)/min(S)
-   s[0] / s[^1]
+   sv.s[0] / sv.s[^1]
 
 proc rank*(sv: SingularValueDecomposition): int =
    ## Effective numerical matrix rank.
    ##
    ## ``return``: Number of nonnegligible singular values.
    let eps = pow(2.0, -52.0)
-   let tol = float(max(u.m, v.m)) * s[0] * eps
-   for d in s:
+   let tol = float(max(sv.u.m, sv.v.m)) * sv.s[0] * eps
+   for d in sv.s:
       if d > tol:
          result.inc

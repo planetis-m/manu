@@ -1,4 +1,4 @@
-import math, morpheus / matrix
+import math, "../morpheus/matrix"
 
 # private utility routines
 
@@ -7,7 +7,7 @@ proc check*(x, y: float) =
    let eps = pow(2.0, -52.0)
    if x == 0.0 and abs(y) < 10.0 * eps: return
    if y == 0.0 and abs(x) < 10.0 * eps: return
-   if abs(x-y) > 10.0 * eps * max(abs(x), abs(y)):
+   if abs(x - y) > 10.0 * eps * max(abs(x), abs(y)):
       raise newException(ValueError, "The difference x-y is too large: x = " & $x & "  y = " & $y)
 
 proc check*(x, y: seq[float]) =

@@ -14,8 +14,6 @@ type CholeskyDecomposition* = object
    # is symmetric and positive definite flag.
    isspd: bool
 
-{.this: c.}
-
 proc chol*(a: Matrix): CholeskyDecomposition =
    ## Cholesky algorithm for symmetric and positive definite matrix.
    ## Structure to access L and isspd flag.
@@ -44,30 +42,30 @@ proc chol*(a: Matrix): CholeskyDecomposition =
 
 proc isSPD*(c: CholeskyDecomposition): bool {.inline.} =
    ## Is the matrix symmetric and positive definite?
-   isspd
+   c.isspd
 
 proc getL*(c: CholeskyDecomposition): Matrix {.inline.} =
    ## Return triangular factor.
-   l
+   c.l
 
 proc solve*(c: CholeskyDecomposition, b: Matrix): Matrix =
    ## Solve ``A*X = B``
    ##
    ## - parameter ``b``:  A Matrix with as many rows as A and any number of columns.
    ## - ``return``: X so that ``L*L'*X = B``
-   assert(b.m == l.n, "Matrix row dimensions must agree.")
-   assert(isspd, "Matrix is not symmetric positive definite.")
+   assert(b.m == c.l.n, "Matrix row dimensions must agree.")
+   assert(c.isspd, "Matrix is not symmetric positive definite.")
    # Copy right hand side.
    result = b
    # Solve L*Y = B
-   for k in 0 ..< l.m:
+   for k in 0 ..< c.l.m:
       for j in 0 ..< b.n:
          for i in 0 ..< k:
-            result[k, j] -= result[i, j] * l[k, i]
-         result[k, j] /= l[k, k]
+            result[k, j] -= result[i, j] * c.l[k, i]
+         result[k, j] /= c.l[k, k]
    # Solve L'*X = Y
-   for k in countdown(l.m - 1, 0):
+   for k in countdown(c.l.m - 1, 0):
       for j in 0 ..< b.n:
-         for i in k + 1 ..< l.m:
-            result[k, j] -= result[i, j] * l[i, k]
-         result[k, j] /= l[k, k]
+         for i in k + 1 ..< c.l.m:
+            result[k, j] -= result[i, j] * c.l[i, k]
+         result[k, j] /= c.l[k, k]
