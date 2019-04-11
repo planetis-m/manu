@@ -8,11 +8,10 @@
 ## be queried by the isSPD() method.
 import "./matrix", math
 
-type CholeskyDecomposition* = object
-   # triangular factor
-   l: Matrix
-   # is symmetric and positive definite flag.
-   isspd: bool
+type
+   CholeskyDecomposition* = object
+      l: Matrix # triangular factor
+      isspd: bool # is symmetric and positive definite flag.
 
 proc chol*(a: Matrix): CholeskyDecomposition =
    ## Cholesky algorithm for symmetric and positive definite matrix.

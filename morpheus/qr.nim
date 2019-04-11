@@ -11,11 +11,10 @@
 ## returns false.
 import "./matrix", math
 
-type QRDecomposition* = object
-   # Array for internal storage of decomposition.
-   qr: Matrix
-   # Array for internal storage of diagonal of R.
-   rDiag: seq[float]
+type
+   QRDecomposition* = object
+      qr: Matrix # Array for internal storage of decomposition.
+      rDiag: seq[float] # Array for internal storage of diagonal of R.
 
 proc qr*(a: Matrix): QRDecomposition =
    ## QR Decomposition, computed by Householder reflections.

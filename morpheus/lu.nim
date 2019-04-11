@@ -11,13 +11,11 @@
 ## linear equations. This will fail if isNonsingular() returns false.
 import "./matrix"
 
-type LUDecomposition* = object
-   # Array for internal storage of decomposition.
-   lu: Matrix
-   # Internal storage of pivot vector.
-   piv: seq[int]
-   # Pivot sign.
-   pivsign: int
+type
+   LUDecomposition* = object
+      lu: Matrix # Array for internal storage of decomposition.
+      piv: seq[int] # Internal storage of pivot vector.
+      pivsign: int # Pivot sign.
 
 proc lu*(a: Matrix): LUDecomposition =
    ## LU Decomposition

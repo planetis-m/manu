@@ -6,17 +6,16 @@ template checkBounds(cond: untyped, msg = "") =
          if not cond:
             raise newException(IndexError, msg)
 
-type Matrix* = object
-   # Array for internal storage of elements.
-   data: seq[float]
-   # Row and column dimensions.
-   m*, n*: int
+type
+   Matrix* = object
+      data: seq[float] # Array for internal storage of elements.
+      m*, n*: int # Row and column dimensions.
 
 proc matrix*(m, n: int): Matrix {.inline.} =
    ## Construct an m-by-n matrix of zeros. 
    result.m = m
    result.n = n
-   result.data = newSeqUninitialized[float](m * n)
+   result.data = newSeq[float](m * n)
 
 proc matrix*(m, n: int, s: float): Matrix =
    ## Construct an m-by-n constant matrix.
@@ -30,9 +29,8 @@ proc matrix*(data: seq[seq[float]]): Matrix =
    ## Construct a matrix from a 2-D array.
    result.m = data.len
    result.n = data[0].len
-   when compileOption("assertions"):
-      for i in 0 ..< result.m:
-         assert(data[i].len == result.n, "All rows must have the same length.")
+   for i in 0 ..< result.m:
+      assert(data[i].len == result.n, "All rows must have the same length.")
    result.data = newSeqUninitialized[float](result.m * result.n)
    for i in 0 ..< result.m:
       for j in 0 ..< result.n:
@@ -106,7 +104,7 @@ proc `[]`*(m: var Matrix, i, j: int): var float {.inline.} =
    ## Get a single element.
    m.data[i * m.n + j]
 
-proc `[]=`*(m: var Matrix, i, j: int, s: float) =
+proc `[]=`*(m: var Matrix, i, j: int, s: float) {.inline.} =
    ## Set a single element.
    m.data[i * m.n + j] = s
 
@@ -283,9 +281,18 @@ proc `*=`*(m: var Matrix, s: float) =
 
 template `*`*(s: float, m: Matrix): Matrix = m * s
 
-template `/`*(m: Matrix, s: float): Matrix = m * (1 / s)
+proc `/`*(m: Matrix, s: float): Matrix =
+   ## Divide a matrix by a scalar, ``C = A/s``
+   result = matrix(m.m, m.n)
+   for i in 0 ..< m.m:
+      for j in 0 ..< m.n:
+         result[i, j] = m[i, j] / s
 
-template `/=`*(m: var Matrix, s: float) = m *= (1 / s)
+proc `/=`*(m: var Matrix, s: float) =
+   ## Divide a matrix by a scalar in place, ``A = A/s``
+   for i in 0 ..< m.m:
+      for j in 0 ..< m.n:
+         m[i, j] = m[i, j] / s
 
 proc `*`*(a, b: Matrix): Matrix =
    ## Linear algebraic matrix multiplication, ``A * B``
@@ -358,20 +365,20 @@ proc trace*(m: Matrix): float =
 proc columnFormat(s: seq[float]): seq[string] =
    result = newSeq[string](s.len)
    var maxLen = 0
-   for i, f in s:
-      result[i] = formatEng(f)
-      maxLen = max(maxLen, result[i].len)
-   for i, f in result.mpairs:
+   for i in 0 ..< s.len:
+      let f = formatEng(s[i])
+      maxLen = max(maxLen, f.len)
+      result[i] = f
+   for f in result.mitems:
       f = spaces(maxLen - f.len) & f
 
 proc `$`*(m: Matrix): string =
-   var cols: seq[seq[string]]
-   newSeq(cols, m.n)
+   var formatted = newSeqOfCap[string](m.m * m.n)
    var mColj = newSeq[float](m.m)
    for j in 0 ..< m.n:
       for i in 0 ..< m.m:
          mColj[i] = m[i, j]
-      cols[j] = columnFormat(mColj)
+      formatted.add columnFormat(mColj)
    result = ""
    for i in 0 ..< m.m:
       if i == 0:
@@ -383,7 +390,7 @@ proc `$`*(m: Matrix): string =
       for j in 0 ..< m.n:
          if j != 0:
             result.add "  "
-         result.add cols[j][i]
+         result.add formatted[i + j * m.m]
       if i == 0:
          result.add "⎤\n"
       elif i == m.m - 1:

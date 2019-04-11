@@ -12,11 +12,10 @@
 ## rank can be computed from this decomposition.
 import "./matrix", math
 
-type SingularValueDecomposition* = object
-   # Arrays for internal storage of U and V.
-   u, v: Matrix
-   # Array for internal storage of singular values.
-   s: seq[float]
+type
+   SingularValueDecomposition* = object
+      u, v: Matrix # Arrays for internal storage of U and V.
+      s: seq[float] # Array for internal storage of singular values.
 
 proc svd*(a: Matrix): SingularValueDecomposition =
    ## Construct the singular value decomposition.

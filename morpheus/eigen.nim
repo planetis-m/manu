@@ -14,15 +14,12 @@
 ## A = V*D*inverse(V) depends upon V.cond().
 import "./matrix", math
 
-type EigenvalueDecomposition* = object
-   # Array for internal storage of eigenvectors.
-   v: Matrix
-   # Array for internal storage of nonsymmetric Hessenberg form.
-   h: Matrix
-   # Arrays for internal storage of eigenvalues.
-   d, e: seq[float]
-   # Working storage for nonsymmetric algorithm.
-   ort: seq[float]
+type
+   EigenvalueDecomposition* = object
+      v: Matrix # Array for internal storage of eigenvectors.
+      h: Matrix # Array for internal storage of nonsymmetric Hessenberg form.
+      d, e: seq[float] # Arrays for internal storage of eigenvalues.
+      ort: seq[float] # Working storage for nonsymmetric algorithm.
 
 proc tred2(ei: var EigenvalueDecomposition) =
    # Symmetric Householder reduction to tridiagonal form.
@@ -601,15 +598,15 @@ proc eig*(a: Matrix): EigenvalueDecomposition =
    let n = a.n
    result.d = newSeq[float](n)
    result.e = newSeq[float](n)
-   var issymmetric = true
+   var isSymmetric = true
    for j in 0 ..< n:
-      if not issymmetric:
+      if not isSymmetric:
          break
       for i in 0 ..< n:
-         if not issymmetric:
+         if not isSymmetric:
             break
-         issymmetric = a[i, j] == a[j, i]
-   if issymmetric:
+         isSymmetric = a[i, j] == a[j, i]
+   if isSymmetric:
       result.v = a
       # Tridiagonalize.
       result.tred2()

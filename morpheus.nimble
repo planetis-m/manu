@@ -1,7 +1,7 @@
 mode = ScriptMode.Verbose
 
 packageName   = "morpheus"
-version       = "4.0"
+version       = "1.0"
 author        = "Antonis Geralis"
 description   = "Nim Matrix library"
 license       = "MIT"
@@ -27,5 +27,5 @@ task test, "run tests":
 task docs, "generate documentation":
   exec("mkdir -p htmldocs/morpheus")
   switch "project"
-  switch "docSeeSrcUrl", "https://github.com/notTito/morpheus/blob/master"
+  switch "docSeeSrcUrl", "https://github.com/b3liever/morpheus/blob/master"
   setCommand "doc", "morpheus.nim"
