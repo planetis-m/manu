@@ -1,4 +1,4 @@
-import math, testutils, morpheus / [matrix, lu]
+import math, testutils, manu / [matrix, lu]
 
 var errorCount = 0
 var warningCount = 0

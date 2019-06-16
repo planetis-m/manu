@@ -1,7 +1,7 @@
-## Morpheus - Nim Matrix library
+## Manu - Nim Matrix library
 ## =============================
 ##
-## The morpheus module provides the fundamental operations of numerical
+## The manu module provides the fundamental operations of numerical
 ## linear algebra. Various constructors create Matrices from two dimensional
 ## arrays of double precision floating point numbers. Various "gets" and
 ## "sets" provide access to submatrices and matrix elements.  Several methods 
@@ -13,7 +13,7 @@
 ##
 ## Five fundamental matrix decompositions, which consist of pairs or triples
 ## of matrices, permutation vectors, and the like, produce results in five
-## decomposition classes. These decompositions are accessed by the morpheus
+## decomposition classes. These decompositions are accessed by the manu
 ## module to compute solutions of simultaneous linear equations, determinants,
 ## inverses and other matrix functions. The five decompositions are:
 ##
@@ -26,7 +26,7 @@
 ## **Example of use:**
 ##
 ## .. code-block:: nim
-##    import morpheus
+##    import manu
 ##    # Solve a linear system A x = b and compute the residual norm, ||b - A x||.
 ##    let vals = @[@[1.0, 2.0, 3.0], @[4.0, 5.0, 6.0], @[7.0, 8.0, 10.0]]
 ##    let A = matrix(vals)
@@ -34,7 +34,7 @@
 ##    let x = A.solve(b)
 ##    let r = A * x - b
 ##    let rnorm = r.normInf()
-import "./morpheus" / [matrix, cholesky, qr, lu, svd, eigen]
+import "./manu" / [matrix, cholesky, qr, lu, svd, eigen]
 export matrix, cholesky, qr, lu, svd, eigen
 
 proc norm2*(m: Matrix): float =

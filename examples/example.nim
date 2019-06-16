@@ -1,4 +1,4 @@
-import math, times, strutils, morpheus
+import math, times, strutils, manu
 
 template ff(f: float, prec: int = 3): string =
    formatFloat(f, ffDecimal, prec)

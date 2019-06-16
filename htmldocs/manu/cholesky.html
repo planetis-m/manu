@@ -842,6 +842,7 @@ function main() {
   </div>
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
+  
   <p class="module-desc"><p>Cholesky Decomposition.</p>
 <p>For a symmetric, positive definite matrix A, the Cholesky decomposition is an lower triangular matrix L so that A = L*L'.</p>
 <p>If the matrix is not symmetric or positive definite, the constructor returns a partial decomposition and sets an internal flag that may be queried by the isSPD() method.</p>
@@ -862,6 +863,7 @@ function main() {
 <dd>
 
 
+
 </dd>
 
 </dl></div>
@@ -871,6 +873,7 @@ function main() {
 <a id="chol,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#chol%2CMatrix"><span class="Identifier">chol</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 <p>Cholesky algorithm for symmetric and positive definite matrix. Structure to access L and isspd flag.</p>
 <p>parameter <tt class="docutils literal"><span class="pre">m</span></tt>: Square, symmetric matrix.</p>
 
@@ -879,18 +882,21 @@ function main() {
 <a id="isSPD,CholeskyDecomposition"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#isSPD%2CCholeskyDecomposition"><span class="Identifier">isSPD</span></a><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Is the matrix symmetric and positive definite?
 
 </dd>
 <a id="getL,CholeskyDecomposition"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#getL%2CCholeskyDecomposition"><span class="Identifier">getL</span></a><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Return triangular factor.
 
 </dd>
 <a id="solve,CholeskyDecomposition,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#solve%2CCholeskyDecomposition%2CMatrix"><span class="Identifier">solve</span></a><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt><ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">b</span></tt>:  A Matrix with as many rows as A and any number of columns.</li>
 <li><tt class="docutils literal"><span class="pre">return</span></tt>: X so that <tt class="docutils literal"><span class="pre">L*L'*X = B</span></tt></li>
 </ul>
@@ -907,7 +913,7 @@ Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt><ul clas
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2019-04-11 19:22:20 UTC</small>
+        <small>Made with Nim. Generated: 2019-06-16 08:12:41 UTC</small>
       </div>
     </div>
   </div>

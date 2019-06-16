@@ -1,6 +1,6 @@
-mode = ScriptMode.Verbose
+# mode = ScriptMode.Verbose
 
-packageName   = "morpheus"
+packageName   = "manu"
 version       = "1.0"
 author        = "Antonis Geralis"
 description   = "Nim Matrix library"
@@ -25,7 +25,7 @@ task test, "run tests":
   setCommand "c", "tests/testMatrix.nim"
 
 task docs, "generate documentation":
-  exec("mkdir -p htmldocs/morpheus")
+  # exec("mkdir -p htmldocs/manu")
   switch "project"
-  switch "docSeeSrcUrl", "https://github.com/b3liever/morpheus/blob/master"
-  setCommand "doc", "morpheus.nim"
+  switch "docSeeSrcUrl", "https://github.com/b3liever/manu/blob/master"
+  setCommand "doc", "manu.nim"

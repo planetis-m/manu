@@ -16,7 +16,7 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
 
 <!-- CSS -->
-<title>lu</title>
+<title>qr</title>
 <style type="text/css" >
 /*
 Stylesheet for use with Docutils/rst2html.
@@ -787,7 +787,7 @@ function main() {
 <body onload="main()">
 <div class="document" id="documentId">
   <div class="container">
-    <h1 class="title">lu</h1>
+    <h1 class="title">qr</h1>
     <div class="row">
   <div class="three columns">
   <div id="global-links">
@@ -815,35 +815,28 @@ function main() {
 <li>
   <a class="reference reference-toplevel" href="#7" id="57">Types</a>
   <ul class="simple simple-toc-section">
-      <li><a class="reference" href="#LUDecomposition"
-    title="LUDecomposition = object
-  lu: Matrix
-  piv: seq[int]
-  pivsign: int"><wbr />LUDecomposition<span class="attachedType"></span></a></li>
+      <li><a class="reference" href="#QRDecomposition"
+    title="QRDecomposition = object
+  qr: Matrix
+  rDiag: seq[float]"><wbr />QRDecomposition<span class="attachedType"></span></a></li>
 
   </ul>
 </li>
 <li>
   <a class="reference reference-toplevel" href="#12" id="62">Procs</a>
   <ul class="simple simple-toc-section">
-      <li><a class="reference" href="#lu%2CMatrix"
-    title="lu(a: Matrix): LUDecomposition"><wbr />lu<span class="attachedType">LUDecomposition</span></a></li>
-  <li><a class="reference" href="#luGauss%2CMatrix"
-    title="luGauss(a: Matrix): LUDecomposition"><wbr />lu<wbr />Gauss<span class="attachedType">LUDecomposition</span></a></li>
-  <li><a class="reference" href="#isNonsingular%2CLUDecomposition"
-    title="isNonsingular(l: LUDecomposition): bool"><wbr />is<wbr />Nonsingular<span class="attachedType">LUDecomposition</span></a></li>
-  <li><a class="reference" href="#getL%2CLUDecomposition"
-    title="getL(l: LUDecomposition): Matrix"><wbr />get<wbr />L<span class="attachedType">LUDecomposition</span></a></li>
-  <li><a class="reference" href="#getU%2CLUDecomposition"
-    title="getU(l: LUDecomposition): Matrix"><wbr />get<wbr />U<span class="attachedType">LUDecomposition</span></a></li>
-  <li><a class="reference" href="#getPivot%2CLUDecomposition"
-    title="getPivot(l: LUDecomposition): seq[int]"><wbr />get<wbr />Pivot<span class="attachedType">LUDecomposition</span></a></li>
-  <li><a class="reference" href="#getFloatPivot%2CLUDecomposition"
-    title="getFloatPivot(l: LUDecomposition): seq[float]"><wbr />get<wbr />Float<wbr />Pivot<span class="attachedType">LUDecomposition</span></a></li>
-  <li><a class="reference" href="#det%2CLUDecomposition"
-    title="det(l: LUDecomposition): float"><wbr />det<span class="attachedType">LUDecomposition</span></a></li>
-  <li><a class="reference" href="#solve%2CLUDecomposition%2CMatrix"
-    title="solve(l: LUDecomposition; b: Matrix): Matrix"><wbr />solve<span class="attachedType">LUDecomposition</span></a></li>
+      <li><a class="reference" href="#qr%2CMatrix"
+    title="qr(a: Matrix): QRDecomposition"><wbr />qr<span class="attachedType">QRDecomposition</span></a></li>
+  <li><a class="reference" href="#isFullRank%2CQRDecomposition"
+    title="isFullRank(q: QRDecomposition): bool"><wbr />is<wbr />Full<wbr />Rank<span class="attachedType">QRDecomposition</span></a></li>
+  <li><a class="reference" href="#getH%2CQRDecomposition"
+    title="getH(q: QRDecomposition): Matrix"><wbr />get<wbr />H<span class="attachedType">QRDecomposition</span></a></li>
+  <li><a class="reference" href="#getR%2CQRDecomposition"
+    title="getR(q: QRDecomposition): Matrix"><wbr />get<wbr />R<span class="attachedType">QRDecomposition</span></a></li>
+  <li><a class="reference" href="#getQ%2CQRDecomposition"
+    title="getQ(q: QRDecomposition): Matrix"><wbr />get<wbr />Q<span class="attachedType">QRDecomposition</span></a></li>
+  <li><a class="reference" href="#solve%2CQRDecomposition%2CMatrix"
+    title="solve(q: QRDecomposition; b: Matrix): Matrix"><wbr />solve<span class="attachedType">QRDecomposition</span></a></li>
 
   </ul>
 </li>
@@ -853,9 +846,10 @@ function main() {
   </div>
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
-  <p class="module-desc"><p>LU Decomposition.</p>
-<p>For an m-by-n matrix A with m &gt;= n, the LU decomposition is an m-by-n unit lower triangular matrix L, an n-by-n upper triangular matrix U, and a permutation vector piv of length m so that A(piv,:) = L*U. If m &lt; n, then L is m-by-m and U is m-by-n.</p>
-<p>The LU decompostion with pivoting always exists, even if the matrix is singular, so the constructor will never fail. The primary use of the LU decomposition is in the solution of square systems of simultaneous linear equations. This will fail if isNonsingular() returns false.</p>
+  
+  <p class="module-desc"><p>QR Decomposition.</p>
+<p>For an m-by-n matrix A with m &gt;= n, the QR decomposition is an m-by-n orthogonal matrix Q and an n-by-n upper triangular matrix R so that A = Q*R.</p>
+<p>The QR decompostion always exists, even if the matrix does not have full rank, so the constructor will never fail. The primary use of the QR decomposition is in the least squares solution of nonsquare systems of simultaneous linear equations. This will fail if isFullRank() returns false.</p>
 </p>
   <div class="section" id="6">
 <h1><a class="toc-backref" href="#6">Imports</a></h1>
@@ -865,13 +859,13 @@ function main() {
 <div class="section" id="7">
 <h1><a class="toc-backref" href="#7">Types</a></h1>
 <dl class="item">
-<a id="LUDecomposition"></a>
-<dt><pre><a href="lu.html#LUDecomposition"><span class="Identifier">LUDecomposition</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
-  <span class="Identifier">lu</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a>
-  <span class="Identifier">piv</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span>
-  <span class="Identifier">pivsign</span><span class="Other">:</span> <span class="Identifier">int</span>
+<a id="QRDecomposition"></a>
+<dt><pre><a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <span class="Identifier">qr</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a>
+  <span class="Identifier">rDiag</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span>
 </pre></dt>
 <dd>
+
 
 
 </dd>
@@ -880,68 +874,51 @@ function main() {
 <div class="section" id="12">
 <h1><a class="toc-backref" href="#12">Procs</a></h1>
 <dl class="item">
-<a id="lu,Matrix"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#lu%2CMatrix"><span class="Identifier">lu</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="lu.html#LUDecomposition"><span class="Identifier">LUDecomposition</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="qr,Matrix"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#qr%2CMatrix"><span class="Identifier">qr</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-<p>LU Decomposition Structure to access L, U and piv.</p>
+
+<p>QR Decomposition, computed by Householder reflections. Structure to access R and the Householder vectors and compute Q.</p>
 <p>parameter <tt class="docutils literal"><span class="pre">a</span></tt>: Rectangular matrix</p>
 
 
 </dd>
-<a id="luGauss,Matrix"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#luGauss%2CMatrix"><span class="Identifier">luGauss</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="lu.html#LUDecomposition"><span class="Identifier">LUDecomposition</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="isFullRank,QRDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#isFullRank%2CQRDecomposition"><span class="Identifier">isFullRank</span></a><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-<p>LU Decomposition, computed by Gaussian elimination.</p>
-<p>This constructor computes L and U with the &quot;daxpy&quot;-based elimination algorithm used in LINPACK and MATLAB.</p>
-<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">a</span></tt>: Rectangular matrix</li>
-<li><tt class="docutils literal"><span class="pre">return</span></tt>: Structure to access L, U and piv.</li>
-</ul>
+
+Is the matrix full rank?
+
+</dd>
+<a id="getH,QRDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#getH%2CQRDecomposition"><span class="Identifier">getH</span></a><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+<p>Return the Householder vectors.</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: Lower trapezoidal matrix whose columns define the reflections.</p>
 
 
 </dd>
-<a id="isNonsingular,LUDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#isNonsingular%2CLUDecomposition"><span class="Identifier">isNonsingular</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <a href="lu.html#LUDecomposition"><span class="Identifier">LUDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="getR,QRDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#getR%2CQRDecomposition"><span class="Identifier">getR</span></a><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-<p>Is the matrix nonsingular?</p>
-<p><tt class="docutils literal"><span class="pre">return</span></tt>: true if U, and hence A, is nonsingular.</p>
 
-
-</dd>
-<a id="getL,LUDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getL%2CLUDecomposition"><span class="Identifier">getL</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <a href="lu.html#LUDecomposition"><span class="Identifier">LUDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
-<dd>
-Return lower triangular factor.
+Return the upper triangular factor.
 
 </dd>
-<a id="getU,LUDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getU%2CLUDecomposition"><span class="Identifier">getU</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <a href="lu.html#LUDecomposition"><span class="Identifier">LUDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="getQ,QRDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#getQ%2CQRDecomposition"><span class="Identifier">getQ</span></a><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-Return upper triangular factor.
+
+Generate and return the (economy-sized) orthogonal factor.
 
 </dd>
-<a id="getPivot,LUDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getPivot%2CLUDecomposition"><span class="Identifier">getPivot</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <a href="lu.html#LUDecomposition"><span class="Identifier">LUDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="solve,QRDecomposition,Matrix"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#solve%2CQRDecomposition%2CMatrix"><span class="Identifier">solve</span></a><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-Return pivot permutation vector.
 
-</dd>
-<a id="getFloatPivot,LUDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getFloatPivot%2CLUDecomposition"><span class="Identifier">getFloatPivot</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <a href="lu.html#LUDecomposition"><span class="Identifier">LUDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
-<dd>
-Return pivot permutation vector as a one-dimensional double array.
-
-</dd>
-<a id="det,LUDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#det%2CLUDecomposition"><span class="Identifier">det</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <a href="lu.html#LUDecomposition"><span class="Identifier">LUDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
-<dd>
-Determinant
-
-</dd>
-<a id="solve,LUDecomposition,Matrix"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#solve%2CLUDecomposition%2CMatrix"><span class="Identifier">solve</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">:</span> <a href="lu.html#LUDecomposition"><span class="Identifier">LUDecomposition</span></a><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
-<dd>
-Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>.<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">b</span></tt>: A Matrix with as many rows as A and any number of columns.</li>
-<li><tt class="docutils literal"><span class="pre">return</span></tt>: X so that <tt class="docutils literal"><span class="pre">L*U*X = B(piv,:)</span></tt></li>
+Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B</span></tt><ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">b</span></tt>: A Matrix with as many rows as A and any number of columns.</li>
+<li><tt class="docutils literal"><span class="pre">return</span></tt>: <tt class="docutils literal"><span class="pre">X</span></tt> that minimizes the two norm of <tt class="docutils literal"><span class="pre">Q*R*X-B</span></tt></li>
 </ul>
 
 
@@ -956,7 +933,7 @@ Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt>.<ul cla
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2019-04-11 19:22:20 UTC</small>
+        <small>Made with Nim. Generated: 2019-06-16 08:13:08 UTC</small>
       </div>
     </div>
   </div>

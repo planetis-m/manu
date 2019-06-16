@@ -1,13 +1,13 @@
-# Morpheus — Nim Matrix library
+# Manu — Nim Matrix library
 
 This is a port of the NIST [JAMA](https://math.nist.gov/javanumerics/jama/) library to Nim.
 
-API documentation is [here](https://rawgit.com/notTito/morpheus/master/htmldocs/morpheus.html)
+API documentation is [here](https://rawgit.com/b3liever/manu/master/htmldocs/manu.html)
 
 ## Example of use
 
 ```nim
-   import morpheus
+   import manu
    # Solve a linear system A x = b and compute the residual norm, ||b - A x||.
    let vals = @[@[1.0, 2.0, 3.0], @[4.0, 5.0, 6.0], @[7.0, 8.0, 10.0]]
    let A = matrix(vals)

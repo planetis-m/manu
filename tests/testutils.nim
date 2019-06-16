@@ -1,4 +1,4 @@
-import math, "../morpheus/matrix"
+import math, "../manu/matrix"
 
 # private utility routines
 

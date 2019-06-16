@@ -926,6 +926,7 @@ function main() {
   </div>
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
+  
   <p class="module-desc"></p>
   <div class="section" id="7">
 <h1><a class="toc-backref" href="#7">Types</a></h1>
@@ -938,6 +939,7 @@ function main() {
 <dd>
 
 
+
 </dd>
 
 </dl></div>
@@ -947,30 +949,35 @@ function main() {
 <a id="matrix,int,int"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#matrix%2Cint%2Cint"><span class="Identifier">matrix</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">n</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Construct an m-by-n matrix of zeros. 
 
 </dd>
 <a id="matrix,int,int,float"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#matrix%2Cint%2Cint%2Cfloat"><span class="Identifier">matrix</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">n</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Construct an m-by-n constant matrix.
 
 </dd>
 <a id="matrix,seq[T][seq[T][float]]"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#matrix%2Cseq%5BT%5D%5Bseq%5BT%5D%5Bfloat%5D%5D"><span class="Identifier">matrix</span></a><span class="Other">(</span><span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Construct a matrix from a 2-D array.
 
 </dd>
 <a id="matrix,seq[T][seq[T][float]],int,int"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#matrix%2Cseq%5BT%5D%5Bseq%5BT%5D%5Bfloat%5D%5D%2Cint%2Cint"><span class="Identifier">matrix</span></a><span class="Other">(</span><span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">n</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Construct a matrix quickly without checking arguments.
 
 </dd>
 <a id="matrix,seq[T][float],int"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#matrix%2Cseq%5BT%5D%5Bfloat%5D%2Cint"><span class="Identifier">matrix</span></a><span class="Other">(</span><span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 <p>Construct a matrix from a one-dimensional packed array.</p>
 <p>parameter <tt class="docutils literal"><span class="pre">data</span></tt>: one-dimensional array of float, packed by columns (ala Fortran). Array length must be a multiple of <tt class="docutils literal"><span class="pre">m</span></tt>.</p>
 
@@ -979,6 +986,7 @@ Construct a matrix quickly without checking arguments.
 <a id="randMatrix,int,int"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#randMatrix%2Cint%2Cint"><span class="Identifier">randMatrix</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">n</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 <p>Generate matrix with random elements.</p>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: an m-by-n matrix with uniformly distributed random elements.</p>
 
@@ -987,36 +995,42 @@ Construct a matrix quickly without checking arguments.
 <a id="getArray,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#getArray%2CMatrix"><span class="Identifier">getArray</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Make a two-dimensional array copy of the internal array.
 
 </dd>
 <a id="getColumnPacked,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#getColumnPacked%2CMatrix"><span class="Identifier">getColumnPacked</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Make a one-dimensional column packed copy of the internal array.
 
 </dd>
 <a id="getRowPacked,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#getRowPacked%2CMatrix"><span class="Identifier">getRowPacked</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Copy the internal one-dimensional row packed array.
 
 </dd>
 <a id="rowDimension,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#rowDimension%2CMatrix"><span class="Identifier">rowDimension</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Get row dimension.
 
 </dd>
 <a id="columnDimension,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#columnDimension%2CMatrix"><span class="Identifier">columnDimension</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Get column dimension.
 
 </dd>
 <a id="[],Matrix,int,int"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%2CMatrix%2Cint%2Cint"><span class="Identifier">`[]`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">i</span><span class="Other">,</span> <span class="Identifier">j</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Get a single element.
 
 </dd>
@@ -1025,22 +1039,26 @@ Get a single element.
 <dd>
 
 
+
 </dd>
 <a id="[]=,Matrix,int,int,float"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%3D%2CMatrix%2Cint%2Cint%2Cfloat"><span class="Identifier">`[]=`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">i</span><span class="Other">,</span> <span class="Identifier">j</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Set a single element.
 
 </dd>
 <a id="[],Matrix,Slice[int],Slice[int]"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%2CMatrix%2CSlice%5Bint%5D%2CSlice%5Bint%5D"><span class="Identifier">`[]`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">r</span><span class="Other">,</span> <span class="Identifier">c</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Get a submatrix, <tt class="docutils literal"><span class="pre">m[i0 .. i1, j0 .. j1]</span></tt>
 
 </dd>
 <a id="[],Matrix,openArray[int],openArray[int]"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%2CMatrix%2CopenArray%5Bint%5D%2CopenArray%5Bint%5D"><span class="Identifier">`[]`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">r</span><span class="Other">,</span> <span class="Identifier">c</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Get a submatrix, <tt class="docutils literal"><span class="pre">m[[0, 2, 3, 4], [1, 2, 3, 4]]</span></tt>
 
 </dd>
@@ -1048,6 +1066,7 @@ Get a submatrix, <tt class="docutils literal"><span class="pre">m[[0, 2, 3, 4], 
 <dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%2CMatrix%2CSlice%5Bint%5D%2CopenArray%5Bint%5D"><span class="Identifier">`[]`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">r</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">c</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Get a submatrix, <tt class="docutils literal"><span class="pre">m[i0 .. i1, [0, 2, 3, 4]]</span></tt>
 
 </dd>
@@ -1055,18 +1074,21 @@ Get a submatrix, <tt class="docutils literal"><span class="pre">m[i0 .. i1, [0, 
 <dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%2CMatrix%2CopenArray%5Bint%5D%2CSlice%5Bint%5D"><span class="Identifier">`[]`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">r</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">c</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Get a submatrix, <tt class="docutils literal"><span class="pre">m[[0, 2, 3, 4], j0 .. j1]</span></tt>
 
 </dd>
 <a id="[]=,Matrix,Slice[int],Slice[int],Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%3D%2CMatrix%2CSlice%5Bint%5D%2CSlice%5Bint%5D%2CMatrix"><span class="Identifier">`[]=`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">r</span><span class="Other">,</span> <span class="Identifier">c</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Set a submatrix, <tt class="docutils literal"><span class="pre">m[i0 .. i1, j0 .. j1] = a</span></tt>
 
 </dd>
 <a id="[]=,Matrix,openArray[int],openArray[int],Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%3D%2CMatrix%2CopenArray%5Bint%5D%2CopenArray%5Bint%5D%2CMatrix"><span class="Identifier">`[]=`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">r</span><span class="Other">,</span> <span class="Identifier">c</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Set a submatrix, <tt class="docutils literal"><span class="pre">m[[0, 2, 3, 4], [1, 2, 3, 4]] = a</span></tt>
 
 </dd>
@@ -1074,6 +1096,7 @@ Set a submatrix, <tt class="docutils literal"><span class="pre">m[[0, 2, 3, 4], 
 <dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%3D%2CMatrix%2CopenArray%5Bint%5D%2CSlice%5Bint%5D%2CMatrix"><span class="Identifier">`[]=`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">r</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">c</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma">
     <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Set a submatrix, <tt class="docutils literal"><span class="pre">m[[0, 2, 3, 4], j0 .. j1] = a</span></tt>
 
 </dd>
@@ -1081,114 +1104,133 @@ Set a submatrix, <tt class="docutils literal"><span class="pre">m[[0, 2, 3, 4], 
 <dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%3D%2CMatrix%2CSlice%5Bint%5D%2CopenArray%5Bint%5D%2CMatrix"><span class="Identifier">`[]=`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">r</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">c</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma">
     <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Set a submatrix, <tt class="docutils literal"><span class="pre">m[i0 .. i1, [0, 2, 3, 4]] = a</span></tt>
 
 </dd>
 <a id="-,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#-%2CMatrix"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Unary minus
 
 </dd>
 <a id="+,Matrix,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%2B%2CMatrix%2CMatrix"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 <tt class="docutils literal"><span class="pre">C = A + B</span></tt>
 
 </dd>
 <a id="+=,Matrix,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%2B%3D%2CMatrix%2CMatrix"><span class="Identifier">`+=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 <tt class="docutils literal"><span class="pre">A = A + B</span></tt>
 
 </dd>
 <a id="-,Matrix,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#-%2CMatrix%2CMatrix"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 <tt class="docutils literal"><span class="pre">C = A - B</span></tt>
 
 </dd>
 <a id="-=,Matrix,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#-%3D%2CMatrix%2CMatrix"><span class="Identifier">`-=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 <tt class="docutils literal"><span class="pre">A = A - B</span></tt>
 
 </dd>
 <a id=".*,Matrix,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#.%2A%2CMatrix%2CMatrix"><span class="Identifier">`.*`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Element-by-element multiplication, <tt class="docutils literal"><span class="pre">C = A.*B</span></tt>
 
 </dd>
 <a id=".*=,Matrix,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#.%2A%3D%2CMatrix%2CMatrix"><span class="Identifier">`.*=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Element-by-element multiplication in place, <tt class="docutils literal"><span class="pre">A = A.*B</span></tt>
 
 </dd>
 <a id="./,Matrix,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#.%2F%2CMatrix%2CMatrix"><span class="Identifier">`./`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Element-by-element right division, <tt class="docutils literal"><span class="pre">C = A./B</span></tt>
 
 </dd>
 <a id="./=,Matrix,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#.%2F%3D%2CMatrix%2CMatrix"><span class="Identifier">`./=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Element-by-element right division in place, <tt class="docutils literal"><span class="pre">A = A./B</span></tt>
 
 </dd>
 <a id=".\,Matrix,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#.%5C%2CMatrix%2CMatrix"><span class="Identifier">`.\`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Element-by-element left division, <tt class="docutils literal"><span class="pre">C = A.\B</span></tt>
 
 </dd>
 <a id=".\=,Matrix,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#.%5C%3D%2CMatrix%2CMatrix"><span class="Identifier">`.\=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Element-by-element left division in place, <tt class="docutils literal"><span class="pre">A = A.\B</span></tt>
 
 </dd>
 <a id="*,Matrix,float"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%2A%2CMatrix%2Cfloat"><span class="Identifier">`*`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Multiply a matrix by a scalar, <tt class="docutils literal"><span class="pre">C = s*A</span></tt>
 
 </dd>
 <a id="*=,Matrix,float"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%2A%3D%2CMatrix%2Cfloat"><span class="Identifier">`*=`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Multiply a matrix by a scalar in place, <tt class="docutils literal"><span class="pre">A = s*A</span></tt>
 
 </dd>
 <a id="/,Matrix,float"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%2F%2CMatrix%2Cfloat"><span class="Identifier">`/`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Divide a matrix by a scalar, <tt class="docutils literal"><span class="pre">C = A/s</span></tt>
 
 </dd>
 <a id="/=,Matrix,float"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%2F%3D%2CMatrix%2Cfloat"><span class="Identifier">`/=`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Divide a matrix by a scalar in place, <tt class="docutils literal"><span class="pre">A = A/s</span></tt>
 
 </dd>
 <a id="*,Matrix,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%2A%2CMatrix%2CMatrix"><span class="Identifier">`*`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Linear algebraic matrix multiplication, <tt class="docutils literal"><span class="pre">A * B</span></tt>
 
 </dd>
 <a id="transpose,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#transpose%2CMatrix"><span class="Identifier">transpose</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 Matrix transpose
 
 </dd>
 <a id="identity,int"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#identity%2Cint"><span class="Identifier">identity</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 <p>Generate identity matrix.</p>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: An m-by-m matrix with ones on the diagonal and zeros elsewhere.</p>
 
@@ -1197,6 +1239,7 @@ Matrix transpose
 <a id="norm1,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#norm1%2CMatrix"><span class="Identifier">norm1</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 <p>One norm.</p>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: maximum column sum</p>
 
@@ -1205,6 +1248,7 @@ Matrix transpose
 <a id="normInf,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#normInf%2CMatrix"><span class="Identifier">normInf</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 <p>Infinity norm.</p>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: maximum row sum</p>
 
@@ -1213,6 +1257,7 @@ Matrix transpose
 <a id="normF,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#normF%2CMatrix"><span class="Identifier">normF</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 <p>Frobenius norm.</p>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: sqrt of sum of squares of all elements.</p>
 
@@ -1221,6 +1266,7 @@ Matrix transpose
 <a id="trace,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#trace%2CMatrix"><span class="Identifier">trace</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 <p>Matrix trace.</p>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: the sum of the diagonal elements</p>
 
@@ -1229,6 +1275,7 @@ Matrix transpose
 <a id="$,Matrix"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#%24%2CMatrix"><span class="Identifier">`$`</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+
 
 
 </dd>
@@ -1242,6 +1289,7 @@ Matrix transpose
 <dd>
 
 
+
 </dd>
 
 </dl></div>
@@ -1253,7 +1301,7 @@ Matrix transpose
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2019-04-11 19:22:20 UTC</small>
+        <small>Made with Nim. Generated: 2019-06-16 08:13:01 UTC</small>
       </div>
     </div>
   </div>

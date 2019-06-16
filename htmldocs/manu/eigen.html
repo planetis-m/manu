@@ -16,7 +16,7 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
 
 <!-- CSS -->
-<title>svd</title>
+<title>eigen</title>
 <style type="text/css" >
 /*
 Stylesheet for use with Docutils/rst2html.
@@ -787,7 +787,7 @@ function main() {
 <body onload="main()">
 <div class="document" id="documentId">
   <div class="container">
-    <h1 class="title">svd</h1>
+    <h1 class="title">eigen</h1>
     <div class="row">
   <div class="three columns">
   <div id="global-links">
@@ -815,32 +815,28 @@ function main() {
 <li>
   <a class="reference reference-toplevel" href="#7" id="57">Types</a>
   <ul class="simple simple-toc-section">
-      <li><a class="reference" href="#SingularValueDecomposition"
-    title="SingularValueDecomposition = object
-  u, v: Matrix
-  s: seq[float]"><wbr />Singular<wbr />Value<wbr />Decomposition<span class="attachedType"></span></a></li>
+      <li><a class="reference" href="#EigenvalueDecomposition"
+    title="EigenvalueDecomposition = object
+  v: Matrix
+  h: Matrix
+  d, e: seq[float]
+  ort: seq[float]"><wbr />Eigenvalue<wbr />Decomposition<span class="attachedType"></span></a></li>
 
   </ul>
 </li>
 <li>
   <a class="reference reference-toplevel" href="#12" id="62">Procs</a>
   <ul class="simple simple-toc-section">
-      <li><a class="reference" href="#svd%2CMatrix"
-    title="svd(a: Matrix): SingularValueDecomposition"><wbr />svd<span class="attachedType">SingularValueDecomposition</span></a></li>
-  <li><a class="reference" href="#getU%2CSingularValueDecomposition"
-    title="getU(sv: SingularValueDecomposition): Matrix"><wbr />get<wbr />U<span class="attachedType">SingularValueDecomposition</span></a></li>
-  <li><a class="reference" href="#getV%2CSingularValueDecomposition"
-    title="getV(sv: SingularValueDecomposition): Matrix"><wbr />get<wbr />V<span class="attachedType">SingularValueDecomposition</span></a></li>
-  <li><a class="reference" href="#getSingularValues%2CSingularValueDecomposition"
-    title="getSingularValues(sv: SingularValueDecomposition): seq[float]"><wbr />get<wbr />Singular<wbr />Values<span class="attachedType">SingularValueDecomposition</span></a></li>
-  <li><a class="reference" href="#getS%2CSingularValueDecomposition"
-    title="getS(sv: SingularValueDecomposition): Matrix"><wbr />get<wbr />S<span class="attachedType">SingularValueDecomposition</span></a></li>
-  <li><a class="reference" href="#norm2%2CSingularValueDecomposition"
-    title="norm2(sv: SingularValueDecomposition): float"><wbr />norm2<span class="attachedType">SingularValueDecomposition</span></a></li>
-  <li><a class="reference" href="#cond%2CSingularValueDecomposition"
-    title="cond(sv: SingularValueDecomposition): float"><wbr />cond<span class="attachedType">SingularValueDecomposition</span></a></li>
-  <li><a class="reference" href="#rank%2CSingularValueDecomposition"
-    title="rank(sv: SingularValueDecomposition): int"><wbr />rank<span class="attachedType">SingularValueDecomposition</span></a></li>
+      <li><a class="reference" href="#eig%2CMatrix"
+    title="eig(a: Matrix): EigenvalueDecomposition"><wbr />eig<span class="attachedType">EigenvalueDecomposition</span></a></li>
+  <li><a class="reference" href="#getV%2CEigenvalueDecomposition"
+    title="getV(ei: EigenvalueDecomposition): Matrix"><wbr />get<wbr />V<span class="attachedType">EigenvalueDecomposition</span></a></li>
+  <li><a class="reference" href="#getRealEigenvalues%2CEigenvalueDecomposition"
+    title="getRealEigenvalues(ei: EigenvalueDecomposition): seq[float]"><wbr />get<wbr />Real<wbr />Eigenvalues<span class="attachedType">EigenvalueDecomposition</span></a></li>
+  <li><a class="reference" href="#getImagEigenvalues%2CEigenvalueDecomposition"
+    title="getImagEigenvalues(ei: EigenvalueDecomposition): seq[float]"><wbr />get<wbr />Imag<wbr />Eigenvalues<span class="attachedType">EigenvalueDecomposition</span></a></li>
+  <li><a class="reference" href="#getD%2CEigenvalueDecomposition"
+    title="getD(ei: EigenvalueDecomposition): Matrix"><wbr />get<wbr />D<span class="attachedType">EigenvalueDecomposition</span></a></li>
 
   </ul>
 </li>
@@ -850,10 +846,10 @@ function main() {
   </div>
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
-  <p class="module-desc"><p>Singular Value Decomposition.</p>
-<p>For an m-by-n matrix A with m &gt;= n, the singular value decomposition is an m-by-n orthogonal matrix U, an n-by-n diagonal matrix S, and an n-by-n orthogonal matrix V so that A = U*S*V'.</p>
-<p>The singular values, sigma[k] = S[k, k], are ordered so that sigma[0] &gt;= sigma[1] &gt;= ... &gt;= sigma[n-1].</p>
-<p>The singular value decompostion always exists, so the constructor will never fail.  The matrix condition number and the effective numerical rank can be computed from this decomposition.</p>
+  
+  <p class="module-desc"><p>Eigenvalues and eigenvectors of a real matrix.</p>
+<p>If A is symmetric, then A = V*D*V' where the eigenvalue matrix D is diagonal and the eigenvector matrix V is orthogonal. I.e. A = V*D*V.transpose() and V*V.transpose() equals the identity matrix.</p>
+<p>If A is not symmetric, then the eigenvalue matrix D is block diagonal with the real eigenvalues in 1-by-1 blocks and any complex eigenvalues, lambda + i * mu, in 2-by-2 blocks, [lambda, mu; -mu, lambda].  The columns of V represent the eigenvectors in the sense that A*V = V*D, i.e. A*V equals V*D. The matrix V may be badly conditioned, or even singular, so the validity of the equation A = V*D*inverse(V) depends upon V.cond().</p>
 </p>
   <div class="section" id="6">
 <h1><a class="toc-backref" href="#6">Imports</a></h1>
@@ -863,12 +859,15 @@ function main() {
 <div class="section" id="7">
 <h1><a class="toc-backref" href="#7">Types</a></h1>
 <dl class="item">
-<a id="SingularValueDecomposition"></a>
-<dt><pre><a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
-  <span class="Identifier">u</span><span class="Other">,</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a>
-  <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span>
+<a id="EigenvalueDecomposition"></a>
+<dt><pre><a href="eigen.html#EigenvalueDecomposition"><span class="Identifier">EigenvalueDecomposition</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a>
+  <span class="Identifier">h</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a>
+  <span class="Identifier">d</span><span class="Other">,</span> <span class="Identifier">e</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span>
+  <span class="Identifier">ort</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span>
 </pre></dt>
 <dd>
+
 
 
 </dd>
@@ -877,63 +876,48 @@ function main() {
 <div class="section" id="12">
 <h1><a class="toc-backref" href="#12">Procs</a></h1>
 <dl class="item">
-<a id="svd,Matrix"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#svd%2CMatrix"><span class="Identifier">svd</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="eig,Matrix"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#eig%2CMatrix"><span class="Identifier">eig</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="eigen.html#EigenvalueDecomposition"><span class="Identifier">EigenvalueDecomposition</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-<p>Construct the singular value decomposition.</p>
-<p><tt class="docutils literal"><span class="pre">return</span></tt>: Structure to access U, S and V.</p>
+
+Check for symmetry, then construct the eigenvalue decomposition.<ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">a</span></tt>: Square matrix</li>
+<li><tt class="docutils literal"><span class="pre">return</span></tt>: Structure to access D and V.</li>
+</ul>
 
 
 </dd>
-<a id="getU,SingularValueDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getU%2CSingularValueDecomposition"><span class="Identifier">getU</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="getV,EigenvalueDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#getV%2CEigenvalueDecomposition"><span class="Identifier">getV</span></a><span class="Other">(</span><span class="Identifier">ei</span><span class="Other">:</span> <a href="eigen.html#EigenvalueDecomposition"><span class="Identifier">EigenvalueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-Return the left singular vectors
+
+Return the eigenvector matrix
 
 </dd>
-<a id="getV,SingularValueDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getV%2CSingularValueDecomposition"><span class="Identifier">getV</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
-<dd>
-Return the right singular vectors
-
-</dd>
-<a id="getSingularValues,SingularValueDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getSingularValues%2CSingularValueDecomposition"><span class="Identifier">getSingularValues</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
+<a id="getRealEigenvalues,EigenvalueDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#getRealEigenvalues%2CEigenvalueDecomposition"><span class="Identifier">getRealEigenvalues</span></a><span class="Other">(</span><span class="Identifier">ei</span><span class="Other">:</span> <a href="eigen.html#EigenvalueDecomposition"><span class="Identifier">EigenvalueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
     <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-<p>Return the one-dimensional array of singular values.</p>
-<p><tt class="docutils literal"><span class="pre">return</span></tt>: diagonal of S</p>
+
+<p>Return the real parts of the eigenvalues</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: real(diag(D))</p>
 
 
 </dd>
-<a id="getS,SingularValueDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getS%2CSingularValueDecomposition"><span class="Identifier">getS</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="getImagEigenvalues,EigenvalueDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#getImagEigenvalues%2CEigenvalueDecomposition"><span class="Identifier">getImagEigenvalues</span></a><span class="Other">(</span><span class="Identifier">ei</span><span class="Other">:</span> <a href="eigen.html#EigenvalueDecomposition"><span class="Identifier">EigenvalueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
+    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-Return the diagonal matrix of singular values.
 
-</dd>
-<a id="norm2,SingularValueDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#norm2%2CSingularValueDecomposition"><span class="Identifier">norm2</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
-<dd>
-<p>Two norm.</p>
-<p><tt class="docutils literal"><span class="pre">return</span></tt>: max(S)</p>
+<p>Return the imaginary parts of the eigenvalues</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: imag(diag(D))</p>
 
 
 </dd>
-<a id="cond,SingularValueDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#cond%2CSingularValueDecomposition"><span class="Identifier">cond</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="getD,EigenvalueDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#getD%2CEigenvalueDecomposition"><span class="Identifier">getD</span></a><span class="Other">(</span><span class="Identifier">ei</span><span class="Other">:</span> <a href="eigen.html#EigenvalueDecomposition"><span class="Identifier">EigenvalueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-<p>Two norm condition number.</p>
-<p><tt class="docutils literal"><span class="pre">return</span></tt>: max(S)/min(S)</p>
 
-
-</dd>
-<a id="rank,SingularValueDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#rank%2CSingularValueDecomposition"><span class="Identifier">rank</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
-<dd>
-<p>Effective numerical matrix rank.</p>
-<p><tt class="docutils literal"><span class="pre">return</span></tt>: Number of nonnegligible singular values.</p>
-
+Return the block diagonal eigenvalue matrix
 
 </dd>
 
@@ -946,7 +930,7 @@ Return the diagonal matrix of singular values.
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2019-04-11 19:22:20 UTC</small>
+        <small>Made with Nim. Generated: 2019-06-16 08:12:48 UTC</small>
       </div>
     </div>
   </div>

@@ -16,7 +16,7 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
 
 <!-- CSS -->
-<title>qr</title>
+<title>svd</title>
 <style type="text/css" >
 /*
 Stylesheet for use with Docutils/rst2html.
@@ -787,7 +787,7 @@ function main() {
 <body onload="main()">
 <div class="document" id="documentId">
   <div class="container">
-    <h1 class="title">qr</h1>
+    <h1 class="title">svd</h1>
     <div class="row">
   <div class="three columns">
   <div id="global-links">
@@ -815,28 +815,32 @@ function main() {
 <li>
   <a class="reference reference-toplevel" href="#7" id="57">Types</a>
   <ul class="simple simple-toc-section">
-      <li><a class="reference" href="#QRDecomposition"
-    title="QRDecomposition = object
-  qr: Matrix
-  rDiag: seq[float]"><wbr />QRDecomposition<span class="attachedType"></span></a></li>
+      <li><a class="reference" href="#SingularValueDecomposition"
+    title="SingularValueDecomposition = object
+  u, v: Matrix
+  s: seq[float]"><wbr />Singular<wbr />Value<wbr />Decomposition<span class="attachedType"></span></a></li>
 
   </ul>
 </li>
 <li>
   <a class="reference reference-toplevel" href="#12" id="62">Procs</a>
   <ul class="simple simple-toc-section">
-      <li><a class="reference" href="#qr%2CMatrix"
-    title="qr(a: Matrix): QRDecomposition"><wbr />qr<span class="attachedType">QRDecomposition</span></a></li>
-  <li><a class="reference" href="#isFullRank%2CQRDecomposition"
-    title="isFullRank(q: QRDecomposition): bool"><wbr />is<wbr />Full<wbr />Rank<span class="attachedType">QRDecomposition</span></a></li>
-  <li><a class="reference" href="#getH%2CQRDecomposition"
-    title="getH(q: QRDecomposition): Matrix"><wbr />get<wbr />H<span class="attachedType">QRDecomposition</span></a></li>
-  <li><a class="reference" href="#getR%2CQRDecomposition"
-    title="getR(q: QRDecomposition): Matrix"><wbr />get<wbr />R<span class="attachedType">QRDecomposition</span></a></li>
-  <li><a class="reference" href="#getQ%2CQRDecomposition"
-    title="getQ(q: QRDecomposition): Matrix"><wbr />get<wbr />Q<span class="attachedType">QRDecomposition</span></a></li>
-  <li><a class="reference" href="#solve%2CQRDecomposition%2CMatrix"
-    title="solve(q: QRDecomposition; b: Matrix): Matrix"><wbr />solve<span class="attachedType">QRDecomposition</span></a></li>
+      <li><a class="reference" href="#svd%2CMatrix"
+    title="svd(a: Matrix): SingularValueDecomposition"><wbr />svd<span class="attachedType">SingularValueDecomposition</span></a></li>
+  <li><a class="reference" href="#getU%2CSingularValueDecomposition"
+    title="getU(sv: SingularValueDecomposition): Matrix"><wbr />get<wbr />U<span class="attachedType">SingularValueDecomposition</span></a></li>
+  <li><a class="reference" href="#getV%2CSingularValueDecomposition"
+    title="getV(sv: SingularValueDecomposition): Matrix"><wbr />get<wbr />V<span class="attachedType">SingularValueDecomposition</span></a></li>
+  <li><a class="reference" href="#getSingularValues%2CSingularValueDecomposition"
+    title="getSingularValues(sv: SingularValueDecomposition): seq[float]"><wbr />get<wbr />Singular<wbr />Values<span class="attachedType">SingularValueDecomposition</span></a></li>
+  <li><a class="reference" href="#getS%2CSingularValueDecomposition"
+    title="getS(sv: SingularValueDecomposition): Matrix"><wbr />get<wbr />S<span class="attachedType">SingularValueDecomposition</span></a></li>
+  <li><a class="reference" href="#norm2%2CSingularValueDecomposition"
+    title="norm2(sv: SingularValueDecomposition): float"><wbr />norm2<span class="attachedType">SingularValueDecomposition</span></a></li>
+  <li><a class="reference" href="#cond%2CSingularValueDecomposition"
+    title="cond(sv: SingularValueDecomposition): float"><wbr />cond<span class="attachedType">SingularValueDecomposition</span></a></li>
+  <li><a class="reference" href="#rank%2CSingularValueDecomposition"
+    title="rank(sv: SingularValueDecomposition): int"><wbr />rank<span class="attachedType">SingularValueDecomposition</span></a></li>
 
   </ul>
 </li>
@@ -846,9 +850,11 @@ function main() {
   </div>
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
-  <p class="module-desc"><p>QR Decomposition.</p>
-<p>For an m-by-n matrix A with m &gt;= n, the QR decomposition is an m-by-n orthogonal matrix Q and an n-by-n upper triangular matrix R so that A = Q*R.</p>
-<p>The QR decompostion always exists, even if the matrix does not have full rank, so the constructor will never fail. The primary use of the QR decomposition is in the least squares solution of nonsquare systems of simultaneous linear equations. This will fail if isFullRank() returns false.</p>
+  
+  <p class="module-desc"><p>Singular Value Decomposition.</p>
+<p>For an m-by-n matrix A with m &gt;= n, the singular value decomposition is an m-by-n orthogonal matrix U, an n-by-n diagonal matrix S, and an n-by-n orthogonal matrix V so that A = U*S*V'.</p>
+<p>The singular values, sigma[k] = S[k, k], are ordered so that sigma[0] &gt;= sigma[1] &gt;= ... &gt;= sigma[n-1].</p>
+<p>The singular value decompostion always exists, so the constructor will never fail.  The matrix condition number and the effective numerical rank can be computed from this decomposition.</p>
 </p>
   <div class="section" id="6">
 <h1><a class="toc-backref" href="#6">Imports</a></h1>
@@ -858,12 +864,13 @@ function main() {
 <div class="section" id="7">
 <h1><a class="toc-backref" href="#7">Types</a></h1>
 <dl class="item">
-<a id="QRDecomposition"></a>
-<dt><pre><a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
-  <span class="Identifier">qr</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a>
-  <span class="Identifier">rDiag</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span>
+<a id="SingularValueDecomposition"></a>
+<dt><pre><a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <span class="Identifier">u</span><span class="Other">,</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a>
+  <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span>
 </pre></dt>
 <dd>
+
 
 
 </dd>
@@ -872,46 +879,70 @@ function main() {
 <div class="section" id="12">
 <h1><a class="toc-backref" href="#12">Procs</a></h1>
 <dl class="item">
-<a id="qr,Matrix"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#qr%2CMatrix"><span class="Identifier">qr</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="svd,Matrix"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#svd%2CMatrix"><span class="Identifier">svd</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-<p>QR Decomposition, computed by Householder reflections. Structure to access R and the Householder vectors and compute Q.</p>
-<p>parameter <tt class="docutils literal"><span class="pre">a</span></tt>: Rectangular matrix</p>
+
+<p>Construct the singular value decomposition.</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: Structure to access U, S and V.</p>
 
 
 </dd>
-<a id="isFullRank,QRDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#isFullRank%2CQRDecomposition"><span class="Identifier">isFullRank</span></a><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="getU,SingularValueDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#getU%2CSingularValueDecomposition"><span class="Identifier">getU</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-Is the matrix full rank?
+
+Return the left singular vectors
 
 </dd>
-<a id="getH,QRDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getH%2CQRDecomposition"><span class="Identifier">getH</span></a><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="getV,SingularValueDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#getV%2CSingularValueDecomposition"><span class="Identifier">getV</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-<p>Return the Householder vectors.</p>
-<p><tt class="docutils literal"><span class="pre">return</span></tt>: Lower trapezoidal matrix whose columns define the reflections.</p>
+
+Return the right singular vectors
+
+</dd>
+<a id="getSingularValues,SingularValueDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#getSingularValues%2CSingularValueDecomposition"><span class="Identifier">getSingularValues</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">float</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span>
+    <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+<p>Return the one-dimensional array of singular values.</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: diagonal of S</p>
 
 
 </dd>
-<a id="getR,QRDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getR%2CQRDecomposition"><span class="Identifier">getR</span></a><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="getS,SingularValueDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#getS%2CSingularValueDecomposition"><span class="Identifier">getS</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-Return the upper triangular factor.
+
+Return the diagonal matrix of singular values.
 
 </dd>
-<a id="getQ,QRDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getQ%2CQRDecomposition"><span class="Identifier">getQ</span></a><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="norm2,SingularValueDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#norm2%2CSingularValueDecomposition"><span class="Identifier">norm2</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-Generate and return the (economy-sized) orthogonal factor.
+
+<p>Two norm.</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: max(S)</p>
+
 
 </dd>
-<a id="solve,QRDecomposition,Matrix"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#solve%2CQRDecomposition%2CMatrix"><span class="Identifier">solve</span></a><span class="Other">(</span><span class="Identifier">q</span><span class="Other">:</span> <a href="qr.html#QRDecomposition"><span class="Identifier">QRDecomposition</span></a><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="cond,SingularValueDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#cond%2CSingularValueDecomposition"><span class="Identifier">cond</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B</span></tt><ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">b</span></tt>: A Matrix with as many rows as A and any number of columns.</li>
-<li><tt class="docutils literal"><span class="pre">return</span></tt>: <tt class="docutils literal"><span class="pre">X</span></tt> that minimizes the two norm of <tt class="docutils literal"><span class="pre">Q*R*X-B</span></tt></li>
-</ul>
+
+<p>Two norm condition number.</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: max(S)/min(S)</p>
+
+
+</dd>
+<a id="rank,SingularValueDecomposition"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#rank%2CSingularValueDecomposition"><span class="Identifier">rank</span></a><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+<p>Effective numerical matrix rank.</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: Number of nonnegligible singular values.</p>
 
 
 </dd>
@@ -925,7 +956,7 @@ Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2019-04-11 19:22:20 UTC</small>
+        <small>Made with Nim. Generated: 2019-06-16 08:13:15 UTC</small>
       </div>
     </div>
   </div>
