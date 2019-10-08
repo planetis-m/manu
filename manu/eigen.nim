@@ -1,8 +1,8 @@
-## Eigenvalues and eigenvectors of a real matrix. 
+## Eigenvalues and eigenvectors of a real matrix.
 ##
 ## If A is symmetric, then A = V*D*V' where the eigenvalue matrix D is
 ## diagonal and the eigenvector matrix V is orthogonal.
-## I.e. A = V*D*V.transpose() and 
+## I.e. A = V*D*V.transpose() and
 ## V*V.transpose() equals the identity matrix.
 ##
 ## If A is not symmetric, then the eigenvalue matrix D is block diagonal
@@ -416,9 +416,9 @@ proc hqr2(ei: var EigenvalueDecomposition) =
             if m == l:
                break
             if abs(ei.h[m, m - 1]) * (abs(q) + abs(r)) <
-               eps * (abs(p) * (abs(ei.h[m - 1, m - 1]) + abs(z) +
-               abs(ei.h[m + 1, m + 1]))):
-                  break
+                  eps * (abs(p) * (abs(ei.h[m - 1, m - 1]) + abs(z) +
+                  abs(ei.h[m + 1, m + 1]))):
+               break
             m.dec
          for i in m + 2 .. n:
             ei.h[i, i - 2] = 0.0
