@@ -2,7 +2,7 @@
 ##
 ## Detailed output is provided indicating the functionality being tested
 ## and whether the functionality is correctly implemented.   Exception handling
-## is also tested.  
+## is also tested.
 ##
 ## The test is designed to run to completion and give a summary of any implementation errors
 ## encountered. The final output should be:
@@ -11,8 +11,8 @@
 ##   Total errors reported: n1
 ##   Total warning reported: n2
 ##
-## If the test does not run to completion, this indicates that there is a 
-## substantial problem within the implementation that was not anticipated in the test design.  
+## If the test does not run to completion, this indicates that there is a
+## substantial problem within the implementation that was not anticipated in the test design.
 ## The stopping point should give an indication of where the problem exists.
 import math, "../manu", "./testutils"
 
@@ -23,7 +23,7 @@ proc main() =
    var errorCount = 0
    var warningCount = 0
    var tmp, s: float
-   let columnwise = @[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0] 
+   let columnwise = @[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0]
    let rowwise = @[1.0, 4.0, 7.0, 10.0, 2.0, 5.0, 8.0, 11.0, 3.0, 6.0, 9.0, 12.0]
    let avals = @[@[1.0, 4.0, 7.0, 10.0], @[2.0, 5.0, 8.0, 11.0], @[3.0, 6.0, 9.0, 12.0]]
    let rankdef = avals
@@ -33,7 +33,7 @@ proc main() =
    rvals.add @[1.0, 4.0, 7.0]
    let pvals = @[@[4.0, 1.0, 1.0], @[1.0, 2.0, 3.0], @[1.0, 3.0, 6.0]]
    let ivals = @[@[1.0, 0.0, 0.0], @[0.0, 1.0, 0.0], @[0.0, 0.0, 1.0]]
-   let evals = 
+   let evals =
       @[@[0.0, 1.0, 0.0, 0.0], @[1.0, 0.0, 2.0e-7,0.0], @[0.0, -2.0e-7,0.0, 1.0], @[0.0, 0.0, 1.0, 0.0]]
    let square = @[@[166.0, 188.0, 210.0], @[188.0, 214.0, 240.0], @[210.0, 240.0, 270.0]]
    let sqSolution = @[@[13.0], @[15.0]]
@@ -54,8 +54,8 @@ proc main() =
       ie = 2
       jb = 1
       je = 3 # index ranges for sub Matrix
-   let rowindexset = [1, 2] 
-   let badrowindexset = [1, 3] 
+   let rowindexset = [1, 2]
+   let badrowindexset = [1, 3]
    let columnindexset = [1, 2, 3]
    let badcolumnindexset = [1, 2, 4]
    let columnsummax = 33.0
@@ -102,11 +102,11 @@ proc main() =
 #    avals[0][0] = 0.0
 #    if tmp - B[0,0] != 0.0:
 #       # check that constructWithCopy behaves properly
-#       try_failure(errorCount, "constructWithCopy... ", 
+#       try_failure(errorCount, "constructWithCopy... ",
 #                   "copy not effected... data visible outside")
 #    else:
 #       try_success("constructWithCopy... ", "")
-# 
+#
 #    avals[0][0] = columnwise[0]
    I = matrix(ivals)
    try:
@@ -174,7 +174,7 @@ proc main() =
       try_failure(errorCount,"get(int,int)... ",
                   "OutOfBoundsException expected but not thrown")
    try:
-      if B[B.rowDimension-1, B.columnDimension-1] != 
+      if B[B.rowDimension-1, B.columnDimension-1] !=
             avals[B.rowDimension-1][B.columnDimension-1]:
          try_failure(errorCount,"get(int,int)... ",
                      "Matrix entry (i,j) not successfully retreived")
@@ -449,7 +449,7 @@ proc main() =
       try_success("minusEquals... ", "")
    A = R #.copy()
    B = randMatrix(A.rowDimension, A.columnDimension)
-   C = A - B 
+   C = A - B
    try:
       S = A + S
       try_failure(errorCount,"plus conformance check... ","nonconformance not raised")
@@ -568,7 +568,7 @@ proc main() =
    #   eig
    #   lu
    #   qr
-   #   svd 
+   #   svd
 
    echo("\nTesting linear algebra methods...")
    A = matrix(columnwise, 3)

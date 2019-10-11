@@ -12,7 +12,7 @@ type
       m*, n*: int # Row and column dimensions.
 
 proc matrix*(m, n: int): Matrix {.inline.} =
-   ## Construct an m-by-n matrix of zeros. 
+   ## Construct an m-by-n matrix of zeros.
    result.m = m
    result.n = n
    result.data = newSeq[float](m * n)
@@ -108,15 +108,22 @@ proc `[]=`*(m: var Matrix, i, j: int, s: float) {.inline.} =
    ## Set a single element.
    m.data[i * m.n + j] = s
 
-proc `[]`*(m: Matrix, r, c: Slice[int]): Matrix =
+template `^^`(dim, i: untyped): untyped =
+  (when i is BackwardsIndex: dim - int(i) else: int(i))
+
+proc `[]`*[U, V, W, X](m: Matrix, r: HSlice[U, V], c: HSlice[W, X]): Matrix =
    ## Get a submatrix,
    ## ``m[i0 .. i1, j0 .. j1]``
-   checkBounds(r.a >= 0 and r.b < m.m, "Submatrix dimensions")
-   checkBounds(c.a >= 0 and c.b < m.n, "Submatrix dimensions")
-   result = matrix(r.b - r.a + 1, c.b - c.a + 1)
-   for i in r.a .. r.b:
-      for j in c.a .. c.b:
-         result[i - r.a, j - c.a] = m[i, j]
+   let ra = m.m ^^ r.a
+   let rb = m.m ^^ r.b
+   checkBounds(ra >= 0 and rb < m.m, "Submatrix dimensions")
+   let ca = m.n ^^ c.a
+   let cb = m.n ^^ c.b
+   checkBounds(ca >= 0 and cb < m.n, "Submatrix dimensions")
+   result = matrix(rb - ra + 1, cb - ca + 1)
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = m[i + ra, j + ca]
 
 proc `[]`*(m: Matrix, r, c: openarray[int]): Matrix =
    ## Get a submatrix,
@@ -128,34 +135,42 @@ proc `[]`*(m: Matrix, r, c: openarray[int]): Matrix =
       for j in 0 ..< c.len:
          result[i, j] = m[r[i], c[j]]
 
-proc `[]`*(m: Matrix, r: Slice[int], c: openarray[int]): Matrix =
+proc `[]`*[U, V](m: Matrix, r: HSlice[U, V], c: openarray[int]): Matrix =
    ## Get a submatrix,
    ## ``m[i0 .. i1, [0, 2, 3, 4]]``
-   checkBounds(r.a >= 0 and r.b < m.m, "Submatrix dimensions")
+   let ra = m.m ^^ r.a
+   let rb = m.m ^^ r.b
+   checkBounds(ra >= 0 and rb < m.m, "Submatrix dimensions")
    checkBounds(c.len <= m.n, "Submatrix dimensions")
-   result = matrix(r.b - r.a + 1, c.len)
-   for i in r.a .. r.b:
+   result = matrix(rb - ra + 1, c.len)
+   for i in 0 ..< result.m:
       for j in 0 ..< c.len:
-         result[i - r.a, j] = m[i, c[j]]
+         result[i, j] = m[i + ra, c[j]]
 
-proc `[]`*(m: Matrix, r: openarray[int], c: Slice[int]): Matrix =
+proc `[]`*[U, V](m: Matrix, r: openarray[int], c: HSlice[U, V]): Matrix =
    ## Get a submatrix,
    ## ``m[[0, 2, 3, 4], j0 .. j1]``
    checkBounds(r.len <= m.m, "Submatrix dimensions")
-   checkBounds(c.a >= 0 and c.b < m.n, "Submatrix dimensions")
-   result = matrix(r.len, c.b - c.a + 1)
+   let ca = m.n ^^ c.a
+   let cb = m.n ^^ c.b
+   checkBounds(ca >= 0 and cb < m.n, "Submatrix dimensions")
+   result = matrix(r.len, cb - ca + 1)
    for i in 0 ..< r.len:
-      for j in c.a .. c.b:
-         result[i, j - c.a] = m[r[i], j]
+      for j in 0 ..< result.n:
+         result[i, j] = m[r[i], j + ca]
 
-proc `[]=`*(m: var Matrix, r, c: Slice[int], a: Matrix) =
+proc `[]=`*[U, V, W, X](m: var Matrix, r: HSlice[U, V], c: HSlice[W, X], a: Matrix) =
    ## Set a submatrix,
    ## ``m[i0 .. i1, j0 .. j1] = a``
-   checkBounds(r.b - r.a + 1 == a.m, "Submatrix dimensions")
-   checkBounds(c.b - c.a + 1 == a.n, "Submatrix dimensions")
-   for i in r.a .. r.b:
-      for j in c.a .. c.b:
-         m[i, j] = a[i - r.a, j - c.a]
+   let ra = m.m ^^ r.a
+   let rb = m.m ^^ r.b
+   checkBounds(rb - ra + 1 == a.m, "Submatrix dimensions")
+   let ca = m.n ^^ c.a
+   let cb = m.n ^^ c.b
+   checkBounds(cb - ca + 1 == a.n, "Submatrix dimensions")
+   for i in 0 ..< a.m:
+      for j in 0 ..< a.n:
+         m[i + ra, j + ca] = a[i, j]
 
 proc `[]=`*(m: var Matrix, r, c: openarray[int], a: Matrix) =
    ## Set a submatrix,
@@ -166,23 +181,27 @@ proc `[]=`*(m: var Matrix, r, c: openarray[int], a: Matrix) =
       for j in 0 ..< c.len:
          m[r[i], c[j]] = a[i, j]
 
-proc `[]=`*(m: var Matrix, r: openarray[int], c: Slice[int], a: Matrix) =
+proc `[]=`*[U, V](m: var Matrix, r: HSlice[U, V], c: openarray[int], a: Matrix) =
+   ## Set a submatrix,
+   ## ``m[i0 .. i1, [0, 2, 3, 4]] = a``
+   let ra = m.m ^^ r.a
+   let rb = m.m ^^ r.b
+   checkBounds(rb - ra + 1 == a.m, "Submatrix dimensions")
+   checkBounds(c.len == a.n, "Submatrix dimensions")
+   for i in 0 ..< a.m:
+      for j in 0 ..< c.len:
+         m[i + ra, c[j]] = a[i, j]
+
+proc `[]=`*[U, V](m: var Matrix, r: openarray[int], c: HSlice[U, V], a: Matrix) =
    ## Set a submatrix,
    ## ``m[[0, 2, 3, 4], j0 .. j1] = a``
    checkBounds(r.len == a.m, "Submatrix dimensions")
-   checkBounds(c.b - c.a + 1 == a.n, "Submatrix dimensions")
+   let ca = m.n ^^ c.a
+   let cb = m.n ^^ c.b
+   checkBounds(cb - ca + 1 == a.n, "Submatrix dimensions")
    for i in 0 ..< r.len:
-      for j in c.a .. c.b:
-         m[r[i], j] = a[i, j - c.a]
-
-proc `[]=`*(m: var Matrix, r: Slice[int], c: openarray[int], a: Matrix) =
-   ## Set a submatrix,
-   ## ``m[i0 .. i1, [0, 2, 3, 4]] = a``
-   checkBounds(r.b - r.a + 1 == a.m, "Submatrix dimensions")
-   checkBounds(c.len == a.n, "Submatrix dimensions")
-   for i in r.a .. r.b:
-      for j in 0 ..< c.len:
-         m[i, c[j]] = a[i - r.a, j]
+      for j in 0 ..< a.n:
+         m[r[i], j + ca] = a[i, j]
 
 proc `-`*(m: Matrix): Matrix =
    ## Unary minus
