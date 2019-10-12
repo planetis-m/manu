@@ -1,15 +1,15 @@
 import random
 
-type
-   Matrix* = object
-      m*, n*: int # Row and column dimensions.
-      data: ptr UncheckedArray[float] # Array for internal storage of elements.
-
 template checkBounds(cond: untyped, msg = "") =
    when compileOption("boundChecks"):
       {.line.}:
          if not cond:
             raise newException(IndexError, msg)
+
+type
+   Matrix* = object
+      m*, n*: int ## Row and column dimensions.
+      data: ptr UncheckedArray[float] # Array for internal storage of elements.
 
 template createData(size): ptr UncheckedArray[float] =
    cast[ptr UncheckedArray[float]](alloc(size * sizeof(float)))
@@ -120,6 +120,8 @@ proc getRowPacked*(m: Matrix): seq[float] =
    for i in 0 ..< m.m:
       for j in 0 ..< m.n:
          result[i * m.n + j] = m.data[i * m.n + j]
+
+# Copy until here ----
 
 proc `[]`*(m: Matrix, i, j: int): float {.inline.} =
    ## Get a single element.

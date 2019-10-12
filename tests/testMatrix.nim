@@ -643,7 +643,8 @@ proc main() =
    SVD = B.svd()
    let singularvalues = SVD.getSingularValues()
    try:
-      check(B.cond(), singularvalues[0] / singularvalues[min(B.rowDimension,B.columnDimension)-1])
+      let tempa = singularvalues[min(B.rowDimension,B.columnDimension)-1] # indexerror What the fuck
+      check(B.cond, singularvalues[0] / tempa)
       try_success("cond()...", "")
    except ValueError:
       try_failure(errorCount,"cond()...","incorrect condition number calculation")
