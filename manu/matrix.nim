@@ -59,6 +59,17 @@ proc matrix*(data: seq[float], m: int): Matrix =
       for j in 0 ..< n:
          result.data[i * n + j] = data[i + j * m]
 
+proc matrix*(n: int, data: sink seq[float]): Matrix =
+   ## Construct a matrix from a one-dimensional packed array.
+   ##
+   ## parameter ``data``: one-dimensional array of float, packed by rows.
+   ## Array length must be a multiple of ``n``.
+   let m = if n != 0: data.len div n else: 0
+   assert(m * n == data.len, "Array length must be a multiple of m.")
+   result.m = m
+   result.n = n
+   result.data = data
+
 proc randMatrix*(m, n: int): Matrix =
    ## Generate matrix with random elements.
    ##
@@ -98,14 +109,20 @@ proc columnDimension*(m: Matrix): int {.inline.} =
 
 proc `[]`*(m: Matrix, i, j: int): float {.inline.} =
    ## Get a single element.
+   checkBounds(i >= 0 and i < m.m)
+   checkBounds(j >= 0 and j < m.n)
    m.data[i * m.n + j]
 
 proc `[]`*(m: var Matrix, i, j: int): var float {.inline.} =
    ## Get a single element.
+   checkBounds(i >= 0 and i < m.m)
+   checkBounds(j >= 0 and j < m.n)
    m.data[i * m.n + j]
 
 proc `[]=`*(m: var Matrix, i, j: int, s: float) {.inline.} =
    ## Set a single element.
+   checkBounds(i >= 0 and i < m.m)
+   checkBounds(j >= 0 and j < m.n)
    m.data[i * m.n + j] = s
 
 template `^^`(dim, i: untyped): untyped =
@@ -307,6 +324,8 @@ proc `/`*(m: Matrix, s: float): Matrix =
       for j in 0 ..< m.n:
          result[i, j] = m[i, j] / s
 
+template `/`*(s: float, m: Matrix): Matrix = m * (1 / s)
+
 proc `/=`*(m: var Matrix, s: float) =
    ## Divide a matrix by a scalar in place, ``A = A/s``
    for i in 0 ..< m.m:
@@ -416,3 +435,35 @@ proc `$`*(m: Matrix): string =
          result.add "⎦"
       else:
          result.add "⎥\n"
+
+# Expiremental, tested nowhere
+template makeUniversal*(fname: untyped) =
+   proc fname*(m: Matrix): Matrix =
+      result = matrix(m.m, m.n)
+      for i in 0 ..< result.data.len:
+         result.data[i] = fname(m.data[i])
+
+makeUniversal(sqrt)
+makeUniversal(cbrt)
+makeUniversal(log10)
+makeUniversal(log2)
+# makeUniversal(log)
+makeUniversal(exp)
+makeUniversal(arccos)
+makeUniversal(arcsin)
+makeUniversal(arctan)
+makeUniversal(cos)
+makeUniversal(cosh)
+makeUniversal(sin)
+makeUniversal(sinh)
+makeUniversal(tan)
+makeUniversal(tanh)
+makeUniversal(erf)
+makeUniversal(erfc)
+makeUniversal(lgamma)
+makeUniversal(gamma)
+makeUniversal(trunc)
+makeUniversal(floor)
+makeUniversal(ceil)
+makeUniversal(degToRad)
+makeUniversal(radToDeg)

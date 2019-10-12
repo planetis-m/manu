@@ -1,7 +1,18 @@
+import random
+
 type
    Matrix* = object
       m*, n*: int # Row and column dimensions.
       data: ptr UncheckedArray[float] # Array for internal storage of elements.
+
+template checkBounds(cond: untyped, msg = "") =
+   when compileOption("boundChecks"):
+      {.line.}:
+         if not cond:
+            raise newException(IndexError, msg)
+
+template createData(size): ptr UncheckedArray[float] =
+   cast[ptr UncheckedArray[float]](alloc(size * sizeof(float)))
 
 proc `=destroy`*(m: var Matrix) =
    if m.data != nil:
@@ -11,34 +22,35 @@ proc `=destroy`*(m: var Matrix) =
       m.n = 0
 
 proc `=sink`*(a: var Matrix; b: Matrix) =
-   if a.data != nil and a.data != b.data:
-      dealloc(a.data)
+   `=destroy`(a)
    a.data = b.data
    a.m = b.m
    a.n = b.n
 
 proc `=`*(a: var Matrix; b: Matrix) =
-   if a.data != nil and a.data != b.data:
-      dealloc(a.data)
-      a.data = nil
-   a.m = b.m
-   a.n = b.n
-   if b.data != nil:
-      a.data = cast[type(a.data)](alloc(a.m * a.n))
-      copyMem(a.data, b.data, b.m * b.n)
+   if a.data != b.data:
+      `=destroy`(a)
+      a.m = b.m
+      a.n = b.n
+      if b.data != nil:
+         let len = b.m * b.n
+         a.data = createData(len)
+         copyMem(a.data, b.data, len * sizeof(float))
 
 proc matrix*(m, n: int): Matrix =
-   ## Construct an m-by-n matrix of zeros. 
+   ## Construct an m-by-n matrix of zeros.
    result.m = m
    result.n = n
-   result.data = cast[type(result.data)](alloc(m * n))
+   let len = m * n
+   result.data = createData(len)
 
 proc matrix*(m, n: int, s: float): Matrix =
    ## Construct an m-by-n constant matrix.
    result.m = m
    result.n = n
-   result.data = cast[type(result.data)](alloc(m * n))
-   for i in 0 ..< m * n:
+   let len = m * n
+   result.data = createData(len)
+   for i in 0 ..< len:
       result.data[i] = s
 
 proc matrix*(data: seq[seq[float]]): Matrix =
@@ -47,7 +59,7 @@ proc matrix*(data: seq[seq[float]]): Matrix =
    result.n = data[0].len
    for i in 0 ..< result.m:
       assert(data[i].len == result.n, "All rows must have the same length.")
-   result.data = cast[type(result.data)](alloc(result.m * result.n))
+   result.data = createData(result.m * result.n)
    for i in 0 ..< result.m:
       for j in 0 ..< result.n:
          result.data[i * result.n + j] = data[i][j]
@@ -56,7 +68,8 @@ proc matrix*(data: seq[seq[float]], m, n: int): Matrix =
    ## Construct a matrix quickly without checking arguments.
    result.m = m
    result.n = n
-   result.data = cast[type(result.data)](alloc(m * n))
+   let len = m * n
+   result.data = createData(len)
    for i in 0 ..< m:
       for j in 0 ..< n:
          result.data[i * n + j] = data[i][j]
@@ -70,7 +83,7 @@ proc matrix*(data: seq[float], m: int): Matrix =
    assert(m * n == data.len, "Array length must be a multiple of m.")
    result.m = m
    result.n = n
-   result.data = cast[type(result.data)](alloc(data.len))
+   result.data = createData(data.len)
    for i in 0 ..< m:
       for j in 0 ..< n:
          result.data[i * n + j] = data[i + j * m]
@@ -81,8 +94,9 @@ proc randMatrix*(m, n: int): Matrix =
    ## ``return``: an m-by-n matrix with uniformly distributed random elements.
    result.m = m
    result.n = n
-   result.data = cast[type(result.data)](alloc(m * n))
-   for i in 0 ..< m * n:
+   let len = m * n
+   result.data = createData(len)
+   for i in 0 ..< len:
       result.data[i] = rand(1.0)
 
 proc getArray*(m: Matrix): seq[seq[float]] =
@@ -100,9 +114,42 @@ proc getColumnPacked*(m: Matrix): seq[float] =
       for j in 0 ..< m.n:
          result[i + j * m.m] = m.data[i * m.n + j]
 
-proc getRowPacked*(m: Matrix): seq[float] {.inline.} =
+proc getRowPacked*(m: Matrix): seq[float] =
    ## Copy the internal one-dimensional row packed array.
    result = newSeq[float](m.m * m.n)
    for i in 0 ..< m.m:
       for j in 0 ..< m.n:
          result[i * m.n + j] = m.data[i * m.n + j]
+
+proc `[]`*(m: Matrix, i, j: int): float {.inline.} =
+   ## Get a single element.
+   checkBounds(i >= 0 and i < m.m)
+   checkBounds(j >= 0 and j < m.n)
+   m.data[i * m.n + j]
+
+proc `[]`*(m: var Matrix, i, j: int): var float {.inline.} =
+   ## Get a single element.
+   checkBounds(i >= 0 and i < m.m)
+   checkBounds(j >= 0 and j < m.n)
+   m.data[i * m.n + j]
+
+proc `[]=`*(m: var Matrix, i, j: int, s: float) {.inline.} =
+   ## Set a single element.
+   checkBounds(i >= 0 and i < m.m)
+   checkBounds(j >= 0 and j < m.n)
+   m.data[i * m.n + j] = s
+
+proc `-`*(m: sink Matrix): Matrix =
+   ## Unary minus
+   result = m
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = -result[i, j]
+
+proc main =
+   let a = matrix(5, 5, 4.0)
+   let b = -a
+   echo b[3, 4]
+   echo a[2, 1]
+
+main()
