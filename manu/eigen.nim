@@ -279,7 +279,7 @@ proc hqr2(ei: var EigenvalueDecomposition) =
    # Vol.ii-Linear Algebra, and the corresponding
    # Fortran subroutine in EISPACK.
 
-   # Initialize   
+   # Initialize
    let nn = ei.v.n
    var n = nn - 1
    let low = 0
@@ -589,7 +589,7 @@ proc hqr2(ei: var EigenvalueDecomposition) =
             z = z + ei.v[i, k] * ei.h[k, j]
          ei.v[i, j] = z
 
-proc eig*(a: Matrix): EigenvalueDecomposition =
+proc eig*(a: sink Matrix): EigenvalueDecomposition =
    ## Check for symmetry, then construct the eigenvalue decomposition.
    ##
    ## - parameter ``a``: Square matrix

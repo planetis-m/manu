@@ -17,7 +17,7 @@ type
       piv: seq[int] # Internal storage of pivot vector.
       pivsign: int # Pivot sign.
 
-proc lu*(a: Matrix): LUDecomposition =
+proc lu*(a: sink Matrix): LUDecomposition =
    ## LU Decomposition
    ## Structure to access L, U and piv.
    ##
@@ -60,7 +60,7 @@ proc lu*(a: Matrix): LUDecomposition =
          for i in j + 1 ..< m:
             result.lu[i, j] /= result.lu[j, j]
 
-proc luGauss*(a: Matrix): LUDecomposition =
+proc luGauss*(a: sink Matrix): LUDecomposition =
    ## LU Decomposition, computed by Gaussian elimination.
    ##
    ## This constructor computes L and U with the "daxpy"-based elimination
@@ -107,7 +107,7 @@ proc isNonsingular*(l: LUDecomposition): bool =
 
 proc getL*(l: LUDecomposition): Matrix =
    ## Return lower triangular factor.
-   result = matrix(l.lu.m, l.lu.n)
+   result = matrix(l.lu.m, l.lu.n) # sink here?!
    for i in 0 ..< l.lu.m:
       for j in 0 ..< l.lu.n:
          if i > j:

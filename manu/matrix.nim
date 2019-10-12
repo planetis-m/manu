@@ -8,8 +8,8 @@ template checkBounds(cond: untyped, msg = "") =
 
 type
    Matrix* = object
-      data: seq[float] # Array for internal storage of elements.
       m*, n*: int # Row and column dimensions.
+      data: seq[float] # Array for internal storage of elements.
 
 proc matrix*(m, n: int): Matrix {.inline.} =
    ## Construct an m-by-n matrix of zeros.
@@ -220,20 +220,20 @@ proc `[]=`*[U, V](m: var Matrix, r: openarray[int], c: HSlice[U, V], a: Matrix) 
       for j in 0 ..< a.n:
          m[r[i], j + ca] = a[i, j]
 
-proc `-`*(m: Matrix): Matrix =
+proc `-`*(m: sink Matrix): Matrix =
    ## Unary minus
-   result = matrix(m.m, m.n)
-   for i in 0 ..< m.m:
-      for j in 0 ..< m.n:
-         result[i, j] = -m[i, j]
+   result = m
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = -result[i, j]
 
-proc `+`*(a, b: Matrix): Matrix =
+proc `+`*(a: sink Matrix, b: Matrix): Matrix =
    ## ``C = A + B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   result = matrix(a.m, a.n)
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         result[i, j] = a[i, j] + b[i, j]
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] + b[i, j]
 
 proc `+=`*(a: var Matrix, b: Matrix) =
    ## ``A = A + B``
@@ -242,13 +242,13 @@ proc `+=`*(a: var Matrix, b: Matrix) =
       for j in 0 ..< a.n:
          a[i, j] = a[i, j] + b[i, j]
 
-proc `-`*(a, b: Matrix): Matrix =
+proc `-`*(a: sink Matrix, b: Matrix): Matrix =
    ## ``C = A - B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   result = matrix(a.m, a.n)
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         result[i, j] = a[i, j] - b[i, j]
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] - b[i, j]
 
 proc `-=`*(a: var Matrix, b: Matrix) =
    ## ``A = A - B``
@@ -257,13 +257,13 @@ proc `-=`*(a: var Matrix, b: Matrix) =
       for j in 0 ..< a.n:
          a[i, j] = a[i, j] - b[i, j]
 
-proc `.*`*(a, b: Matrix): Matrix =
+proc `.*`*(a: sink Matrix, b: Matrix): Matrix =
    ## Element-by-element multiplication, ``C = A.*B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   result = matrix(a.m, a.n)
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         result[i, j] = a[i, j] * b[i, j]
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] * b[i, j]
 
 proc `.*=`*(a: var Matrix, b: Matrix) =
    ## Element-by-element multiplication in place, ``A = A.*B``
@@ -272,13 +272,13 @@ proc `.*=`*(a: var Matrix, b: Matrix) =
       for j in 0 ..< a.n:
          a[i, j] = a[i, j] * b[i, j]
 
-proc `./`*(a, b: Matrix): Matrix =
+proc `./`*(a: sink Matrix, b: Matrix): Matrix =
    ## Element-by-element right division, ``C = A./B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   result = matrix(a.m, a.n)
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         result[i, j] = a[i, j] / b[i, j]
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] / b[i, j]
 
 proc `./=`*(a: var Matrix, b: Matrix) =
    ## Element-by-element right division in place, ``A = A./B``
@@ -287,13 +287,13 @@ proc `./=`*(a: var Matrix, b: Matrix) =
       for j in 0 ..< a.n:
          a[i, j] = a[i, j] / b[i, j]
 
-proc `.\`*(a, b: Matrix): Matrix =
+proc `.\`*(a: sink Matrix, b: Matrix): Matrix =
    ## Element-by-element left division, ``C = A.\B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   result = matrix(a.m, a.n)
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         result[i, j] = b[i, j] / a[i, j]
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = b[i, j] / result[i, j]
 
 proc `.\=`*(a: var Matrix, b: Matrix) =
    ## Element-by-element left division in place, ``A = A.\B``
@@ -302,12 +302,12 @@ proc `.\=`*(a: var Matrix, b: Matrix) =
       for j in 0 ..< a.n:
          a[i, j] = b[i, j] / a[i, j]
 
-proc `*`*(m: Matrix, s: float): Matrix =
+proc `*`*(m: sink Matrix, s: float): Matrix =
    ## Multiply a matrix by a scalar, ``C = s*A``
-   result = matrix(m.m, m.n)
-   for i in 0 ..< m.m:
-      for j in 0 ..< m.n:
-         result[i, j] = s * m[i, j]
+   result = m
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = s * result[i, j]
 
 proc `*=`*(m: var Matrix, s: float) =
    ## Multiply a matrix by a scalar in place, ``A = s*A``
@@ -317,12 +317,12 @@ proc `*=`*(m: var Matrix, s: float) =
 
 template `*`*(s: float, m: Matrix): Matrix = m * s
 
-proc `/`*(m: Matrix, s: float): Matrix =
+proc `/`*(m: sink Matrix, s: float): Matrix =
    ## Divide a matrix by a scalar, ``C = A/s``
-   result = matrix(m.m, m.n)
-   for i in 0 ..< m.m:
-      for j in 0 ..< m.n:
-         result[i, j] = m[i, j] / s
+   result = m
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] / s
 
 template `/`*(s: float, m: Matrix): Matrix = m * (1 / s)
 
@@ -438,10 +438,10 @@ proc `$`*(m: Matrix): string =
 
 # Expiremental, tested nowhere
 template makeUniversal*(fname: untyped) =
-   proc fname*(m: Matrix): Matrix =
-      result = matrix(m.m, m.n)
+   proc fname*(m: sink Matrix): Matrix =
+      result = m
       for i in 0 ..< result.data.len:
-         result.data[i] = fname(m.data[i])
+         result.data[i] = fname(result.data[i])
 
 makeUniversal(sqrt)
 makeUniversal(cbrt)

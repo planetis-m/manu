@@ -16,14 +16,14 @@ type
       qr: Matrix # Array for internal storage of decomposition.
       rDiag: seq[float] # Array for internal storage of diagonal of R.
 
-proc qr*(a: Matrix): QRDecomposition =
+proc qr*(a: sink Matrix): QRDecomposition =
    ## QR Decomposition, computed by Householder reflections.
    ## Structure to access R and the Householder vectors and compute Q.
    ##
    ## parameter ``a``: Rectangular matrix
-   result.qr = a
    let m = a.m
    let n = a.n
+   result.qr = a
    result.rDiag = newSeq[float](n)
    # Main loop.
    for k in 0 ..< n:
@@ -59,7 +59,7 @@ proc getH*(q: QRDecomposition): Matrix =
    ## Return the Householder vectors.
    ##
    ## ``return``: Lower trapezoidal matrix whose columns define the reflections.
-   result = matrix(q.qr.m, q.qr.n)
+   result = matrix(q.qr.m, q.qr.n) # sink here?!
    for i in 0 ..< q.qr.m:
       for j in 0 ..< q.qr.n:
          if i >= j:

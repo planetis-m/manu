@@ -17,15 +17,15 @@ type
       u, v: Matrix # Arrays for internal storage of U and V.
       s: seq[float] # Array for internal storage of singular values.
 
-proc svd*(a: Matrix): SingularValueDecomposition =
+proc svd*(a: sink Matrix): SingularValueDecomposition =
    ## Construct the singular value decomposition.
    ##
    ## ``return``: Structure to access U, S and V.
    # Derived from LINPACK code.
    # Initialize.
-   var a = a
    let m = a.m
    let n = a.n
+   var a = a
    # assert(m >= n, "SVD only works for m >= n") and set nu = n
    let nu = min(m, n)
    result.s = newSeq[float](min(m + 1, n)) # n<=m so n is min
@@ -237,7 +237,7 @@ proc svd*(a: Matrix): SingularValueDecomposition =
       of 3:
          # Calculate the shift.
          let scale = max(max(max(max(
-                  abs(result.s[p - 1]), abs(result.s[p - 2])), abs(e[p - 2])), 
+                  abs(result.s[p - 1]), abs(result.s[p - 2])), abs(e[p - 2])),
                   abs(result.s[k])), abs(e[k]))
          let sp = result.s[p - 1] / scale
          let spm1 = result.s[p - 2] / scale
@@ -325,7 +325,7 @@ proc getSingularValues*(sv: SingularValueDecomposition): seq[float] {.inline.} =
 
 proc getS*(sv: SingularValueDecomposition): Matrix =
    ## Return the diagonal matrix of singular values.
-   result = matrix(sv.v.m, sv.v.n)
+   result = matrix(sv.v.m, sv.v.n) # sink here?!
    for i in 0 ..< sv.v.m:
       for j in 0 ..< sv.v.n:
          result[i, j] = 0.0

@@ -4,7 +4,7 @@
 ## The manu module provides the fundamental operations of numerical
 ## linear algebra. Various constructors create Matrices from two dimensional
 ## arrays of double precision floating point numbers. Various "gets" and
-## "sets" provide access to submatrices and matrix elements.  Several methods 
+## "sets" provide access to submatrices and matrix elements.  Several methods
 ## implement basic matrix arithmetic, including matrix addition and
 ## multiplication, matrix norms, and element-by-element array operations.
 ## Methods for reading and printing matrices are also included. All the
@@ -37,13 +37,13 @@
 import "./manu" / [matrix, cholesky, qr, lu, svd, eigen]
 export matrix, cholesky, qr, lu, svd, eigen
 
-proc norm2*(m: Matrix): float =
+proc norm2*(m: sink Matrix): float =
    ## Two norm
    ##
    ## ``return``: maximum singular value.
    svd(m).norm2()
 
-proc solve*(a, b: Matrix): Matrix =
+proc solve*(a: sink Matrix, b: Matrix): Matrix =
    ## Solve ``A*X = B``
    ##
    ## - parameter ``b``: the right hand side
@@ -60,23 +60,24 @@ proc solveTranspose*(a, b: Matrix): Matrix =
    ## - ``return``: solution if A is square, least squares solution otherwise.
    transpose(a).solve(b.transpose())
 
-proc inverse*(m: Matrix): Matrix =
+proc inverse*(m: sink Matrix): Matrix =
    ## Matrix inverse or pseudoinverse
    ##
    ## ``return``: inverse(A) if A is square, pseudoinverse otherwise.
-   solve(m, identity(m.m))
+   let id = identity(m.m)
+   solve(m, id)
 
-proc det*(m: Matrix): float =
+proc det*(m: sink Matrix): float =
    ## Matrix determinant
    lu(m).det()
 
-proc rank*(m: Matrix): int =
+proc rank*(m: sink Matrix): int =
    ## Matrix rank
    ##
    ## ``return``: effective numerical rank, obtained from SVD.
    svd(m).rank()
 
-proc cond*(m: Matrix): float =
+proc cond*(m: sink Matrix): float =
    ## Matrix condition (2 norm)
    ##
    ## ``return``: ratio of largest to smallest singular value.

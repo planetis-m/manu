@@ -47,7 +47,7 @@ proc getL*(c: CholeskyDecomposition): Matrix {.inline.} =
    ## Return triangular factor.
    c.l
 
-proc solve*(c: CholeskyDecomposition, b: Matrix): Matrix =
+proc solve*(c: CholeskyDecomposition, b: sink Matrix): Matrix =
    ## Solve ``A*X = B``
    ##
    ## - parameter ``b``:  A Matrix with as many rows as A and any number of columns.
@@ -58,13 +58,13 @@ proc solve*(c: CholeskyDecomposition, b: Matrix): Matrix =
    result = b
    # Solve L*Y = B
    for k in 0 ..< c.l.m:
-      for j in 0 ..< b.n:
+      for j in 0 ..< result.n:
          for i in 0 ..< k:
             result[k, j] -= result[i, j] * c.l[k, i]
          result[k, j] /= c.l[k, k]
    # Solve L'*X = Y
    for k in countdown(c.l.m - 1, 0):
-      for j in 0 ..< b.n:
+      for j in 0 ..< result.n:
          for i in k + 1 ..< c.l.m:
             result[k, j] -= result[i, j] * c.l[i, k]
          result[k, j] /= c.l[k, k]

@@ -139,6 +139,14 @@ proc `[]=`*(m: var Matrix, i, j: int, s: float) {.inline.} =
    checkBounds(j >= 0 and j < m.n)
    m.data[i * m.n + j] = s
 
+proc `+`*(a: sink Matrix; b: Matrix): Matrix =
+   ## ``C = A + B``
+   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] + b[i, j]
+
 proc `-`*(m: sink Matrix): Matrix =
    ## Unary minus
    result = m
@@ -146,10 +154,26 @@ proc `-`*(m: sink Matrix): Matrix =
       for j in 0 ..< result.n:
          result[i, j] = -result[i, j]
 
+proc `-`*(a: sink Matrix; b: Matrix): Matrix =
+   ## ``C = A - B``
+   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] - b[i, j]
+
+proc `.*`*(a: sink Matrix; b: Matrix): Matrix =
+   ## Element-by-element multiplication, ``C = A.*B``
+   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] * b[i, j]
+
 proc main =
    let a = matrix(5, 5, 4.0)
    let b = -a
-   echo b[3, 4]
-   echo a[2, 1]
+   let c = a - b
+   echo c[3, 4]
 
 main()
