@@ -399,11 +399,7 @@ proc identity*(m: int): Matrix =
    ## ``return``: An m-by-m matrix with ones on the diagonal and zeros elsewhere.
    result = matrix(m, m)
    for i in 0 ..< m:
-      for j in 0 ..< m:
-         if i == j:
-            result[i, j] = 1.0
-         else:
-            result[i, j] = 0.0
+      result[i, i] = 1.0
 
 template eye*(m: int): Matrix = identity(m)
 
