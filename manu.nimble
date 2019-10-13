@@ -7,7 +7,7 @@ description   = "Nim Matrix library"
 license       = "MIT"
 skipDirs = @["tests", "htmldocs", "examples", "experiments"]
 
-requires "nim >= 0.18.0"
+requires "nim >= 1.0.0"
 
 switch "forceBuild"
 

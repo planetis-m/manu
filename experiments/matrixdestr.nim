@@ -170,10 +170,23 @@ proc `.*`*(a: sink Matrix; b: Matrix): Matrix =
       for j in 0 ..< result.n:
          result[i, j] = result[i, j] * b[i, j]
 
+# not releated but
+proc identity*(m: int): Matrix =
+   ## Generate identity matrix.
+   ##
+   ## ``return``: An m-by-m matrix with ones on the diagonal and zeros elsewhere.
+   result = matrix(m, m)
+   for i in 0 ..< m:
+      result[i, i] = 1.0
+
 proc main =
    let a = matrix(5, 5, 4.0)
    let b = -a
    let c = a - b
    echo c[3, 4]
+   let eye = identity(6)
+   for i in 0 ..< eye.m:
+      for j in 0 ..< eye.n:
+         echo eye[i, j]
 
 main()

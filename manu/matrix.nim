@@ -8,7 +8,7 @@ template checkBounds(cond: untyped, msg = "") =
 
 type
    Matrix* = object
-      m*, n*: int # Row and column dimensions.
+      m, n: int # Row and column dimensions.
       data: seq[float] # Array for internal storage of elements.
 
 proc matrix*(m, n: int): Matrix {.inline.} =
@@ -24,6 +24,9 @@ proc matrix*(m, n: int, s: float): Matrix =
    result.data = newSeqUninitialized[float](m * n)
    for i in 0 ..< result.data.len:
       result.data[i] = s
+
+template ones*(m, n: int): Matrix = matrix(m, n, 1.0)
+template zeros*(m, n: int): Matrix = matrix(m, n)
 
 proc matrix*(data: seq[seq[float]]): Matrix =
    ## Construct a matrix from a 2-D array.
@@ -98,6 +101,18 @@ proc getColumnPacked*(m: Matrix): seq[float] =
 proc getRowPacked*(m: Matrix): seq[float] {.inline.} =
    ## Copy the internal one-dimensional row packed array.
    m.data
+
+proc dim*(m: Matrix): (int, int) {.inline.} =
+   ## Get (row, column) dimensions tuple.
+   (m.m, m.n)
+
+proc m*(m: Matrix): int {.inline.} =
+   ## Get row dimension.
+   m.m
+
+proc n*(m: Matrix): int {.inline.} =
+   ## Get column dimension.
+   m.n
 
 proc rowDimension*(m: Matrix): int {.inline.} =
    ## Get row dimension.
@@ -302,6 +317,31 @@ proc `.\=`*(a: var Matrix, b: Matrix) =
       for j in 0 ..< a.n:
          a[i, j] = b[i, j] / a[i, j]
 
+proc `+`*(m: sink Matrix, s: float): Matrix =
+   ## Add a matrix to a scalar, ``C = s+A``
+   result = m
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = s + result[i, j]
+
+template `+`*(s: float, m: Matrix): Matrix = m + s
+template `-`*(m: Matrix, s: float): Matrix = m + (-s)
+
+proc `+=`*(m: var Matrix, s: float) =
+   ## Add a matrix to a scalar in place, ``A = s+A``
+   for i in 0 ..< m.m:
+      for j in 0 ..< m.n:
+         m[i, j] = s + m[i, j]
+
+template `-=`*(m: Matrix, s: float): Matrix = m += (-s)
+
+proc `-`*(s: float, m: sink Matrix): Matrix =
+   ## Subtract a matrix from a scalar, ``C = s-A``
+   result = m
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = s - result[i, j]
+
 proc `*`*(m: sink Matrix, s: float): Matrix =
    ## Multiply a matrix by a scalar, ``C = s*A``
    result = m
@@ -364,6 +404,14 @@ proc identity*(m: int): Matrix =
             result[i, j] = 1.0
          else:
             result[i, j] = 0.0
+
+template eye*(m: int): Matrix = identity(m)
+
+proc sum*(m: Matrix): float =
+   ## Sum.
+   for i in 0 ..< m.m:
+      for j in 0 ..< m.n:
+         result += m[i, j]
 
 proc norm1*(m: Matrix): float =
    ## One norm.
@@ -439,15 +487,16 @@ proc `$`*(m: Matrix): string =
 # Expiremental, tested nowhere
 template makeUniversal*(fname: untyped) =
    proc fname*(m: sink Matrix): Matrix =
+      let len = m.m * m.n
       result = m
-      for i in 0 ..< result.data.len:
+      for i in 0 ..< len:
          result.data[i] = fname(result.data[i])
 
 makeUniversal(sqrt)
 makeUniversal(cbrt)
 makeUniversal(log10)
 makeUniversal(log2)
-# makeUniversal(log)
+makeUniversal(ln)
 makeUniversal(exp)
 makeUniversal(arccos)
 makeUniversal(arcsin)
