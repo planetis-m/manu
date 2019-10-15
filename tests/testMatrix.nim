@@ -14,7 +14,7 @@
 ## If the test does not run to completion, this indicates that there is a
 ## substantial problem within the implementation that was not anticipated in the test design.
 ## The stopping point should give an indication of where the problem exists.
-import math, "../manu", "./testutils"
+import math, manu, testutils
 
 # main
 
