@@ -2,7 +2,7 @@
 
 This is a port of the NIST [JAMA](https://math.nist.gov/javanumerics/jama/) library to Nim.
 
-API documentation is [here](https://rawgit.com/b3liever/manu/master/htmldocs/manu.html)
+API documentation is [here](https://b3liever.github.io/manu/)
 
 ## Example of use
 
@@ -28,8 +28,8 @@ MIT
 
 From the original JAMA code:
 
-> This software is a cooperative product of The MathWorks and the National 
-> Institute of Standards and Technology (NIST) which has been released to the 
-> public domain. Neither The MathWorks nor NIST assumes any responsibility 
-> whatsoever for its use by other parties, and makes no guarantees, expressed or 
+> This software is a cooperative product of The MathWorks and the National
+> Institute of Standards and Technology (NIST) which has been released to the
+> public domain. Neither The MathWorks nor NIST assumes any responsibility
+> whatsoever for its use by other parties, and makes no guarantees, expressed or
 > implied, about its quality, reliability, or any other characteristic.

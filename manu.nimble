@@ -26,5 +26,5 @@ task test, "run tests":
 
 task docs, "generate documentation":
   switch "project"
-  switch "docSeeSrcUrl", "https://github.com/b3liever/manu/blob/master"
+  switch "docSeeSrcUrl", "https://github.com/b3liever/manu/master"
   setCommand "doc", "manu.nim"
