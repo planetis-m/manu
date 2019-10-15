@@ -1,4 +1,4 @@
-import math, testutils, manu / [matrix, cholesky]
+import math, testutils, "../manu" / [matrix, cholesky]
 
 var errorCount = 0
 var warningCount = 0

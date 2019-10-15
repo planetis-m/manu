@@ -1,7 +1,7 @@
 # mode = ScriptMode.Verbose
 
 packageName   = "manu"
-version       = "1.1"
+version       = "1.2"
 author        = "Antonis Geralis"
 description   = "Nim Matrix library"
 license       = "MIT"
@@ -25,7 +25,6 @@ task test, "run tests":
   setCommand "c", "tests/testMatrix.nim"
 
 task docs, "generate documentation":
-  # exec("mkdir -p htmldocs/manu")
   switch "project"
   switch "docSeeSrcUrl", "https://github.com/b3liever/manu/blob/master"
   setCommand "doc", "manu.nim"

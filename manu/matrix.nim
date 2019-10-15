@@ -114,13 +114,8 @@ proc n*(m: Matrix): int {.inline.} =
    ## Get column dimension.
    m.n
 
-proc rowDimension*(m: Matrix): int {.inline.} =
-   ## Get row dimension.
-   m.m
-
-proc columnDimension*(m: Matrix): int {.inline.} =
-   ## Get column dimension.
-   m.n
+proc rowDimension*(m: Matrix): int {.inline.} = m.m
+proc columnDimension*(m: Matrix): int {.inline.} = m.n
 
 proc `[]`*(m: Matrix, i, j: int): float {.inline.} =
    ## Get a single element.
@@ -480,7 +475,6 @@ proc `$`*(m: Matrix): string =
       else:
          result.add "⎥\n"
 
-# Expiremental, tested nowhere
 template makeUniversal*(fname: untyped) =
    proc fname*(m: sink Matrix): Matrix =
       let len = m.m * m.n

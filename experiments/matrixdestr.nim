@@ -12,7 +12,7 @@ template checkBounds(cond: untyped, msg = "") =
             raise newException(IndexError, msg)
 
 template createData(size): ptr UncheckedArray[float] =
-   cast[ptr UncheckedArray[float]](alloc0(size * sizeof(float)))
+   cast[ptr UncheckedArray[float]](alloc(size * sizeof(float)))
 
 proc `=destroy`*(m: var Matrix) =
    if m.data != nil:
@@ -43,6 +43,8 @@ proc matrix*(m, n: int): Matrix =
    result.n = n
    let len = m * n
    result.data = createData(len)
+   for i in 0 ..< len:
+      result.data[i] = 0.0
 
 proc matrix*(m, n: int, s: float): Matrix =
    ## Construct an m-by-n constant matrix.
