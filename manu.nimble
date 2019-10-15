@@ -29,11 +29,11 @@ task tests, "run tests":
 task docs, "generate documentation":
    switch "project"
    switch "index"
+   switch "out", "docs/"
+   switch "git.url", "https://github.com/b3liever/manu/"
    switch "docSeeSrcUrl", "https://github.com/b3liever/manu/master"
    setCommand "doc", "manu.nim"
 
 after docs:
-   exec("mv htmldocs/ docs/")
-   switch "out", "htmldocs/index.html"
+   switch "out", "docs/index.html"
    setCommand "buildIndex", "docs/"
-   exec("mv docs/theindex.html docs/index.html")
