@@ -2,7 +2,7 @@
 
 This is a port of the NIST [JAMA](https://math.nist.gov/javanumerics/jama/) library to Nim.
 
-API documentation is [here](https://b3liever.github.io/manu/)
+API documentation is [here](https://b3liever.github.io/manu/index.html)
 
 ## Example of use
 

@@ -1,6 +1,6 @@
-Manu Documentation Index
+## Manu Documentation Index
 
-- [Manu - Nim Matrix library](manu.html)
+- [Manu](manu.html)
 - [Matrix](manu/matrix.html)
 - [Cholesky Decomposition](manu/cholesky.html)
 - [LU Decomposition](manu/lu.html)
