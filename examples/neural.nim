@@ -6,16 +6,13 @@ proc sigmoid(s: float): float {.inline.} =
    result = 1.0 / (1.0 + exp(-s))
 makeUniversal(sigmoid)
 
-proc crossEntropy(batchLen: int, y: Matrix, a: sink Matrix): float =
-   var a = a
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = y[i, j] * ln(a[i, j]) + (1.0 - y[i, j]) * ln(1.0 - a[i, j])
-   result = -sum(a) / batchLen.float
+proc loss(y, t: float): float {.inline.} =
+   result = t * ln(y) + (1.0 - t) * ln(1.0 - y)
+makeUniversalBinary(loss)
 
 proc main =
    const
-      m = 4
+      m = 4 # batch length
       nodes = 400
       anneal = 0.99
    let
@@ -42,12 +39,12 @@ proc main =
       let
          # LAYER 2
          dZ2 = A2 - Y
-         dW2 = (dZ2 * A1.transpose) / m.float
          db2 = dZ2 / m.float
+         dW2 = db2 * A1.transpose
          # LAYER 1
-         dZ1 = (W2.transpose * dZ2) .* (1.0 - A1 .* A1)
-         dW1 = (dZ1 * X.transpose) / m.float
+         dZ1 = (W2.transpose * dZ2) *. (1.0 - A1 *. A1)
          db1 = dZ1 / m.float
+         dW1 = db1 * X.transpose
       # Gradient Descent
       # LAYER 2
       W2 -= rate * dW2
@@ -56,11 +53,11 @@ proc main =
       W1 -= rate * dW1
       b1 -= rate * db1
       rate = rate * anneal
-      # Loss
-      let loss = crossEntropy(m, Y, A2)
+      # Cross Entropy
+      let loss = -sum(loss(A2, Y)) / m.float
       if i mod 20 == 0:
-         echo("Iteration : ", i)
-         echo("  Loss = ", loss.formatEng)
-         echo("  Predictions = ", A2)
+         echo(" Iteration ", i, ":")
+         echo("   Loss = ", formatEng(loss))
+         echo("   Predictions = ", A2)
 
 main()

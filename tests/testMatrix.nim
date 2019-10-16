@@ -480,9 +480,9 @@ proc main() =
       try_failure(errorCount,"uminus... ","(-A + A != zeros)")
    A = R #.copy()
    O = matrix(A.rowDimension,A.columnDimension, 1.0)
-   C = A .\ R
+   C = A \. R
    try:
-      S = A .\ S
+      S = A \. S
       try_failure(errorCount,"arrayLeftDivide conformance check... ","nonconformance not raised")
    except AssertionError:
       try_success("arrayLeftDivide conformance check... ", "")
@@ -492,11 +492,11 @@ proc main() =
    except ValueError:
       try_failure(errorCount,"arrayLeftDivide... ","(M.\\M != ones)")
    try:
-      A .\= S
+      A \.= S
       try_failure(errorCount,"arrayLeftDivideEquals conformance check... ","nonconformance not raised")
    except AssertionError:
       try_success("arrayLeftDivideEquals conformance check... ", "")
-   A .\= R
+   A \.= R
    try:
       check(A,O)
       try_success("arrayLeftDivideEquals... ", "")
@@ -504,22 +504,22 @@ proc main() =
       try_failure(errorCount,"arrayLeftDivideEquals... ","(M.\\M != ones)")
    A = R #.copy()
    try:
-      C = A ./ S
+      C = A /. S
       try_failure(errorCount,"arrayRightDivide conformance check... ","nonconformance not raised")
    except AssertionError:
       try_success("arrayRightDivide conformance check... ", "")
-   C = A ./ R
+   C = A /. R
    try:
       check(C, O)
       try_success("arrayRightDivide... ", "")
    except ValueError:
       try_failure(errorCount,"arrayRightDivide... ","(M./M != ones)")
    try:
-      A ./= S
+      A /.= S
       try_failure(errorCount,"arrayRightDivideEquals conformance check... ","nonconformance not raised")
    except AssertionError:
       try_success("arrayRightDivideEquals conformance check... ", "")
-   A ./= R
+   A /.= R
    try:
       check(A, O)
       try_success("arrayRightDivideEquals... ", "")
@@ -528,24 +528,24 @@ proc main() =
    A = R #.copy()
    B = randMatrix(A.rowDimension, A.columnDimension)
    try:
-      S = A .* S
+      S = A *. S
       try_failure(errorCount, "arrayTimes conformance check... ","nonconformance not raised")
    except AssertionError:
       try_success("arrayTimes conformance check... ", "")
-   C = A .* B
+   C = A *. B
    try:
-      check(C ./ B, A)
+      check(C /. B, A)
       try_success("arrayTimes... ", "")
    except ValueError:
       try_failure(errorCount,"arrayTimes... ","(A = R, C = A.*B, but C./B != A)")
    try:
-      A .*= S
+      A *.= S
       try_failure(errorCount,"arrayTimesEquals conformance check... ","nonconformance not raised")
    except AssertionError:
       try_success("arrayTimesEquals conformance check... ", "")
-   A .*= B
+   A *.= B
    try:
-      check(A ./ B, R)
+      check(A /. B, R)
       try_success("arrayTimesEquals... ", "")
    except ValueError:
       try_failure(errorCount,"arrayTimesEquals... ","(A = R, A = A.*B, but A./B != R)")

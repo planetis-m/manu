@@ -267,7 +267,7 @@ proc `-=`*(a: var Matrix, b: Matrix) =
       for j in 0 ..< a.n:
          a[i, j] = a[i, j] - b[i, j]
 
-proc `.*`*(a: sink Matrix, b: Matrix): Matrix =
+proc `*.`*(a: sink Matrix, b: Matrix): Matrix =
    ## Element-by-element multiplication, ``C = A.*B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
    result = a
@@ -275,14 +275,14 @@ proc `.*`*(a: sink Matrix, b: Matrix): Matrix =
       for j in 0 ..< result.n:
          result[i, j] = result[i, j] * b[i, j]
 
-proc `.*=`*(a: var Matrix, b: Matrix) =
+proc `*.=`*(a: var Matrix, b: Matrix) =
    ## Element-by-element multiplication in place, ``A = A.*B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
       for j in 0 ..< a.n:
          a[i, j] = a[i, j] * b[i, j]
 
-proc `./`*(a: sink Matrix, b: Matrix): Matrix =
+proc `/.`*(a: sink Matrix, b: Matrix): Matrix =
    ## Element-by-element right division, ``C = A./B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
    result = a
@@ -290,14 +290,14 @@ proc `./`*(a: sink Matrix, b: Matrix): Matrix =
       for j in 0 ..< result.n:
          result[i, j] = result[i, j] / b[i, j]
 
-proc `./=`*(a: var Matrix, b: Matrix) =
+proc `/.=`*(a: var Matrix, b: Matrix) =
    ## Element-by-element right division in place, ``A = A./B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
       for j in 0 ..< a.n:
          a[i, j] = a[i, j] / b[i, j]
 
-proc `.\`*(a: sink Matrix, b: Matrix): Matrix =
+proc `\.`*(a: sink Matrix, b: Matrix): Matrix =
    ## Element-by-element left division, ``C = A.\B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
    result = a
@@ -305,7 +305,7 @@ proc `.\`*(a: sink Matrix, b: Matrix): Matrix =
       for j in 0 ..< result.n:
          result[i, j] = b[i, j] / result[i, j]
 
-proc `.\=`*(a: var Matrix, b: Matrix) =
+proc `\.=`*(a: var Matrix, b: Matrix) =
    ## Element-by-element left division in place, ``A = A.\B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
@@ -481,6 +481,14 @@ template makeUniversal*(fname: untyped) =
       result = m
       for i in 0 ..< len:
          result.data[i] = fname(result.data[i])
+
+template makeUniversalBinary*(fname: untyped) =
+   proc fname*(a: sink Matrix, b: Matrix): Matrix =
+      assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
+      let len = a.m * a.n
+      result = a
+      for i in 0 ..< len:
+         result.data[i] = fname(result.data[i], b.data[i])
 
 makeUniversal(sqrt)
 makeUniversal(cbrt)

@@ -31,7 +31,7 @@ task docs, "generate documentation":
    switch "index"
    switch "out", "docs/"
    switch "git.url", "https://github.com/b3liever/manu/"
-   switch "docSeeSrcUrl", "https://github.com/b3liever/manu/master"
+   #switch "docSeeSrcUrl", "https://github.com/b3liever/manu/blob/master"
    setCommand "doc", "manu.nim"
 
 after docs:
