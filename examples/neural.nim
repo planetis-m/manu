@@ -1,4 +1,4 @@
-# From: https://gist.github.com/Jeraldy/1aa6ae6fefa46b7a9cc02b6573cfeefe
+# See: https://peterroelants.github.io/posts/neural-network-implementation-part04/
 # Implementing an Artificial Neural Network in manu
 import math, strutils, "../manu" / matrix
 
@@ -13,38 +13,37 @@ makeUniversalBinary(loss)
 proc main =
    const
       m = 4 # batch length
-      nodes = 400
-      anneal = 0.99
+      nodes = 3
+      rate = 0.01
    let
-      X = matrix(m, @[0.0, 0, 1, 1, 0, 1, 0, 1]) # X.transpose
-      Y = matrix(m, @[0.0, 1, 1, 0]) # Y.transpose
+      X = matrix(2, @[0.0, 0, 0, 1, 1, 0, 1, 1])
+      Y = matrix(1, @[0.0, 1, 1, 0])
    var
-      rate = 1.0
       # LAYER 1
-      W1 = randMatrix(nodes, 2)
-      b1 = zeros(nodes, m)
+      W1 = randMatrix(2, nodes, -1.0..1.0)
+      b1 = zeros(1, nodes)
       # LAYER 2
-      W2 = randMatrix(1, nodes)
-      b2 = zeros(1, m)
-   for i in 1 .. 100:
+      W2 = randMatrix(nodes, 1, -1.0..1.0)
+      b2 = zeros(1, 1)
+   for i in 1 .. 1000:
       # Foward Prop
       let
          # LAYER 1
-         Z1 = W1 * X + b1
+         Z1 = X * W1 + b1 # broadcast bias to (m, nodes)
          A1 = sigmoid(Z1)
          # LAYER 2
-         Z2 = W2 * A1 + b2
+         Z2 = A1 * W2 + b2 # to (m, 1)
          A2 = sigmoid(Z2)
       # Back Prop
       let
          # LAYER 2
          dZ2 = A2 - Y
-         db2 = dZ2 / m.float
-         dW2 = db2 * A1.transpose
+         db2 = sumColumns(dZ2)
+         dW2 = A1.transpose * dZ2
          # LAYER 1
-         dZ1 = (W2.transpose * dZ2) *. (1.0 - A1 *. A1)
-         db1 = dZ1 / m.float
-         dW1 = db1 * X.transpose
+         dZ1 = (dZ2 * W2.transpose) *. (1.0 - A1) *. A1
+         db1 = sumColumns(dZ1)
+         dW1 = X.transpose * dZ1
       # Gradient Descent
       # LAYER 2
       W2 -= rate * dW2
@@ -52,12 +51,11 @@ proc main =
       # LAYER 1
       W1 -= rate * dW1
       b1 -= rate * db1
-      rate = rate * anneal
       # Cross Entropy
       let loss = -sum(loss(A2, Y)) / m.float
       if i mod 20 == 0:
          echo(" Iteration ", i, ":")
          echo("   Loss = ", formatEng(loss))
-         echo("   Predictions = ", A2)
+         echo("   Predictions =\n", A2)
 
 main()

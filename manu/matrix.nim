@@ -73,7 +73,7 @@ proc matrix*(n: int, data: sink seq[float]): Matrix =
    result.n = n
    result.data = data
 
-proc randMatrix*(m, n: int): Matrix =
+proc randMatrix*(m, n: int, max: float): Matrix =
    ## Generate matrix with random elements.
    ##
    ## ``return``: an m-by-n matrix with uniformly distributed random elements.
@@ -81,7 +81,19 @@ proc randMatrix*(m, n: int): Matrix =
    result.n = n
    result.data = newSeqUninitialized[float](result.m * result.n)
    for i in 0 ..< result.data.len:
-      result.data[i] = rand(1.0)
+      result.data[i] = rand(max)
+
+proc randMatrix*(m, n: int, x: Slice[float]): Matrix =
+   ## Generate matrix with random elements.
+   ##
+   ## ``return``: an m-by-n matrix with uniformly distributed random elements.
+   result.m = m
+   result.n = n
+   result.data = newSeqUninitialized[float](result.m * result.n)
+   for i in 0 ..< result.data.len:
+      result.data[i] = rand(x)
+
+template randMatrix*(m, n: int): Matrix = randMatrix(m, n, 1.0)
 
 proc getArray*(m: Matrix): seq[seq[float]] =
    ## Make a two-dimensional array copy of the internal array.
@@ -403,6 +415,28 @@ proc sum*(m: Matrix): float =
    for i in 0 ..< m.m:
       for j in 0 ..< m.n:
          result += m[i, j]
+
+proc sumColumns*(m: Matrix): Matrix =
+   ## Column sum.
+   ##
+   ## ``return``: An 1-by-n matrix with the column sum of each row.
+   result = matrix(1, m.n)
+   for j in 0 ..< m.n:
+      var s = 0.0
+      for i in 0 ..< m.m:
+         s += m[i, j]
+      result[0, j] = s
+
+proc sumRows*(m: Matrix): Matrix =
+   ## Row sum.
+   ##
+   ## ``return``: An m-by-1 matrix with the row sum of each column.
+   result = matrix(m.m, 1)
+   for i in 0 ..< m.m:
+      var s = 0.0
+      for j in 0 ..< m.n:
+         s += m[i, j]
+      result[i, 0] = s
 
 proc norm1*(m: Matrix): float =
    ## One norm.
