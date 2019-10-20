@@ -10,6 +10,8 @@ type
    Matrix* = object
       m, n: int # Row and column dimensions.
       data: seq[float] # Array for internal storage of elements.
+   ColVector* = distinct Matrix
+   RowVector* = distinct Matrix
 
 proc matrix*(m, n: int): Matrix {.inline.} =
    ## Construct an m-by-n matrix of zeros.
@@ -95,6 +97,9 @@ proc randMatrix*(m, n: int, x: Slice[float]): Matrix =
 
 template randMatrix*(m, n: int): Matrix = randMatrix(m, n, 1.0)
 
+template colVector*(m: int): ColVector = ColVector(matrix(m, 1))
+template rowVector*(n: int): RowVector = RowVector(matrix(1, n))
+
 proc getArray*(m: Matrix): seq[seq[float]] =
    ## Make a two-dimensional array copy of the internal array.
    result = newSeq[seq[float]](m.m)
@@ -146,6 +151,36 @@ proc `[]=`*(m: var Matrix, i, j: int, s: float) {.inline.} =
    checkBounds(i >= 0 and i < m.m)
    checkBounds(j >= 0 and j < m.n)
    m.data[i * m.n + j] = s
+
+proc `[]`*(v: ColVector, i: int): float {.inline.} =
+   ## Get a single element.
+   checkBounds(i >= 0 and i < Matrix(v).m)
+   Matrix(v).data[i]
+
+proc `[]`*(v: var ColVector, i: int): var float {.inline.} =
+   ## Get a single element.
+   checkBounds(i >= 0 and i < Matrix(v).m)
+   Matrix(v).data[i]
+
+proc `[]=`*(v: var ColVector, i: int, s: float) {.inline.} =
+   ## Set a single element.
+   checkBounds(i >= 0 and i < Matrix(v).m)
+   Matrix(v).data[i] = s
+
+proc `[]`*(v: RowVector, j: int): float {.inline.} =
+   ## Get a single element.
+   checkBounds(j >= 0 and j < Matrix(v).n)
+   Matrix(v).data[j]
+
+proc `[]`*(v: var RowVector, j: int): var float {.inline.} =
+   ## Get a single element.
+   checkBounds(j >= 0 and j < Matrix(v).n)
+   Matrix(v).data[j]
+
+proc `[]=`*(v: var RowVector, j: int, s: float) {.inline.} =
+   ## Set a single element.
+   checkBounds(j >= 0 and j < Matrix(v).n)
+   Matrix(v).data[j] = s
 
 template `^^`(dim, i: untyped): untyped =
   (when i is BackwardsIndex: dim - int(i) else: int(i))
@@ -393,6 +428,270 @@ proc `*`*(a, b: Matrix): Matrix =
             s += a[i, k] * bColj[k]
          result[i, j] = s
 
+template `-`*(v: ColVector): ColVector = ColVector(-Matrix(v))
+template `-`*(v: RowVector): RowVector = RowVector(-Matrix(v))
+
+proc `+`*(a: sink Matrix, b: ColVector): Matrix =
+   ## ``C = A + B``, ``b`` is broadcasted
+   assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix-vector dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] + b[i]
+
+proc `+`*(a: sink Matrix, b: RowVector): Matrix =
+   ## ``C = A + B``, ``b`` is broadcasted
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.n, "Matrix-vector dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] + b[j]
+
+proc `+`*(a: ColVector, b: RowVector): Matrix =
+   ## ``C = A + B``, ``a`` and ``b`` are broadcasted
+   assert(Matrix(b).m == 1 and Matrix(a).n == 1, "Matrices are not broadcastable.")
+   result = matrix(Matrix(a).m, Matrix(b).n)
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = a[i] + b[j]
+
+template `+`*(b: RowVector, a: ColVector): Matrix = a + b
+template `+`*(b: ColVector, a: Matrix): Matrix = m + b
+template `+`*(b: RowVector, a: Matrix): Matrix = m + b
+
+template `+=`*(a, b: ColVector) = Matrix(a) += Matrix(b)
+template `+=`*(a, b: RowVector) = Matrix(a) += Matrix(b)
+
+proc `+=`*(a: var Matrix, b: ColVector) =
+   ## ``A = A + B``, ``b`` is broadcasted
+   assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix dimensions must agree.")
+   for i in 0 ..< a.m:
+      for j in 0 ..< a.n:
+         a[i, j] = a[i, j] + b[i]
+
+proc `+=`*(a: var Matrix, b: RowVector) =
+   ## ``A = A + B``, ``b`` is broadcasted
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
+   for i in 0 ..< a.m:
+      for j in 0 ..< a.n:
+         a[i, j] = a[i, j] + b[i]
+
+proc `-`*(a: sink Matrix, b: ColVector): Matrix =
+   ## ``C = A - B``, ``b`` is broadcasted
+   assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix-vector dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] - b[i]
+
+proc `-`*(a: sink Matrix, b: RowVector): Matrix =
+   ## ``C = A - B``, ``b`` is broadcasted
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.n, "Matrix-vector dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] - b[j]
+
+proc `-`*(a: ColVector, b: RowVector): Matrix =
+   ## ``C = A - B``, ``a`` and ``b`` are broadcasted
+   assert(Matrix(b).m == 1 and Matrix(a).n == 1, "Matrices are not broadcastable.")
+   result = matrix(Matrix(a).m, Matrix(b).n)
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = a[i] - b[j]
+
+template `-`*(b: RowVector, a: ColVector): Matrix = a - b
+template `-`*(b: ColVector, a: Matrix): Matrix = m - b
+template `-`*(b: RowVector, a: Matrix): Matrix = m - b
+
+template `-=`*(a, b: ColVector) = Matrix(a) -= Matrix(b)
+template `-=`*(a, b: RowVector) = Matrix(a) -= Matrix(b)
+
+proc `-=`*(a: var Matrix, b: ColVector) =
+   ## ``A = A - B``, ``b`` is broadcasted
+   assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix dimensions must agree.")
+   for i in 0 ..< a.m:
+      for j in 0 ..< a.n:
+         a[i, j] = a[i, j] - b[i]
+
+proc `-=`*(a: var Matrix, b: RowVector) =
+   ## ``A = A - B``, ``b`` is broadcasted
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
+   for i in 0 ..< a.m:
+      for j in 0 ..< a.n:
+         a[i, j] = a[i, j] - b[i]
+
+proc `*.`*(a: sink Matrix, b: ColVector): Matrix =
+   ## Element-by-element multiplication, ``C = A.*B``, ``b`` is broadcasted
+   assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix-vector dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] * b[i]
+
+proc `*.`*(a: sink Matrix, b: RowVector): Matrix =
+   ## Element-by-element multiplication, ``C = A.*B``, ``b`` is broadcasted
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.n, "Matrix-vector dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] * b[j]
+
+proc `*.`*(a: ColVector, b: RowVector): Matrix =
+   ## Element-by-element multiplication, ``C = A.*B``, ``a`` and ``b`` are broadcasted
+   assert(Matrix(b).m == 1 and Matrix(a).n == 1, "Matrices are not broadcastable.")
+   result = matrix(Matrix(a).m, Matrix(b).n)
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = a[i] * b[j]
+
+template `*.`*(b: RowVector, a: ColVector): Matrix = a *. b
+template `*.`*(b: ColVector, a: Matrix): Matrix = m *. b
+template `*.`*(b: RowVector, a: Matrix): Matrix = m *. b
+
+template `*.=`*(a, b: ColVector) = Matrix(a) *.= Matrix(b)
+template `*.=`*(a, b: RowVector) = Matrix(a) *.= Matrix(b)
+
+proc `*.=`*(a: var Matrix, b: ColVector) =
+   ## Element-by-element multiplication in place, ``A = A.*B``, ``b`` is broadcasted
+   assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix dimensions must agree.")
+   for i in 0 ..< a.m:
+      for j in 0 ..< a.n:
+         a[i, j] = a[i, j] * b[i]
+
+proc `*.=`*(a: var Matrix, b: RowVector) =
+   ## Element-by-element multiplication in place, ``A = A.*B``, ``b`` is broadcasted
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
+   for i in 0 ..< a.m:
+      for j in 0 ..< a.n:
+         a[i, j] = a[i, j] * b[i]
+
+proc `/.`*(a: sink Matrix, b: ColVector): Matrix =
+   ## Element-by-element right division, ``C = A./B``, ``b`` is broadcasted
+   assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix-vector dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] / b[i]
+
+proc `/.`*(a: sink Matrix, b: RowVector): Matrix =
+   ## Element-by-element right division, ``C = A./B``, ``b`` is broadcasted
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.n, "Matrix-vector dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = result[i, j] / b[j]
+
+proc `/.`*(a: ColVector, b: RowVector): Matrix =
+   ## Element-by-element right division, ``C = A./B``, ``a`` and ``b`` are broadcasted
+   assert(Matrix(b).m == 1 and Matrix(a).n == 1, "Matrices are not broadcastable.")
+   result = matrix(Matrix(a).m, Matrix(b).n)
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = a[i] / b[j]
+
+template `/.=`*(a, b: ColVector) = Matrix(a) /.= Matrix(b)
+template `/.=`*(a, b: RowVector) = Matrix(a) /.= Matrix(b)
+
+proc `/.=`*(a: var Matrix, b: ColVector) =
+   ## Element-by-element right division in place, ``A = A./B``, ``b`` is broadcasted
+   assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix dimensions must agree.")
+   for i in 0 ..< a.m:
+      for j in 0 ..< a.n:
+         a[i, j] = a[i, j] / b[i]
+
+proc `/.=`*(a: var Matrix, b: RowVector) =
+   ## Element-by-element right division in place, ``A = A./B``, ``b`` is broadcasted
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
+   for i in 0 ..< a.m:
+      for j in 0 ..< a.n:
+         a[i, j] = a[i, j] / b[i]
+
+proc `\.`*(a: sink Matrix, b: ColVector): Matrix =
+   ## Element-by-element left division, ``C = A.\B``, ``b`` is broadcasted
+   assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix-vector dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = b[i] / result[i, j]
+
+proc `\.`*(a: sink Matrix, b: RowVector): Matrix =
+   ## Element-by-element left division, ``C = A.\B``, ``b`` is broadcasted
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.n, "Matrix-vector dimensions must agree.")
+   result = a
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = b[j] / result[i, j]
+
+proc `\.`*(a: ColVector, b: RowVector): Matrix =
+   ## Element-by-element left division, ``C = A.\B``, ``a`` and ``b`` are broadcasted
+   assert(Matrix(b).m == 1 and Matrix(a).n == 1, "Matrices are not broadcastable.")
+   result = matrix(Matrix(a).m, Matrix(b).n)
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = b[j] / a[i]
+
+template `\.=`*(a, b: ColVector) = Matrix(a) \.= Matrix(b)
+template `\.=`*(a, b: RowVector) = Matrix(a) \.= Matrix(b)
+
+proc `\.=`*(a: var Matrix, b: ColVector) =
+   ## Element-by-element left division in place, ``A = A.\B``, ``b`` is broadcasted
+   assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix dimensions must agree.")
+   for i in 0 ..< a.m:
+      for j in 0 ..< a.n:
+         a[i, j] = b[i] / a[i, j]
+
+proc `\.=`*(a: var Matrix, b: RowVector) =
+   ## Element-by-element left division in place, ``A = A.\B``, ``b`` is broadcasted
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
+   for i in 0 ..< a.m:
+      for j in 0 ..< a.n:
+         a[i, j] = b[i] / a[i, j]
+
+template `/.`*(b: RowVector, a: ColVector): Matrix = a \. b
+template `/.`*(b: ColVector, a: Matrix): Matrix = a \. b
+template `/.`*(b: RowVector, a: Matrix): Matrix = a \. b
+
+template `\.`*(b: RowVector, a: ColVector): Matrix = a /. b
+template `\.`*(b: ColVector, a: Matrix): Matrix = a /. b
+template `\.`*(b: RowVector, a: Matrix): Matrix = a /. b
+
+template `+`*(v: ColVector, s: float): ColVector = ColVector(Matrix(v) + s)
+template `+`*(s: float, v: ColVector): ColVector = ColVector(Matrix(v) + s)
+
+template `-`*(v: ColVector, s: float): ColVector = ColVector(Matrix(v) + (-s))
+template `-`*(s: float, v: ColVector): ColVector = ColVector(s - Matrix(v))
+
+template `+=`*(v: ColVector, s: float) = Matrix(v) += s
+template `-=`*(v: ColVector, s: float) = Matrix(v) += (-s)
+
+template `+`*(v: RowVector, s: float): RowVector = RowVector(Matrix(v) + s)
+template `+`*(s: float, v: RowVector): RowVector = RowVector(Matrix(v) + s)
+
+template `-`*(v: RowVector, s: float): RowVector = RowVector(Matrix(v) + (-s))
+template `-`*(s: float, v: RowVector): RowVector = RowVector(s - Matrix(v))
+
+template `+=`*(v: RowVector, s: float) = Matrix(v) += s
+template `-=`*(v: RowVector, s: float) = Matrix(v) += (-s)
+
+template `*`*(v: ColVector, s: float): ColVector = ColVector(Matrix(v) * s)
+template `*`*(s: float, v: ColVector): ColVector = ColVector(Matrix(v) * s)
+
+template `/`*(v: ColVector, s: float): ColVector = ColVector(Matrix(v) / s)
+template `/`*(s: float, v: ColVector): ColVector = ColVector(Matrix(v) * (1 / s))
+
+template `*=`*(v: ColVector, s: float) = Matrix(v) *= s
+template `/=`*(v: ColVector, s: float) = Matrix(v) /= s
+
+template `*`*(v: RowVector, s: float): RowVector = RowVector(Matrix(v) * s)
+template `*`*(s: float, v: RowVector): RowVector = RowVector(Matrix(v) * s)
+
+template `/`*(v: RowVector, s: float): RowVector = RowVector(Matrix(v) / s)
+template `/`*(s: float, v: RowVector): RowVector = RowVector(Matrix(v) * (1 / s))
+
+template `*=`*(v: RowVector, s: float) = Matrix(v) *= s
+template `/=`*(v: RowVector, s: float) = Matrix(v) /= s
+
 proc transpose*(m: Matrix): Matrix =
    ## Matrix transpose
    result = matrix(m.n, m.m)
@@ -416,27 +715,27 @@ proc sum*(m: Matrix): float =
       for j in 0 ..< m.n:
          result += m[i, j]
 
-proc sumColumns*(m: Matrix): Matrix =
+proc sumColumns*(m: Matrix): RowVector =
    ## Column sum.
    ##
    ## ``return``: An 1-by-n matrix with the column sum of each row.
-   result = matrix(1, m.n)
+   result = rowVector(m.n)
    for j in 0 ..< m.n:
       var s = 0.0
       for i in 0 ..< m.m:
          s += m[i, j]
-      result[0, j] = s
+      result[j] = s
 
-proc sumRows*(m: Matrix): Matrix =
+proc sumRows*(m: Matrix): ColVector =
    ## Row sum.
    ##
    ## ``return``: An m-by-1 matrix with the row sum of each column.
-   result = matrix(m.m, 1)
+   result = colVector(m.m)
    for i in 0 ..< m.m:
       var s = 0.0
       for j in 0 ..< m.n:
          s += m[i, j]
-      result[i, 0] = s
+      result[i] = s
 
 proc norm1*(m: Matrix): float =
    ## One norm.
@@ -508,6 +807,9 @@ proc `$`*(m: Matrix): string =
          result.add "⎦"
       else:
          result.add "⎥\n"
+
+template `$`*(v: ColVector): string = $Matrix(v)
+template `$`*(v: RowVector): string = $Matrix(v)
 
 template makeUniversal*(fname: untyped) =
    proc fname*(m: sink Matrix): Matrix =

@@ -21,10 +21,10 @@ proc main =
    var
       # LAYER 1
       W1 = randMatrix(2, nodes, -1.0..1.0)
-      b1 = zeros(1, nodes)
+      b1 = rowVector(nodes)
       # LAYER 2
       W2 = randMatrix(nodes, 1, -1.0..1.0)
-      b2 = zeros(1, 1)
+      b2 = 0.0
    for i in 1 .. 1000:
       # Foward Prop
       let
@@ -38,7 +38,7 @@ proc main =
       let
          # LAYER 2
          dZ2 = A2 - Y
-         db2 = sumColumns(dZ2)
+         db2 = sum(dZ2)
          dW2 = A1.transpose * dZ2
          # LAYER 1
          dZ1 = (dZ2 * W2.transpose) *. (1.0 - A1) *. A1
