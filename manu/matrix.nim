@@ -459,6 +459,9 @@ template `+`*(b: RowVector, a: ColVector): Matrix = a + b
 template `+`*(b: ColVector, a: Matrix): Matrix = m + b
 template `+`*(b: RowVector, a: Matrix): Matrix = m + b
 
+template `+`*(a, b: ColVector): ColVector = ColVector(Matrix(a) + Matrix(b))
+template `+`*(a, b: RowVector): RowVector = RowVector(Matrix(a) + Matrix(b))
+
 template `+=`*(a, b: ColVector) = Matrix(a) += Matrix(b)
 template `+=`*(a, b: RowVector) = Matrix(a) += Matrix(b)
 
@@ -504,6 +507,9 @@ template `-`*(b: RowVector, a: ColVector): Matrix = a - b
 template `-`*(b: ColVector, a: Matrix): Matrix = m - b
 template `-`*(b: RowVector, a: Matrix): Matrix = m - b
 
+template `-`*(a, b: ColVector): ColVector = ColVector(Matrix(a) - Matrix(b))
+template `-`*(a, b: RowVector): RowVector = RowVector(Matrix(a) - Matrix(b))
+
 template `-=`*(a, b: ColVector) = Matrix(a) -= Matrix(b)
 template `-=`*(a, b: RowVector) = Matrix(a) -= Matrix(b)
 
@@ -548,6 +554,9 @@ proc `*.`*(a: ColVector, b: RowVector): Matrix =
 template `*.`*(b: RowVector, a: ColVector): Matrix = a *. b
 template `*.`*(b: ColVector, a: Matrix): Matrix = m *. b
 template `*.`*(b: RowVector, a: Matrix): Matrix = m *. b
+
+template `*.`*(a, b: ColVector): ColVector = ColVector(Matrix(a) *. Matrix(b))
+template `*.`*(a, b: RowVector): RowVector = RowVector(Matrix(a) *. Matrix(b))
 
 template `*.=`*(a, b: ColVector) = Matrix(a) *.= Matrix(b)
 template `*.=`*(a, b: RowVector) = Matrix(a) *.= Matrix(b)
@@ -655,6 +664,11 @@ template `/.`*(b: RowVector, a: Matrix): Matrix = a \. b
 template `\.`*(b: RowVector, a: ColVector): Matrix = a /. b
 template `\.`*(b: ColVector, a: Matrix): Matrix = a /. b
 template `\.`*(b: RowVector, a: Matrix): Matrix = a /. b
+
+template `/.`*(a, b: ColVector): ColVector = ColVector(Matrix(a) /. Matrix(b))
+template `/.`*(a, b: RowVector): RowVector = RowVector(Matrix(a) /. Matrix(b))
+template `\.`*(a, b: ColVector): ColVector = ColVector(Matrix(a) \. Matrix(b))
+template `\.`*(a, b: RowVector): RowVector = RowVector(Matrix(a) \. Matrix(b))
 
 template `+`*(v: ColVector, s: float): ColVector = ColVector(Matrix(v) + s)
 template `+`*(s: float, v: ColVector): ColVector = ColVector(Matrix(v) + s)
