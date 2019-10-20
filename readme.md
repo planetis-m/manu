@@ -18,8 +18,8 @@ API [documentation](https://b3liever.github.io/manu/)
 
 In the examples directory you will find the following:
 
-1. [two layer neural network](https://github.com/b3liever/manu/blob/master/examples/neural.nim>)
-2. [stress state analysis](https://github.com/b3liever/manu/blob/master/examples/mohr.nim>)
+1. [two layer neural network](https://github.com/b3liever/manu/blob/master/examples/neural.nim)
+2. [stress state analysis script](https://github.com/b3liever/manu/blob/master/examples/mohr.nim)
 
 showcasing what can already be done.
 
@@ -61,7 +61,7 @@ determinants, inverses and other matrix functions. Theses are:
 
 ## Broadcasting
 
-It is implemented with the help of two distinct types ``RowVector`` and ``ColVector``.
+It is implemented with the help of two ``distinct`` types ``RowVector`` and ``ColVector``.
 Any compatible matrix can be casted to these i.e: ``ColVector(ones(5, 1))`` and when
 doing arithmetic with Matrices, will be broadcasted to the correct dimensions, so:
 
