@@ -425,9 +425,6 @@ proc `*`*(a, b: Matrix): Matrix =
             s += a[i, k] * bColj[k]
          result[i, j] = s
 
-template `-`*(v: ColVector): ColVector = ColVector(-Matrix(v))
-template `-`*(v: RowVector): RowVector = RowVector(-Matrix(v))
-
 proc `+`*(a: sink Matrix, b: ColVector): Matrix =
    ## ``C = A + B``, ``b`` is broadcasted
    assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix-vector dimensions must agree.")
@@ -455,12 +452,6 @@ proc `+`*(a: ColVector, b: RowVector): Matrix =
 template `+`*(b: RowVector, a: ColVector): Matrix = a + b
 template `+`*(b: ColVector, a: Matrix): Matrix = a + b
 template `+`*(b: RowVector, a: Matrix): Matrix = a + b
-
-template `+`*(a, b: ColVector): ColVector = ColVector(Matrix(a) + Matrix(b))
-template `+`*(a, b: RowVector): RowVector = RowVector(Matrix(a) + Matrix(b))
-
-template `+=`*(a, b: ColVector) = Matrix(a) += Matrix(b)
-template `+=`*(a, b: RowVector) = Matrix(a) += Matrix(b)
 
 proc `+=`*(a: var Matrix, b: ColVector) =
    ## ``A = A + B``, ``b`` is broadcasted
@@ -504,12 +495,6 @@ template `-`*(b: RowVector, a: ColVector): Matrix = a - b
 template `-`*(b: ColVector, a: Matrix): Matrix = a - b
 template `-`*(b: RowVector, a: Matrix): Matrix = a - b
 
-template `-`*(a, b: ColVector): ColVector = ColVector(Matrix(a) - Matrix(b))
-template `-`*(a, b: RowVector): RowVector = RowVector(Matrix(a) - Matrix(b))
-
-template `-=`*(a, b: ColVector) = Matrix(a) -= Matrix(b)
-template `-=`*(a, b: RowVector) = Matrix(a) -= Matrix(b)
-
 proc `-=`*(a: var Matrix, b: ColVector) =
    ## ``A = A - B``, ``b`` is broadcasted
    assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix dimensions must agree.")
@@ -552,12 +537,6 @@ template `*.`*(b: RowVector, a: ColVector): Matrix = a *. b
 template `*.`*(b: ColVector, a: Matrix): Matrix = a *. b
 template `*.`*(b: RowVector, a: Matrix): Matrix = a *. b
 
-template `*.`*(a, b: ColVector): ColVector = ColVector(Matrix(a) *. Matrix(b))
-template `*.`*(a, b: RowVector): RowVector = RowVector(Matrix(a) *. Matrix(b))
-
-template `*.=`*(a, b: ColVector) = Matrix(a) *.= Matrix(b)
-template `*.=`*(a, b: RowVector) = Matrix(a) *.= Matrix(b)
-
 proc `*.=`*(a: var Matrix, b: ColVector) =
    ## Element-by-element multiplication in place, ``A = A.*B``, ``b`` is broadcasted
    assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix dimensions must agree.")
@@ -595,9 +574,6 @@ proc `/.`*(a: ColVector, b: RowVector): Matrix =
    for i in 0 ..< result.m:
       for j in 0 ..< result.n:
          result[i, j] = a[i] / b[j]
-
-template `/.=`*(a, b: ColVector) = Matrix(a) /.= Matrix(b)
-template `/.=`*(a, b: RowVector) = Matrix(a) /.= Matrix(b)
 
 proc `/.=`*(a: var Matrix, b: ColVector) =
    ## Element-by-element right division in place, ``A = A./B``, ``b`` is broadcasted
@@ -637,9 +613,6 @@ proc `\.`*(a: ColVector, b: RowVector): Matrix =
       for j in 0 ..< result.n:
          result[i, j] = b[j] / a[i]
 
-template `\.=`*(a, b: ColVector) = Matrix(a) \.= Matrix(b)
-template `\.=`*(a, b: RowVector) = Matrix(a) \.= Matrix(b)
-
 proc `\.=`*(a: var Matrix, b: ColVector) =
    ## Element-by-element left division in place, ``A = A.\B``, ``b`` is broadcasted
    assert(Matrix(b).m == a.m and Matrix(b).n == 1, "Matrix dimensions must agree.")
@@ -661,47 +634,6 @@ template `/.`*(b: RowVector, a: Matrix): Matrix = a \. b
 template `\.`*(b: RowVector, a: ColVector): Matrix = a /. b
 template `\.`*(b: ColVector, a: Matrix): Matrix = a /. b
 template `\.`*(b: RowVector, a: Matrix): Matrix = a /. b
-
-template `/.`*(a, b: ColVector): ColVector = ColVector(Matrix(a) /. Matrix(b))
-template `/.`*(a, b: RowVector): RowVector = RowVector(Matrix(a) /. Matrix(b))
-template `\.`*(a, b: ColVector): ColVector = ColVector(Matrix(a) \. Matrix(b))
-template `\.`*(a, b: RowVector): RowVector = RowVector(Matrix(a) \. Matrix(b))
-
-template `+`*(v: ColVector, s: float): ColVector = ColVector(Matrix(v) + s)
-template `+`*(s: float, v: ColVector): ColVector = ColVector(Matrix(v) + s)
-
-template `-`*(v: ColVector, s: float): ColVector = ColVector(Matrix(v) + (-s))
-template `-`*(s: float, v: ColVector): ColVector = ColVector(s - Matrix(v))
-
-template `+=`*(v: ColVector, s: float) = Matrix(v) += s
-template `-=`*(v: ColVector, s: float) = Matrix(v) += (-s)
-
-template `+`*(v: RowVector, s: float): RowVector = RowVector(Matrix(v) + s)
-template `+`*(s: float, v: RowVector): RowVector = RowVector(Matrix(v) + s)
-
-template `-`*(v: RowVector, s: float): RowVector = RowVector(Matrix(v) + (-s))
-template `-`*(s: float, v: RowVector): RowVector = RowVector(s - Matrix(v))
-
-template `+=`*(v: RowVector, s: float) = Matrix(v) += s
-template `-=`*(v: RowVector, s: float) = Matrix(v) += (-s)
-
-template `*`*(v: ColVector, s: float): ColVector = ColVector(Matrix(v) * s)
-template `*`*(s: float, v: ColVector): ColVector = ColVector(Matrix(v) * s)
-
-template `/`*(v: ColVector, s: float): ColVector = ColVector(Matrix(v) / s)
-template `/`*(s: float, v: ColVector): ColVector = ColVector(Matrix(v) * (1 / s))
-
-template `*=`*(v: ColVector, s: float) = Matrix(v) *= s
-template `/=`*(v: ColVector, s: float) = Matrix(v) /= s
-
-template `*`*(v: RowVector, s: float): RowVector = RowVector(Matrix(v) * s)
-template `*`*(s: float, v: RowVector): RowVector = RowVector(Matrix(v) * s)
-
-template `/`*(v: RowVector, s: float): RowVector = RowVector(Matrix(v) / s)
-template `/`*(s: float, v: RowVector): RowVector = RowVector(Matrix(v) * (1 / s))
-
-template `*=`*(v: RowVector, s: float) = Matrix(v) *= s
-template `/=`*(v: RowVector, s: float) = Matrix(v) /= s
 
 proc transpose*(m: Matrix): Matrix =
    ## Matrix transpose
