@@ -474,7 +474,7 @@ proc `+=`*(a: var Matrix, b: ColVector) =
 
 proc `+=`*(a: var Matrix, b: RowVector) =
    ## ``A = A + B``, ``b`` is broadcasted
-   assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.n, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
       for j in 0 ..< a.n:
          a[i, j] = a[i, j] + b[j]
@@ -522,7 +522,7 @@ proc `-=`*(a: var Matrix, b: ColVector) =
 
 proc `-=`*(a: var Matrix, b: RowVector) =
    ## ``A = A - B``, ``b`` is broadcasted
-   assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.n, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
       for j in 0 ..< a.n:
          a[i, j] = a[i, j] - b[j]
@@ -570,7 +570,7 @@ proc `*.=`*(a: var Matrix, b: ColVector) =
 
 proc `*.=`*(a: var Matrix, b: RowVector) =
    ## Element-by-element multiplication in place, ``A = A.*B``, ``b`` is broadcasted
-   assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.n, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
       for j in 0 ..< a.n:
          a[i, j] = a[i, j] * b[j]
@@ -611,7 +611,7 @@ proc `/.=`*(a: var Matrix, b: ColVector) =
 
 proc `/.=`*(a: var Matrix, b: RowVector) =
    ## Element-by-element right division in place, ``A = A./B``, ``b`` is broadcasted
-   assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.n, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
       for j in 0 ..< a.n:
          a[i, j] = a[i, j] / b[j]
@@ -652,7 +652,7 @@ proc `\.=`*(a: var Matrix, b: ColVector) =
 
 proc `\.=`*(a: var Matrix, b: RowVector) =
    ## Element-by-element left division in place, ``A = A.\B``, ``b`` is broadcasted
-   assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
+   assert(Matrix(b).m == 1 and Matrix(b).n == a.n, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
       for j in 0 ..< a.n:
          a[i, j] = b[j] / a[i, j]
