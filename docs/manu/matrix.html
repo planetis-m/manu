@@ -1001,9 +1001,9 @@ function main() {
   <li><a class="reference" href="#sum%2CMatrix"
     title="sum(m: Matrix): float"><wbr />sum<span class="attachedType">Matrix</span></a></li>
   <li><a class="reference" href="#sumColumns%2CMatrix"
-    title="sumColumns(m: Matrix): RowVector"><wbr />sum<wbr />Columns<span class="attachedType">Matrix</span></a></li>
+    title="sumColumns(m: Matrix): Matrix"><wbr />sum<wbr />Columns<span class="attachedType">Matrix</span></a></li>
   <li><a class="reference" href="#sumRows%2CMatrix"
-    title="sumRows(m: Matrix): ColVector"><wbr />sum<wbr />Rows<span class="attachedType">Matrix</span></a></li>
+    title="sumRows(m: Matrix): Matrix"><wbr />sum<wbr />Rows<span class="attachedType">Matrix</span></a></li>
   <li><a class="reference" href="#norm1%2CMatrix"
     title="norm1(m: Matrix): float"><wbr />norm1<span class="attachedType">Matrix</span></a></li>
   <li><a class="reference" href="#normInf%2CMatrix"
@@ -1074,10 +1074,6 @@ function main() {
     title="zeros(m, n: int): Matrix"><wbr />zeros<span class="attachedType">Matrix</span></a></li>
   <li><a class="reference" href="#randMatrix.t%2Cint%2Cint"
     title="randMatrix(m, n: int): Matrix"><wbr />rand<wbr />Matrix<span class="attachedType">Matrix</span></a></li>
-  <li><a class="reference" href="#colVector.t%2Cint"
-    title="colVector(m: int): ColVector"><wbr />col<wbr />Vector<span class="attachedType">ColVector</span></a></li>
-  <li><a class="reference" href="#rowVector.t%2Cint"
-    title="rowVector(n: int): RowVector"><wbr />row<wbr />Vector<span class="attachedType">RowVector</span></a></li>
   <li><a class="reference" href="#%2B.t%2Cfloat%2CMatrix"
     title="`+`(s: float; m: Matrix): Matrix"><wbr />`+`<span class="attachedType">Matrix</span></a></li>
   <li><a class="reference" href="#-.t%2CMatrix%2Cfloat"
@@ -1377,9 +1373,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Make a two-dimensional array copy of the internal array.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L103"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L100"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L103" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L100" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getColumnPacked,Matrix"></a>
@@ -1388,9 +1384,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Make a one-dimensional column packed copy of the internal array.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L111"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L108"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L111" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L108" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getRowPacked,Matrix"></a>
@@ -1399,9 +1395,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Copy the internal one-dimensional row packed array.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L118"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L115"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L118" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L115" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="dim,Matrix"></a>
@@ -1410,9 +1406,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Get (row, column) dimensions tuple.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L122"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L119"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L122" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L119" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="m,Matrix"></a>
@@ -1421,9 +1417,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Get row dimension.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L126"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L123"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L126" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L123" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="n,Matrix"></a>
@@ -1432,9 +1428,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Get column dimension.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L130"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L127"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L130" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L127" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="rowDimension,Matrix"></a>
@@ -1443,9 +1439,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L134"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L131"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L134" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L131" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="columnDimension,Matrix"></a>
@@ -1454,9 +1450,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L135"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L132"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L135" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L132" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[],Matrix,int,int"></a>
@@ -1465,9 +1461,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Get a single element.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L137"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L134"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L137" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L134" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[],Matrix,int,int_2"></a>
@@ -1476,9 +1472,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L143"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L140"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L143" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L140" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[]=,Matrix,int,int,float"></a>
@@ -1487,9 +1483,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Set a single element.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L149"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L146"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L149" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L146" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[],ColVector,int"></a>
@@ -1498,9 +1494,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Get a single element.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L155"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L152"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L155" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L152" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[],ColVector,int_2"></a>
@@ -1509,9 +1505,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L160"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L157"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L160" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L157" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[]=,ColVector,int,float"></a>
@@ -1520,9 +1516,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Set a single element.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L165"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L162"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L165" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L162" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[],RowVector,int"></a>
@@ -1531,9 +1527,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Get a single element.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L170"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L167"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L170" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L167" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[],RowVector,int_2"></a>
@@ -1542,9 +1538,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L175"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L172"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L175" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L172" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[]=,RowVector,int,float"></a>
@@ -1553,9 +1549,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Set a single element.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L180"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L177"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L180" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L177" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[],Matrix,HSlice[U,V],HSlice[W,X]"></a>
@@ -1564,9 +1560,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Get a submatrix, <tt class="docutils literal"><span class="pre">m[i0 .. i1, j0 .. j1]</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L188"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L185"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L188" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L185" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[],Matrix,openArray[int],openArray[int]"></a>
@@ -1575,9 +1571,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Get a submatrix, <tt class="docutils literal"><span class="pre">m[[0, 2, 3, 4], [1, 2, 3, 4]]</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L202"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L199"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L202" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L199" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[],Matrix,HSlice[U,V],openArray[int]"></a>
@@ -1586,9 +1582,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Get a submatrix, <tt class="docutils literal"><span class="pre">m[i0 .. i1, [0, 2, 3, 4]]</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L212"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L209"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L212" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L209" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[],Matrix,openArray[int],HSlice[U,V]"></a>
@@ -1597,9 +1593,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Get a submatrix, <tt class="docutils literal"><span class="pre">m[[0, 2, 3, 4], j0 .. j1]</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L224"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L221"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L224" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L221" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[]=,Matrix,HSlice[U,V],HSlice[W,X],Matrix"></a>
@@ -1608,9 +1604,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Set a submatrix, <tt class="docutils literal"><span class="pre">m[i0 .. i1, j0 .. j1] = a</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L236"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L233"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L236" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L233" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[]=,Matrix,openArray[int],openArray[int],Matrix"></a>
@@ -1619,9 +1615,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Set a submatrix, <tt class="docutils literal"><span class="pre">m[[0, 2, 3, 4], [1, 2, 3, 4]] = a</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L249"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L246"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L249" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L246" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[]=,Matrix,HSlice[U,V],openArray[int],Matrix"></a>
@@ -1630,9 +1626,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Set a submatrix, <tt class="docutils literal"><span class="pre">m[i0 .. i1, [0, 2, 3, 4]] = a</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L258"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L255"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L258" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L255" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="[]=,Matrix,openArray[int],HSlice[U,V],Matrix"></a>
@@ -1641,9 +1637,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Set a submatrix, <tt class="docutils literal"><span class="pre">m[[0, 2, 3, 4], j0 .. j1] = a</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L269"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L266"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L269" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L266" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-"></a>
@@ -1652,9 +1648,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Unary minus
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L280"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L277"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L280" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L277" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="+,,Matrix"></a>
@@ -1663,9 +1659,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">C = A + B</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L287"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L284"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L287" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L284" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="+=,Matrix,Matrix"></a>
@@ -1674,9 +1670,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">A = A + B</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L295"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L292"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L295" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L292" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-,,Matrix"></a>
@@ -1685,9 +1681,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">C = A - B</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L302"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L299"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L302" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L299" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-=,Matrix,Matrix"></a>
@@ -1696,9 +1692,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">A = A - B</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L310"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L307"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L310" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L307" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="*.,,Matrix"></a>
@@ -1707,9 +1703,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element multiplication, <tt class="docutils literal"><span class="pre">C = A.*B</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L317"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L314"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L317" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L314" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="*.=,Matrix,Matrix"></a>
@@ -1718,9 +1714,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element multiplication in place, <tt class="docutils literal"><span class="pre">A = A.*B</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L325"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L322"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L325" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L322" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/.,,Matrix"></a>
@@ -1729,9 +1725,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element right division, <tt class="docutils literal"><span class="pre">C = A./B</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L332"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L329"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L332" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L329" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/.=,Matrix,Matrix"></a>
@@ -1740,9 +1736,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element right division in place, <tt class="docutils literal"><span class="pre">A = A./B</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L340"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L337"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L340" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L337" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="\.,,Matrix"></a>
@@ -1751,9 +1747,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element left division, <tt class="docutils literal"><span class="pre">C = A.\B</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L347"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L344"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L347" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L344" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="\.=,Matrix,Matrix"></a>
@@ -1762,9 +1758,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element left division in place, <tt class="docutils literal"><span class="pre">A = A.\B</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L355"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L352"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L355" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L352" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="+,,float"></a>
@@ -1773,9 +1769,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Add a matrix to a scalar, <tt class="docutils literal"><span class="pre">C = s+A</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L362"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L359"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L362" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L359" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="+=,Matrix,float"></a>
@@ -1784,9 +1780,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Add a matrix to a scalar in place, <tt class="docutils literal"><span class="pre">A = s+A</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L372"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L369"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L372" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L369" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-,float,"></a>
@@ -1795,9 +1791,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Subtract a matrix from a scalar, <tt class="docutils literal"><span class="pre">C = s-A</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L380"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L377"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L380" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L377" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="*,,float"></a>
@@ -1806,9 +1802,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Multiply a matrix by a scalar, <tt class="docutils literal"><span class="pre">C = s*A</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L387"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L384"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L387" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L384" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="*=,Matrix,float"></a>
@@ -1817,9 +1813,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Multiply a matrix by a scalar in place, <tt class="docutils literal"><span class="pre">A = s*A</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L394"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L391"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L394" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L391" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/,,float"></a>
@@ -1828,9 +1824,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Divide a matrix by a scalar, <tt class="docutils literal"><span class="pre">C = A/s</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L402"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L399"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L402" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L399" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/=,Matrix,float"></a>
@@ -1839,9 +1835,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Divide a matrix by a scalar in place, <tt class="docutils literal"><span class="pre">A = A/s</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L411"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L408"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L411" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L408" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="*,Matrix,Matrix"></a>
@@ -1850,9 +1846,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Linear algebraic matrix multiplication, <tt class="docutils literal"><span class="pre">A * B</span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L417"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L414"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L417" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L414" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="+,,ColVector"></a>
@@ -1861,9 +1857,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">C = A + B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L434"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L431"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L434" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L431" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="+,,RowVector"></a>
@@ -1872,9 +1868,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">C = A + B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L442"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L439"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L442" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L439" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="+,ColVector,RowVector"></a>
@@ -1883,9 +1879,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">C = A + B</span></tt>, <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> are broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L450"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L447"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L450" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L447" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="+=,Matrix,ColVector"></a>
@@ -1894,9 +1890,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">A = A + B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L468"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L465"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L468" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L465" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="+=,Matrix,RowVector"></a>
@@ -1905,9 +1901,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">A = A + B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L475"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L472"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L475" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L472" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-,,ColVector"></a>
@@ -1916,9 +1912,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">C = A - B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L482"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L479"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L482" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L479" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-,,RowVector"></a>
@@ -1927,9 +1923,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">C = A - B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L490"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L487"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L490" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L487" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-,ColVector,RowVector"></a>
@@ -1938,9 +1934,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">C = A - B</span></tt>, <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> are broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L498"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L495"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L498" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L495" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-=,Matrix,ColVector"></a>
@@ -1949,9 +1945,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">A = A - B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L516"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L513"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L516" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L513" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-=,Matrix,RowVector"></a>
@@ -1960,9 +1956,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 <tt class="docutils literal"><span class="pre">A = A - B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L523"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L520"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L523" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L520" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="*.,,ColVector"></a>
@@ -1971,9 +1967,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element multiplication, <tt class="docutils literal"><span class="pre">C = A.*B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L530"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L527"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L530" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L527" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="*.,,RowVector"></a>
@@ -1982,9 +1978,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element multiplication, <tt class="docutils literal"><span class="pre">C = A.*B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L538"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L535"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L538" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L535" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="*.,ColVector,RowVector"></a>
@@ -1993,9 +1989,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element multiplication, <tt class="docutils literal"><span class="pre">C = A.*B</span></tt>, <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> are broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L546"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L543"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L546" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L543" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="*.=,Matrix,ColVector"></a>
@@ -2004,9 +2000,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element multiplication in place, <tt class="docutils literal"><span class="pre">A = A.*B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L564"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L561"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L564" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L561" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="*.=,Matrix,RowVector"></a>
@@ -2015,9 +2011,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element multiplication in place, <tt class="docutils literal"><span class="pre">A = A.*B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L571"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L568"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L571" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L568" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/.,,ColVector"></a>
@@ -2026,9 +2022,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element right division, <tt class="docutils literal"><span class="pre">C = A./B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L578"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L575"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L578" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L575" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/.,,RowVector"></a>
@@ -2037,9 +2033,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element right division, <tt class="docutils literal"><span class="pre">C = A./B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L586"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L583"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L586" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L583" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/.,ColVector,RowVector"></a>
@@ -2048,9 +2044,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element right division, <tt class="docutils literal"><span class="pre">C = A./B</span></tt>, <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> are broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L594"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L591"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L594" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L591" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/.=,Matrix,ColVector"></a>
@@ -2059,9 +2055,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element right division in place, <tt class="docutils literal"><span class="pre">A = A./B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L605"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L602"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L605" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L602" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/.=,Matrix,RowVector"></a>
@@ -2070,9 +2066,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element right division in place, <tt class="docutils literal"><span class="pre">A = A./B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L612"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L609"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L612" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L609" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="\.,,ColVector"></a>
@@ -2081,9 +2077,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element left division, <tt class="docutils literal"><span class="pre">C = A.\B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L619"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L616"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L619" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L616" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="\.,,RowVector"></a>
@@ -2092,9 +2088,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element left division, <tt class="docutils literal"><span class="pre">C = A.\B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L627"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L624"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L627" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L624" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="\.,ColVector,RowVector"></a>
@@ -2103,9 +2099,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element left division, <tt class="docutils literal"><span class="pre">C = A.\B</span></tt>, <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> are broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L635"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L632"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L635" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L632" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="\.=,Matrix,ColVector"></a>
@@ -2114,9 +2110,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element left division in place, <tt class="docutils literal"><span class="pre">A = A.\B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L646"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L643"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L646" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L643" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="\.=,Matrix,RowVector"></a>
@@ -2125,9 +2121,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Element-by-element left division in place, <tt class="docutils literal"><span class="pre">A = A.\B</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> is broadcasted
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L653"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L650"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L653" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L650" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="transpose,Matrix"></a>
@@ -2136,9 +2132,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Matrix transpose
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L709"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L706"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L709" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L706" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="identity,int"></a>
@@ -2149,9 +2145,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: An m-by-m matrix with ones on the diagonal and zeros elsewhere.</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L716"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L713"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L716" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L713" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="sum,Matrix"></a>
@@ -2160,35 +2156,35 @@ class="link-seesrc" target="_blank">Source</a>
 
 Sum.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L726"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L723"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L726" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L723" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="sumColumns,Matrix"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#sumColumns%2CMatrix"><span class="Identifier">sumColumns</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#sumColumns%2CMatrix"><span class="Identifier">sumColumns</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 <p>Column sum.</p>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: An 1-by-n matrix with the column sum of each row.</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L732"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L729"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L732" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L729" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="sumRows,Matrix"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#sumRows%2CMatrix"><span class="Identifier">sumRows</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#sumRows%2CMatrix"><span class="Identifier">sumRows</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 <p>Row sum.</p>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: An m-by-1 matrix with the row sum of each column.</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L743"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L740"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L743" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L740" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="norm1,Matrix"></a>
@@ -2199,9 +2195,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: maximum column sum</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L754"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L751"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L754" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L751" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="normInf,Matrix"></a>
@@ -2212,9 +2208,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: maximum row sum</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L764"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L761"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L764" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L761" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="normF,Matrix"></a>
@@ -2225,9 +2221,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: sqrt of sum of squares of all elements.</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L774"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L771"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L774" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L771" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="trace,Matrix"></a>
@@ -2238,9 +2234,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: the sum of the diagonal elements</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L782"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L779"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L782" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L779" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="$,Matrix"></a>
@@ -2249,13 +2245,46 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L799"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L796"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L799" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L796" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="sqrt"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#sqrt"><span class="Identifier">sqrt</span></a><span class="Other">(</span><span class="Identifier">m`gensym325236</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L840"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L840" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="cbrt"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#cbrt"><span class="Identifier">cbrt</span></a><span class="Other">(</span><span class="Identifier">m`gensym325273</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L841"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L841" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="log10"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#log10"><span class="Identifier">log10</span></a><span class="Other">(</span><span class="Identifier">m`gensym325310</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L842"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L842" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="log2"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#log2"><span class="Identifier">log2</span></a><span class="Other">(</span><span class="Identifier">m`gensym325347</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2265,8 +2294,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L843" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="cbrt"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#cbrt"><span class="Identifier">cbrt</span></a><span class="Other">(</span><span class="Identifier">m`gensym325273</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="ln"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#ln"><span class="Identifier">ln</span></a><span class="Other">(</span><span class="Identifier">m`gensym325384</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2276,8 +2305,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L844" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="log10"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#log10"><span class="Identifier">log10</span></a><span class="Other">(</span><span class="Identifier">m`gensym325310</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="exp"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#exp"><span class="Identifier">exp</span></a><span class="Other">(</span><span class="Identifier">m`gensym325421</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2287,8 +2316,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L845" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="log2"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#log2"><span class="Identifier">log2</span></a><span class="Other">(</span><span class="Identifier">m`gensym325347</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="arccos"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#arccos"><span class="Identifier">arccos</span></a><span class="Other">(</span><span class="Identifier">m`gensym325458</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2298,8 +2327,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L846" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="ln"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#ln"><span class="Identifier">ln</span></a><span class="Other">(</span><span class="Identifier">m`gensym325384</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="arcsin"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#arcsin"><span class="Identifier">arcsin</span></a><span class="Other">(</span><span class="Identifier">m`gensym325495</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2309,8 +2338,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L847" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="exp"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#exp"><span class="Identifier">exp</span></a><span class="Other">(</span><span class="Identifier">m`gensym325421</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="arctan"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#arctan"><span class="Identifier">arctan</span></a><span class="Other">(</span><span class="Identifier">m`gensym325532</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2320,8 +2349,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L848" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="arccos"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#arccos"><span class="Identifier">arccos</span></a><span class="Other">(</span><span class="Identifier">m`gensym325458</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="cos"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#cos"><span class="Identifier">cos</span></a><span class="Other">(</span><span class="Identifier">m`gensym325569</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2331,8 +2360,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L849" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="arcsin"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#arcsin"><span class="Identifier">arcsin</span></a><span class="Other">(</span><span class="Identifier">m`gensym325495</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="cosh"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#cosh"><span class="Identifier">cosh</span></a><span class="Other">(</span><span class="Identifier">m`gensym325606</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2342,8 +2371,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L850" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="arctan"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#arctan"><span class="Identifier">arctan</span></a><span class="Other">(</span><span class="Identifier">m`gensym325532</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="sin"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#sin"><span class="Identifier">sin</span></a><span class="Other">(</span><span class="Identifier">m`gensym325643</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2353,8 +2382,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L851" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="cos"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#cos"><span class="Identifier">cos</span></a><span class="Other">(</span><span class="Identifier">m`gensym325569</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="sinh"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#sinh"><span class="Identifier">sinh</span></a><span class="Other">(</span><span class="Identifier">m`gensym325680</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2364,8 +2393,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L852" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="cosh"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#cosh"><span class="Identifier">cosh</span></a><span class="Other">(</span><span class="Identifier">m`gensym325606</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="tan"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#tan"><span class="Identifier">tan</span></a><span class="Other">(</span><span class="Identifier">m`gensym325717</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2375,8 +2404,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L853" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="sin"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#sin"><span class="Identifier">sin</span></a><span class="Other">(</span><span class="Identifier">m`gensym325643</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="tanh"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#tanh"><span class="Identifier">tanh</span></a><span class="Other">(</span><span class="Identifier">m`gensym325754</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2386,8 +2415,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L854" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="sinh"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#sinh"><span class="Identifier">sinh</span></a><span class="Other">(</span><span class="Identifier">m`gensym325680</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="erf"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#erf"><span class="Identifier">erf</span></a><span class="Other">(</span><span class="Identifier">m`gensym325791</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2397,8 +2426,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L855" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="tan"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#tan"><span class="Identifier">tan</span></a><span class="Other">(</span><span class="Identifier">m`gensym325717</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="erfc"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#erfc"><span class="Identifier">erfc</span></a><span class="Other">(</span><span class="Identifier">m`gensym325828</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2408,8 +2437,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L856" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="tanh"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#tanh"><span class="Identifier">tanh</span></a><span class="Other">(</span><span class="Identifier">m`gensym325754</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="lgamma"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#lgamma"><span class="Identifier">lgamma</span></a><span class="Other">(</span><span class="Identifier">m`gensym325865</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2419,8 +2448,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L857" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="erf"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#erf"><span class="Identifier">erf</span></a><span class="Other">(</span><span class="Identifier">m`gensym325791</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="gamma"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#gamma"><span class="Identifier">gamma</span></a><span class="Other">(</span><span class="Identifier">m`gensym325902</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2430,8 +2459,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L858" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="erfc"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#erfc"><span class="Identifier">erfc</span></a><span class="Other">(</span><span class="Identifier">m`gensym325828</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="trunc"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#trunc"><span class="Identifier">trunc</span></a><span class="Other">(</span><span class="Identifier">m`gensym325939</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2441,8 +2470,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L859" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="lgamma"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#lgamma"><span class="Identifier">lgamma</span></a><span class="Other">(</span><span class="Identifier">m`gensym325865</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="floor"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#floor"><span class="Identifier">floor</span></a><span class="Other">(</span><span class="Identifier">m`gensym325976</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2452,8 +2481,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L860" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="gamma"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#gamma"><span class="Identifier">gamma</span></a><span class="Other">(</span><span class="Identifier">m`gensym325902</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="ceil"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#ceil"><span class="Identifier">ceil</span></a><span class="Other">(</span><span class="Identifier">m`gensym326013</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2463,8 +2492,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L861" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="trunc"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#trunc"><span class="Identifier">trunc</span></a><span class="Other">(</span><span class="Identifier">m`gensym325939</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="degToRad"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#degToRad"><span class="Identifier">degToRad</span></a><span class="Other">(</span><span class="Identifier">m`gensym326050</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2474,8 +2503,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L862" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="floor"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#floor"><span class="Identifier">floor</span></a><span class="Other">(</span><span class="Identifier">m`gensym325976</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="radToDeg"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#radToDeg"><span class="Identifier">radToDeg</span></a><span class="Other">(</span><span class="Identifier">m`gensym326105</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 
@@ -2483,39 +2512,6 @@ class="link-seesrc" target="_blank">Source</a>
 href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L863"
 class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L863" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
-<a id="ceil"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#ceil"><span class="Identifier">ceil</span></a><span class="Other">(</span><span class="Identifier">m`gensym326013</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L864"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L864" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
-<a id="degToRad"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#degToRad"><span class="Identifier">degToRad</span></a><span class="Other">(</span><span class="Identifier">m`gensym326050</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L865"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L865" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
-<a id="radToDeg"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#radToDeg"><span class="Identifier">radToDeg</span></a><span class="Other">(</span><span class="Identifier">m`gensym326105</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L866"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L866" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -2556,37 +2552,15 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L98" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="colVector.t,int"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#colVector.t%2Cint"><span class="Identifier">colVector</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L100"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L100" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
-<a id="rowVector.t,int"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#rowVector.t%2Cint"><span class="Identifier">rowVector</span></a><span class="Other">(</span><span class="Identifier">n</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L101"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L101" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
 <a id="+.t,float,Matrix"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2Cfloat%2CMatrix"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">m</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L369"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L366"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L369" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L366" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-.t,Matrix,float"></a>
@@ -2595,9 +2569,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L370"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L367"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L370" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L367" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-=.t,Matrix,float"></a>
@@ -2606,9 +2580,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L378"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L375"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L378" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L375" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="*.t,float,Matrix"></a>
@@ -2617,9 +2591,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L400"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L397"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L400" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L397" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/.t,float,Matrix"></a>
@@ -2628,9 +2602,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L409"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L406"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L409" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L406" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-.t,ColVector"></a>
@@ -2639,9 +2613,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L431"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L428"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L431" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L428" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-.t,RowVector"></a>
@@ -2650,9 +2624,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L432"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L429"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L432" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L429" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="+.t,RowVector,ColVector"></a>
@@ -2661,13 +2635,35 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L458"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L455"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L458" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L455" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="+.t,ColVector,Matrix"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2CColVector%2CMatrix"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L456"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L456" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="+.t,RowVector,Matrix"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2CRowVector%2CMatrix"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L457"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L457" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="+.t,ColVector,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2CColVector%2CColVector"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
 <dd>
 
 
@@ -2677,8 +2673,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L459" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="+.t,RowVector,Matrix"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2CRowVector%2CMatrix"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<a id="+.t,RowVector,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2CRowVector%2CRowVector"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -2688,8 +2684,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L460" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="+.t,ColVector,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2CColVector%2CColVector"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="+=.t,ColVector,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2B%3D.t%2CColVector%2CColVector"><span class="Identifier">`+=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -2699,8 +2695,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L462" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="+.t,RowVector,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2CRowVector%2CRowVector"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
+<a id="+=.t,RowVector,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2B%3D.t%2CRowVector%2CRowVector"><span class="Identifier">`+=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -2710,41 +2706,41 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L463" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="+=.t,ColVector,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2B%3D.t%2CColVector%2CColVector"><span class="Identifier">`+=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L465"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L465" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
-<a id="+=.t,RowVector,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2B%3D.t%2CRowVector%2CRowVector"><span class="Identifier">`+=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L466"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L466" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
 <a id="-.t,RowVector,ColVector"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#-.t%2CRowVector%2CColVector"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L506"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L503"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L506" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L503" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="-.t,ColVector,Matrix"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#-.t%2CColVector%2CMatrix"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L504"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L504" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="-.t,RowVector,Matrix"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#-.t%2CRowVector%2CMatrix"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L505"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L505" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="-.t,ColVector,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#-.t%2CColVector%2CColVector"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
 <dd>
 
 
@@ -2754,8 +2750,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L507" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="-.t,RowVector,Matrix"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#-.t%2CRowVector%2CMatrix"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<a id="-.t,RowVector,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#-.t%2CRowVector%2CRowVector"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -2765,8 +2761,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L508" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="-.t,ColVector,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#-.t%2CColVector%2CColVector"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="-=.t,ColVector,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#-%3D.t%2CColVector%2CColVector"><span class="Identifier">`-=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -2776,8 +2772,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L510" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="-.t,RowVector,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#-.t%2CRowVector%2CRowVector"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
+<a id="-=.t,RowVector,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#-%3D.t%2CRowVector%2CRowVector"><span class="Identifier">`-=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -2787,41 +2783,41 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L511" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="-=.t,ColVector,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#-%3D.t%2CColVector%2CColVector"><span class="Identifier">`-=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L513"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L513" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
-<a id="-=.t,RowVector,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#-%3D.t%2CRowVector%2CRowVector"><span class="Identifier">`-=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L514"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L514" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
 <a id="*..t,RowVector,ColVector"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#%2A..t%2CRowVector%2CColVector"><span class="Identifier">`*.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L554"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L551"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L554" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L551" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="*..t,ColVector,Matrix"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#%2A..t%2CColVector%2CMatrix"><span class="Identifier">`*.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L552"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L552" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="*..t,RowVector,Matrix"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2A..t%2CRowVector%2CMatrix"><span class="Identifier">`*.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L553"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L553" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="*..t,ColVector,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2A..t%2CColVector%2CColVector"><span class="Identifier">`*.`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
 <dd>
 
 
@@ -2831,8 +2827,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L555" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="*..t,RowVector,Matrix"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2A..t%2CRowVector%2CMatrix"><span class="Identifier">`*.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<a id="*..t,RowVector,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2A..t%2CRowVector%2CRowVector"><span class="Identifier">`*.`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -2842,8 +2838,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L556" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="*..t,ColVector,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2A..t%2CColVector%2CColVector"><span class="Identifier">`*.`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="*.=.t,ColVector,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2A.%3D.t%2CColVector%2CColVector"><span class="Identifier">`*.=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -2853,8 +2849,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L558" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="*..t,RowVector,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2A..t%2CRowVector%2CRowVector"><span class="Identifier">`*.`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
+<a id="*.=.t,RowVector,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2A.%3D.t%2CRowVector%2CRowVector"><span class="Identifier">`*.=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -2864,37 +2860,15 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L559" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="*.=.t,ColVector,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2A.%3D.t%2CColVector%2CColVector"><span class="Identifier">`*.=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L561"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L561" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
-<a id="*.=.t,RowVector,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2A.%3D.t%2CRowVector%2CRowVector"><span class="Identifier">`*.=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L562"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L562" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
 <a id="/.=.t,ColVector,ColVector"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#%2F.%3D.t%2CColVector%2CColVector"><span class="Identifier">`/.=`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span></pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L602"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L599"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L602" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L599" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/.=.t,RowVector,RowVector"></a>
@@ -2903,9 +2877,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L603"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L600"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L603" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L600" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="\.=.t,ColVector,ColVector"></a>
@@ -2914,9 +2888,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L643"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L640"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L643" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L640" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="\.=.t,RowVector,RowVector"></a>
@@ -2925,9 +2899,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L644"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L641"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L644" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L641" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/..t,RowVector,ColVector"></a>
@@ -2936,13 +2910,35 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L660"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L657"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L660" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L657" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="/..t,ColVector,Matrix"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#%2F..t%2CColVector%2CMatrix"><span class="Identifier">`/.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L658"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L658" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="/..t,RowVector,Matrix"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2F..t%2CRowVector%2CMatrix"><span class="Identifier">`/.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L659"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L659" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="\..t,RowVector,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%5C..t%2CRowVector%2CColVector"><span class="Identifier">`\.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
 <dd>
 
 
@@ -2952,8 +2948,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L661" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="/..t,RowVector,Matrix"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2F..t%2CRowVector%2CMatrix"><span class="Identifier">`/.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<a id="\..t,ColVector,Matrix"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%5C..t%2CColVector%2CMatrix"><span class="Identifier">`\.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
 <dd>
 
 
@@ -2963,19 +2959,19 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L662" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="\..t,RowVector,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%5C..t%2CRowVector%2CColVector"><span class="Identifier">`\.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<a id="\..t,RowVector,Matrix"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%5C..t%2CRowVector%2CMatrix"><span class="Identifier">`\.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L664"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L663"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L664" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L663" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="\..t,ColVector,Matrix"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%5C..t%2CColVector%2CMatrix"><span class="Identifier">`\.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<a id="/..t,ColVector,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2F..t%2CColVector%2CColVector"><span class="Identifier">`/.`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
 <dd>
 
 
@@ -2985,8 +2981,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L665" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="\..t,RowVector,Matrix"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%5C..t%2CRowVector%2CMatrix"><span class="Identifier">`\.`</span></a><span class="Other">(</span><span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
+<a id="/..t,RowVector,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2F..t%2CRowVector%2CRowVector"><span class="Identifier">`/.`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -2996,8 +2992,19 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L666" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="/..t,ColVector,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2F..t%2CColVector%2CColVector"><span class="Identifier">`/.`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="\..t,ColVector,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%5C..t%2CColVector%2CColVector"><span class="Identifier">`\.`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L667"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L667" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="\..t,RowVector,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%5C..t%2CRowVector%2CRowVector"><span class="Identifier">`\.`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -3007,19 +3014,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L668" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="/..t,RowVector,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2F..t%2CRowVector%2CRowVector"><span class="Identifier">`/.`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L669"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L669" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
-<a id="\..t,ColVector,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%5C..t%2CColVector%2CColVector"><span class="Identifier">`\.`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="+.t,ColVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2CColVector%2Cfloat"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
 <dd>
 
 
@@ -3029,8 +3025,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L670" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="\..t,RowVector,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%5C..t%2CRowVector%2CRowVector"><span class="Identifier">`\.`</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
+<a id="+.t,float,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2Cfloat%2CColVector"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
 <dd>
 
 
@@ -3040,8 +3036,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L671" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="+.t,ColVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2CColVector%2Cfloat"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="-.t,ColVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#-.t%2CColVector%2Cfloat"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
 <dd>
 
 
@@ -3051,8 +3047,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L673" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="+.t,float,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2Cfloat%2CColVector"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="-.t,float,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#-.t%2Cfloat%2CColVector"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
 <dd>
 
 
@@ -3062,8 +3058,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L674" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="-.t,ColVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#-.t%2CColVector%2Cfloat"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="+=.t,ColVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2B%3D.t%2CColVector%2Cfloat"><span class="Identifier">`+=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -3073,8 +3069,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L676" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="-.t,float,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#-.t%2Cfloat%2CColVector"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="-=.t,ColVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#-%3D.t%2CColVector%2Cfloat"><span class="Identifier">`-=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -3084,8 +3080,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L677" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="+=.t,ColVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2B%3D.t%2CColVector%2Cfloat"><span class="Identifier">`+=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
+<a id="+.t,RowVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2CRowVector%2Cfloat"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -3095,8 +3091,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L679" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="-=.t,ColVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#-%3D.t%2CColVector%2Cfloat"><span class="Identifier">`-=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
+<a id="+.t,float,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2Cfloat%2CRowVector"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -3106,8 +3102,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L680" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="+.t,RowVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2CRowVector%2Cfloat"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
+<a id="-.t,RowVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#-.t%2CRowVector%2Cfloat"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -3117,8 +3113,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L682" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="+.t,float,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2B.t%2Cfloat%2CRowVector"><span class="Identifier">`+`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
+<a id="-.t,float,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#-.t%2Cfloat%2CRowVector"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -3128,8 +3124,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L683" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="-.t,RowVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#-.t%2CRowVector%2Cfloat"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
+<a id="+=.t,RowVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2B%3D.t%2CRowVector%2Cfloat"><span class="Identifier">`+=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -3139,8 +3135,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L685" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="-.t,float,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#-.t%2Cfloat%2CRowVector"><span class="Identifier">`-`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
+<a id="-=.t,RowVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#-%3D.t%2CRowVector%2Cfloat"><span class="Identifier">`-=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -3150,8 +3146,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L686" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="+=.t,RowVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2B%3D.t%2CRowVector%2Cfloat"><span class="Identifier">`+=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
+<a id="*.t,ColVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2A.t%2CColVector%2Cfloat"><span class="Identifier">`*`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
 <dd>
 
 
@@ -3161,8 +3157,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L688" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="-=.t,RowVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#-%3D.t%2CRowVector%2Cfloat"><span class="Identifier">`-=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
+<a id="*.t,float,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2A.t%2Cfloat%2CColVector"><span class="Identifier">`*`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
 <dd>
 
 
@@ -3172,8 +3168,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L689" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="*.t,ColVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2A.t%2CColVector%2Cfloat"><span class="Identifier">`*`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="/.t,ColVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2F.t%2CColVector%2Cfloat"><span class="Identifier">`/`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
 <dd>
 
 
@@ -3183,8 +3179,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L691" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="*.t,float,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2A.t%2Cfloat%2CColVector"><span class="Identifier">`*`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="/.t,float,ColVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2F.t%2Cfloat%2CColVector"><span class="Identifier">`/`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
 <dd>
 
 
@@ -3194,8 +3190,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L692" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="/.t,ColVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2F.t%2CColVector%2Cfloat"><span class="Identifier">`/`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="*=.t,ColVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2A%3D.t%2CColVector%2Cfloat"><span class="Identifier">`*=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -3205,8 +3201,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L694" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="/.t,float,ColVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2F.t%2Cfloat%2CColVector"><span class="Identifier">`/`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a></pre></dt>
+<a id="/=.t,ColVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2F%3D.t%2CColVector%2Cfloat"><span class="Identifier">`/=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -3216,8 +3212,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L695" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="*=.t,ColVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2A%3D.t%2CColVector%2Cfloat"><span class="Identifier">`*=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
+<a id="*.t,RowVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2A.t%2CRowVector%2Cfloat"><span class="Identifier">`*`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -3227,8 +3223,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L697" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="/=.t,ColVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2F%3D.t%2CColVector%2Cfloat"><span class="Identifier">`/=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
+<a id="*.t,float,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2A.t%2Cfloat%2CRowVector"><span class="Identifier">`*`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -3238,8 +3234,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L698" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="*.t,RowVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2A.t%2CRowVector%2Cfloat"><span class="Identifier">`*`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
+<a id="/.t,RowVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2F.t%2CRowVector%2Cfloat"><span class="Identifier">`/`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -3249,8 +3245,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L700" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="*.t,float,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2A.t%2Cfloat%2CRowVector"><span class="Identifier">`*`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
+<a id="/.t,float,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2F.t%2Cfloat%2CRowVector"><span class="Identifier">`/`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
 <dd>
 
 
@@ -3260,8 +3256,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L701" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="/.t,RowVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2F.t%2CRowVector%2Cfloat"><span class="Identifier">`/`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
+<a id="*=.t,RowVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2A%3D.t%2CRowVector%2Cfloat"><span class="Identifier">`*=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -3271,8 +3267,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L703" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="/.t,float,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2F.t%2Cfloat%2CRowVector"><span class="Identifier">`/`</span></a><span class="Other">(</span><span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">;</span> <span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a></pre></dt>
+<a id="/=.t,RowVector,float"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%2F%3D.t%2CRowVector%2Cfloat"><span class="Identifier">`/=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -3282,41 +3278,41 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L704" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="*=.t,RowVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2A%3D.t%2CRowVector%2Cfloat"><span class="Identifier">`*=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L706"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L706" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
-<a id="/=.t,RowVector,float"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%2F%3D.t%2CRowVector%2Cfloat"><span class="Identifier">`/=`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">;</span> <span class="Identifier">s</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L707"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L707" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
 <a id="eye.t,int"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#eye.t%2Cint"><span class="Identifier">eye</span></a><span class="Other">(</span><span class="Identifier">m</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a></pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L724"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L721"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L724" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L721" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="$.t,ColVector"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#%24.t%2CColVector"><span class="Identifier">`$`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#ColVector"><span class="Identifier">ColVector</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L822"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L822" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="$.t,RowVector"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#%24.t%2CRowVector"><span class="Identifier">`$`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L823"
+class="link-seesrc" target="_blank">Source</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L823" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="makeUniversal.t,untyped"></a>
+<dt><pre><span class="Keyword">template</span> <a href="#makeUniversal.t%2Cuntyped"><span class="Identifier">makeUniversal</span></a><span class="Other">(</span><span class="Identifier">fname</span><span class="Other">:</span> <span class="Identifier">untyped</span><span class="Other">)</span></pre></dt>
 <dd>
 
 
@@ -3326,37 +3322,15 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L825" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="$.t,RowVector"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#%24.t%2CRowVector"><span class="Identifier">`$`</span></a><span class="Other">(</span><span class="Identifier">v</span><span class="Other">:</span> <a href="matrix.html#RowVector"><span class="Identifier">RowVector</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L826"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L826" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
-<a id="makeUniversal.t,untyped"></a>
-<dt><pre><span class="Keyword">template</span> <a href="#makeUniversal.t%2Cuntyped"><span class="Identifier">makeUniversal</span></a><span class="Other">(</span><span class="Identifier">fname</span><span class="Other">:</span> <span class="Identifier">untyped</span><span class="Other">)</span></pre></dt>
-<dd>
-
-
-&nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L828"
-class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L828" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
 <a id="makeUniversalBinary.t,untyped"></a>
 <dt><pre><span class="Keyword">template</span> <a href="#makeUniversalBinary.t%2Cuntyped"><span class="Identifier">makeUniversalBinary</span></a><span class="Other">(</span><span class="Identifier">fname</span><span class="Other">:</span> <span class="Identifier">untyped</span><span class="Other">)</span></pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L835"
+href="https://github.com/b3liever/manu//tree/devel/manu/matrix.nim#L832"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L835" class="link-seesrc" target="_blank" >Edit</a>
+<a href="https://github.com/b3liever/manu//edit/devel/manu/matrix.nim#L832" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -3369,7 +3343,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2019-10-20 12:17:07 UTC</small>
+        <small>Made with Nim. Generated: 2019-10-20 18:51:47 UTC</small>
       </div>
     </div>
   </div>

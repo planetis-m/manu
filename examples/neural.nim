@@ -21,7 +21,7 @@ proc main =
    var
       # LAYER 1
       W1 = randMatrix(2, nodes, -1.0..1.0)
-      b1 = rowVector(nodes)
+      b1 = zeros(1, nodes)
       # LAYER 2
       W2 = randMatrix(nodes, 1, -1.0..1.0)
       b2 = 0.0
@@ -29,10 +29,10 @@ proc main =
       # Foward Prop
       let
          # LAYER 1
-         Z1 = X * W1 + b1 # broadcast bias to (m, nodes)
+         Z1 = X * W1 + RowVector(b1) # broadcast bias to (m, nodes)
          A1 = sigmoid(Z1)
          # LAYER 2
-         Z2 = A1 * W2 + b2 # to (m, 1)
+         Z2 = A1 * W2 + b2 # scalar to (m, 1)
          A2 = sigmoid(Z2)
       # Back Prop
       let
@@ -53,7 +53,7 @@ proc main =
       b1 -= rate * db1
       # Cross Entropy
       let loss = -sum(loss(A2, Y)) / m.float
-      if i mod 20 == 0:
+      if i mod 250 == 0:
          echo(" Iteration ", i, ":")
          echo("   Loss = ", formatEng(loss))
          echo("   Predictions =\n", A2)

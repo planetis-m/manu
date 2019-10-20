@@ -97,9 +97,6 @@ proc randMatrix*(m, n: int, x: Slice[float]): Matrix =
 
 template randMatrix*(m, n: int): Matrix = randMatrix(m, n, 1.0)
 
-template colVector*(m: int): ColVector = ColVector(matrix(m, 1))
-template rowVector*(n: int): RowVector = RowVector(matrix(1, n))
-
 proc getArray*(m: Matrix): seq[seq[float]] =
    ## Make a two-dimensional array copy of the internal array.
    result = newSeq[seq[float]](m.m)
@@ -456,8 +453,8 @@ proc `+`*(a: ColVector, b: RowVector): Matrix =
          result[i, j] = a[i] + b[j]
 
 template `+`*(b: RowVector, a: ColVector): Matrix = a + b
-template `+`*(b: ColVector, a: Matrix): Matrix = m + b
-template `+`*(b: RowVector, a: Matrix): Matrix = m + b
+template `+`*(b: ColVector, a: Matrix): Matrix = a + b
+template `+`*(b: RowVector, a: Matrix): Matrix = a + b
 
 template `+`*(a, b: ColVector): ColVector = ColVector(Matrix(a) + Matrix(b))
 template `+`*(a, b: RowVector): RowVector = RowVector(Matrix(a) + Matrix(b))
@@ -504,8 +501,8 @@ proc `-`*(a: ColVector, b: RowVector): Matrix =
          result[i, j] = a[i] - b[j]
 
 template `-`*(b: RowVector, a: ColVector): Matrix = a - b
-template `-`*(b: ColVector, a: Matrix): Matrix = m - b
-template `-`*(b: RowVector, a: Matrix): Matrix = m - b
+template `-`*(b: ColVector, a: Matrix): Matrix = a - b
+template `-`*(b: RowVector, a: Matrix): Matrix = a - b
 
 template `-`*(a, b: ColVector): ColVector = ColVector(Matrix(a) - Matrix(b))
 template `-`*(a, b: RowVector): RowVector = RowVector(Matrix(a) - Matrix(b))
@@ -552,8 +549,8 @@ proc `*.`*(a: ColVector, b: RowVector): Matrix =
          result[i, j] = a[i] * b[j]
 
 template `*.`*(b: RowVector, a: ColVector): Matrix = a *. b
-template `*.`*(b: ColVector, a: Matrix): Matrix = m *. b
-template `*.`*(b: RowVector, a: Matrix): Matrix = m *. b
+template `*.`*(b: ColVector, a: Matrix): Matrix = a *. b
+template `*.`*(b: RowVector, a: Matrix): Matrix = a *. b
 
 template `*.`*(a, b: ColVector): ColVector = ColVector(Matrix(a) *. Matrix(b))
 template `*.`*(a, b: RowVector): RowVector = RowVector(Matrix(a) *. Matrix(b))
@@ -729,27 +726,27 @@ proc sum*(m: Matrix): float =
       for j in 0 ..< m.n:
          result += m[i, j]
 
-proc sumColumns*(m: Matrix): RowVector =
+proc sumColumns*(m: Matrix): Matrix =
    ## Column sum.
    ##
    ## ``return``: An 1-by-n matrix with the column sum of each row.
-   result = rowVector(m.n)
+   result = matrix(1, m.n)
    for j in 0 ..< m.n:
       var s = 0.0
       for i in 0 ..< m.m:
          s += m[i, j]
-      result[j] = s
+      RowVector(result)[j] = s
 
-proc sumRows*(m: Matrix): ColVector =
+proc sumRows*(m: Matrix): Matrix =
    ## Row sum.
    ##
    ## ``return``: An m-by-1 matrix with the row sum of each column.
-   result = colVector(m.m)
+   result = matrix(m.m, 1)
    for i in 0 ..< m.m:
       var s = 0.0
       for j in 0 ..< m.n:
          s += m[i, j]
-      result[i] = s
+      ColVector(result)[i] = s
 
 proc norm1*(m: Matrix): float =
    ## One norm.

@@ -1,4 +1,4 @@
-Manu - Nim Matrix library
+Manu - Nim Matrix Numeric library
 
 (c) Copyright 2018-2019 Antonis Geralis. All rights reserved.
 
