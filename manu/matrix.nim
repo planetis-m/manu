@@ -477,7 +477,7 @@ proc `+=`*(a: var Matrix, b: RowVector) =
    assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
       for j in 0 ..< a.n:
-         a[i, j] = a[i, j] + b[i]
+         a[i, j] = a[i, j] + b[j]
 
 proc `-`*(a: sink Matrix, b: ColVector): Matrix =
    ## ``C = A - B``, ``b`` is broadcasted
@@ -525,7 +525,7 @@ proc `-=`*(a: var Matrix, b: RowVector) =
    assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
       for j in 0 ..< a.n:
-         a[i, j] = a[i, j] - b[i]
+         a[i, j] = a[i, j] - b[j]
 
 proc `*.`*(a: sink Matrix, b: ColVector): Matrix =
    ## Element-by-element multiplication, ``C = A.*B``, ``b`` is broadcasted
@@ -573,7 +573,7 @@ proc `*.=`*(a: var Matrix, b: RowVector) =
    assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
       for j in 0 ..< a.n:
-         a[i, j] = a[i, j] * b[i]
+         a[i, j] = a[i, j] * b[j]
 
 proc `/.`*(a: sink Matrix, b: ColVector): Matrix =
    ## Element-by-element right division, ``C = A./B``, ``b`` is broadcasted
@@ -614,7 +614,7 @@ proc `/.=`*(a: var Matrix, b: RowVector) =
    assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
       for j in 0 ..< a.n:
-         a[i, j] = a[i, j] / b[i]
+         a[i, j] = a[i, j] / b[j]
 
 proc `\.`*(a: sink Matrix, b: ColVector): Matrix =
    ## Element-by-element left division, ``C = A.\B``, ``b`` is broadcasted
@@ -655,7 +655,7 @@ proc `\.=`*(a: var Matrix, b: RowVector) =
    assert(Matrix(b).m == 1 and Matrix(b).n == a.m, "Matrix dimensions must agree.")
    for i in 0 ..< a.m:
       for j in 0 ..< a.n:
-         a[i, j] = b[i] / a[i, j]
+         a[i, j] = b[j] / a[i, j]
 
 template `/.`*(b: RowVector, a: ColVector): Matrix = a \. b
 template `/.`*(b: ColVector, a: Matrix): Matrix = a \. b
