@@ -751,9 +751,6 @@ proc `$`*(m: Matrix): string =
       else:
          result.add "⎥\n"
 
-template `$`*(v: ColVector): string = $Matrix(v)
-template `$`*(v: RowVector): string = $Matrix(v)
-
 template makeUniversal*(fname: untyped) =
    proc fname*(m: sink Matrix): Matrix =
       let len = m.m * m.n
