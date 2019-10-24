@@ -491,9 +491,29 @@ proc `-`*(a: ColVector, b: RowVector): Matrix =
       for j in 0 ..< result.n:
          result[i, j] = a[i] - b[j]
 
-template `-`*(b: RowVector, a: ColVector): Matrix = a - b
-template `-`*(b: ColVector, a: Matrix): Matrix = a - b
-template `-`*(b: RowVector, a: Matrix): Matrix = a - b
+proc `-`*(a: ColVector, b: sink Matrix): Matrix =
+   ## ``C = A - B``, ``b`` is broadcasted
+   assert(Matrix(a).m == b.m and Matrix(a).n == 1, "Matrix-vector dimensions must agree.")
+   result = b
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = a[i] - result[i, j]
+
+proc `-`*(a: RowVector, b: sink Matrix): Matrix =
+   ## ``C = A - B``, ``b`` is broadcasted
+   assert(Matrix(a).m == 1 and Matrix(a).n == b.n, "Matrix-vector dimensions must agree.")
+   result = b
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = a[j] - result[i, j]
+
+proc `-`*(a: RowVector, b: ColVector): Matrix =
+   ## ``C = A - B``, ``a`` and ``b`` are broadcasted
+   assert(Matrix(a).m == 1 and Matrix(b).n == 1, "Matrices are not broadcastable.")
+   result = matrix(Matrix(b).m, Matrix(a).n)
+   for i in 0 ..< result.m:
+      for j in 0 ..< result.n:
+         result[i, j] = a[j] - b[i]
 
 proc `-=`*(a: var Matrix, b: ColVector) =
    ## ``A = A - B``, ``b`` is broadcasted
@@ -653,15 +673,15 @@ proc identity*(m: int): Matrix =
 template eye*(m: int): Matrix = identity(m)
 
 proc sum*(m: Matrix): float =
-   ## Sum.
+   ## Sum of all elements.
    for i in 0 ..< m.m:
       for j in 0 ..< m.n:
          result += m[i, j]
 
 proc sumColumns*(m: Matrix): Matrix =
-   ## Column sum.
+   ## Sum of matrix columns.
    ##
-   ## ``return``: An 1-by-n matrix with the column sum of each row.
+   ## ``return``: An 1-by-n matrix with sum of the elements in each column.
    result = matrix(1, m.n)
    for j in 0 ..< m.n:
       var s = 0.0
@@ -670,9 +690,9 @@ proc sumColumns*(m: Matrix): Matrix =
       RowVector(result)[j] = s
 
 proc sumRows*(m: Matrix): Matrix =
-   ## Row sum.
+   ## Sum of matrix rows.
    ##
-   ## ``return``: An m-by-1 matrix with the row sum of each column.
+   ## ``return``: An m-by-1 matrix with sum of the elements in each row.
    result = matrix(m.m, 1)
    for i in 0 ..< m.m:
       var s = 0.0
