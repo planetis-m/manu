@@ -11,11 +11,6 @@ type
       address: pointer
       data: ptr UncheckedArray[float] # Array for internal storage of elements.
 
-proc assumeAligned(data: ptr UncheckedArray[float]): ptr UncheckedArray[float] =
-   proc builtinAssumeAligned(data: ptr UncheckedArray[float], alignment: int): ptr UncheckedArray[float] {.
-      importc: "__builtin_assume_aligned", noDecl.}
-   builtinAssumeAligned(data, memAlign)
-
 {.pragma: restrict, codegenDecl: "$# __restrict $#".}
 template checkBounds(cond: untyped, msg = "") =
    when compileOption("boundChecks"):
@@ -23,22 +18,16 @@ template checkBounds(cond: untyped, msg = "") =
          if not cond:
             raise newException(IndexError, msg)
 
-template allocAddress(size: int): pointer =
-   alloc(size *% sizeof(float) +% (memAlign - 1))
-
-template alignData(address: pointer): ptr UncheckedArray[float] =
-   let aligned {.restrict.} = block:
-      echo cast[int](address)
+proc alignedAlloc(size: int): (pointer, ptr UncheckedArray[float]) {.inline.} =
+   let address = alloc(size *% sizeof(float) +% (memAlign - 1))
+   let data {.restrict, align(memAlign).} = block:
       let remainder = cast[ByteAddress](address) and (memAlign - 1)
-      echo remainder
       if remainder == 0:
-         assumeAligned cast[ptr UncheckedArray[float]](address)
+         cast[ptr UncheckedArray[float]](address)
       else:
          let offset = memAlign -% remainder
-         echo offset
-         echo cast[ByteAddress](address) +% offset
-         assumeAligned cast[ptr UncheckedArray[float]](cast[ByteAddress](address) +% offset)
-   aligned
+         cast[ptr UncheckedArray[float]](cast[ByteAddress](address) +% offset)
+   (address, data)
 
 proc `=destroy`*(m: var Matrix) =
    if m.address != nil:
@@ -62,8 +51,7 @@ proc `=`*(a: var Matrix; b: Matrix) =
       a.n = b.n
       if b.address != nil:
          let len = b.m * b.n
-         a.address = allocAddress(len)
-         a.data = alignData(a.address)
+         (a.address, a.data) = alignedAlloc(len)
          copyMem(a.address, b.address, len * sizeof(float) + memAlign - 1)
 
 proc matrix*(m, n: int): Matrix =
@@ -71,8 +59,7 @@ proc matrix*(m, n: int): Matrix =
    result.m = m
    result.n = n
    let len = m * n
-   result.address = allocAddress(len)
-   result.data = alignData(result.address)
+   (result.address, result.data) = alignedAlloc(len)
    for i in 0 ..< len:
       result.data[i] = 0.0
 
@@ -81,8 +68,7 @@ proc matrix*(m, n: int, s: float): Matrix =
    result.m = m
    result.n = n
    let len = m * n
-   result.address = allocAddress(len)
-   result.data = alignData(result.address)
+   (result.address, result.data) = alignedAlloc(len)
    for i in 0 ..< len:
       result.data[i] = s
 
@@ -92,8 +78,7 @@ proc matrix*(data: seq[seq[float]]): Matrix =
    result.n = data[0].len
    for i in 0 ..< result.m:
       assert(data[i].len == result.n, "All rows must have the same length.")
-   result.address = allocAddress(result.m * result.n)
-   result.data = alignData(result.address)
+   (result.address, result.data) = alignedAlloc(result.m * result.n)
    for i in 0 ..< result.m:
       for j in 0 ..< result.n:
          result.data[i * result.n + j] = data[i][j]
@@ -103,8 +88,7 @@ proc matrix*(data: seq[seq[float]], m, n: int): Matrix =
    result.m = m
    result.n = n
    let len = m * n
-   result.address = allocAddress(len)
-   result.data = alignData(result.address)
+   (result.address, result.data) = alignedAlloc(len)
    for i in 0 ..< m:
       for j in 0 ..< n:
          result.data[i * n + j] = data[i][j]
@@ -118,8 +102,7 @@ proc matrix*(data: seq[float], m: int): Matrix =
    assert(m * n == data.len, "Array length must be a multiple of m.")
    result.m = m
    result.n = n
-   result.address = allocAddress(data.len)
-   result.data = alignData(result.address)
+   (result.address, result.data) = alignedAlloc(data.len)
    for i in 0 ..< m:
       for j in 0 ..< n:
          result.data[i * n + j] = data[i + j * m]
@@ -131,8 +114,7 @@ proc randMatrix*(m, n: int): Matrix =
    result.m = m
    result.n = n
    let len = m * n
-   result.address = allocAddress(len)
-   result.data = alignData(result.address)
+   (result.address, result.data) = alignedAlloc(len)
    for i in 0 ..< len:
       result.data[i] = rand(1.0)
 
@@ -162,30 +144,34 @@ proc `[]`*(m: Matrix, i, j: int): float {.inline.} =
    ## Get a single element.
    checkBounds(i >= 0 and i < m.m)
    checkBounds(j >= 0 and j < m.n)
-   let data {.restrict.} = assumeAligned m.data
-   data[i * m.n + j]
+   m.data[i * m.n + j]
 
 proc `[]`*(m: var Matrix, i, j: int): var float {.inline.} =
    ## Get a single element.
    checkBounds(i >= 0 and i < m.m)
    checkBounds(j >= 0 and j < m.n)
-   let data {.restrict.} = assumeAligned m.data
-   data[i * m.n + j]
+   m.data[i * m.n + j]
 
 proc `[]=`*(m: var Matrix, i, j: int, s: float) {.inline.} =
    ## Set a single element.
    checkBounds(i >= 0 and i < m.m)
    checkBounds(j >= 0 and j < m.n)
-   let data {.restrict.} = assumeAligned m.data
-   data[i * m.n + j] = s
+   m.data[i * m.n + j] = s
+
+template kernelBin(op: untyped) =
+   proc `op`(a, b: ptr UncheckedArray[float]; m, n: int) =
+      for i in 0 ..< n * m:
+         a[i] = `op`(a[i], b[i])
+
+kernelBin(`+`)
+kernelBin(`-`)
+kernelBin(`*`)
 
 proc `+`*(a: sink Matrix; b: Matrix): Matrix =
    ## ``C = A + B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
    result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] + b[i, j]
+   `+`(result.data, b.data, result.m, result.n)
 
 proc `-`*(m: sink Matrix): Matrix =
    ## Unary minus
@@ -198,17 +184,13 @@ proc `-`*(a: sink Matrix; b: Matrix): Matrix =
    ## ``C = A - B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
    result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] - b[i, j]
+   `-`(result.data, b.data, result.m, result.n)
 
 proc `*.`*(a: sink Matrix; b: Matrix): Matrix =
    ## Element-by-element multiplication, ``C = A.*B``
    assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
    result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] * b[i, j]
+   `*`(result.data, b.data, result.m, result.n)
 
 proc main =
    let a = matrix(5, 5, 4.0)
