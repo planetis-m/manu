@@ -12,16 +12,16 @@
 ## i.e. A*V equals V*D. The matrix V may be badly
 ## conditioned, or even singular, so the validity of the equation
 ## A = V*D*inverse(V) depends upon V.cond().
-import "./matrix", math
+import "./matrix", math, fenv
 
 type
-   EigenvalueDecomposition* = object
-      v: Matrix # Array for internal storage of eigenvectors.
-      h: Matrix # Array for internal storage of nonsymmetric Hessenberg form.
-      d, e: seq[float] # Arrays for internal storage of eigenvalues.
-      ort: seq[float] # Working storage for nonsymmetric algorithm.
+   EigenvalueDecomposition*[T] = object
+      v: Matrix[T] # Array for internal storage of eigenvectors.
+      h: Matrix[T] # Array for internal storage of nonsymmetric Hessenberg form.
+      d, e: seq[T] # Arrays for internal storage of eigenvalues.
+      ort: seq[T] # Working storage for nonsymmetric algorithm.
 
-proc tred2(ei: var EigenvalueDecomposition) =
+proc tred2[T](ei: var EigenvalueDecomposition[T]) =
    # Symmetric Householder reduction to tridiagonal form.
    #
    # This is derived from the Algol procedures tred2 by
@@ -34,16 +34,16 @@ proc tred2(ei: var EigenvalueDecomposition) =
    # Householder reduction to tridiagonal form.
    for i in countdown(n - 1, 1):
       # Scale to avoid under/overflow.
-      var scale = 0.0
-      var h = 0.0
+      var scale = T(0.0)
+      var h = T(0.0)
       for k in 0 ..< i:
          scale = scale + abs(ei.d[k])
       if scale == 0.0:
          ei.e[i] = ei.d[i - 1]
          for j in 0 ..< i:
             ei.d[j] = ei.v[i - 1, j]
-            ei.v[i, j] = 0.0
-            ei.v[j, i] = 0.0
+            ei.v[i, j] = T(0.0)
+            ei.v[j, i] = T(0.0)
       else:
          # Generate Householder vector.
          for k in 0 ..< i:
@@ -51,13 +51,13 @@ proc tred2(ei: var EigenvalueDecomposition) =
             h += ei.d[k] * ei.d[k]
          var f = ei.d[i - 1]
          var g = sqrt(h)
-         if f > 0:
+         if f > 0.0:
             g = -g
          ei.e[i] = scale * g
          h = h - f * g
          ei.d[i - 1] = f - g
          for j in 0 ..< i:
-            ei.e[j] = 0.0
+            ei.e[j] = T(0.0)
          # Apply similarity transformation to remaining columns.
          for j in 0 ..< i:
             f = ei.d[j]
@@ -67,7 +67,7 @@ proc tred2(ei: var EigenvalueDecomposition) =
                g += ei.v[k, j] * ei.d[k]
                ei.e[k] += ei.v[k, j] * f
             ei.e[j] = g
-         f = 0.0
+         f = T(0.0)
          for j in 0 ..< i:
             ei.e[j] /= h
             f += ei.e[j] * ei.d[j]
@@ -80,31 +80,31 @@ proc tred2(ei: var EigenvalueDecomposition) =
             for k in j .. i - 1:
                ei.v[k, j] -= (f * ei.e[k] + g * ei.d[k])
             ei.d[j] = ei.v[i - 1, j]
-            ei.v[i, j] = 0.0
+            ei.v[i, j] = T(0.0)
       ei.d[i] = h
    # Accumulate transformations.
    for i in 0 .. n - 2:
       ei.v[n - 1, i] = ei.v[i, i]
-      ei.v[i, i] = 1.0
+      ei.v[i, i] = T(1.0)
       var h = ei.d[i + 1]
       if h != 0.0:
          for k in 0 .. i:
             ei.d[k] = ei.v[k, i + 1] / h
          for j in 0 .. i:
-            var g = 0.0
+            var g = T(0.0)
             for k in 0 .. i:
                g += ei.v[k, i + 1] * ei.v[k, j]
             for k in 0 .. i:
                ei.v[k, j] -= g * ei.d[k]
       for k in 0 .. i:
-         ei.v[k, i + 1] = 0.0
+         ei.v[k, i + 1] = T(0.0)
    for j in 0 ..< n:
       ei.d[j] = ei.v[n - 1, j]
-      ei.v[n - 1, j] = 0.0
-   ei.v[n - 1, n - 1] = 1.0
-   ei.e[0] = 0.0
+      ei.v[n - 1, j] = T(0.0)
+   ei.v[n - 1, n - 1] = T(1.0)
+   ei.e[0] = T(0.0)
 
-proc tql2(ei: var EigenvalueDecomposition) =
+proc tql2[T](ei: var EigenvalueDecomposition[T]) =
    # Symmetric tridiagonal QL algorithm.
    #
    # This is derived from the Algol procedures tql2, by
@@ -114,10 +114,10 @@ proc tql2(ei: var EigenvalueDecomposition) =
    let n = ei.v.n
    for i in 1 ..< n:
       ei.e[i - 1] = ei.e[i]
-   ei.e[n - 1] = 0.0
-   var f = 0.0
-   var tst1 = 0.0
-   let eps = pow(2.0, -52.0)
+   ei.e[n - 1] = T(0.0)
+   var f = T(0.0)
+   var tst1 = T(0.0)
+   let eps = epsilon(T)
    for l in 0 ..< n:
       # Find small subdiagonal element
       tst1 = max(tst1, abs(ei.d[l]) + abs(ei.e[l]))
@@ -134,8 +134,8 @@ proc tql2(ei: var EigenvalueDecomposition) =
             iter.inc  # (Could check iteration count here.)
             # Compute implicit shift
             var g = ei.d[l]
-            var p = (ei.d[l + 1] - g) / (2.0 * ei.e[l])
-            var r = hypot(p, 1.0)
+            var p = (ei.d[l + 1] - g) / (T(2.0) * ei.e[l])
+            var r = hypot(p, T(1.0))
             if p < 0:
                r = -r
             ei.d[l] = ei.e[l] / (p + r)
@@ -147,12 +147,12 @@ proc tql2(ei: var EigenvalueDecomposition) =
             f = f + h
             # Implicit QL transformation.
             p = ei.d[m]
-            var c = 1.0
+            var c = T(1.0)
             var c2 = c
             var c3 = c
             let el1 = ei.e[l + 1]
-            var s = 0.0
-            var s2 = 0.0
+            var s = T(0.0)
+            var s2 = T(0.0)
             for i in countdown(m - 1, l):
                c3 = c2
                c2 = c
@@ -176,7 +176,7 @@ proc tql2(ei: var EigenvalueDecomposition) =
             # Check for convergence.
             if abs(ei.e[l]) <= eps * tst1: break
       ei.d[l] = ei.d[l] + f
-      ei.e[l] = 0.0
+      ei.e[l] = T(0.0)
    # Sort eigenvalues and corresponding vectors.
    for i in 0 .. n - 2:
       var k = i
@@ -193,7 +193,7 @@ proc tql2(ei: var EigenvalueDecomposition) =
             ei.v[j, i] = ei.v[j, k]
             ei.v[j, k] = p
 
-proc orthes(ei: var EigenvalueDecomposition) =
+proc orthes[T](ei: var EigenvalueDecomposition[T]) =
    # Nonsymmetric reduction to Hessenberg form.
    #
    # This is derived from the Algol procedures orthes and ortran,
@@ -205,31 +205,31 @@ proc orthes(ei: var EigenvalueDecomposition) =
    let high = n - 1
    for m in low + 1 .. high - 1:
       # Scale column.
-      var scale = 0.0
+      var scale = T(0.0)
       for i in m .. high:
          scale = scale + abs(ei.h[i, m - 1])
       if scale != 0.0:
          # Compute Householder transformation.
-         var d = 0.0
+         var d = T(0.0)
          for i in countdown(high, m):
             ei.ort[i] = ei.h[i, m - 1] / scale
             d += ei.ort[i] * ei.ort[i]
          var g = sqrt(d)
-         if ei.ort[m] > 0:
+         if ei.ort[m] > 0.0:
             g = -g
          d = d - ei.ort[m] * g
          ei.ort[m] = ei.ort[m] - g
          # Apply Householder similarity transformation
          # H = (I-u*u'/h)*H*(I-u*u')/h)
          for j in m ..< n:
-            var f = 0.0
+            var f = T(0.0)
             for i in countdown(high, m):
                f += ei.ort[i] * ei.h[i, j]
             f = f / d
             for i in m .. high:
                ei.h[i, j] -= f * ei.ort[i]
          for i in 0 .. high:
-            var f = 0.0
+            var f = T(0.0)
             for j in countdown(high, m):
                f += ei.ort[j] * ei.h[i, j]
             f = f / d
@@ -241,15 +241,15 @@ proc orthes(ei: var EigenvalueDecomposition) =
    for i in 0 ..< n:
       for j in 0 ..< n:
          if i == j:
-            ei.v[i, j] = 1.0
+            ei.v[i, j] = T(1.0)
          else:
-            ei.v[i, j] = 0.0
+            ei.v[i, j] = T(0.0)
    for m in countdown(high - 1, low + 1):
       if ei.h[m, m - 1] != 0.0:
          for i in m + 1 .. high:
             ei.ort[i] = ei.h[i, m - 1]
          for j in m .. high:
-            var g = 0.0
+            var g = T(0.0)
             for i in m .. high:
                g += ei.ort[i] * ei.v[i, j]
             # Double division avoids possible underflow
@@ -257,9 +257,9 @@ proc orthes(ei: var EigenvalueDecomposition) =
             for i in m .. high:
                ei.v[i, j] += g * ei.ort[i]
 
-proc cdiv(xr, xi, yr, yi: float): tuple[re, im: float] =
+proc cdiv[T](xr, xi, yr, yi: T): tuple[re, im: T] =
    # Complex scalar division.
-   var r, d: float
+   var r, d: T
    if abs(yr) > abs(yi):
       r = yi / yr
       d = yr + r * yi
@@ -271,7 +271,7 @@ proc cdiv(xr, xi, yr, yi: float): tuple[re, im: float] =
       result.re = (r * xr + xi) / d
       result.im = (r * xi - xr) / d
 
-proc hqr2(ei: var EigenvalueDecomposition) =
+proc hqr2[T](ei: var EigenvalueDecomposition[T]) =
    # Nonsymmetric reduction from Hessenberg to real Schur form.
    #
    # This is derived from the Algol procedure hqr2,
@@ -284,15 +284,15 @@ proc hqr2(ei: var EigenvalueDecomposition) =
    var n = nn - 1
    let low = 0
    let high = nn - 1
-   let eps = pow(2.0, -52.0)
-   var exshift = 0.0
-   var p, q, r, s, z, t, w, x, y: float
+   let eps = epsilon(T)
+   var exshift = T(0.0)
+   var p, q, r, s, z, t, w, x, y: T
    # Store roots isolated by balanc and compute matrix norm
-   var norm = 0.0
+   var norm = T(0.0)
    for i in 0 ..< nn:
       if i < low or i > high:
          ei.d[i] = ei.h[i, i]
-         ei.e[i] = 0.0
+         ei.e[i] = T(0.0)
       for j in max(i - 1, 0) ..< nn:
          norm = norm + abs(ei.h[i, j])
    # Outer loop over eigenvalue index
@@ -312,21 +312,21 @@ proc hqr2(ei: var EigenvalueDecomposition) =
       if l == n:
          ei.h[n, n] = ei.h[n, n] + exshift
          ei.d[n] = ei.h[n, n]
-         ei.e[n] = 0.0
+         ei.e[n] = T(0.0)
          n.dec
          iter = 0
       # Two roots found
       elif l == n - 1:
          w = ei.h[n, n - 1] * ei.h[n - 1, n]
-         p = (ei.h[n - 1, n - 1] - ei.h[n, n]) / 2.0
+         p = (ei.h[n - 1, n - 1] - ei.h[n, n]) / T(2.0)
          q = p * p + w
          z = sqrt(abs(q))
          ei.h[n, n] = ei.h[n, n] + exshift
          ei.h[n - 1, n - 1] = ei.h[n - 1, n - 1] + exshift
          x = ei.h[n, n]
          # Real pair
-         if q >= 0:
-            if p >= 0:
+         if q >= 0.0:
+            if p >= 0.0:
                z = p + z
             else:
                z = p - z
@@ -334,8 +334,8 @@ proc hqr2(ei: var EigenvalueDecomposition) =
             ei.d[n] = ei.d[n - 1]
             if z != 0.0:
                ei.d[n] = x - w / z
-            ei.e[n - 1] = 0.0
-            ei.e[n] = 0.0
+            ei.e[n - 1] = T(0.0)
+            ei.e[n] = T(0.0)
             x = ei.h[n, n - 1]
             s = abs(x) + abs(z)
             p = x / s
@@ -370,8 +370,8 @@ proc hqr2(ei: var EigenvalueDecomposition) =
       else:
          # Form shift
          x = ei.h[n, n]
-         y = 0.0
-         w = 0.0
+         y = T(0.0)
+         w = T(0.0)
          if l < n:
             y = ei.h[n - 1, n - 1]
             w = ei.h[n, n - 1] * ei.h[n - 1, n]
@@ -381,22 +381,22 @@ proc hqr2(ei: var EigenvalueDecomposition) =
             for i in low .. n:
                ei.h[i, i] -= x
             s = abs(ei.h[n, n - 1]) + abs(ei.h[n - 1, n - 2])
-            y = 0.75 * s
+            y = T(0.75) * s
             x = y
-            w = -0.4375 * s * s
+            w = T(-0.4375) * s * s
          # MATLAB's new ad hoc shift
          if iter == 30:
-            s = (y - x) / 2.0
+            s = (y - x) / T(2.0)
             s = s * s + w
-            if s > 0:
+            if s > 0.0:
                s = sqrt(s)
                if y < x:
                   s = -s
-               s = x - w / ((y - x) / 2.0 + s)
+               s = x - w / ((y - x) / T(2.0) + s)
                for i in low .. n:
                   ei.h[i, i] -= s
                exshift += s
-               w = 0.964
+               w = T(0.964)
                y = w
                x = y
          iter.inc # (Could check iteration count here.)
@@ -421,16 +421,16 @@ proc hqr2(ei: var EigenvalueDecomposition) =
                break
             m.dec
          for i in m + 2 .. n:
-            ei.h[i, i - 2] = 0.0
+            ei.h[i, i - 2] = T(0.0)
             if i > m + 2:
-               ei.h[i, i - 3] = 0.0
+               ei.h[i, i - 3] = T(0.0)
          # Double QR step involving rows l:n and columns m:n
          for k in m .. n - 1:
             let notlast = k != n - 1
             if k != m:
                p = ei.h[k, k - 1]
                q = ei.h[k + 1, k - 1]
-               r = if notlast: ei.h[k+2, k - 1] else: 0.0
+               r = if notlast: ei.h[k+2, k - 1] else: T(0.0)
                x = abs(p) + abs(q) + abs(r)
                if x == 0.0:
                   continue
@@ -488,10 +488,10 @@ proc hqr2(ei: var EigenvalueDecomposition) =
       # Real vector
       if q == 0:
          var l = n
-         ei.h[n, n] = 1.0
+         ei.h[n, n] = T(1.0)
          for i in countdown(n - 1, 0):
             w = ei.h[i, i] - p
-            r = 0.0
+            r = T(0.0)
             for j in l .. n:
                r = r + ei.h[i, j] * ei.h[j, n]
             if ei.e[i] < 0.0:
@@ -528,15 +528,15 @@ proc hqr2(ei: var EigenvalueDecomposition) =
             ei.h[n - 1, n - 1] = q / ei.h[n, n - 1]
             ei.h[n - 1, n] = -(ei.h[n, n] - p) / ei.h[n, n - 1]
          else:
-            let (cdivr, cdivi) = cdiv(0.0, -ei.h[n - 1, n], ei.h[n - 1, n - 1] - p, q)
+            let (cdivr, cdivi) = cdiv(T(0.0), -ei.h[n - 1, n], ei.h[n - 1, n - 1] - p, q)
             ei.h[n - 1, n - 1] = cdivr
             ei.h[n - 1, n] = cdivi
-         ei.h[n, n - 1] = 0.0
-         ei.h[n, n] = 1.0
+         ei.h[n, n - 1] = T(0.0)
+         ei.h[n, n] = T(1.0)
          for i in countdown(n - 2, 0):
-            var ra, sa, vr, vi: float
-            ra = 0.0
-            sa = 0.0
+            var ra, sa, vr, vi: T
+            ra = T(0.0)
+            sa = T(0.0)
             for j in l .. n:
                ra = ra + ei.h[i, j] * ei.h[j, n - 1]
                sa = sa + ei.h[i, j] * ei.h[j, n]
@@ -556,7 +556,7 @@ proc hqr2(ei: var EigenvalueDecomposition) =
                   x = ei.h[i, i + 1]
                   y = ei.h[i + 1, i]
                   vr = (ei.d[i] - p) * (ei.d[i] - p) + ei.e[i] * ei.e[i] - q * q
-                  vi = (ei.d[i] - p) * 2.0 * q
+                  vi = (ei.d[i] - p) * T(2.0) * q
                   if vr == 0.0 and vi == 0.0:
                      vr = eps * norm * (abs(w) + abs(q) +
                           abs(x) + abs(y) + abs(z))
@@ -584,20 +584,20 @@ proc hqr2(ei: var EigenvalueDecomposition) =
    # Back transformation to get eigenvectors of original matrix
    for j in countdown(nn - 1, low):
       for i in low .. high:
-         z = 0.0
+         z = T(0.0)
          for k in low .. min(j, high):
             z = z + ei.v[i, k] * ei.h[k, j]
          ei.v[i, j] = z
 
-proc eig*(a: sink Matrix): EigenvalueDecomposition =
+proc eig*[T](a: sink Matrix[T]): EigenvalueDecomposition[T] =
    ## Check for symmetry, then construct the eigenvalue decomposition.
    ##
    ## - parameter ``a``: Square matrix
    ## - ``return``: Structure to access D and V.
    # assert(a.n == a.m and a.n >= 1)
    let n = a.n
-   result.d = newSeq[float](n)
-   result.e = newSeq[float](n)
+   result.d = newSeq[T](n)
+   result.e = newSeq[T](n)
    var isSymmetric = true
    for j in 0 ..< n:
       if not isSymmetric:
@@ -614,36 +614,36 @@ proc eig*(a: sink Matrix): EigenvalueDecomposition =
       result.tql2()
    else:
       result.h = a
-      result.v = matrix(n, n)
-      result.ort = newSeq[float](n)
+      result.v = matrix[T](n, n)
+      result.ort = newSeq[T](n)
       # Reduce to Hessenberg form.
       result.orthes()
       # Reduce Hessenberg to real Schur form.
       result.hqr2()
 
-proc getV*(ei: EigenvalueDecomposition): Matrix {.inline.} =
+proc getV*[T](ei: EigenvalueDecomposition[T]): Matrix[T] {.inline.} =
    ## Return the eigenvector matrix
    ei.v
 
-proc getRealEigenvalues*(ei: EigenvalueDecomposition): seq[float] {.inline.} =
+proc getRealEigenvalues*[T](ei: EigenvalueDecomposition[T]): seq[T] {.inline.} =
    ## Return the real parts of the eigenvalues
    ##
    ## ``return``: real(diag(D))
    ei.d
 
-proc getImagEigenvalues*(ei: EigenvalueDecomposition): seq[float] {.inline.} =
+proc getImagEigenvalues*[T](ei: EigenvalueDecomposition[T]): seq[T] {.inline.} =
    ## Return the imaginary parts of the eigenvalues
    ##
    ## ``return``: imag(diag(D))
    ei.e
 
-proc getD*(ei: EigenvalueDecomposition): Matrix =
+proc getD*[T](ei: EigenvalueDecomposition[T]): Matrix[T] =
    ## Return the block diagonal eigenvalue matrix
    let n = ei.v.n
-   result = matrix(n, n)
+   result = matrix[T](n, n)
    for i in 0 ..< n:
       for j in 0 ..< n:
-         result[i, j] = 0.0
+         result[i, j] = T(0.0)
       result[i, i] = ei.d[i]
       if ei.e[i] > 0:
          result[i, i + 1] = ei.e[i]

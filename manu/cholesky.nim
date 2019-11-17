@@ -9,24 +9,24 @@
 import "./matrix", math
 
 type
-   CholeskyDecomposition* = object
-      l: Matrix # triangular factor
+   CholeskyDecomposition*[T] = object
+      l: Matrix[T] # triangular factor
       isspd: bool # is symmetric and positive definite flag.
 
-proc chol*(a: Matrix): CholeskyDecomposition =
+proc chol*[T](a: Matrix[T]): CholeskyDecomposition[T] =
    ## Cholesky algorithm for symmetric and positive definite matrix.
    ## Structure to access L and isspd flag.
    ##
    ## parameter ``m``: Square, symmetric matrix.
    # assert(a.n == a.m and a.n >= 1)
    let n = a.m
-   result.l = matrix(n, n)
+   result.l = matrix[T](n, n)
    result.isspd = a.n == a.m
    # Main loop.
    for j in 0 ..< n:
-      var d = 0.0
+      var d = T(0.0)
       for k in 0 ..< j:
-         var s = 0.0
+         var s = T(0.0)
          for i in 0 ..< k:
             s += result.l[k, i] * result.l[j, i]
          s = (a[j, k] - s) / result.l[k, k]
@@ -35,19 +35,19 @@ proc chol*(a: Matrix): CholeskyDecomposition =
          result.isspd = result.isspd and a[k, j] == a[j, k]
       d = a[j, j] - d
       result.isspd = result.isspd and d > 0.0
-      result.l[j, j] = sqrt(max(d, 0.0))
+      result.l[j, j] = sqrt(max(d, T(0.0)))
       for k in j + 1 ..< n:
-         result.l[j, k] = 0.0
+         result.l[j, k] = T(0.0)
 
-proc isSPD*(c: CholeskyDecomposition): bool {.inline.} =
+proc isSPD*[T](c: CholeskyDecomposition[T]): bool {.inline.} =
    ## Is the matrix symmetric and positive definite?
    c.isspd
 
-proc getL*(c: CholeskyDecomposition): Matrix {.inline.} =
+proc getL*[T](c: CholeskyDecomposition[T]): Matrix[T] {.inline.} =
    ## Return triangular factor.
    c.l
 
-proc solve*(c: CholeskyDecomposition, b: sink Matrix): Matrix =
+proc solve*[T](c: CholeskyDecomposition[T], b: sink Matrix[T]): Matrix[T] =
    ## Solve ``A*X = B``
    ##
    ## - parameter ``b``:  A Matrix with as many rows as A and any number of columns.

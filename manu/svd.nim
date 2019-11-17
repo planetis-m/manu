@@ -10,14 +10,14 @@
 ## The singular value decompostion always exists, so the constructor will
 ## never fail.  The matrix condition number and the effective numerical
 ## rank can be computed from this decomposition.
-import "./matrix", math
+import "./matrix", math, fenv
 
 type
-   SingularValueDecomposition* = object
-      u, v: Matrix # Arrays for internal storage of U and V.
-      s: seq[float] # Array for internal storage of singular values.
+   SingularValueDecomposition*[T] = object
+      u, v: Matrix[T] # Arrays for internal storage of U and V.
+      s: seq[T] # Array for internal storage of singular values.
 
-proc svd*(a: sink Matrix): SingularValueDecomposition =
+proc svd*[T](a: sink Matrix[T]): SingularValueDecomposition[T] =
    ## Construct the singular value decomposition.
    ##
    ## ``return``: Structure to access U, S and V.
@@ -28,11 +28,11 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
    var a = a
    # assert(m >= n, "SVD only works for m >= n") and set nu = n
    let nu = min(m, n)
-   result.s = newSeq[float](min(m + 1, n)) # n<=m so n is min
-   result.u = matrix(m, nu)
-   result.v = matrix(n, n)
-   var e = newSeq[float](n)
-   var work = newSeq[float](m)
+   result.s = newSeq[T](min(m + 1, n)) # n<=m so n is min
+   result.u = matrix[T](m, nu)
+   result.v = matrix[T](n, n)
+   var e = newSeq[T](n)
+   var work = newSeq[T](m)
    var wantu = true
    var wantv = true
    # Reduce A to bidiagonal form, storing the diagonal elements
@@ -44,7 +44,7 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
          # Compute the transformation for the k-th column and
          # place the k-th diagonal in s[k].
          # Compute 2-norm of k-th column without under/overflow.
-         result.s[k] = 0
+         result.s[k] = T(0.0)
          for i in k ..< m:
             result.s[k] = hypot(result.s[k], a[i, k])
          if result.s[k] != 0.0:
@@ -52,12 +52,12 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
                result.s[k] = -result.s[k]
             for i in k ..< m:
                a[i, k] /= result.s[k]
-            a[k, k] += 1.0
+            a[k, k] += T(1.0)
          result.s[k] = -result.s[k]
       for j in k + 1 ..< n:
          if k < nct and result.s[k] != 0.0:
             # Apply the transformation.
-            var t = 0.0
+            var t = T(0.0)
             for i in k ..< m:
                t += a[i, k] * a[i, j]
             t = -t / a[k, k]
@@ -75,7 +75,7 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
          # Compute the k-th row transformation and place the
          # k-th super-diagonal in e[k].
          # Compute 2-norm without under/overflow.
-         e[k] = 0
+         e[k] = T(0.0)
          for i in k + 1 ..< n:
             e[k] = hypot(e[k], e[i])
          if e[k] != 0.0:
@@ -83,12 +83,12 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
                e[k] = -e[k]
             for i in k + 1 ..< n:
                e[i] /= e[k]
-            e[k + 1] += 1.0
+            e[k + 1] += T(1.0)
          e[k] = -e[k]
          if k + 1 < m and e[k] != 0.0:
             # Apply the transformation.
             for i in k + 1 ..< m:
-               work[i] = 0.0
+               work[i] = T(0.0)
             for j in k + 1 ..< n:
                for i in k + 1 ..< m:
                   work[i] += e[j] * a[i, j]
@@ -106,20 +106,20 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
    if nct < n:
       result.s[nct] = a[nct, nct]
    if m < p:
-      result.s[p - 1] = 0.0
+      result.s[p - 1] = T(0.0)
    if nrt + 1 < p:
       e[nrt] = a[nrt, p - 1]
-   e[p - 1] = 0.0
+   e[p - 1] = T(0.0)
    # If required, generate U.
    if wantu:
       for j in nct ..< nu:
          for i in 0 ..< m:
-            result.u[i, j] = 0.0
-         result.u[j, j] = 1.0
+            result.u[i, j] = T(0.0)
+         result.u[j, j] = T(1.0)
       for k in countdown(nct - 1, 0):
          if result.s[k] != 0.0:
             for j in k + 1 ..< nu:
-               var t = 0.0
+               var t = T(0.0)
                for i in k ..< m:
                   t += result.u[i, k] * result.u[i, j]
                t = -t / result.u[k, k]
@@ -127,40 +127,43 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
                   result.u[i, j] += t * result.u[i, k]
             for i in k ..< m:
                result.u[i, k] = -result.u[i, k]
-            result.u[k, k] = 1.0 + result.u[k, k]
+            result.u[k, k] = T(1.0) + result.u[k, k]
             for i in 0 .. k - 2:
-               result.u[i, k] = 0.0
+               result.u[i, k] = T(0.0)
          else:
             for i in 0 ..< m:
-               result.u[i, k] = 0.0
-            result.u[k, k] = 1.0
+               result.u[i, k] = T(0.0)
+            result.u[k, k] = T(1.0)
    # If required, generate V.
    if wantv:
       for k in countdown(n - 1, 0):
          if k < nrt and e[k] != 0.0:
             for j in k + 1 ..< nu:
-               var t = 0.0
+               var t = T(0.0)
                for i in k + 1 ..< n:
                   t += result.v[i, k] * result.v[i, j]
                t = -t / result.v[k + 1, k]
                for i in k + 1 ..< n:
                   result.v[i, j] += t * result.v[i, k]
          for i in 0 ..< n:
-            result.v[i, k] = 0.0
-         result.v[k, k] = 1.0
+            result.v[i, k] = T(0.0)
+         result.v[k, k] = T(1.0)
    # Main iteration loop for the singular values.
    let pp = p - 1
    var iter = 0
-   var eps = pow(2.0, -52.0) # mantissa length (bits) in float64
-   var tiny = pow(2.0, -966.0)
+   var eps = epsilon(T) # machine epsilon
+   when T is float64:
+      var tiny = pow(T(2.0), T(-966.0)) # no idea!
+   elif T is float32:
+      var tiny = pow(T(2.0), T(-120.0))
    while p > 0:
       var k = p - 2
       var kase = 0
       # Here is where a test for too many iterations would go.
       if iter == 500 or iter == 750:
          # echo("Svd taking a long time: making convergence criterion less exact.")
-         eps = pow(0.8, eps)
-         tiny = pow(0.8, tiny)
+         eps = pow(T(0.8), eps)
+         tiny = pow(T(0.8), tiny)
       assert(iter < 1000,
              "Svd not converging on matrix of size " & $m & " by " & $n)
       # This section of the program inspects for
@@ -175,7 +178,7 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
       while k >= 0:
          if abs(e[k]) <=
                tiny + eps * (abs(result.s[k]) + abs(result.s[k + 1])):
-            e[k] = 0.0
+            e[k] = T(0.0)
             break
          k.dec
       if k == p - 2:
@@ -183,11 +186,11 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
       else:
          var ks = p - 1
          while ks > k:
-            var t = 0.0
+            var t = T(0.0)
             if ks != p: t += abs(e[ks])
             if ks != k + 1: t += abs(e[ks-1])
             if abs(result.s[ks]) <= tiny + eps * t:
-               result.s[ks] = 0.0
+               result.s[ks] = T(0.0)
                break
             ks.dec
          if ks == k:
@@ -203,7 +206,7 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
       # Deflate negligible s(p).
       of 1:
          var f = e[p - 2]
-         e[p - 2] = 0.0
+         e[p - 2] = T(0.0)
          for j in countdown(p - 2, k):
             var t = hypot(result.s[j], f)
             let cs = result.s[j] / t
@@ -220,7 +223,7 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
       # Split at negligible s(k).
       of 2:
          var f = e[k - 1]
-         e[k - 1] = 0.0
+         e[k - 1] = T(0.0)
          for j in k ..< p:
             var t = hypot(result.s[j], f)
             let cs = result.s[j] / t
@@ -244,9 +247,9 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
          let epm1 = e[p - 2] / scale
          let sk = result.s[k] / scale
          let ek = e[k] / scale
-         let b = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / 2.0
+         let b = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / T(2.0)
          let c = (sp * epm1) * (sp * epm1)
-         var shift = 0.0
+         var shift = T(0.0)
          if b != 0.0 or c != 0.0:
             shift = sqrt(b * b + c)
             if b < 0.0:
@@ -289,7 +292,7 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
       of 4:
          # Make the singular values positive.
          if result.s[k] <= 0.0:
-            result.s[k] = if result.s[k] < 0.0: -result.s[k] else: 0.0
+            result.s[k] = if result.s[k] < 0.0: -result.s[k] else: T(0.0)
             if wantv:
                for i in 0 .. pp:
                   result.v[i, k] = -result.v[i, k]
@@ -309,46 +312,46 @@ proc svd*(a: sink Matrix): SingularValueDecomposition =
          p.dec
       else: discard
 
-proc getU*(sv: SingularValueDecomposition): Matrix {.inline.} =
+proc getU*[T](sv: SingularValueDecomposition[T]): Matrix[T] {.inline.} =
    ## Return the left singular vectors
    sv.u
 
-proc getV*(sv: SingularValueDecomposition): Matrix {.inline.} =
+proc getV*[T](sv: SingularValueDecomposition[T]): Matrix[T] {.inline.} =
    ## Return the right singular vectors
    sv.v
 
-proc getSingularValues*(sv: SingularValueDecomposition): seq[float] {.inline.} =
+proc getSingularValues*[T](sv: SingularValueDecomposition[T]): seq[T] {.inline.} =
    ## Return the one-dimensional array of singular values.
    ##
    ## ``return``: diagonal of S
    sv.s
 
-proc getS*(sv: SingularValueDecomposition): Matrix =
+proc getS*[T](sv: SingularValueDecomposition[T]): Matrix[T] =
    ## Return the diagonal matrix of singular values.
    result = matrix(sv.v.m, sv.v.n) # sink here?!
    for i in 0 ..< sv.v.m:
       for j in 0 ..< sv.v.n:
-         result[i, j] = 0.0
+         result[i, j] = T(0.0)
       result[i, i] = sv.s[i]
 
-proc norm2*(sv: SingularValueDecomposition): float {.inline.} =
+proc norm2*[T](sv: SingularValueDecomposition[T]): T {.inline.} =
    ## Two norm.
    ##
    ## ``return``: max(S)
    sv.s[0]
 
-proc cond*(sv: SingularValueDecomposition): float {.inline.} =
+proc cond*[T](sv: SingularValueDecomposition[T]): T {.inline.} =
    ## Two norm condition number.
    ##
    ## ``return``: max(S)/min(S)
    sv.s[0] / sv.s[^1]
 
-proc rank*(sv: SingularValueDecomposition): int =
+proc rank*[T](sv: SingularValueDecomposition[T]): int =
    ## Effective numerical matrix rank.
    ##
    ## ``return``: Number of nonnegligible singular values.
-   let eps = pow(2.0, -52.0)
-   let tol = float(max(sv.u.m, sv.v.m)) * sv.s[0] * eps
+   let eps = epsilon(T)
+   let tol = T(max(sv.u.m, sv.v.m)) * sv.s[0] * eps
    for d in sv.s:
       if d > tol:
          result.inc

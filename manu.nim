@@ -37,13 +37,13 @@
 import "./manu" / [matrix, cholesky, qr, lu, svd, eigen]
 export matrix, cholesky, qr, lu, svd, eigen
 
-proc norm2*(m: sink Matrix): float =
+proc norm2*[T](m: sink Matrix[T]): T =
    ## Two norm
    ##
    ## ``return``: maximum singular value.
    svd(m).norm2()
 
-proc solve*(a: sink Matrix, b: Matrix): Matrix =
+proc solve*[T](a: sink Matrix[T], b: Matrix[T]): Matrix[T] =
    ## Solve ``A*X = B``
    ##
    ## - parameter ``b``: the right hand side
@@ -53,31 +53,31 @@ proc solve*(a: sink Matrix, b: Matrix): Matrix =
    else:
       qr(a).solve(b)
 
-proc solveTranspose*(a, b: Matrix): Matrix =
+proc solveTranspose*[T](a, b: Matrix[T]): Matrix[T] =
    ## Solve ``X*A = B``, which is also ``A'*X' = B'``
    ##
    ## - parameter ``b``: the right hand side
    ## - ``return``: solution if A is square, least squares solution otherwise.
    transpose(a).solve(b.transpose())
 
-proc inverse*(m: sink Matrix): Matrix =
+proc inverse*[T](m: sink Matrix[T]): Matrix[T] =
    ## Matrix inverse or pseudoinverse
    ##
    ## ``return``: inverse(A) if A is square, pseudoinverse otherwise.
    let id = identity(m.m)
    solve(m, id)
 
-proc det*(m: sink Matrix): float =
+proc det*[T](m: sink Matrix[T]): T =
    ## Matrix determinant
    lu(m).det()
 
-proc rank*(m: sink Matrix): int =
+proc rank*[T](m: sink Matrix[T]): int =
    ## Matrix rank
    ##
    ## ``return``: effective numerical rank, obtained from SVD.
    svd(m).rank()
 
-proc cond*(m: sink Matrix): float =
+proc cond*[T](m: sink Matrix[T]): T =
    ## Matrix condition (2 norm)
    ##
    ## ``return``: ratio of largest to smallest singular value.

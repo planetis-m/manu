@@ -12,12 +12,12 @@
 import "./matrix"
 
 type
-   LUDecomposition* = object
-      lu: Matrix # Array for internal storage of decomposition.
+   LUDecomposition*[T] = object
+      lu: Matrix[T] # Array for internal storage of decomposition.
       piv: seq[int] # Internal storage of pivot vector.
       pivsign: int # Pivot sign.
 
-proc lu*(a: sink Matrix): LUDecomposition =
+proc lu*[T](a: sink Matrix[T]): LUDecomposition[T] =
    ## LU Decomposition
    ## Structure to access L, U and piv.
    ##
@@ -40,7 +40,7 @@ proc lu*(a: sink Matrix): LUDecomposition =
       for i in 0 ..< m:
          # Most of the time is spent in the following dot product.
          let kmax = min(i, j)
-         var s = 0.0
+         var s = T(0.0)
          for k in 0 ..< kmax:
             s += result.lu[i, k] * luColj[k]
          luColj[i] -= s
@@ -60,7 +60,7 @@ proc lu*(a: sink Matrix): LUDecomposition =
          for i in j + 1 ..< m:
             result.lu[i, j] /= result.lu[j, j]
 
-proc luGauss*(a: sink Matrix): LUDecomposition =
+proc luGauss*[T](a: sink Matrix[T]): LUDecomposition[T] =
    ## LU Decomposition, computed by Gaussian elimination.
    ##
    ## This constructor computes L and U with the "daxpy"-based elimination
@@ -96,7 +96,7 @@ proc luGauss*(a: sink Matrix): LUDecomposition =
             for j in k + 1 ..< n:
                result.lu[i, j] -= result.lu[i, k] * result.lu[k, j]
 
-proc isNonsingular*(l: LUDecomposition): bool =
+proc isNonsingular*[T](l: LUDecomposition[T]): bool =
    ## Is the matrix nonsingular?
    ##
    ## ``return``: true if U, and hence A, is nonsingular.
@@ -105,46 +105,46 @@ proc isNonsingular*(l: LUDecomposition): bool =
          return false
    return true
 
-proc getL*(l: LUDecomposition): Matrix =
+proc getL*[T](l: LUDecomposition[T]): Matrix[T] =
    ## Return lower triangular factor.
-   result = matrix(l.lu.m, l.lu.n) # sink here?!
+   result = matrix[T](l.lu.m, l.lu.n) # sink here?!
    for i in 0 ..< l.lu.m:
       for j in 0 ..< l.lu.n:
          if i > j:
             result[i, j] = l.lu[i, j]
          elif i == j:
-            result[i, j] = 1.0
+            result[i, j] = T(1.0)
          else:
-            result[i, j] = 0.0
+            result[i, j] = T(0.0)
 
-proc getU*(l: LUDecomposition): Matrix =
+proc getU*[T](l: LUDecomposition[T]): Matrix[T] =
    ## Return upper triangular factor.
-   result = matrix(l.lu.n, l.lu.n)
+   result = matrix[T](l.lu.n, l.lu.n)
    for i in 0 ..< l.lu.n:
       for j in 0 ..< l.lu.n:
          if i <= j:
             result[i, j] = l.lu[i, j]
          else:
-            result[i, j] = 0.0
+            result[i, j] = T(0.0)
 
-proc getPivot*(l: LUDecomposition): seq[int] {.inline.} =
+proc getPivot*[T](l: LUDecomposition[T]): seq[int] {.inline.} =
    ## Return pivot permutation vector.
    l.piv
 
-proc getFloatPivot*(l: LUDecomposition): seq[float] =
+proc getFloatPivot*[T](l: LUDecomposition[T]): seq[T] =
    ## Return pivot permutation vector as a one-dimensional double array.
-   result = newSeq[float](l.lu.m)
+   result = newSeq[T](l.lu.m)
    for i in 0 ..< l.lu.m:
-      result[i] = float(l.piv[i])
+      result[i] = T(l.piv[i])
 
-proc det*(l: LUDecomposition): float =
+proc det*[T](l: LUDecomposition[T]): T =
    ## Determinant
    assert(l.lu.m == l.lu.n, "Matrix must be square.")
-   result = float(l.pivsign)
+   result = T(l.pivsign)
    for j in 0 ..< l.lu.n:
       result *= l.lu[j, j]
 
-proc solve*(l: LUDecomposition, b: Matrix): Matrix =
+proc solve*[T](l: LUDecomposition[T], b: Matrix[T]): Matrix[T] =
    ## Solve ``A*X = B``.
    ##
    ## - parameter ``b``: A Matrix with as many rows as A and any number of columns.

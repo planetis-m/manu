@@ -833,8 +833,8 @@ function main() {
   <a class="reference reference-toplevel" href="#7" id="57">Types</a>
   <ul class="simple simple-toc-section">
       <li><a class="reference" href="#CholeskyDecomposition"
-    title="CholeskyDecomposition = object
-  l: Matrix
+    title="CholeskyDecomposition[T] = object
+  l: Matrix[T]
   isspd: bool"><wbr />Cholesky<wbr />Decomposition<span class="attachedType"></span></a></li>
 
   </ul>
@@ -842,14 +842,14 @@ function main() {
 <li>
   <a class="reference reference-toplevel" href="#12" id="62">Procs</a>
   <ul class="simple simple-toc-section">
-      <li><a class="reference" href="#chol%2CMatrix"
-    title="chol(a: Matrix): CholeskyDecomposition"><wbr />chol<span class="attachedType">CholeskyDecomposition</span></a></li>
-  <li><a class="reference" href="#isSPD%2CCholeskyDecomposition"
-    title="isSPD(c: CholeskyDecomposition): bool"><wbr />is<wbr />SPD<span class="attachedType">CholeskyDecomposition</span></a></li>
-  <li><a class="reference" href="#getL%2CCholeskyDecomposition"
-    title="getL(c: CholeskyDecomposition): Matrix"><wbr />get<wbr />L<span class="attachedType">CholeskyDecomposition</span></a></li>
-  <li><a class="reference" href="#solve%2CCholeskyDecomposition%2C"
-    title="solve(c: CholeskyDecomposition; b: sink Matrix): Matrix"><wbr />solve<span class="attachedType">CholeskyDecomposition</span></a></li>
+      <li><a class="reference" href="#chol%2CMatrix%5BT%5D"
+    title="chol[T](a: Matrix[T]): CholeskyDecomposition[T]"><wbr />chol<span class="attachedType">CholeskyDecomposition</span></a></li>
+  <li><a class="reference" href="#isSPD%2CCholeskyDecomposition%5BT%5D"
+    title="isSPD[T](c: CholeskyDecomposition[T]): bool"><wbr />is<wbr />SPD<span class="attachedType">CholeskyDecomposition</span></a></li>
+  <li><a class="reference" href="#getL%2CCholeskyDecomposition%5BT%5D"
+    title="getL[T](c: CholeskyDecomposition[T]): Matrix[T]"><wbr />get<wbr />L<span class="attachedType">CholeskyDecomposition</span></a></li>
+  <li><a class="reference" href="#solve%2CCholeskyDecomposition%5BT%5D%2C"
+    title="solve[T](c: CholeskyDecomposition[T]; b: sink Matrix[T]): Matrix[T]"><wbr />solve<span class="attachedType">CholeskyDecomposition</span></a></li>
 
   </ul>
 </li>
@@ -873,8 +873,8 @@ function main() {
 <h1><a class="toc-backref" href="#7">Types</a></h1>
 <dl class="item">
 <a id="CholeskyDecomposition"></a>
-<dt><pre><a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
-  <span class="Identifier">l</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a>
+<dt><pre><a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> <span class="Other">=</span> <span class="Keyword">object</span>
+  <span class="Identifier">l</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span>
   <span class="Identifier">isspd</span><span class="Other">:</span> <span class="Identifier">bool</span>
 </pre></dt>
 <dd>
@@ -891,8 +891,8 @@ class="link-seesrc" target="_blank">Source</a>
 <div class="section" id="12">
 <h1><a class="toc-backref" href="#12">Procs</a></h1>
 <dl class="item">
-<a id="chol,Matrix"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#chol%2CMatrix"><span class="Identifier">chol</span></a><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="chol,Matrix[T]"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#chol%2CMatrix%5BT%5D"><span class="Identifier">chol</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span></pre></dt>
 <dd>
 
 <p>Cholesky algorithm for symmetric and positive definite matrix. Structure to access L and isspd flag.</p>
@@ -904,8 +904,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/cholesky.nim#L16" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="isSPD,CholeskyDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#isSPD%2CCholeskyDecomposition"><span class="Identifier">isSPD</span></a><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="isSPD,CholeskyDecomposition[T]"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#isSPD%2CCholeskyDecomposition%5BT%5D"><span class="Identifier">isSPD</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 Is the matrix symmetric and positive definite?
@@ -915,8 +915,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/cholesky.nim#L42" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="getL,CholeskyDecomposition"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getL%2CCholeskyDecomposition"><span class="Identifier">getL</span></a><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span><span class="Other">,</span> <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="getL,CholeskyDecomposition[T]"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#getL%2CCholeskyDecomposition%5BT%5D"><span class="Identifier">getL</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
 
 Return triangular factor.
@@ -926,9 +926,8 @@ class="link-seesrc" target="_blank">Source</a>
 <a href="https://github.com/b3liever/manu//edit/devel/manu/cholesky.nim#L46" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="solve,CholeskyDecomposition,"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#solve%2CCholeskyDecomposition%2C"><span class="Identifier">solve</span></a><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IndexError</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="solve,CholeskyDecomposition[T],"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#solve%2CCholeskyDecomposition%5BT%5D%2C"><span class="Identifier">solve</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span></pre></dt>
 <dd>
 
 Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt><ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">b</span></tt>:  A Matrix with as many rows as A and any number of columns.</li>
@@ -951,7 +950,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2019-10-21 08:06:15 UTC</small>
+        <small>Made with Nim. Generated: 2019-11-17 18:10:46 UTC</small>
       </div>
     </div>
   </div>
