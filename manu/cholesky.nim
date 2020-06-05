@@ -43,7 +43,7 @@ proc isSPD*[T](c: CholeskyDecomposition[T]): bool {.inline.} =
    ## Is the matrix symmetric and positive definite?
    c.isspd
 
-proc getL*[T](c: CholeskyDecomposition[T]): Matrix[T] {.inline.} =
+proc getL*[T](c: CholeskyDecomposition[T]): lent Matrix[T] {.inline.} =
    ## Return triangular factor.
    c.l
 

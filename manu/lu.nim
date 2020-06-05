@@ -127,7 +127,7 @@ proc getU*[T](l: LUDecomposition[T]): Matrix[T] =
          else:
             result[i, j] = T(0.0)
 
-proc getPivot*[T](l: LUDecomposition[T]): seq[int] {.inline.} =
+proc getPivot*[T](l: LUDecomposition[T]): lent seq[int] {.inline.} =
    ## Return pivot permutation vector.
    l.piv
 

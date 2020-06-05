@@ -312,15 +312,15 @@ proc svd*[T](a: sink Matrix[T]): SingularValueDecomposition[T] =
          p.dec
       else: discard
 
-proc getU*[T](sv: SingularValueDecomposition[T]): Matrix[T] {.inline.} =
+proc getU*[T](sv: SingularValueDecomposition[T]): lent Matrix[T] {.inline.} =
    ## Return the left singular vectors
    sv.u
 
-proc getV*[T](sv: SingularValueDecomposition[T]): Matrix[T] {.inline.} =
+proc getV*[T](sv: SingularValueDecomposition[T]): lent Matrix[T] {.inline.} =
    ## Return the right singular vectors
    sv.v
 
-proc getSingularValues*[T](sv: SingularValueDecomposition[T]): seq[T] {.inline.} =
+proc getSingularValues*[T](sv: SingularValueDecomposition[T]): lent seq[T] {.inline.} =
    ## Return the one-dimensional array of singular values.
    ##
    ## ``return``: diagonal of S
@@ -328,7 +328,7 @@ proc getSingularValues*[T](sv: SingularValueDecomposition[T]): seq[T] {.inline.}
 
 proc getS*[T](sv: SingularValueDecomposition[T]): Matrix[T] =
    ## Return the diagonal matrix of singular values.
-   result = matrix(sv.v.m, sv.v.n) # sink here?!
+   result = matrix[T](sv.v.m, sv.v.n) # sink here?!
    for i in 0 ..< sv.v.m:
       for j in 0 ..< sv.v.n:
          result[i, j] = T(0.0)

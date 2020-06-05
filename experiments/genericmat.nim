@@ -1,10 +1,10 @@
-import math, random, strutils
+import random, math, strutils
 
 template checkBounds(cond: untyped, msg = "") =
    when compileOption("boundChecks"):
       {.line.}:
          if not cond:
-            raise newException(IndexDefect, msg)
+            raise newException(IndexError, msg)
 
 type
    Matrix*[T: SomeFloat] = object
@@ -126,7 +126,7 @@ proc getColumnPacked*[T](m: Matrix[T]): seq[T] =
       for j in 0 ..< m.n:
          result[i + j * m.m] = m.data[i * m.n + j]
 
-proc getRowPacked*[T](m: Matrix[T]): lent seq[T] {.inline.} =
+proc getRowPacked*[T](m: Matrix[T]): seq[T] {.inline.} =
    ## Copy the internal one-dimensional row packed array.
    m.data
 
@@ -145,11 +145,11 @@ proc n*[T](m: Matrix[T]): int {.inline.} =
 proc rowDimension*[T](m: Matrix[T]): int {.inline.} = m.m
 proc columnDimension*[T](m: Matrix[T]): int {.inline.} = m.n
 
-proc `[]`*[T](m: Matrix[T], i, j: int): lent T {.inline.} =
+proc `[]`*[T](m: Matrix[T], i, j: int): T {.inline.} =
    ## Get a single element.
    checkBounds(i >= 0 and i < m.m)
    checkBounds(j >= 0 and j < m.n)
-   result = m.data[i * m.n + j]
+   m.data[i * m.n + j]
 
 proc `[]`*[T](m: var Matrix[T], i, j: int): var T {.inline.} =
    ## Get a single element.
@@ -163,7 +163,7 @@ proc `[]=`*[T](m: var Matrix[T], i, j: int, s: T) {.inline.} =
    checkBounds(j >= 0 and j < m.n)
    m.data[i * m.n + j] = s
 
-proc `[]`*[T](v: ColVector[T], i: int): lent T {.inline.} =
+proc `[]`*[T](v: ColVector[T], i: int): T {.inline.} =
    ## Get a single element.
    checkBounds(i >= 0 and i < Matrix[T](v).m)
    Matrix[T](v).data[i]
@@ -178,7 +178,7 @@ proc `[]=`*[T](v: var ColVector[T], i: int, s: T) {.inline.} =
    checkBounds(i >= 0 and i < Matrix[T](v).m)
    Matrix[T](v).data[i] = s
 
-proc `[]`*[T](v: RowVector[T], j: int): lent T {.inline.} =
+proc `[]`*[T](v: RowVector[T], j: int): T {.inline.} =
    ## Get a single element.
    checkBounds(j >= 0 and j < Matrix[T](v).n)
    Matrix[T](v).data[j]
@@ -428,7 +428,7 @@ proc `/=`*[T](m: var Matrix[T], s: T) =
 proc `*`*[T](a, b: Matrix[T]): Matrix[T] =
    ## Linear algebraic matrix multiplication, ``A * B``
    assert(b.m == a.n, "Matrix inner dimensions must agree.")
-   result = matrix[T](a.m, b.n)
+   result = matrix(a.m, b.n)
    var bColj = newSeq[T](b.m)
    for j in 0 ..< b.n:
       for k in 0 ..< a.n:
@@ -685,8 +685,6 @@ proc identity*[T](m: int): Matrix[T] =
       result[i, i] = T(1.0)
 
 template eye*[T](m: int): Matrix[T] = identity[T](m)
-template eye32*(m: int): Matrix32 = identity[float32](m)
-template eye64*(m: int): Matrix64 = identity[float64](m)
 
 proc sum*[T](m: Matrix[T]): T =
    ## Sum of all elements.
@@ -789,40 +787,27 @@ proc `$`*[T](m: Matrix[T]): string =
 
 template makeUniversal*(fname: untyped) =
    proc fname*[T](m: sink Matrix[T]): Matrix[T] =
+      let len = m.m * m.n
       result = m
-      for i in 0 ..< result.m:
-         for j in 0 ..< result.n:
-            result[i, j] = fname(result[i, j])
+      for i in 0 ..< len:
+         result.data[i] = fname(result.data[i])
 
 template makeUniversalBinary*(fname: untyped) =
    proc fname*[T](a: sink Matrix[T], b: Matrix[T]): Matrix[T] =
       assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
+      let len = a.m * a.n
       result = a
-      for i in 0 ..< result.m:
-         for j in 0 ..< result.n:
-            result[i, j] = fname(result[i, j], b[i, j])
+      for i in 0 ..< len:
+         result.data[i] = fname(result.data[i], b.data[i])
 
-makeUniversal(sqrt)
-makeUniversal(cbrt)
-makeUniversal(log10)
-makeUniversal(log2)
-makeUniversal(ln)
-makeUniversal(exp)
-makeUniversal(arccos)
-makeUniversal(arcsin)
-makeUniversal(arctan)
-makeUniversal(cos)
-makeUniversal(cosh)
-makeUniversal(sin)
-makeUniversal(sinh)
-makeUniversal(tan)
-makeUniversal(tanh)
-makeUniversal(erf)
-makeUniversal(erfc)
-makeUniversal(lgamma)
-makeUniversal(gamma)
-makeUniversal(trunc)
-makeUniversal(floor)
-makeUniversal(ceil)
-makeUniversal(degToRad)
-makeUniversal(radToDeg)
+var
+   a = ones[float32](1, 2)
+   b = zeros32(2, 2)
+   c = matrix(2, @[0.0'f32, 0, 0, 1, 1, 0, 1, 1])
+   d = randMatrix(2, 3, -1.0'f32..1.0'f32)
+
+echo d is Matrix32
+d[0..1, 1..2] = b + 1.0
+echo d.getRowPacked()
+echo RowVector32(d)[1]
+echo sumColumns(d)

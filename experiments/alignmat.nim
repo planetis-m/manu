@@ -1,7 +1,6 @@
 import random
 {.passC: "-march=native -ffast-math".}
-when defined(debugAsm):
-   {.passC: "-fverbose-asm -masm=intel -S".}
+
 const
    memAlign = 16
 
@@ -20,13 +19,13 @@ template checkBounds(cond: untyped, msg = "") =
 
 proc alignedAlloc(size: int): (pointer, ptr UncheckedArray[float]) {.inline.} =
    let address = alloc(size *% sizeof(float) +% (memAlign - 1))
-   let data {.restrict, align(memAlign).} = block:
-      let remainder = cast[ByteAddress](address) and (memAlign - 1)
-      if remainder == 0:
-         cast[ptr UncheckedArray[float]](address)
-      else:
-         let offset = memAlign -% remainder
-         cast[ptr UncheckedArray[float]](cast[ByteAddress](address) +% offset)
+   var data {.restrict, align(memAlign).}: ptr UncheckedArray[float]
+   let remainder = cast[ByteAddress](address) and (memAlign - 1)
+   if remainder == 0:
+      data = cast[ptr UncheckedArray[float]](address)
+   else:
+      let offset = memAlign -% remainder
+      data = cast[ptr UncheckedArray[float]](cast[ByteAddress](address) +% offset)
    (address, data)
 
 proc `=destroy`*(m: var Matrix) =
@@ -52,7 +51,7 @@ proc `=`*(a: var Matrix; b: Matrix) =
       if b.address != nil:
          let len = b.m * b.n
          (a.address, a.data) = alignedAlloc(len)
-         copyMem(a.address, b.address, len * sizeof(float) + memAlign - 1)
+         copyMem(a.data, b.data, len * sizeof(float))
 
 proc matrix*(m, n: int): Matrix =
    ## Construct an m-by-n matrix of zeros.
@@ -160,6 +159,8 @@ proc `[]=`*(m: var Matrix, i, j: int, s: float) {.inline.} =
 
 template kernelBin(op: untyped) =
    proc `op`(a, b: ptr UncheckedArray[float]; m, n: int) =
+      let a {.restrict, align(memAlign).} = a
+      let b {.restrict, align(memAlign).} = b
       for i in 0 ..< n * m:
          a[i] = `op`(a[i], b[i])
 

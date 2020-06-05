@@ -1,4 +1,4 @@
-import fenv, math, "../manu/matrix"
+import fenv, "../manu/matrix"
 
 # private utility routines
 
@@ -29,7 +29,7 @@ proc check*[T](a, b: Matrix[T]) =
    if xmiy_norm1 > T(1000.0) * eps * max(x_norm1, y_norm1):
       raise newException(ValueError, "The norm of (a-b) is too large: " & $xmiy_norm1)
 
-proc check*(x, y: seq[seq[T]]) =
+proc check*[T](x, y: seq[seq[T]]) =
    # Check norm of difference of arrays.
    let a = matrix(x)
    let b = matrix(y)

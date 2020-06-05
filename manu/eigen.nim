@@ -621,17 +621,17 @@ proc eig*[T](a: sink Matrix[T]): EigenvalueDecomposition[T] =
       # Reduce Hessenberg to real Schur form.
       result.hqr2()
 
-proc getV*[T](ei: EigenvalueDecomposition[T]): Matrix[T] {.inline.} =
+proc getV*[T](ei: EigenvalueDecomposition[T]): lent Matrix[T] {.inline.} =
    ## Return the eigenvector matrix
    ei.v
 
-proc getRealEigenvalues*[T](ei: EigenvalueDecomposition[T]): seq[T] {.inline.} =
+proc getRealEigenvalues*[T](ei: EigenvalueDecomposition[T]): lent seq[T] {.inline.} =
    ## Return the real parts of the eigenvalues
    ##
    ## ``return``: real(diag(D))
    ei.d
 
-proc getImagEigenvalues*[T](ei: EigenvalueDecomposition[T]): seq[T] {.inline.} =
+proc getImagEigenvalues*[T](ei: EigenvalueDecomposition[T]): lent seq[T] {.inline.} =
    ## Return the imaginary parts of the eigenvalues
    ##
    ## ``return``: imag(diag(D))

@@ -1,4 +1,4 @@
-import algorithm, os, math, strutils, strformat, manu
+import algorithm, os, math, strutils, strformat, "../manu"
 
 
 # From: https://csmbrannon.net/2011/04/25/stress-state-analysis-python-script/
@@ -82,7 +82,7 @@ proc main() =
          @[dum[3], dum[1], dum[5]],
          @[dum[4], dum[5], dum[2]]
       ])
-      sigmaIso = 1.0/3.0*trace(sigma)*identity(sigma.m)
+      sigmaIso = 1.0/3.0*trace(sigma)*eye64(sigma.m)
       sigmaDev = sigma - sigmaIso
 
    # compute principal stresses

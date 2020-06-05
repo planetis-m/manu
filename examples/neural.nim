@@ -1,6 +1,6 @@
 # See: https://peterroelants.github.io/posts/neural-network-implementation-part04/
 # Implementing an Artificial Neural Network in manu
-import math, strutils, "../manu" / matrix
+import math, strutils, "../manu/matrix"
 
 proc sigmoid(s: float): float {.inline.} =
    result = 1.0 / (1.0 + exp(-s))
@@ -21,7 +21,7 @@ proc main =
    var
       # LAYER 1
       W1 = randMatrix(2, nodes, -1.0..1.0)
-      b1 = zeros(1, nodes)
+      b1 = zeros64(1, nodes)
       # LAYER 2
       W2 = randMatrix(nodes, 1, -1.0..1.0)
       b2 = 0.0
@@ -29,7 +29,7 @@ proc main =
       # Foward Prop
       let
          # LAYER 1
-         Z1 = X * W1 + RowVector(b1) # broadcast bias to (m, nodes)
+         Z1 = X * W1 + RowVector64(b1) # broadcast bias to (m, nodes)
          A1 = sigmoid(Z1)
          # LAYER 2
          Z2 = A1 * W2 + b2 # scalar to (m, 1)

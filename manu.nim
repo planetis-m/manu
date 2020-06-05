@@ -64,7 +64,7 @@ proc inverse*[T](m: sink Matrix[T]): Matrix[T] =
    ## Matrix inverse or pseudoinverse
    ##
    ## ``return``: inverse(A) if A is square, pseudoinverse otherwise.
-   let id = identity(m.m)
+   let id = identity[T](m.m)
    solve(m, id)
 
 proc det*[T](m: sink Matrix[T]): T =
