@@ -9,7 +9,7 @@ template checkBounds(cond: untyped, msg = "") =
 type
    Matrix*[T: SomeFloat] = object
       m, n: int # Row and column dimensions.
-      data: seq[T] # Array for internal storage of elements.
+      data: ptr UncheckedArray[T] # Array for internal storage of elements.
    Matrix64* = Matrix[float64]
       ## Alias for a ``Matrix`` of 64-bit floats.
    Matrix32* = Matrix[float32]
@@ -21,18 +21,39 @@ type
    ColVector32* = ColVector[float32]
    RowVector32* = RowVector[float32]
 
+template createData[T](size): ptr UncheckedArray[T] =
+   cast[ptr UncheckedArray[T]](alloc(size * sizeof(T)))
+
+proc `=destroy`*[T](m: var Matrix[T]) =
+   if m.data != nil:
+      dealloc(m.data)
+      m.data = nil
+      m.m = 0
+      m.n = 0
+
+proc `=`*[T](a: var Matrix[T]; b: Matrix[T]) =
+   if a.data != b.data:
+      `=destroy`(a)
+      a.m = b.m
+      a.n = b.n
+      if b.data != nil:
+         let len = b.m * b.n
+         a.data = createData[T](len)
+         copyMem(a.data, b.data, len * sizeof(T))
+
 proc matrix*[T: SomeFloat](m, n: int): Matrix[T] {.inline.} =
    ## Construct an m-by-n matrix of zeros.
    result.m = m
    result.n = n
-   result.data = newSeq[T](m * n)
+   result.data = createData[T](m * n)
 
 proc matrix*[T: SomeFloat](m, n: int, s: T): Matrix[T] =
    ## Construct an m-by-n constant matrix.
    result.m = m
    result.n = n
-   result.data = newSeqUninitialized[T](m * n)
-   for i in 0 ..< result.data.len:
+   let len = m * n
+   result.data = createData[T](len)
+   for i in 0 ..< len:
       result.data[i] = s
 
 template ones*[T](m, n: int): Matrix[T] = matrix[T](m, n, T(1.0))
@@ -48,7 +69,7 @@ proc matrix*[T: SomeFloat](data: seq[seq[T]]): Matrix[T] =
    result.n = data[0].len
    for i in 0 ..< result.m:
       assert(data[i].len == result.n, "All rows must have the same length.")
-   result.data = newSeqUninitialized[T](result.m * result.n)
+   result.data = createData[T](result.m * result.n)
    for i in 0 ..< result.m:
       for j in 0 ..< result.n:
          result.data[i * result.n + j] = data[i][j]
@@ -57,7 +78,7 @@ proc matrix*[T: SomeFloat](data: seq[seq[T]], m, n: int): Matrix[T] =
    ## Construct a matrix quickly without checking arguments.
    result.m = m
    result.n = n
-   result.data = newSeqUninitialized[T](m * n)
+   result.data = createData[T](m * n)
    for i in 0 ..< m:
       for j in 0 ..< n:
          result.data[i * n + j] = data[i][j]
@@ -65,27 +86,16 @@ proc matrix*[T: SomeFloat](data: seq[seq[T]], m, n: int): Matrix[T] =
 proc matrix*[T: SomeFloat](data: seq[T], m: int): Matrix[T] =
    ## Construct a matrix from a one-dimensional packed array.
    ##
-   ## parameter ``data``: one-dimensional array of SomeFloat, packed by columns (ala Fortran).
+   ## parameter ``data``: one-dimensional array of float, packed by columns (ala Fortran).
    ## Array length must be a multiple of ``m``.
    let n = if m != 0: data.len div m else: 0
    assert(m * n == data.len, "Array length must be a multiple of m.")
    result.m = m
    result.n = n
-   result.data = newSeqUninitialized[T](data.len)
+   result.data = createData[T](data.len)
    for i in 0 ..< m:
       for j in 0 ..< n:
          result.data[i * n + j] = data[i + j * m]
-
-proc matrix*[T: SomeFloat](n: int, data: sink seq[T]): Matrix[T] =
-   ## Construct a matrix from a one-dimensional packed array.
-   ##
-   ## parameter ``data``: one-dimensional array of SomeFloat, packed by rows.
-   ## Array length must be a multiple of ``n``.
-   let m = if n != 0: data.len div n else: 0
-   assert(m * n == data.len, "Array length must be a multiple of m.")
-   result.m = m
-   result.n = n
-   result.data = data
 
 proc randMatrix*[T: SomeFloat](m, n: int, max: T): Matrix[T] =
    ## Generate matrix with random elements.
@@ -93,8 +103,9 @@ proc randMatrix*[T: SomeFloat](m, n: int, max: T): Matrix[T] =
    ## ``return``: an m-by-n matrix with uniformly distributed random elements.
    result.m = m
    result.n = n
-   result.data = newSeqUninitialized[T](result.m * result.n)
-   for i in 0 ..< result.data.len:
+   let len = m * n
+   result.data = createData[T](len)
+   for i in 0 ..< len:
       result.data[i] = rand(max)
 
 proc randMatrix*[T: SomeFloat](m, n: int, x: Slice[T]): Matrix[T] =
@@ -103,8 +114,9 @@ proc randMatrix*[T: SomeFloat](m, n: int, x: Slice[T]): Matrix[T] =
    ## ``return``: an m-by-n matrix with uniformly distributed random elements.
    result.m = m
    result.n = n
-   result.data = newSeqUninitialized[T](result.m * result.n)
-   for i in 0 ..< result.data.len:
+   let len = m * n
+   result.data = createData[T](len)
+   for i in 0 ..< len:
       result.data[i] = rand(x)
 
 template randMatrix*[T](m, n: int): Matrix[T] = randMatrix[T](m, n, T(1.0))
@@ -126,9 +138,11 @@ proc getColumnPacked*[T](m: Matrix[T]): seq[T] =
       for j in 0 ..< m.n:
          result[i + j * m.m] = m.data[i * m.n + j]
 
-proc getRowPacked*[T](m: Matrix[T]): lent seq[T] {.inline.} =
+proc getRowPacked*[T](m: Matrix[T]): seq[T] {.inline.} =
    ## Copy the internal one-dimensional row packed array.
-   m.data
+   result = newSeq[T](m.m * m.n)
+   for i in 0 ..< result.len:
+      result[i] = m.data[i]
 
 proc dim*[T](m: Matrix[T]): (int, int) {.inline.} =
    ## Get (row, column) dimensions tuple.
