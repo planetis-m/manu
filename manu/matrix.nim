@@ -10,19 +10,12 @@ type
    Matrix*[T: SomeFloat] = object
       m, n: int # Row and column dimensions.
       data: ptr UncheckedArray[T] # Array for internal storage of elements.
-   Matrix64* = Matrix[float64]
-      ## Alias for a ``Matrix`` of 64-bit floats.
-   Matrix32* = Matrix[float32]
-      ## Alias for a ``Matrix`` of 32-bit floats.
-   ColVector*[T: SomeFloat] = distinct Matrix[T]
-   RowVector*[T: SomeFloat] = distinct Matrix[T]
-   ColVector64* = ColVector[float64]
-   RowVector64* = RowVector[float64]
-   ColVector32* = ColVector[float32]
-   RowVector32* = RowVector[float32]
 
 template createData[T](size): ptr UncheckedArray[T] =
    cast[ptr UncheckedArray[T]](alloc(size * sizeof(T)))
+
+template createData0[T](size): ptr UncheckedArray[T] =
+   cast[ptr UncheckedArray[T]](alloc0(size * sizeof(T)))
 
 proc `=destroy`*[T](m: var Matrix[T]) =
    if m.data != nil:
@@ -41,11 +34,23 @@ proc `=`*[T](a: var Matrix[T]; b: Matrix[T]) =
          a.data = createData[T](len)
          copyMem(a.data, b.data, len * sizeof(T))
 
+type
+   Matrix64* = Matrix[float64]
+      ## Alias for a ``Matrix`` of 64-bit floats.
+   Matrix32* = Matrix[float32]
+      ## Alias for a ``Matrix`` of 32-bit floats.
+   ColVector*[T: SomeFloat] = distinct Matrix[T]
+   RowVector*[T: SomeFloat] = distinct Matrix[T]
+   ColVector64* = ColVector[float64]
+   RowVector64* = RowVector[float64]
+   ColVector32* = ColVector[float32]
+   RowVector32* = RowVector[float32]
+
 proc matrix*[T: SomeFloat](m, n: int): Matrix[T] {.inline.} =
    ## Construct an m-by-n matrix of zeros.
    result.m = m
    result.n = n
-   result.data = createData[T](m * n)
+   result.data = createData0[T](m * n)
 
 proc matrix*[T: SomeFloat](m, n: int, s: T): Matrix[T] =
    ## Construct an m-by-n constant matrix.
@@ -96,6 +101,20 @@ proc matrix*[T: SomeFloat](data: seq[T], m: int): Matrix[T] =
    for i in 0 ..< m:
       for j in 0 ..< n:
          result.data[i * n + j] = data[i + j * m]
+
+proc matrix*[T: SomeFloat](n: int, data: seq[T]): Matrix[T] =
+   ## Construct a matrix from a one-dimensional packed array.
+   ##
+   ## parameter ``data``: one-dimensional array of SomeFloat, packed by rows.
+   ## Array length must be a multiple of ``n``.
+   let m = if n != 0: data.len div n else: 0
+   assert(m * n == data.len, "Array length must be a multiple of n.")
+   result.m = m
+   result.n = n
+   result.data = createData[T](data.len)
+   for i in 0 ..< data.len:
+      result.data[i] = data[i]
+#    copyMem(result.data, data[0].unsafeAddr, data.len * sizeof(T))
 
 proc randMatrix*[T: SomeFloat](m, n: int, max: T): Matrix[T] =
    ## Generate matrix with random elements.
@@ -690,7 +709,7 @@ proc transpose*[T](m: Matrix[T]): Matrix[T] =
       for j in 0 ..< m.n:
          result[j, i] = m[i, j]
 
-proc identity*[T](m: int): Matrix[T] =
+proc identity*[T: SomeFloat](m: int): Matrix[T] =
    ## Generate identity matrix.
    ##
    ## ``return``: An m-by-m matrix with ones on the diagonal and zeros elsewhere.

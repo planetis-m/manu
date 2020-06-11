@@ -13,7 +13,7 @@ template checkBounds(cond: untyped, msg = "") =
    when compileOption("boundChecks"):
       {.line.}:
          if not cond:
-            raise newException(IndexError, msg)
+            raise newException(IndexDefect, msg)
 
 template createData(size): ptr UncheckedArray[float] =
    cast[ptr UncheckedArray[float]](alloc(size * sizeof(float)))
@@ -24,12 +24,6 @@ proc `=destroy`*(m: var Matrix) =
       m.data = nil
       m.m = 0
       m.n = 0
-
-proc `=sink`*(a: var Matrix; b: Matrix) =
-   `=destroy`(a)
-   a.data = b.data
-   a.m = b.m
-   a.n = b.n
 
 proc `=`*(a: var Matrix; b: Matrix) =
    if a.data != b.data:
@@ -45,10 +39,7 @@ proc matrix*(m, n: int): Matrix =
    ## Construct an m-by-n matrix of zeros.
    result.m = m
    result.n = n
-   let len = m * n
-   result.data = createData(len)
-   for i in 0 ..< len:
-      result.data[i] = 0.0
+   result.data = createData(m * n)
 
 proc matrix*(m, n: int, s: float): Matrix =
    ## Construct an m-by-n constant matrix.
