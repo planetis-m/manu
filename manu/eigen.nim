@@ -614,7 +614,7 @@ proc eig*[T](a: sink Matrix[T]): EigenvalueDecomposition[T] =
       result.tql2()
    else:
       result.h = a
-      result.v = matrix[T](n, n)
+      result.v = matrixUninit[T](n, n)
       result.ort = newSeq[T](n)
       # Reduce to Hessenberg form.
       result.orthes()
@@ -640,7 +640,7 @@ proc getImagEigenvalues*[T](ei: EigenvalueDecomposition[T]): lent seq[T] {.inlin
 proc getD*[T](ei: EigenvalueDecomposition[T]): Matrix[T] =
    ## Return the block diagonal eigenvalue matrix
    let n = ei.v.n
-   result = matrix[T](n, n)
+   result = matrixUninit[T](n, n)
    for i in 0 ..< n:
       for j in 0 ..< n:
          result[i, j] = T(0.0)

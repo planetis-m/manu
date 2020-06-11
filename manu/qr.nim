@@ -59,7 +59,7 @@ proc getH*[T](q: QRDecomposition[T]): Matrix[T] =
    ## Return the Householder vectors.
    ##
    ## ``return``: Lower trapezoidal matrix whose columns define the reflections.
-   result = matrix[T](q.qr.m, q.qr.n) # sink here?!
+   result = matrixUninit[T](q.qr.m, q.qr.n)
    for i in 0 ..< q.qr.m:
       for j in 0 ..< q.qr.n:
          if i >= j:
@@ -69,7 +69,7 @@ proc getH*[T](q: QRDecomposition[T]): Matrix[T] =
 
 proc getR*[T](q: QRDecomposition[T]): Matrix[T] =
    ## Return the upper triangular factor.
-   result = matrix[T](q.qr.n, q.qr.n)
+   result = matrixUninit[T](q.qr.n, q.qr.n)
    for i in 0 ..< q.qr.n:
       for j in 0 ..< q.qr.n:
          if i < j:
@@ -81,7 +81,7 @@ proc getR*[T](q: QRDecomposition[T]): Matrix[T] =
 
 proc getQ*[T](q: QRDecomposition[T]): Matrix[T] =
    ## Generate and return the (economy-sized) orthogonal factor.
-   result = matrix[T](q.qr.m, q.qr.n)
+   result = matrixUninit[T](q.qr.m, q.qr.n)
    for k in countdown(q.qr.n - 1, 0):
       for i in 0 ..< q.qr.m:
          result[i, k] = T(0.0)

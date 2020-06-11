@@ -52,6 +52,12 @@ proc matrix*[T: SomeFloat](m, n: int): Matrix[T] {.inline.} =
    result.n = n
    result.data = createData0[T](m * n)
 
+proc matrixUninit*[T: SomeFloat](m, n: int): Matrix[T] {.inline.} =
+   ## Construct an m-by-n matrix. Note that the matrix will be uninitialized.
+   result.m = m
+   result.n = n
+   result.data = createData[T](m * n)
+
 proc matrix*[T: SomeFloat](m, n: int, s: T): Matrix[T] =
    ## Construct an m-by-n constant matrix.
    result.m = m
@@ -238,7 +244,7 @@ proc `[]`*[T, U, V, W, X](m: Matrix[T], r: HSlice[U, V], c: HSlice[W, X]): Matri
    let ca = m.n ^^ c.a
    let cb = m.n ^^ c.b
    checkBounds(ca >= 0 and cb < m.n, "Submatrix dimensions")
-   result = matrix[T](rb - ra + 1, cb - ca + 1)
+   result = matrixUninit[T](rb - ra + 1, cb - ca + 1)
    for i in 0 ..< result.m:
       for j in 0 ..< result.n:
          result[i, j] = m[i + ra, j + ca]
@@ -248,7 +254,7 @@ proc `[]`*[T](m: Matrix[T], r, c: openarray[int]): Matrix[T] =
    ## ``m[[0, 2, 3, 4], [1, 2, 3, 4]]``
    checkBounds(r.len <= m.m, "Submatrix dimensions")
    checkBounds(c.len <= m.n, "Submatrix dimensions")
-   result = matrix[T](r.len, c.len)
+   result = matrixUninit[T](r.len, c.len)
    for i in 0 ..< r.len:
       for j in 0 ..< c.len:
          result[i, j] = m[r[i], c[j]]
@@ -260,7 +266,7 @@ proc `[]`*[T, U, V](m: Matrix[T], r: HSlice[U, V], c: openarray[int]): Matrix[T]
    let rb = m.m ^^ r.b
    checkBounds(ra >= 0 and rb < m.m, "Submatrix dimensions")
    checkBounds(c.len <= m.n, "Submatrix dimensions")
-   result = matrix[T](rb - ra + 1, c.len)
+   result = matrixUninit[T](rb - ra + 1, c.len)
    for i in 0 ..< result.m:
       for j in 0 ..< c.len:
          result[i, j] = m[i + ra, c[j]]
@@ -272,7 +278,7 @@ proc `[]`*[T, U, V](m: Matrix[T], r: openarray[int], c: HSlice[U, V]): Matrix[T]
    let ca = m.n ^^ c.a
    let cb = m.n ^^ c.b
    checkBounds(ca >= 0 and cb < m.n, "Submatrix dimensions")
-   result = matrix[T](r.len, cb - ca + 1)
+   result = matrixUninit[T](r.len, cb - ca + 1)
    for i in 0 ..< r.len:
       for j in 0 ..< result.n:
          result[i, j] = m[r[i], j + ca]
@@ -461,7 +467,7 @@ proc `/=`*[T](m: var Matrix[T], s: T) =
 proc `*`*[T](a, b: Matrix[T]): Matrix[T] =
    ## Linear algebraic matrix multiplication, ``A * B``
    assert(b.m == a.n, "Matrix inner dimensions must agree.")
-   result = matrix[T](a.m, b.n)
+   result = matrixUninit[T](a.m, b.n)
    var bColj = newSeq[T](b.m)
    for j in 0 ..< b.n:
       for k in 0 ..< a.n:
@@ -704,7 +710,7 @@ template `\.`*[T](b: RowVector[T], a: Matrix[T]): Matrix[T] = a /. b
 
 proc transpose*[T](m: Matrix[T]): Matrix[T] =
    ## Matrix transpose
-   result = matrix[T](m.n, m.m)
+   result = matrixUninit[T](m.n, m.m)
    for i in 0 ..< m.m:
       for j in 0 ..< m.n:
          result[j, i] = m[i, j]
@@ -731,7 +737,7 @@ proc sumColumns*[T](m: Matrix[T]): Matrix[T] =
    ## Sum of matrix columns.
    ##
    ## ``return``: An 1-by-n matrix with sum of the elements in each column.
-   result = matrix[T](1, m.n)
+   result = matrixUninit[T](1, m.n)
    for j in 0 ..< m.n:
       var s = T(0.0)
       for i in 0 ..< m.m:
@@ -742,7 +748,7 @@ proc sumRows*[T](m: Matrix[T]): Matrix[T] =
    ## Sum of matrix rows.
    ##
    ## ``return``: An m-by-1 matrix with sum of the elements in each row.
-   result = matrix[T](m.m, 1)
+   result = matrixUninit[T](m.m, 1)
    for i in 0 ..< m.m:
       var s = T(0.0)
       for j in 0 ..< m.n:

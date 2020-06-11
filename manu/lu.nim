@@ -107,7 +107,7 @@ proc isNonsingular*[T](l: LUDecomposition[T]): bool =
 
 proc getL*[T](l: LUDecomposition[T]): Matrix[T] =
    ## Return lower triangular factor.
-   result = matrix[T](l.lu.m, l.lu.n) # sink here?!
+   result = matrixUninit[T](l.lu.m, l.lu.n)
    for i in 0 ..< l.lu.m:
       for j in 0 ..< l.lu.n:
          if i > j:
@@ -119,7 +119,7 @@ proc getL*[T](l: LUDecomposition[T]): Matrix[T] =
 
 proc getU*[T](l: LUDecomposition[T]): Matrix[T] =
    ## Return upper triangular factor.
-   result = matrix[T](l.lu.n, l.lu.n)
+   result = matrixUninit[T](l.lu.n, l.lu.n)
    for i in 0 ..< l.lu.n:
       for j in 0 ..< l.lu.n:
          if i <= j:

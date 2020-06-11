@@ -20,7 +20,7 @@ proc chol*[T](a: Matrix[T]): CholeskyDecomposition[T] =
    ## parameter ``m``: Square, symmetric matrix.
    # assert(a.n == a.m and a.n >= 1)
    let n = a.m
-   result.l = matrix[T](n, n)
+   result.l = matrixUninit[T](n, n)
    result.isspd = a.n == a.m
    # Main loop.
    for j in 0 ..< n:

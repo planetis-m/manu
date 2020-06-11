@@ -29,8 +29,8 @@ proc svd*[T](a: sink Matrix[T]): SingularValueDecomposition[T] =
    # assert(m >= n, "SVD only works for m >= n") and set nu = n
    let nu = min(m, n)
    result.s = newSeq[T](min(m + 1, n)) # n<=m so n is min
-   result.u = matrix[T](m, nu)
-   result.v = matrix[T](n, n)
+   result.u = matrixUninit[T](m, nu)
+   result.v = matrixUninit[T](n, n)
    var e = newSeq[T](n)
    var work = newSeq[T](m)
    var wantu = true
@@ -328,7 +328,7 @@ proc getSingularValues*[T](sv: SingularValueDecomposition[T]): lent seq[T] {.inl
 
 proc getS*[T](sv: SingularValueDecomposition[T]): Matrix[T] =
    ## Return the diagonal matrix of singular values.
-   result = matrix[T](sv.v.m, sv.v.n) # sink here?!
+   result = matrixUninit[T](sv.v.m, sv.v.n)
    for i in 0 ..< sv.v.m:
       for j in 0 ..< sv.v.n:
          result[i, j] = T(0.0)
