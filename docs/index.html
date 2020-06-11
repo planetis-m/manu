@@ -209,6 +209,14 @@ function main() {
           <li><a class="reference external"
           data-doc-search-tag="matrix: `/`[T](s: T; m: Matrix[T]): Matrix[T]" href="manu/matrix.html#/.t%2CT%2CMatrix%5BT%5D">matrix: `/`[T](s: T; m: Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
+<dt><a name="%60%3D%60" href="#%60%3D%60"><span>`=`:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="matrix: `=`[T](a: var Matrix[T]; b: Matrix[T])" href="manu/matrix.html#%3D%2CMatrix%5BT%5D%2CMatrix%5BT%5D">matrix: `=`[T](a: var Matrix[T]; b: Matrix[T])</a></li>
+          </ul></dd>
+<dt><a name="%60%3Ddestroy%60" href="#%60%3Ddestroy%60"><span>`=destroy`:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="matrix: `=destroy`[T](m: var Matrix[T])" href="manu/matrix.html#%3Ddestroy%2CMatrix%5BT%5D">matrix: `=destroy`[T](m: var Matrix[T])</a></li>
+          </ul></dd>
 <dt><a name="%60%5B%5D%3D%60" href="#%60%5B%5D%3D%60"><span>`[]=`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="matrix: `[]=`[T](v: var ColVector[T]; i: int; s: T)" href="manu/matrix.html#%5B%5D%3D%2CColVector%5BT%5D%2Cint%2CT">matrix: `[]=`[T](v: var ColVector[T]; i: int; s: T)</a></li>
@@ -431,7 +439,7 @@ function main() {
           </ul></dd>
 <dt><a name="getRowPacked" href="#getRowPacked"><span>getRowPacked:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: getRowPacked[T](m: Matrix[T]): lent seq[T]" href="manu/matrix.html#getRowPacked%2CMatrix%5BT%5D">matrix: getRowPacked[T](m: Matrix[T]): lent seq[T]</a></li>
+          data-doc-search-tag="matrix: getRowPacked[T](m: Matrix[T]): seq[T]" href="manu/matrix.html#getRowPacked%2CMatrix%5BT%5D">matrix: getRowPacked[T](m: Matrix[T]): seq[T]</a></li>
           </ul></dd>
 <dt><a name="getS" href="#getS"><span>getS:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -455,7 +463,7 @@ function main() {
           </ul></dd>
 <dt><a name="identity" href="#identity"><span>identity:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: identity[T](m: int): Matrix[T]" href="manu/matrix.html#identity%2Cint">matrix: identity[T](m: int): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: identity[T: SomeFloat](m: int): Matrix[T]" href="manu/matrix.html#identity%2Cint">matrix: identity[T: SomeFloat](m: int): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="inverse" href="#inverse"><span>inverse:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -519,11 +527,11 @@ function main() {
           </ul></dd>
 <dt><a name="matrix" href="#matrix"><span>matrix:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: matrix[T: SomeFloat](n: int; data: sink seq[T]): Matrix[T]" href="manu/matrix.html#matrix%2Cint%2C">matrix: matrix[T: SomeFloat](n: int; data: sink seq[T]): Matrix[T]</a></li>
-          <li><a class="reference external"
           data-doc-search-tag="matrix: matrix[T: SomeFloat](m, n: int): Matrix[T]" href="manu/matrix.html#matrix%2Cint%2Cint">matrix: matrix[T: SomeFloat](m, n: int): Matrix[T]</a></li>
           <li><a class="reference external"
           data-doc-search-tag="matrix: matrix[T: SomeFloat](m, n: int; s: T): Matrix[T]" href="manu/matrix.html#matrix%2Cint%2Cint%2CT">matrix: matrix[T: SomeFloat](m, n: int; s: T): Matrix[T]</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="matrix: matrix[T: SomeFloat](n: int; data: seq[T]): Matrix[T]" href="manu/matrix.html#matrix%2Cint%2Cseq%5BT%5D">matrix: matrix[T: SomeFloat](n: int; data: seq[T]): Matrix[T]</a></li>
           <li><a class="reference external"
           data-doc-search-tag="matrix: matrix[T: SomeFloat](data: seq[seq[T]]): Matrix[T]" href="manu/matrix.html#matrix%2Cseq%5Bseq%5BT%5D%5D">matrix: matrix[T: SomeFloat](data: seq[seq[T]]): Matrix[T]</a></li>
           <li><a class="reference external"
@@ -651,7 +659,7 @@ function main() {
           </ul></dd>
 <dt><a name="sqrt" href="#sqrt"><span>sqrt:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: sqrt[T](m`gensym24865938: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#sqrt">matrix: sqrt[T](m`gensym24865938: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: sqrt[T](m`gensym24866007: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#sqrt">matrix: sqrt[T](m`gensym24866007: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="sum" href="#sum"><span>sum:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -706,7 +714,7 @@ function main() {
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2020-06-05 18:17:21 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2020-06-11 19:26:57 UTC</small>
       </div>
     </div>
   </div>
