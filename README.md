@@ -8,9 +8,10 @@ library, and is adapted to Nim programming paradigm and specific performace cons
 What is supported:
 
 - Compute solutions of simultaneous linear equations, determinants, inverses and other matrix functions.
+- Generics allow matrices of ``SomeFloat`` only.
 - Arithmetic operators are overloaded to support matrices.
   * Broadcast scalars, column and row vectors to work with matrices.
-- Destructors, with sink annotations, copies can be avoided in some cases. Compile with ``--seqsv2:on`` switch.
+- Destructors, with sink annotations, copies can be avoided in some cases.
 
 API [documentation](https://b3liever.github.io/manu/)
 
@@ -61,15 +62,15 @@ determinants, inverses and other matrix functions. Theses are:
 
 ## Broadcasting
 
-It is implemented with the help of two ``distinct`` types ``RowVector`` and ``ColVector``.
-Any compatible matrix can be casted to these i.e: ``ColVector(ones(5, 1))`` and when
-doing arithmetic with Matrices, will be broadcasted to the correct dimensions, so:
+It is implemented with the help of two ``distinct`` types ``RowVector[T]`` and ``ColVector[T]``.
+You can cast any compatible matrix to these and when performing matrix operations,
+it will be broadcasted to the correct dimensions:
 
 ```nim
 var a = matrix(1, 5, 2.0)
-let b = ones(2, 1)
-echo ColVector(b) + RowVector(a)
-echo 2.0 + a
+let b = ones64(2, 1)
+echo ColVector64(b) + RowVector64(a)
+echo 2.0 + a # matrix-scalar ops are implicit
 ```
 
 Results in:
@@ -80,15 +81,16 @@ Results in:
 ⎡4  4  4  4  4⎤
 ```
 
-If the casted matrix is not a vector an ``AssertionError`` will be thrown at runtime.
+If the matrices are not broadcastable an ``AssertionDefect`` will be thrown at runtime.
 
-The correct paradigm of usage is to first initialize a matrix, i.e ``let a = ones(1, 5)`` and cast it
-to ``RowVector`` where broadcasting is needed: ``RowVector(a) + zeros(5, 5)``.
-This system is designed to be more explicit, and since it is type-checked, work well with ``sink`` optimizations.
+The correct paradigm of usage is to first initialize a matrix, i.e ``let a = ones64(1, 5)``
+and cast it to ``RowVector64`` where broadcasting is needed: ``RowVector64(a) + zeros64(5, 5)``.
+This system is designed to be more explicit, and since it is type-checked,
+work well with ``sink`` optimizations.
 
-## Feature improvements
+## Feature improvements / contributions
 - Add more tests
 - Incorporate usefull additions from [Apache Commons Math](https://github.com/apache/commons-math)
 
 ## License
-This library is distributed under the MIT license. For more information see `copying.txt`.
+This library is distributed under the [MIT license](LICENSE).
