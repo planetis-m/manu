@@ -12,21 +12,19 @@ type
       data: ptr UncheckedArray[T] # Array for internal storage of elements.
 
 template createData[T](size): ptr UncheckedArray[T] =
-   cast[ptr UncheckedArray[T]](alloc(size * sizeof(T)))
+   cast[ptr UncheckedArray[T]](allocShared(size * sizeof(T)))
 
 template createData0[T](size): ptr UncheckedArray[T] =
-   cast[ptr UncheckedArray[T]](alloc0(size * sizeof(T)))
+   cast[ptr UncheckedArray[T]](allocShared0(size * sizeof(T)))
 
 proc `=destroy`*[T](m: var Matrix[T]) =
    if m.data != nil:
       dealloc(m.data)
-      m.data = nil
-      m.m = 0
-      m.n = 0
 
 proc `=`*[T](a: var Matrix[T]; b: Matrix[T]) =
    if a.data != b.data:
       `=destroy`(a)
+      wasMoved(a)
       a.m = b.m
       a.n = b.n
       if b.data != nil:
@@ -148,6 +146,37 @@ template randMatrix*[T](m, n: int): Matrix[T] = randMatrix[T](m, n, T(1.0))
 template randMatrix32*(m, n: int): Matrix32 = randMatrix(m, n, 1.0'f32)
 template randMatrix64*(m, n: int): Matrix64 = randMatrix(m, n, 1.0)
 
+when not declared(gauss):
+   proc gauss*(r: var Rand; mu = 0.0; sigma = 1.0): float =
+      # Ratio of uniforms method for normal
+      # http://www2.econ.osaka-u.ac.jp/~tanizaki/class/2013/econome3/13.pdf
+      const K = sqrt(2 / E)
+      var
+         a = 0.0
+         b = 0.0
+      while true:
+         a = rand(r, 1.0)
+         b = (2.0 * rand(r, 1.0) - 1.0) * K
+         if  b * b <= -4.0 * a * a * ln(a): break
+      result = mu + sigma * (b / a)
+
+proc randNMatrix*[T: SomeFloat](m, n: int, mu, sigma: T): Matrix[T] =
+   ## Normal distribution
+   ##
+   ## parameter ``mu``: the mean
+   ## parameter ``sigma``: the standard deviation
+   ## ``return``: an m-by-n matrix with normally distributed random elements.
+   result.m = m
+   result.n = n
+   let len = m * n
+   result.data = createData[T](len)
+   for i in 0 ..< len:
+      result.data[i] = gauss(mu, sigma).T
+
+template randNMatrix*[T](m, n: int): Matrix[T] = randNMatrix[T](m, n, T(0.0), T(1.0))
+template randNMatrix32*(m, n: int): Matrix32 = randNMatrix(m, n, 0.0'f32, 1.0'f32)
+template randNMatrix64*(m, n: int): Matrix64 = randNMatrix(m, n, 0.0, 1.0)
+
 proc getArray*[T](m: Matrix[T]): seq[seq[T]] =
    ## Make a two-dimensional array copy of the internal array.
    result = newSeq[seq[T]](m.m)
@@ -249,7 +278,7 @@ proc `[]`*[T, U, V, W, X](m: Matrix[T], r: HSlice[U, V], c: HSlice[W, X]): Matri
       for j in 0 ..< result.n:
          result[i, j] = m[i + ra, j + ca]
 
-proc `[]`*[T](m: Matrix[T], r, c: openarray[int]): Matrix[T] =
+proc `[]`*[T](m: Matrix[T], r, c: openarray[SomeInteger]): Matrix[T] =
    ## Get a submatrix,
    ## ``m[[0, 2, 3, 4], [1, 2, 3, 4]]``
    checkBounds(r.len <= m.m, "Submatrix dimensions")
@@ -259,7 +288,7 @@ proc `[]`*[T](m: Matrix[T], r, c: openarray[int]): Matrix[T] =
       for j in 0 ..< c.len:
          result[i, j] = m[r[i], c[j]]
 
-proc `[]`*[T, U, V](m: Matrix[T], r: HSlice[U, V], c: openarray[int]): Matrix[T] =
+proc `[]`*[T, U, V](m: Matrix[T], r: HSlice[U, V], c: openarray[SomeInteger]): Matrix[T] =
    ## Get a submatrix,
    ## ``m[i0 .. i1, [0, 2, 3, 4]]``
    let ra = m.m ^^ r.a
@@ -271,7 +300,7 @@ proc `[]`*[T, U, V](m: Matrix[T], r: HSlice[U, V], c: openarray[int]): Matrix[T]
       for j in 0 ..< c.len:
          result[i, j] = m[i + ra, c[j]]
 
-proc `[]`*[T, U, V](m: Matrix[T], r: openarray[int], c: HSlice[U, V]): Matrix[T] =
+proc `[]`*[T, U, V](m: Matrix[T], r: openarray[SomeInteger], c: HSlice[U, V]): Matrix[T] =
    ## Get a submatrix,
    ## ``m[[0, 2, 3, 4], j0 .. j1]``
    checkBounds(r.len <= m.m, "Submatrix dimensions")
@@ -296,7 +325,7 @@ proc `[]=`*[T, U, V, W, X](m: var Matrix[T], r: HSlice[U, V], c: HSlice[W, X], a
       for j in 0 ..< a.n:
          m[i + ra, j + ca] = a[i, j]
 
-proc `[]=`*[T](m: var Matrix[T], r, c: openarray[int], a: Matrix[T]) =
+proc `[]=`*[T](m: var Matrix[T], r, c: openarray[SomeInteger], a: Matrix[T]) =
    ## Set a submatrix,
    ## ``m[[0, 2, 3, 4], [1, 2, 3, 4]] = a``
    checkBounds(r.len == a.m, "Submatrix dimensions")
@@ -305,7 +334,7 @@ proc `[]=`*[T](m: var Matrix[T], r, c: openarray[int], a: Matrix[T]) =
       for j in 0 ..< c.len:
          m[r[i], c[j]] = a[i, j]
 
-proc `[]=`*[T, U, V](m: var Matrix[T], r: HSlice[U, V], c: openarray[int], a: Matrix[T]) =
+proc `[]=`*[T, U, V](m: var Matrix[T], r: HSlice[U, V], c: openarray[SomeInteger], a: Matrix[T]) =
    ## Set a submatrix,
    ## ``m[i0 .. i1, [0, 2, 3, 4]] = a``
    let ra = m.m ^^ r.a
@@ -316,7 +345,7 @@ proc `[]=`*[T, U, V](m: var Matrix[T], r: HSlice[U, V], c: openarray[int], a: Ma
       for j in 0 ..< c.len:
          m[i + ra, c[j]] = a[i, j]
 
-proc `[]=`*[T, U, V](m: var Matrix[T], r: openarray[int], c: HSlice[U, V], a: Matrix[T]) =
+proc `[]=`*[T, U, V](m: var Matrix[T], r: openarray[SomeInteger], c: HSlice[U, V], a: Matrix[T]) =
    ## Set a submatrix,
    ## ``m[[0, 2, 3, 4], j0 .. j1] = a``
    checkBounds(r.len == a.m, "Submatrix dimensions")
