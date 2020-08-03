@@ -13,14 +13,14 @@ What is supported:
   * Broadcast scalars, column and row vectors to work with matrices.
 - Destructors, with sink annotations, copies can be avoided in some cases.
 
-API [documentation](https://b3liever.github.io/manu/)
+API [documentation](https://planetis-m.github.io/manu/)
 
 ## Examples
 
 In the examples directory you will find the following:
 
-1. [two layer neural network](https://github.com/b3liever/manu/blob/master/examples/neural.nim)
-2. [stress state analysis script](https://github.com/b3liever/manu/blob/master/examples/mohr.nim)
+1. [two layer neural network](https://github.com/planetis-m/manu/blob/master/examples/neural.nim)
+2. [stress state analysis script](https://github.com/planetis-m/manu/blob/master/examples/mohr.nim)
 
 showcasing what can already be done.
 
