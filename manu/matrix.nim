@@ -12,14 +12,23 @@ type
       data: ptr UncheckedArray[T] # Array for internal storage of elements.
 
 template createData[T](size): ptr UncheckedArray[T] =
-   cast[ptr UncheckedArray[T]](allocShared(size * sizeof(T)))
+   when compileOption("threads"):
+      cast[ptr UncheckedArray[T]](allocShared(size * sizeof(T)))
+   else:
+      cast[ptr UncheckedArray[T]](alloc(size * sizeof(T)))
 
 template createData0[T](size): ptr UncheckedArray[T] =
-   cast[ptr UncheckedArray[T]](allocShared0(size * sizeof(T)))
+   when compileOption("threads"):
+      cast[ptr UncheckedArray[T]](allocShared0(size * sizeof(T)))
+   else:
+      cast[ptr UncheckedArray[T]](alloc0(size * sizeof(T)))
 
 proc `=destroy`*[T](m: var Matrix[T]) =
    if m.data != nil:
-      dealloc(m.data)
+      when compileOption("threads"):
+         deallocShared(m.data)
+      else:
+         dealloc(m.data)
 
 proc `=`*[T](a: var Matrix[T]; b: Matrix[T]) =
    if a.data != b.data:
