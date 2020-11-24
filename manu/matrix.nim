@@ -30,7 +30,7 @@ proc `=destroy`*[T](m: var Matrix[T]) =
       else:
          dealloc(m.data)
 
-proc `=`*[T](a: var Matrix[T]; b: Matrix[T]) =
+proc `=copy`*[T](a: var Matrix[T]; b: Matrix[T]) =
    if a.data != b.data:
       `=destroy`(a)
       wasMoved(a)
@@ -39,6 +39,8 @@ proc `=`*[T](a: var Matrix[T]; b: Matrix[T]) =
       if b.data != nil:
          let len = b.m * b.n
          a.data = createData[T](len)
+         #for i in 0 ..< len:
+            #a.data[i] = b.data[i]
          copyMem(a.data, b.data, len * sizeof(T))
 
 type

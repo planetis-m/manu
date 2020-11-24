@@ -47,21 +47,12 @@ function main() {
 
   toggleSwitch.addEventListener('change', switchTheme, false);
 
+  const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+  if (currentTheme) {
+    document.documentElement.setAttribute('data-theme', currentTheme);
 
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.documentElement.setAttribute('data-theme', "dark");
-    toggleSwitch.checked = true;
-  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-    document.documentElement.setAttribute('data-theme', "light");
-    toggleSwitch.checked = false;
-  } else {
-    const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
-    if (currentTheme) {
-      document.documentElement.setAttribute('data-theme', currentTheme);
-
-      if (currentTheme === 'dark') {
-        toggleSwitch.checked = true;
-      }
+    if (currentTheme === 'dark') {
+      toggleSwitch.checked = true;
     }
   }
 }
@@ -112,21 +103,33 @@ function main() {
       <li><a class="reference" href="#CholeskyDecomposition"
     title="CholeskyDecomposition[T] = object
   l: Matrix[T]
-  isspd: bool"><wbr />Cholesky<wbr />Decomposition<span class="attachedType"></span></a></li>
+  isspd: bool">CholeskyDecomposition</a></li>
 
   </ul>
 </li>
 <li>
   <a class="reference reference-toplevel" href="#12" id="62">Procs</a>
   <ul class="simple simple-toc-section">
+      <ul class="simple nested-toc-section">chol
       <li><a class="reference" href="#chol%2CMatrix%5BT%5D"
-    title="chol[T](a: Matrix[T]): CholeskyDecomposition[T]"><wbr />chol<span class="attachedType">CholeskyDecomposition</span></a></li>
-  <li><a class="reference" href="#isSPD%2CCholeskyDecomposition%5BT%5D"
-    title="isSPD[T](c: CholeskyDecomposition[T]): bool"><wbr />is<wbr />SPD<span class="attachedType">CholeskyDecomposition</span></a></li>
-  <li><a class="reference" href="#getL%2CCholeskyDecomposition%5BT%5D"
-    title="getL[T](c: CholeskyDecomposition[T]): lent Matrix[T]"><wbr />get<wbr />L<span class="attachedType">CholeskyDecomposition</span></a></li>
-  <li><a class="reference" href="#solve%2CCholeskyDecomposition%5BT%5D%2C"
-    title="solve[T](c: CholeskyDecomposition[T]; b: sink Matrix[T]): Matrix[T]"><wbr />solve<span class="attachedType">CholeskyDecomposition</span></a></li>
+    title="chol[T](a: Matrix[T]): CholeskyDecomposition[T]">chol,<wbr>Matrix[T]</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">solve
+      <li><a class="reference" href="#solve%2CCholeskyDecomposition%5BT%5D%2CsinkMatrix%5BT%5D"
+    title="solve[T](c: CholeskyDecomposition[T]; b: sink Matrix[T]): Matrix[T]">solve,<wbr>CholeskyDecomposition[T],<wbr>sinkMatrix[T]</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">getL
+      <li><a class="reference" href="#getL%2CCholeskyDecomposition%5BT%5D"
+    title="getL[T](c: CholeskyDecomposition[T]): lent Matrix[T]">getL,<wbr>CholeskyDecomposition[T]</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">isSPD
+      <li><a class="reference" href="#isSPD%2CCholeskyDecomposition%5BT%5D"
+    title="isSPD[T](c: CholeskyDecomposition[T]): bool">isSPD,<wbr>CholeskyDecomposition[T]</a></li>
+
+  </ul>
 
   </ul>
 </li>
@@ -134,6 +137,11 @@ function main() {
 </ul>
 
   </div>
+  &nbsp;&nbsp;<a
+href="https://github.com/planetis-m/manu/tree/devel/manu/cholesky.nim#L1"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/cholesky.nim#L1" class="link-seesrc" target="_blank" >Edit</a>
+
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
   
@@ -158,9 +166,9 @@ function main() {
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu/tree/devel/manu/cholesky.nim#L12"
+href="https://github.com/planetis-m/manu/tree/devel/manu/cholesky.nim#L12"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu/edit/devel/manu/cholesky.nim#L12" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/cholesky.nim#L12" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -176,9 +184,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>parameter <tt class="docutils literal"><span class="pre">m</span></tt>: Square, symmetric matrix.</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu/tree/devel/manu/cholesky.nim#L16"
+href="https://github.com/planetis-m/manu/tree/devel/manu/cholesky.nim#L16"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu/edit/devel/manu/cholesky.nim#L16" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/cholesky.nim#L16" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="isSPD,CholeskyDecomposition[T]"></a>
@@ -187,9 +195,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Is the matrix symmetric and positive definite?
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu/tree/devel/manu/cholesky.nim#L42"
+href="https://github.com/planetis-m/manu/tree/devel/manu/cholesky.nim#L42"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu/edit/devel/manu/cholesky.nim#L42" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/cholesky.nim#L42" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getL,CholeskyDecomposition[T]"></a>
@@ -198,13 +206,13 @@ class="link-seesrc" target="_blank">Source</a>
 
 Return triangular factor.
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu/tree/devel/manu/cholesky.nim#L46"
+href="https://github.com/planetis-m/manu/tree/devel/manu/cholesky.nim#L46"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu/edit/devel/manu/cholesky.nim#L46" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/cholesky.nim#L46" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="solve,CholeskyDecomposition[T],"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#solve%2CCholeskyDecomposition%5BT%5D%2C"><span class="Identifier">solve</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span></pre></dt>
+<a id="solve,CholeskyDecomposition[T],sinkMatrix[T]"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#solve%2CCholeskyDecomposition%5BT%5D%2CsinkMatrix%5BT%5D"><span class="Identifier">solve</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">sink</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span></pre></dt>
 <dd>
 
 Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt><ul class="simple"><li>parameter <tt class="docutils literal"><span class="pre">b</span></tt>:  A Matrix with as many rows as A and any number of columns.</li>
@@ -212,9 +220,9 @@ Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt><ul clas
 </ul>
 
 &nbsp;&nbsp;<a
-href="https://github.com/b3liever/manu/tree/devel/manu/cholesky.nim#L50"
+href="https://github.com/planetis-m/manu/tree/devel/manu/cholesky.nim#L50"
 class="link-seesrc" target="_blank">Source</a>
-<a href="https://github.com/b3liever/manu/edit/devel/manu/cholesky.nim#L50" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/cholesky.nim#L50" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -227,7 +235,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2020-06-11 20:03:16 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2020-11-24 10:44:23 UTC</small>
       </div>
     </div>
   </div>
