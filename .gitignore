@@ -1,8 +1,9 @@
 # Ignore all root files
 /*
-# Exclude readme file
+# Exclude top level readme file
 !/*.md
 !/*.nim
+!/*.nimble
 # Exclude root directories
 !/*/
 # Include all files in subdirectories
@@ -10,3 +11,9 @@
 # Exclude source code files in subdirectories
 !/*/*.nim
 !/*/*.txt
+# # Exclude docs
+# !/docs/*.html
+# !/docs/*.css
+# !/docs/*.js
+# # Exclude module docs
+# !/docs/manu/*.html

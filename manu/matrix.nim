@@ -127,9 +127,9 @@ proc matrix*[T: SomeFloat](n: int, data: seq[T]): Matrix[T] =
    result.m = m
    result.n = n
    result.data = createData[T](data.len)
-   for i in 0 ..< data.len:
-      result.data[i] = data[i]
-      #copyMem(result.data, data[0].unsafeAddr, data.len * sizeof(T))
+   #for i in 0 ..< data.len:
+      #result.data[i] = data[i]
+   copyMem(result.data, data[0].unsafeAddr, data.len * sizeof(T))
 
 proc randMatrix*[T: SomeFloat](m, n: int, max: T): Matrix[T] =
    ## Generate matrix with random elements.
@@ -548,7 +548,7 @@ template makeUniversalBinaryImpl*(fname, opname: untyped, isCommutative = true) 
             for j in 0 ..< result.n:
                result[i, j] = opname(a[j], b[i])
 
-template makeUniversalBinaryScalar(fname: untyped, isCommutative = true) =
+template makeUniversalBinaryScalar(fname: untyped, isCommutative = false) =
    proc fname*[T](m: sink Matrix[T], s: T): Matrix[T] =
       result = m
       for i in 0 ..< result.m:
@@ -589,7 +589,7 @@ template makeUniversalBinaryScalarInplace*(fnameInplace, opname: untyped) =
          for j in 0 ..< m.n:
             m[i, j] = opname(s, m[i, j])
 
-template makeUniversalBinary*(fname: untyped, isCommutative = true) =
+template makeUniversalBinary*(fname: untyped, isCommutative = false) =
    makeUniversalBinaryImpl(fname, fname, isCommutative)
    makeUniversalBinaryScalar(fname, isCommutative)
 
@@ -625,20 +625,20 @@ makeUniversal(radToDeg)
 # Unary minus
 makeUniversal(`-`)
 # ``A = A - B``
-makeUniversalBinary(`-`, false)
+makeUniversalBinary(`-`)
 makeUniversalBinaryInplace(`-=`, `-`)
 # ``C = A + B``
-makeUniversalBinary(`+`)
+makeUniversalBinary(`+`, true)
 makeUniversalBinaryInplace(`+=`, `+`)
 # Divide a matrix by a scalar
-makeUniversalBinaryScalar(`/`, false)
+makeUniversalBinaryScalar(`/`)
 makeUniversalBinaryScalarInplace(`/=`, `/`)
 # Multiply a matrix by a scalar
-makeUniversalBinaryScalar(`*`)
+makeUniversalBinaryScalar(`*`, true)
 makeUniversalBinaryScalarInplace(`*=`, `*`)
 # Element-by-element multiplication, ``C = A.*B``
-makeUniversalBinaryImpl(`*.`, `*`)
+makeUniversalBinaryImpl(`*.`, `*`, true)
 makeUniversalBinaryInplaceImpl(`*.=`, `*`)
 # Element-by-element right division, ``C = A./B``
-makeUniversalBinaryImpl(`/.`, `/`, false)
+makeUniversalBinaryImpl(`/.`, `/`)
 makeUniversalBinaryInplaceImpl(`/.=`, `/`)
