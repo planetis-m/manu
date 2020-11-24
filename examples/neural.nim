@@ -35,14 +35,14 @@ proc main =
          Z2 = A1 * W2 + b2 # scalar to (m, 1)
          A2 = sigmoid(Z2)
          # Cross Entropy
-         loss = -sum(loss(A2, Y)) / m.float
+         loss = -sum(loss(A2, Y)) / m.float64
          # Back Prop
          # Layer 2
          dZ2 = A2 - Y
          db2 = sum(dZ2)
          dW2 = A1.transpose * dZ2
          # Layer 1
-         dZ1 = (dZ2 * W2.transpose) *. (1.0 - A1) *. A1
+         dZ1 = (dZ2 * W2.transpose) *. (1.0'f64 - A1) *. A1
          db1 = sumColumns(dZ1)
          dW1 = X.transpose * dZ1
       # Gradient Descent

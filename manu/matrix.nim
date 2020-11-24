@@ -127,7 +127,7 @@ proc matrix*[T: SomeFloat](n: int, data: seq[T]): Matrix[T] =
    result.data = createData[T](data.len)
    for i in 0 ..< data.len:
       result.data[i] = data[i]
-#    copyMem(result.data, data[0].unsafeAddr, data.len * sizeof(T))
+      #copyMem(result.data, data[0].unsafeAddr, data.len * sizeof(T))
 
 proc randMatrix*[T: SomeFloat](m, n: int, max: T): Matrix[T] =
    ## Generate matrix with random elements.
@@ -154,20 +154,6 @@ proc randMatrix*[T: SomeFloat](m, n: int, x: Slice[T]): Matrix[T] =
 template randMatrix*[T](m, n: int): Matrix[T] = randMatrix[T](m, n, T(1.0))
 template randMatrix32*(m, n: int): Matrix32 = randMatrix(m, n, 1.0'f32)
 template randMatrix64*(m, n: int): Matrix64 = randMatrix(m, n, 1.0)
-
-when not declared(gauss):
-   proc gauss*(r: var Rand; mu = 0.0; sigma = 1.0): float =
-      # Ratio of uniforms method for normal
-      # http://www2.econ.osaka-u.ac.jp/~tanizaki/class/2013/econome3/13.pdf
-      const K = sqrt(2 / E)
-      var
-         a = 0.0
-         b = 0.0
-      while true:
-         a = rand(r, 1.0)
-         b = (2.0 * rand(r, 1.0) - 1.0) * K
-         if  b * b <= -4.0 * a * a * ln(a): break
-      result = mu + sigma * (b / a)
 
 proc randNMatrix*[T: SomeFloat](m, n: int, mu, sigma: T): Matrix[T] =
    ## Normal distribution
@@ -365,143 +351,6 @@ proc `[]=`*[T, U, V](m: var Matrix[T], r: openarray[SomeInteger], c: HSlice[U, V
       for j in 0 ..< a.n:
          m[r[i], j + ca] = a[i, j]
 
-proc `-`*[T](m: sink Matrix[T]): Matrix[T] =
-   ## Unary minus
-   result = m
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = -result[i, j]
-
-proc `+`*[T](a: sink Matrix[T], b: Matrix[T]): Matrix[T] =
-   ## ``C = A + B``
-   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] + b[i, j]
-
-proc `+=`*[T](a: var Matrix[T], b: Matrix[T]) =
-   ## ``A = A + B``
-   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = a[i, j] + b[i, j]
-
-proc `-`*[T](a: sink Matrix[T], b: Matrix[T]): Matrix[T] =
-   ## ``C = A - B``
-   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] - b[i, j]
-
-proc `-=`*[T](a: var Matrix[T], b: Matrix[T]) =
-   ## ``A = A - B``
-   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = a[i, j] - b[i, j]
-
-proc `*.`*[T](a: sink Matrix[T], b: Matrix[T]): Matrix[T] =
-   ## Element-by-element multiplication, ``C = A.*B``
-   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] * b[i, j]
-
-proc `*.=`*[T](a: var Matrix[T], b: Matrix[T]) =
-   ## Element-by-element multiplication in place, ``A = A.*B``
-   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = a[i, j] * b[i, j]
-
-proc `/.`*[T](a: sink Matrix[T], b: Matrix[T]): Matrix[T] =
-   ## Element-by-element right division, ``C = A./B``
-   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] / b[i, j]
-
-proc `/.=`*[T](a: var Matrix[T], b: Matrix[T]) =
-   ## Element-by-element right division in place, ``A = A./B``
-   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = a[i, j] / b[i, j]
-
-proc `\.`*[T](a: sink Matrix[T], b: Matrix[T]): Matrix[T] =
-   ## Element-by-element left division, ``C = A.\B``
-   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = b[i, j] / result[i, j]
-
-proc `\.=`*[T](a: var Matrix[T], b: Matrix[T]) =
-   ## Element-by-element left division in place, ``A = A.\B``
-   assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = b[i, j] / a[i, j]
-
-proc `+`*[T](m: sink Matrix[T], s: T): Matrix[T] =
-   ## Add a matrix to a scalar, ``C = s+A``
-   result = m
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = s + result[i, j]
-
-template `+`*[T](s: T, m: Matrix[T]): Matrix[T] = m + s
-template `-`*[T](m: Matrix[T], s: T): Matrix[T] = m + (-s)
-
-proc `+=`*[T](m: var Matrix[T], s: T) =
-   ## Add a matrix to a scalar in place, ``A = s+A``
-   for i in 0 ..< m.m:
-      for j in 0 ..< m.n:
-         m[i, j] = s + m[i, j]
-
-template `-=`*[T](m: Matrix[T], s: T): Matrix[T] = m += (-s)
-
-proc `-`*[T](s: T, m: sink Matrix[T]): Matrix[T] =
-   ## Subtract a matrix from a scalar, ``C = s-A``
-   result = m
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = s - result[i, j]
-
-proc `*`*[T](m: sink Matrix[T], s: T): Matrix[T] =
-   ## Multiply a matrix by a scalar, ``C = s*A``
-   result = m
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = s * result[i, j]
-
-proc `*=`*[T](m: var Matrix[T], s: T) =
-   ## Multiply a matrix by a scalar in place, ``A = s*A``
-   for i in 0 ..< m.m:
-      for j in 0 ..< m.n:
-         m[i, j] = s * m[i, j]
-
-template `*`*[T](s: T, m: Matrix[T]): Matrix[T] = m * s
-
-proc `/`*[T](m: sink Matrix[T], s: T): Matrix[T] =
-   ## Divide a matrix by a scalar, ``C = A/s``
-   result = m
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] / s
-
-template `/`*[T](s: T, m: Matrix[T]): Matrix[T] = m * (1 / s)
-
-proc `/=`*[T](m: var Matrix[T], s: T) =
-   ## Divide a matrix by a scalar in place, ``A = A/s``
-   for i in 0 ..< m.m:
-      for j in 0 ..< m.n:
-         m[i, j] = m[i, j] / s
-
 proc `*`*[T](a, b: Matrix[T]): Matrix[T] =
    ## Linear algebraic matrix multiplication, ``A * B``
    assert(b.m == a.n, "Matrix inner dimensions must agree.")
@@ -515,236 +364,6 @@ proc `*`*[T](a, b: Matrix[T]): Matrix[T] =
          for k in 0 ..< a.n:
             s += a[i, k] * bColj[k]
          result[i, j] = s
-
-proc `+`*[T](a: sink Matrix[T], b: ColVector[T]): Matrix[T] =
-   ## ``C = A + B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == a.m and Matrix[T](b).n == 1, "Matrix-vector dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] + b[i]
-
-proc `+`*[T](a: sink Matrix[T], b: RowVector[T]): Matrix[T] =
-   ## ``C = A + B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](b).n == a.n, "Matrix-vector dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] + b[j]
-
-proc `+`*[T](a: ColVector[T], b: RowVector[T]): Matrix[T] =
-   ## ``C = A + B``, ``a`` and ``b`` are broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](a).n == 1, "Matrices are not broadcastable.")
-   result = matrix(Matrix[T](a).m, Matrix[T](b).n)
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = a[i] + b[j]
-
-template `+`*[T](b: RowVector[T], a: ColVector[T]): Matrix[T] = a + b
-template `+`*[T](b: ColVector[T], a: Matrix[T]): Matrix[T] = a + b
-template `+`*[T](b: RowVector[T], a: Matrix[T]): Matrix[T] = a + b
-
-proc `+=`*[T](a: var Matrix[T], b: ColVector[T]) =
-   ## ``A = A + B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == a.m and Matrix[T](b).n == 1, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = a[i, j] + b[i]
-
-proc `+=`*[T](a: var Matrix[T], b: RowVector[T]) =
-   ## ``A = A + B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](b).n == a.n, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = a[i, j] + b[j]
-
-proc `-`*[T](a: sink Matrix[T], b: ColVector[T]): Matrix[T] =
-   ## ``C = A - B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == a.m and Matrix[T](b).n == 1, "Matrix-vector dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] - b[i]
-
-proc `-`*[T](a: sink Matrix[T], b: RowVector[T]): Matrix[T] =
-   ## ``C = A - B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](b).n == a.n, "Matrix-vector dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] - b[j]
-
-proc `-`*[T](a: ColVector[T], b: RowVector[T]): Matrix[T] =
-   ## ``C = A - B``, ``a`` and ``b`` are broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](a).n == 1, "Matrices are not broadcastable.")
-   result = matrix(Matrix[T](a).m, Matrix[T](b).n)
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = a[i] - b[j]
-
-proc `-`*[T](a: ColVector[T], b: sink Matrix[T]): Matrix[T] =
-   ## ``C = A - B``, ``b`` is broadcasted
-   assert(Matrix[T](a).m == b.m and Matrix[T](a).n == 1, "Matrix-vector dimensions must agree.")
-   result = b
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = a[i] - result[i, j]
-
-proc `-`*[T](a: RowVector[T], b: sink Matrix[T]): Matrix[T] =
-   ## ``C = A - B``, ``b`` is broadcasted
-   assert(Matrix[T](a).m == 1 and Matrix[T](a).n == b.n, "Matrix-vector dimensions must agree.")
-   result = b
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = a[j] - result[i, j]
-
-proc `-`*[T](a: RowVector[T], b: ColVector[T]): Matrix[T] =
-   ## ``C = A - B``, ``a`` and ``b`` are broadcasted
-   assert(Matrix[T](a).m == 1 and Matrix[T](b).n == 1, "Matrices are not broadcastable.")
-   result = matrix(Matrix[T](b).m, Matrix[T](a).n)
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = a[j] - b[i]
-
-proc `-=`*[T](a: var Matrix[T], b: ColVector[T]) =
-   ## ``A = A - B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == a.m and Matrix[T](b).n == 1, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = a[i, j] - b[i]
-
-proc `-=`*[T](a: var Matrix[T], b: RowVector[T]) =
-   ## ``A = A - B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](b).n == a.n, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = a[i, j] - b[j]
-
-proc `*.`*[T](a: sink Matrix[T], b: ColVector[T]): Matrix[T] =
-   ## Element-by-element multiplication, ``C = A.*B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == a.m and Matrix[T](b).n == 1, "Matrix-vector dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] * b[i]
-
-proc `*.`*[T](a: sink Matrix[T], b: RowVector[T]): Matrix[T] =
-   ## Element-by-element multiplication, ``C = A.*B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](b).n == a.n, "Matrix-vector dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] * b[j]
-
-proc `*.`*[T](a: ColVector[T], b: RowVector[T]): Matrix[T] =
-   ## Element-by-element multiplication, ``C = A.*B``, ``a`` and ``b`` are broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](a).n == 1, "Matrices are not broadcastable.")
-   result = matrix(Matrix[T](a).m, Matrix[T](b).n)
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = a[i] * b[j]
-
-template `*.`*[T](b: RowVector[T], a: ColVector[T]): Matrix[T] = a *. b
-template `*.`*[T](b: ColVector[T], a: Matrix[T]): Matrix[T] = a *. b
-template `*.`*[T](b: RowVector[T], a: Matrix[T]): Matrix[T] = a *. b
-
-proc `*.=`*[T](a: var Matrix[T], b: ColVector[T]) =
-   ## Element-by-element multiplication in place, ``A = A.*B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == a.m and Matrix[T](b).n == 1, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = a[i, j] * b[i]
-
-proc `*.=`*[T](a: var Matrix[T], b: RowVector[T]) =
-   ## Element-by-element multiplication in place, ``A = A.*B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](b).n == a.n, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = a[i, j] * b[j]
-
-proc `/.`*[T](a: sink Matrix[T], b: ColVector[T]): Matrix[T] =
-   ## Element-by-element right division, ``C = A./B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == a.m and Matrix[T](b).n == 1, "Matrix-vector dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] / b[i]
-
-proc `/.`*[T](a: sink Matrix[T], b: RowVector[T]): Matrix[T] =
-   ## Element-by-element right division, ``C = A./B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](b).n == a.n, "Matrix-vector dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = result[i, j] / b[j]
-
-proc `/.`*[T](a: ColVector[T], b: RowVector[T]): Matrix[T] =
-   ## Element-by-element right division, ``C = A./B``, ``a`` and ``b`` are broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](a).n == 1, "Matrices are not broadcastable.")
-   result = matrix(Matrix[T](a).m, Matrix[T](b).n)
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = a[i] / b[j]
-
-proc `/.=`*[T](a: var Matrix[T], b: ColVector[T]) =
-   ## Element-by-element right division in place, ``A = A./B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == a.m and Matrix[T](b).n == 1, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = a[i, j] / b[i]
-
-proc `/.=`*[T](a: var Matrix[T], b: RowVector[T]) =
-   ## Element-by-element right division in place, ``A = A./B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](b).n == a.n, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = a[i, j] / b[j]
-
-proc `\.`*[T](a: sink Matrix[T], b: ColVector[T]): Matrix[T] =
-   ## Element-by-element left division, ``C = A.\B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == a.m and Matrix[T](b).n == 1, "Matrix-vector dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = b[i] / result[i, j]
-
-proc `\.`*[T](a: sink Matrix[T], b: RowVector[T]): Matrix[T] =
-   ## Element-by-element left division, ``C = A.\B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](b).n == a.n, "Matrix-vector dimensions must agree.")
-   result = a
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = b[j] / result[i, j]
-
-proc `\.`*[T](a: ColVector[T], b: RowVector[T]): Matrix[T] =
-   ## Element-by-element left division, ``C = A.\B``, ``a`` and ``b`` are broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](a).n == 1, "Matrices are not broadcastable.")
-   result = matrix(Matrix[T](a).m, Matrix[T](b).n)
-   for i in 0 ..< result.m:
-      for j in 0 ..< result.n:
-         result[i, j] = b[j] / a[i]
-
-proc `\.=`*[T](a: var Matrix[T], b: ColVector[T]) =
-   ## Element-by-element left division in place, ``A = A.\B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == a.m and Matrix[T](b).n == 1, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = b[i] / a[i, j]
-
-proc `\.=`*[T](a: var Matrix[T], b: RowVector[T]) =
-   ## Element-by-element left division in place, ``A = A.\B``, ``b`` is broadcasted
-   assert(Matrix[T](b).m == 1 and Matrix[T](b).n == a.n, "Matrix dimensions must agree.")
-   for i in 0 ..< a.m:
-      for j in 0 ..< a.n:
-         a[i, j] = b[j] / a[i, j]
-
-template `/.`*[T](b: RowVector[T], a: ColVector[T]): Matrix[T] = a \. b
-template `/.`*[T](b: ColVector[T], a: Matrix[T]): Matrix[T] = a \. b
-template `/.`*[T](b: RowVector[T], a: Matrix[T]): Matrix[T] = a \. b
-
-template `\.`*[T](b: RowVector[T], a: ColVector[T]): Matrix[T] = a /. b
-template `\.`*[T](b: ColVector[T], a: Matrix[T]): Matrix[T] = a /. b
-template `\.`*[T](b: RowVector[T], a: Matrix[T]): Matrix[T] = a /. b
 
 proc transpose*[T](m: Matrix[T]): Matrix[T] =
    ## Matrix transpose
@@ -871,13 +490,110 @@ template makeUniversal*(fname: untyped) =
          for j in 0 ..< result.n:
             result[i, j] = fname(result[i, j])
 
-template makeUniversalBinary*(fname: untyped) =
+template makeUniversalBinaryImpl*(fname, opname: untyped, isCommutative = true) =
+   ## Supports broadcasting
    proc fname*[T](a: sink Matrix[T], b: Matrix[T]): Matrix[T] =
       assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
       result = a
       for i in 0 ..< result.m:
          for j in 0 ..< result.n:
-            result[i, j] = fname(result[i, j], b[i, j])
+            result[i, j] = opname(result[i, j], b[i, j])
+
+   proc fname*[T](a: sink Matrix[T], b: ColVector[T]): Matrix[T] =
+      assert(Matrix[T](b).m == a.m and Matrix[T](b).n == 1, "Matrix-vector dimensions must agree.")
+      result = a
+      for i in 0 ..< result.m:
+         for j in 0 ..< result.n:
+            result[i, j] = opname(result[i, j], b[i])
+
+   proc fname*[T](a: sink Matrix[T], b: RowVector[T]): Matrix[T] =
+      assert(Matrix[T](b).m == 1 and Matrix[T](b).n == a.n, "Matrix-vector dimensions must agree.")
+      result = a
+      for i in 0 ..< result.m:
+         for j in 0 ..< result.n:
+            result[i, j] = opname(result[i, j], b[j])
+
+   proc fname*[T](a: ColVector[T], b: RowVector[T]): Matrix[T] =
+      assert(Matrix[T](b).m == 1 and Matrix[T](a).n == 1, "Matrices are not broadcastable.")
+      result = matrix(Matrix[T](a).m, Matrix[T](b).n)
+      for i in 0 ..< result.m:
+         for j in 0 ..< result.n:
+            result[i, j] = opname(a[i], b[j])
+
+   when isCommutative:
+      template fname*[T](b: RowVector[T], a: ColVector[T]): Matrix[T] = fname(a, b)
+      template fname*[T](b: ColVector[T], a: Matrix[T]): Matrix[T] = fname(a, b)
+      template fname*[T](b: RowVector[T], a: Matrix[T]): Matrix[T] = fname(a, b)
+   else:
+      proc fname*[T](a: ColVector[T], b: sink Matrix[T]): Matrix[T] =
+         assert(Matrix[T](a).m == b.m and Matrix[T](a).n == 1, "Matrix-vector dimensions must agree.")
+         result = b
+         for i in 0 ..< result.m:
+            for j in 0 ..< result.n:
+               result[i, j] = opname(a[i], result[i, j])
+
+      proc fname*[T](a: RowVector[T], b: sink Matrix[T]): Matrix[T] =
+         assert(Matrix[T](a).m == 1 and Matrix[T](a).n == b.n, "Matrix-vector dimensions must agree.")
+         result = b
+         for i in 0 ..< result.m:
+            for j in 0 ..< result.n:
+               result[i, j] = opname(a[j], result[i, j])
+
+      proc fname*[T](a: RowVector[T], b: ColVector[T]): Matrix[T] =
+         assert(Matrix[T](a).m == 1 and Matrix[T](b).n == 1, "Matrices are not broadcastable.")
+         result = matrix(Matrix[T](b).m, Matrix[T](a).n)
+         for i in 0 ..< result.m:
+            for j in 0 ..< result.n:
+               result[i, j] = opname(a[j], b[i])
+
+template makeUniversalBinaryScalar(fname: untyped, isCommutative = true) =
+   proc fname*[T](m: sink Matrix[T], s: T): Matrix[T] =
+      result = m
+      for i in 0 ..< result.m:
+         for j in 0 ..< result.n:
+            result[i, j] = fname(s, result[i, j])
+
+   when isCommutative:
+      template fname*[T](s: T, m: Matrix[T]): Matrix[T] = fname(m, s)
+   else:
+      proc fname*[T](s: T, m: sink Matrix[T]): Matrix[T] =
+         result = m
+         for i in 0 ..< result.m:
+            for j in 0 ..< result.n:
+               result[i, j] = fname(s, result[i, j])
+
+template makeUniversalBinaryInplaceImpl*(fnameInplace, opname: untyped) =
+   proc fnameInplace*[T](a: var Matrix[T], b: Matrix[T]) =
+      assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
+      for i in 0 ..< a.m:
+         for j in 0 ..< a.n:
+            a[i, j] = opname(a[i, j], b[i, j])
+
+   proc fnameInplace*[T](a: var Matrix[T], b: ColVector[T]) =
+      assert(Matrix[T](b).m == a.m and Matrix[T](b).n == 1, "Matrix dimensions must agree.")
+      for i in 0 ..< a.m:
+         for j in 0 ..< a.n:
+            a[i, j] = opname(a[i, j], b[i])
+
+   proc fnameInplace*[T](a: var Matrix[T], b: RowVector[T]) =
+      assert(Matrix[T](b).m == 1 and Matrix[T](b).n == a.n, "Matrix dimensions must agree.")
+      for i in 0 ..< a.m:
+         for j in 0 ..< a.n:
+            a[i, j] = opname(a[i, j], b[j])
+
+template makeUniversalBinaryScalarInplace*(fnameInplace, opname: untyped) =
+   proc fnameInplace*[T](m: var Matrix[T], s: T) =
+      for i in 0 ..< m.m:
+         for j in 0 ..< m.n:
+            m[i, j] = opname(s, m[i, j])
+
+template makeUniversalBinary*(fname: untyped, isCommutative = true) =
+   makeUniversalBinaryImpl(fname, fname, isCommutative)
+   makeUniversalBinaryScalar(fname, isCommutative)
+
+template makeUniversalBinaryInplace*(fnameInplace, opname: untyped) =
+   makeUniversalBinaryInplaceImpl(fnameInplace, opname)
+   makeUniversalBinaryScalarInplace(fnameInplace, opname)
 
 makeUniversal(sqrt)
 makeUniversal(cbrt)
@@ -903,3 +619,24 @@ makeUniversal(floor)
 makeUniversal(ceil)
 makeUniversal(degToRad)
 makeUniversal(radToDeg)
+
+# Unary minus
+makeUniversal(`-`)
+# ``A = A - B``
+makeUniversalBinary(`-`, false)
+makeUniversalBinaryInplace(`-=`, `-`)
+# ``C = A + B``
+makeUniversalBinary(`+`)
+makeUniversalBinaryInplace(`+=`, `+`)
+# Divide a matrix by a scalar
+makeUniversalBinaryScalar(`/`, false)
+makeUniversalBinaryScalarInplace(`/=`, `/`)
+# Multiply a matrix by a scalar
+makeUniversalBinaryScalar(`*`)
+makeUniversalBinaryScalarInplace(`*=`, `*`)
+# Element-by-element multiplication, ``C = A.*B``
+makeUniversalBinaryImpl(`*.`, `*`)
+makeUniversalBinaryInplaceImpl(`*.=`, `*`)
+# Element-by-element right division, ``C = A./B``
+makeUniversalBinaryImpl(`/.`, `/`, false)
+makeUniversalBinaryInplaceImpl(`/.=`, `/`)
