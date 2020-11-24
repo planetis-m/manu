@@ -480,29 +480,29 @@ proc main() =
       try_failure(errorCount,"uminus... ","(-A + A != zeros)")
    A = R #.copy()
    O = matrix(A.rowDimension,A.columnDimension, 1.0'f32)
-   C = A \. R
-   try:
-      S = A \. S
-      try_failure(errorCount,"arrayLeftDivide conformance check... ","nonconformance not raised")
-   except AssertionDefect:
-      try_success("arrayLeftDivide conformance check... ", "")
-   try:
-      check(C, O)
-      try_success("arrayLeftDivide... ", "")
-   except ValueError:
-      try_failure(errorCount,"arrayLeftDivide... ","(M.\\M != ones)")
-   try:
-      A \.= S
-      try_failure(errorCount,"arrayLeftDivideEquals conformance check... ","nonconformance not raised")
-   except AssertionDefect:
-      try_success("arrayLeftDivideEquals conformance check... ", "")
-   A \.= R
-   try:
-      check(A,O)
-      try_success("arrayLeftDivideEquals... ", "")
-   except ValueError:
-      try_failure(errorCount,"arrayLeftDivideEquals... ","(M.\\M != ones)")
-   A = R #.copy()
+   #C = A \. R
+   #try:
+      #S = A \. S
+      #try_failure(errorCount,"arrayLeftDivide conformance check... ","nonconformance not raised")
+   #except AssertionDefect:
+      #try_success("arrayLeftDivide conformance check... ", "")
+   #try:
+      #check(C, O)
+      #try_success("arrayLeftDivide... ", "")
+   #except ValueError:
+      #try_failure(errorCount,"arrayLeftDivide... ","(M.\\M != ones)")
+   #try:
+      #A \.= S
+      #try_failure(errorCount,"arrayLeftDivideEquals conformance check... ","nonconformance not raised")
+   #except AssertionDefect:
+      #try_success("arrayLeftDivideEquals conformance check... ", "")
+   #A \.= R
+   #try:
+      #check(A,O)
+      #try_success("arrayLeftDivideEquals... ", "")
+   #except ValueError:
+      #try_failure(errorCount,"arrayLeftDivideEquals... ","(M.\\M != ones)")
+   #A = R #.copy()
    try:
       C = A /. S
       try_failure(errorCount,"arrayRightDivide conformance check... ","nonconformance not raised")

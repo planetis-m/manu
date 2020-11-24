@@ -1,7 +1,7 @@
 # mode = ScriptMode.Verbose
 
 packageName   = "manu"
-version       = "2.1.1"
+version       = "2.1.2"
 author        = "Antonis Geralis"
 description   = "Nim Matrix library"
 license       = "MIT"
@@ -10,6 +10,20 @@ skipDirs = @["tests", "docs", "examples", "experiments"]
 requires "nim >= 1.4.0"
 
 switch "forceBuild"
+
+proc configForTests() =
+   switch "hints", "off"
+   switch "linedir", "on"
+   switch "stacktrace", "on"
+   switch "linetrace", "on"
+   switch "debuginfo"
+   switch "path", "."
+   switch "gc", "arc"
+   switch "run"
+
+task test, "run tests":
+   configForTests()
+   setCommand "c", "tests/testMatrix.nim"
 
 task doc, "generate documentation":
    switch "project"
