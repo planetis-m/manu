@@ -25,7 +25,7 @@ proc svd*[T](a: sink Matrix[T]): SingularValueDecomposition[T] =
    # Initialize.
    let m = a.m
    let n = a.n
-   var a = a
+   #var a = a
    # assert(m >= n, "SVD only works for m >= n") and set nu = n
    let nu = min(m, n)
    result.s = newSeq[T](min(m + 1, n)) # n<=m so n is min

@@ -718,6 +718,7 @@ proc main() =
 
    echo("\nTestMatrix completed.")
    echo("Total errors reported: ", errorCount)
-   echo("Total warnings reported: ", warningCount)
+   #echo("Total warnings reported: ", warningCount)
+   if errorCount > 0: quit(QuitFailure)
 
 main()
