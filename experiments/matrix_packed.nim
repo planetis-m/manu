@@ -8,8 +8,8 @@ type
 proc `$`(m: Matrix): string =
    result = ""
    for e in countup(0, high(m.data), m.stride):
+      if e > 0: result.add "\n"
       result.add join(m.data[e ..< e + m.stride], "\t")
-      result.add "\n"
 
 proc matrix(data: seq[float], s: int): Matrix =
    result.data = data
@@ -37,20 +37,21 @@ proc multiply(a, b: Matrix): Matrix =
          result.data[rx] = s
          rx.inc
 
-#var a = matrix(@[1.0, 2, 3, 4, 5, 6, 7, 8], 4)
-#var b = matrix(@[1.0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 3)
+proc main =
+   var a = matrix(@[1.0, 2, 3, 4, 5, 6, 7, 8], 4)
+   var b = matrix(@[1.0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 3)
 
-#echo multiply(a, b)
+   echo a
+   echo multiply(a, b)
 
-proc main() =
-   const n = 1000
-   let a = randomMatrix(n, n)
-   let b = randomMatrix(n, n)
-   block:
-      # time standard ijk
-      let start = epochTime()
-      discard multiply(a, b)
-      let duration = epochTime() - start
-      echo formatFloat(duration, ffDecimal, 3), "us --- standard"
+#proc main() =
+   #const n = 1000
+   #let a = randomMatrix(n, n)
+   #let b = randomMatrix(n, n)
+   #block:
+      #let start = epochTime()
+      #discard multiply(a, b)
+      #let duration = epochTime() - start
+      #echo formatFloat(duration, ffDecimal, 3), "us --- standard"
 
 main()

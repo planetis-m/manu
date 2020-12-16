@@ -10,6 +10,7 @@ type
    Matrix*[T: SomeFloat] = object
       m, n: int # Row and column dimensions.
       data: ptr UncheckedArray[T] # Array for internal storage of elements.
+   #All* = object
 
 template createData[T](size): ptr UncheckedArray[T] =
    when compileOption("threads"):
@@ -76,12 +77,12 @@ proc matrix*[T: SomeFloat](m, n: int, s: T): Matrix[T] =
    for i in 0 ..< len:
       result.data[i] = s
 
-template ones*[T](m, n: int): Matrix[T] = matrix[T](m, n, T(1.0))
-template zeros*[T](m, n: int): Matrix[T] = matrix[T](m, n)
-template ones32*(m, n: int): Matrix32 = matrix(m, n, 1.0'f32)
-template zeros32*(m, n: int): Matrix32 = matrix[float32](m, n)
-template ones64*(m, n: int): Matrix64 = matrix(m, n, 1.0)
-template zeros64*(m, n: int): Matrix64 = matrix[float64](m, n)
+proc ones*[T](m, n: int): Matrix[T] {.inline.} = matrix[T](m, n, T(1.0))
+proc zeros*[T](m, n: int): Matrix[T] {.inline.} = matrix[T](m, n)
+proc ones32*(m, n: int): Matrix32 {.inline.} = matrix(m, n, 1.0'f32)
+proc zeros32*(m, n: int): Matrix32 {.inline.} = matrix[float32](m, n)
+proc ones64*(m, n: int): Matrix64 {.inline.} = matrix(m, n, 1.0)
+proc zeros64*(m, n: int): Matrix64 {.inline.} = matrix[float64](m, n)
 
 proc matrix*[T: SomeFloat](data: seq[seq[T]]): Matrix[T] =
    ## Construct a matrix from a 2-D array.
@@ -153,9 +154,9 @@ proc randMatrix*[T: SomeFloat](m, n: int, x: Slice[T]): Matrix[T] =
    for i in 0 ..< len:
       result.data[i] = rand(x)
 
-template randMatrix*[T](m, n: int): Matrix[T] = randMatrix[T](m, n, T(1.0))
-template randMatrix32*(m, n: int): Matrix32 = randMatrix(m, n, 1.0'f32)
-template randMatrix64*(m, n: int): Matrix64 = randMatrix(m, n, 1.0)
+proc randMatrix*[T](m, n: int): Matrix[T] {.inline.} = randMatrix[T](m, n, T(1.0))
+proc randMatrix32*(m, n: int): Matrix32 {.inline.} = randMatrix(m, n, 1.0'f32)
+proc randMatrix64*(m, n: int): Matrix64 {.inline.} = randMatrix(m, n, 1.0)
 
 proc randNMatrix*[T: SomeFloat](m, n: int, mu, sigma: T): Matrix[T] =
    ## Normal distribution
@@ -170,9 +171,9 @@ proc randNMatrix*[T: SomeFloat](m, n: int, mu, sigma: T): Matrix[T] =
    for i in 0 ..< len:
       result.data[i] = gauss(mu, sigma).T
 
-template randNMatrix*[T](m, n: int): Matrix[T] = randNMatrix[T](m, n, T(0.0), T(1.0))
-template randNMatrix32*(m, n: int): Matrix32 = randNMatrix(m, n, 0.0'f32, 1.0'f32)
-template randNMatrix64*(m, n: int): Matrix64 = randNMatrix(m, n, 0.0, 1.0)
+proc randNMatrix*[T](m, n: int): Matrix[T] {.inline.} = randNMatrix[T](m, n, T(0.0), T(1.0))
+proc randNMatrix32*(m, n: int): Matrix32 {.inline.} = randNMatrix(m, n, 0.0'f32, 1.0'f32)
+proc randNMatrix64*(m, n: int): Matrix64 {.inline.} = randNMatrix(m, n, 0.0, 1.0)
 
 proc getArray*[T](m: Matrix[T]): seq[seq[T]] =
    ## Make a two-dimensional array copy of the internal array.
@@ -309,6 +310,16 @@ proc `[]`*[T, U, V](m: Matrix[T], r: openarray[SomeInteger], c: HSlice[U, V]): M
       for j in 0 ..< result.n:
          result[i, j] = m[r[i], j + ca]
 
+#proc `[]`*[T, U, V](m: Matrix[T], r: HSlice[U, V], c: typedesc[All]): lent Matrix[T] =
+   # Get a submatrix, all columns
+   # ``m[i0 .. i1, 0 .. ^1]``
+   #let ra = m.m ^^ r.a
+   #let rb = m.m ^^ r.b
+   #checkBounds(ra >= 0 and rb < m.m, "Submatrix dimensions")
+   #result = m
+   #result.m = rb - ra + 1
+   #result.data = cast[ptr UncheckedArray[T]](result.data[ra].addr)
+
 proc `[]=`*[T, U, V, W, X](m: var Matrix[T], r: HSlice[U, V], c: HSlice[W, X], a: Matrix[T]) =
    ## Set a submatrix,
    ## ``m[i0 .. i1, j0 .. j1] = a``
@@ -382,9 +393,9 @@ proc identity*[T: SomeFloat](m: int): Matrix[T] =
    for i in 0 ..< m:
       result[i, i] = T(1.0)
 
-template eye*[T](m: int): Matrix[T] = identity[T](m)
-template eye32*(m: int): Matrix32 = identity[float32](m)
-template eye64*(m: int): Matrix64 = identity[float64](m)
+proc eye*[T](m: int): Matrix[T] {.inline.} = identity[T](m)
+proc eye32*(m: int): Matrix32 {.inline.} = identity[float32](m)
+proc eye64*(m: int): Matrix64 {.inline.} = identity[float64](m)
 
 proc sum*[T](m: Matrix[T]): T =
    ## Sum of all elements.
@@ -523,9 +534,9 @@ template makeUniversalBinaryImpl*(fname, opname: untyped, isCommutative = true) 
             result[i, j] = opname(a[i], b[j])
 
    when isCommutative:
-      template fname*[T](b: RowVector[T], a: ColVector[T]): Matrix[T] = fname(a, b)
-      template fname*[T](b: ColVector[T], a: Matrix[T]): Matrix[T] = fname(a, b)
-      template fname*[T](b: RowVector[T], a: Matrix[T]): Matrix[T] = fname(a, b)
+      proc fname*[T](b: RowVector[T], a: ColVector[T]): Matrix[T] {.inline.} = fname(a, b)
+      proc fname*[T](b: ColVector[T], a: Matrix[T]): Matrix[T] {.inline.} = fname(a, b)
+      proc fname*[T](b: RowVector[T], a: Matrix[T]): Matrix[T] {.inline.} = fname(a, b)
    else:
       proc fname*[T](a: ColVector[T], b: sink Matrix[T]): Matrix[T] =
          assert(Matrix[T](a).m == b.m and Matrix[T](a).n == 1, "Matrix-vector dimensions must agree.")
@@ -556,7 +567,7 @@ template makeUniversalBinaryScalar(fname: untyped, isCommutative = false) =
             result[i, j] = fname(s, result[i, j])
 
    when isCommutative:
-      template fname*[T](s: T, m: Matrix[T]): Matrix[T] = fname(m, s)
+      proc fname*[T](s: T, m: Matrix[T]): Matrix[T] {.inline.} = fname(m, s)
    else:
       proc fname*[T](s: T, m: sink Matrix[T]): Matrix[T] =
          result = m

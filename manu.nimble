@@ -1,7 +1,7 @@
 # mode = ScriptMode.Verbose
 
 packageName   = "manu"
-version       = "2.1.2"
+version       = "2.2.0"
 author        = "Antonis Geralis"
 description   = "Nim Matrix library"
 license       = "MIT"
