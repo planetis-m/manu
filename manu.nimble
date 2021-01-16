@@ -1,13 +1,13 @@
 # mode = ScriptMode.Verbose
 
 packageName   = "manu"
-version       = "2.2.0"
+version       = "2.2.1"
 author        = "Antonis Geralis"
 description   = "Nim Matrix library"
 license       = "MIT"
 skipDirs = @["tests", "docs", "examples", "experiments"]
 
-requires "nim >= 1.4.0"
+requires "nim >= 1.5.0"
 
 switch "forceBuild"
 

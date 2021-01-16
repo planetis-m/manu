@@ -503,7 +503,7 @@ template makeUniversal*(fname: untyped) =
          for j in 0 ..< result.n:
             result[i, j] = fname(result[i, j])
 
-template makeUniversalBinaryImpl*(fname, opname: untyped, isCommutative = true) =
+template makeUniversalBinaryImpl*(fname, opname: untyped, isCommutative = false) =
    ## Supports broadcasting
    proc fname*[T](a: sink Matrix[T], b: Matrix[T]): Matrix[T] =
       assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
