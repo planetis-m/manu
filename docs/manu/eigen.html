@@ -17,7 +17,7 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
 
 <!-- CSS -->
-<title>Eigenvalues and eigenvectors of a real matrix</title>
+<title>manu/eigen</title>
 <link rel="stylesheet" type="text/css" href="../nimdoc.out.css">
 
 <script type="text/javascript" src="../dochack.js"></script>
@@ -69,7 +69,7 @@ window.addEventListener('DOMContentLoaded', main);
 <body>
 <div class="document" id="documentId">
   <div class="container">
-    <h1 class="title">Eigenvalues and eigenvectors of a real matrix</h1>
+    <h1 class="title">manu/eigen</h1>
     <div class="row">
   <div class="three columns">
   <div class="theme-switch-wrapper">
@@ -98,6 +98,7 @@ window.addEventListener('DOMContentLoaded', main);
     </select>
   </div>
   <ul class="simple simple-toc" id="toc-list">
+<li><a class="reference" id="eigenvalues-and-eigenvectors-of-a-real-matrix_toc" href="#eigenvalues-and-eigenvectors-of-a-real-matrix">Eigenvalues and eigenvectors of a real matrix</a></li>
 <li>
   <a class="reference reference-toplevel" href="#6" id="56">Imports</a>
   <ul class="simple simple-toc-section">
@@ -159,7 +160,8 @@ class="link-seesrc" target="_blank">Source</a>
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
   
-  <p class="module-desc"><p>If A is symmetric, then <tt class="docutils literal"><span class="pre">A = V*D*V'</span></tt> where the eigenvalue matrix D is diagonal and the eigenvector matrix V is orthogonal. I.e. <tt class="docutils literal"><span class="pre">A = V*D*V.transpose()</span></tt> and <tt class="docutils literal"><span class="pre">V*V.transpose()</span></tt> equals the identity matrix.</p>
+  <p class="module-desc">
+<h1><a class="toc-backref" id="eigenvalues-and-eigenvectors-of-a-real-matrix" href="#eigenvalues-and-eigenvectors-of-a-real-matrix">Eigenvalues and eigenvectors of a real matrix</a></h1><p>If A is symmetric, then <tt class="docutils literal"><span class="pre">A = V*D*V'</span></tt> where the eigenvalue matrix D is diagonal and the eigenvector matrix V is orthogonal. I.e. <tt class="docutils literal"><span class="pre">A = V*D*V.transpose()</span></tt> and <tt class="docutils literal"><span class="pre">V*V.transpose()</span></tt> equals the identity matrix.</p>
 <p>If A is not symmetric, then the eigenvalue matrix D is block diagonal with the real eigenvalues in 1-by-1 blocks and any complex eigenvalues, <tt class="docutils literal"><span class="pre">lambda + i * mu</span></tt>, in 2-by-2 blocks, <tt class="docutils literal"><span class="pre">[lambda, mu; -mu, lambda]</span></tt>.  The columns of V represent the eigenvectors in the sense that <tt class="docutils literal"><span class="pre">A*V = V*D</span></tt>, i.e. <tt class="docutils literal"><span class="pre">A*V</span></tt> equals <tt class="docutils literal"><span class="pre">V*D</span></tt>. The matrix V may be badly conditioned, or even singular, so the validity of the equation <tt class="docutils literal"><span class="pre">A = V*D*inverse(V)</span></tt> depends upon <tt class="docutils literal"><span class="pre"><span class="Identifier">V</span><span class="Operator">.</span><span class="Identifier">cond</span><span class="Punctuation">(</span><span class="Punctuation">)</span></span></tt>.</p>
 </p>
   <div class="section" id="6">
@@ -181,9 +183,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L20"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L19"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L20" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L19" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -200,9 +202,9 @@ Check for symmetry, then construct the eigenvalue decomposition.<ul class="simpl
 </ul>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L596"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L595"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L596" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L595" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getV,EigenvalueDecomposition[T]"></a>
@@ -211,9 +213,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Return the eigenvector matrix
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L628"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L627"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L628" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L627" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getRealEigenvalues,EigenvalueDecomposition[T]"></a>
@@ -224,9 +226,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: <tt class="docutils literal"><span class="pre">real(diag(D))</span></tt></p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L632"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L631"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L632" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L631" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getImagEigenvalues,EigenvalueDecomposition[T]"></a>
@@ -237,9 +239,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: <tt class="docutils literal"><span class="pre">imag(diag(D))</span></tt></p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L638"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L637"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L638" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L637" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getD,EigenvalueDecomposition[T]"></a>
@@ -248,9 +250,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Return the block diagonal eigenvalue matrix
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L644"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L643"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L644" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L643" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -263,7 +265,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-17 20:00:10 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-17 20:05:51 UTC</small>
       </div>
     </div>
   </div>
