@@ -17,7 +17,7 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
 
 <!-- CSS -->
-<title>manu/cholesky</title>
+<title>Cholesky Decomposition</title>
 <link rel="stylesheet" type="text/css" href="../nimdoc.out.css">
 
 <script type="text/javascript" src="../dochack.js"></script>
@@ -34,7 +34,6 @@ function main() {
     }
   }
 
-  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
   function switchTheme(e) {
       if (e.target.checked) {
           document.documentElement.setAttribute('data-theme', 'dark');
@@ -45,24 +44,32 @@ function main() {
       }
   }
 
-  toggleSwitch.addEventListener('change', switchTheme, false);
+  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+  if (toggleSwitch !== null) {
+    toggleSwitch.addEventListener('change', switchTheme, false);
+  }
 
-  const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+  var currentTheme = localStorage.getItem('theme');
+  if (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    currentTheme = 'dark';
+  }
   if (currentTheme) {
     document.documentElement.setAttribute('data-theme', currentTheme);
 
-    if (currentTheme === 'dark') {
+    if (currentTheme === 'dark' && toggleSwitch !== null) {
       toggleSwitch.checked = true;
     }
   }
 }
+
+window.addEventListener('DOMContentLoaded', main);
 </script>
 
 </head>
-<body onload="main()">
+<body>
 <div class="document" id="documentId">
   <div class="container">
-    <h1 class="title">manu/cholesky</h1>
+    <h1 class="title">Cholesky Decomposition</h1>
     <div class="row">
   <div class="three columns">
   <div class="theme-switch-wrapper">
@@ -103,7 +110,7 @@ function main() {
       <li><a class="reference" href="#CholeskyDecomposition"
     title="CholeskyDecomposition[T] = object
   l: Matrix[T]
-  isspd: bool">CholeskyDecomposition</a></li>
+  isSpd: bool">CholeskyDecomposition</a></li>
 
   </ul>
 </li>
@@ -112,22 +119,22 @@ function main() {
   <ul class="simple simple-toc-section">
       <ul class="simple nested-toc-section">chol
       <li><a class="reference" href="#chol%2CMatrix%5BT%5D"
-    title="chol[T](a: Matrix[T]): CholeskyDecomposition[T]">chol,<wbr>Matrix[T]</a></li>
+    title="chol[T](a: Matrix[T]): CholeskyDecomposition[T]">chol[T](a: Matrix[T]): CholeskyDecomposition[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">solve
       <li><a class="reference" href="#solve%2CCholeskyDecomposition%5BT%5D%2CsinkMatrix%5BT%5D"
-    title="solve[T](c: CholeskyDecomposition[T]; b: sink Matrix[T]): Matrix[T]">solve,<wbr>CholeskyDecomposition[T],<wbr>sinkMatrix[T]</a></li>
+    title="solve[T](c: CholeskyDecomposition[T]; b: sink Matrix[T]): Matrix[T]">solve[T](c: CholeskyDecomposition[T]; b: sink Matrix[T]): Matrix[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">getL
       <li><a class="reference" href="#getL%2CCholeskyDecomposition%5BT%5D"
-    title="getL[T](c: CholeskyDecomposition[T]): lent Matrix[T]">getL,<wbr>CholeskyDecomposition[T]</a></li>
+    title="getL[T](c: CholeskyDecomposition[T]): lent Matrix[T]">getL[T](c: CholeskyDecomposition[T]): lent Matrix[T]</a></li>
 
   </ul>
-  <ul class="simple nested-toc-section">isSPD
-      <li><a class="reference" href="#isSPD%2CCholeskyDecomposition%5BT%5D"
-    title="isSPD[T](c: CholeskyDecomposition[T]): bool">isSPD,<wbr>CholeskyDecomposition[T]</a></li>
+  <ul class="simple nested-toc-section">isSpd
+      <li><a class="reference" href="#isSpd%2CCholeskyDecomposition%5BT%5D"
+    title="isSpd[T](c: CholeskyDecomposition[T]): bool">isSpd[T](c: CholeskyDecomposition[T]): bool</a></li>
 
   </ul>
 
@@ -138,16 +145,15 @@ function main() {
 
   </div>
   &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/cholesky.nim#L1"
+href="https://github.com/planetis-m/manu/tree/master/manu/cholesky.nim#L1"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/cholesky.nim#L1" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/cholesky.nim#L1" class="link-seesrc" target="_blank" >Edit</a>
 
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
   
-  <p class="module-desc"><p>Cholesky Decomposition.</p>
-<p>For a symmetric, positive definite matrix A, the Cholesky decomposition is an lower triangular matrix L so that A = L*L'.</p>
-<p>If the matrix is not symmetric or positive definite, the constructor returns a partial decomposition and sets an internal flag that may be queried by the isSPD() method.</p>
+  <p class="module-desc"><p>For a symmetric, positive definite matrix A, the Cholesky decomposition is an lower triangular matrix L so that <tt class="docutils literal"><span class="pre">A = L*L'</span></tt>.</p>
+<p>If the matrix is not symmetric or positive definite, the constructor returns a partial decomposition and sets an internal flag that may be queried by the <tt class="docutils literal"><span class="pre"><span class="Identifier">isSpd</span><span class="Punctuation">(</span><span class="Punctuation">)</span></span></tt> method.</p>
 </p>
   <div class="section" id="6">
 <h1><a class="toc-backref" href="#6">Imports</a></h1>
@@ -160,15 +166,15 @@ class="link-seesrc" target="_blank">Source</a>
 <a id="CholeskyDecomposition"></a>
 <dt><pre><a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">l</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span>
-  <span class="Identifier">isspd</span><span class="Other">:</span> <span class="Identifier">bool</span>
+  <span class="Identifier">isSpd</span><span class="Other">:</span> <span class="Identifier">bool</span>
 </pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/cholesky.nim#L12"
+href="https://github.com/planetis-m/manu/tree/master/manu/cholesky.nim#L14"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/cholesky.nim#L12" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/cholesky.nim#L14" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -180,35 +186,35 @@ class="link-seesrc" target="_blank">Source</a>
 <dt><pre><span class="Keyword">proc</span> <a href="#chol%2CMatrix%5BT%5D"><span class="Identifier">chol</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">a</span><span class="Other">:</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span></pre></dt>
 <dd>
 
-<p>Cholesky algorithm for symmetric and positive definite matrix. Structure to access L and isspd flag.</p>
+<p>Cholesky algorithm for symmetric and positive definite matrix. Structure to access L and isSpd flag.</p>
 <p>parameter <tt class="docutils literal"><span class="pre">m</span></tt>: Square, symmetric matrix.</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/cholesky.nim#L16"
+href="https://github.com/planetis-m/manu/tree/master/manu/cholesky.nim#L18"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/cholesky.nim#L16" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/cholesky.nim#L18" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="isSPD,CholeskyDecomposition[T]"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#isSPD%2CCholeskyDecomposition%5BT%5D"><span class="Identifier">isSPD</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
+<a id="isSpd,CholeskyDecomposition[T]"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#isSpd%2CCholeskyDecomposition%5BT%5D"><span class="Identifier">isSpd</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 Is the matrix symmetric and positive definite?
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/cholesky.nim#L42"
+href="https://github.com/planetis-m/manu/tree/master/manu/cholesky.nim#L44"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/cholesky.nim#L42" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/cholesky.nim#L44" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getL,CholeskyDecomposition[T]"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getL%2CCholeskyDecomposition%5BT%5D"><span class="Identifier">getL</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#getL%2CCholeskyDecomposition%5BT%5D"><span class="Identifier">getL</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">c</span><span class="Other">:</span> <a href="cholesky.html#CholeskyDecomposition"><span class="Identifier">CholeskyDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 Return triangular factor.
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/cholesky.nim#L46"
+href="https://github.com/planetis-m/manu/tree/master/manu/cholesky.nim#L48"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/cholesky.nim#L46" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/cholesky.nim#L48" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="solve,CholeskyDecomposition[T],sinkMatrix[T]"></a>
@@ -220,9 +226,9 @@ Solve <tt class="docutils literal"><span class="pre">A*X = B</span></tt><ul clas
 </ul>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/cholesky.nim#L50"
+href="https://github.com/planetis-m/manu/tree/master/manu/cholesky.nim#L52"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/cholesky.nim#L50" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/cholesky.nim#L52" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -235,7 +241,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2020-11-24 10:44:23 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-17 20:00:10 UTC</small>
       </div>
     </div>
   </div>

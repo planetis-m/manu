@@ -17,7 +17,7 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
 
 <!-- CSS -->
-<title>manu/eigen</title>
+<title>Eigenvalues and eigenvectors of a real matrix</title>
 <link rel="stylesheet" type="text/css" href="../nimdoc.out.css">
 
 <script type="text/javascript" src="../dochack.js"></script>
@@ -34,7 +34,6 @@ function main() {
     }
   }
 
-  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
   function switchTheme(e) {
       if (e.target.checked) {
           document.documentElement.setAttribute('data-theme', 'dark');
@@ -45,24 +44,32 @@ function main() {
       }
   }
 
-  toggleSwitch.addEventListener('change', switchTheme, false);
+  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+  if (toggleSwitch !== null) {
+    toggleSwitch.addEventListener('change', switchTheme, false);
+  }
 
-  const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+  var currentTheme = localStorage.getItem('theme');
+  if (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    currentTheme = 'dark';
+  }
   if (currentTheme) {
     document.documentElement.setAttribute('data-theme', currentTheme);
 
-    if (currentTheme === 'dark') {
+    if (currentTheme === 'dark' && toggleSwitch !== null) {
       toggleSwitch.checked = true;
     }
   }
 }
+
+window.addEventListener('DOMContentLoaded', main);
 </script>
 
 </head>
-<body onload="main()">
+<body>
 <div class="document" id="documentId">
   <div class="container">
-    <h1 class="title">manu/eigen</h1>
+    <h1 class="title">Eigenvalues and eigenvectors of a real matrix</h1>
     <div class="row">
   <div class="three columns">
   <div class="theme-switch-wrapper">
@@ -114,27 +121,27 @@ function main() {
   <ul class="simple simple-toc-section">
       <ul class="simple nested-toc-section">getRealEigenvalues
       <li><a class="reference" href="#getRealEigenvalues%2CEigenvalueDecomposition%5BT%5D"
-    title="getRealEigenvalues[T](ei: EigenvalueDecomposition[T]): lent seq[T]">getRealEigenvalues,<wbr>EigenvalueDecomposition[T]</a></li>
+    title="getRealEigenvalues[T](ei: EigenvalueDecomposition[T]): lent seq[T]">getRealEigenvalues[T](ei: EigenvalueDecomposition[T]): lent seq[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">eig
       <li><a class="reference" href="#eig%2CsinkMatrix%5BT%5D"
-    title="eig[T](a: sink Matrix[T]): EigenvalueDecomposition[T]">eig,<wbr>sinkMatrix[T]</a></li>
+    title="eig[T](a: sink Matrix[T]): EigenvalueDecomposition[T]">eig[T](a: sink Matrix[T]): EigenvalueDecomposition[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">getV
       <li><a class="reference" href="#getV%2CEigenvalueDecomposition%5BT%5D"
-    title="getV[T](ei: EigenvalueDecomposition[T]): lent Matrix[T]">getV,<wbr>EigenvalueDecomposition[T]</a></li>
+    title="getV[T](ei: EigenvalueDecomposition[T]): lent Matrix[T]">getV[T](ei: EigenvalueDecomposition[T]): lent Matrix[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">getD
       <li><a class="reference" href="#getD%2CEigenvalueDecomposition%5BT%5D"
-    title="getD[T](ei: EigenvalueDecomposition[T]): Matrix[T]">getD,<wbr>EigenvalueDecomposition[T]</a></li>
+    title="getD[T](ei: EigenvalueDecomposition[T]): Matrix[T]">getD[T](ei: EigenvalueDecomposition[T]): Matrix[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">getImagEigenvalues
       <li><a class="reference" href="#getImagEigenvalues%2CEigenvalueDecomposition%5BT%5D"
-    title="getImagEigenvalues[T](ei: EigenvalueDecomposition[T]): lent seq[T]">getImagEigenvalues,<wbr>EigenvalueDecomposition[T]</a></li>
+    title="getImagEigenvalues[T](ei: EigenvalueDecomposition[T]): lent seq[T]">getImagEigenvalues[T](ei: EigenvalueDecomposition[T]): lent seq[T]</a></li>
 
   </ul>
 
@@ -145,16 +152,15 @@ function main() {
 
   </div>
   &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/eigen.nim#L1"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L1"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/eigen.nim#L1" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L1" class="link-seesrc" target="_blank" >Edit</a>
 
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
   
-  <p class="module-desc"><p>Eigenvalues and eigenvectors of a real matrix.</p>
-<p>If A is symmetric, then A = V*D*V' where the eigenvalue matrix D is diagonal and the eigenvector matrix V is orthogonal. I.e. A = V*D*V.transpose() and V*V.transpose() equals the identity matrix.</p>
-<p>If A is not symmetric, then the eigenvalue matrix D is block diagonal with the real eigenvalues in 1-by-1 blocks and any complex eigenvalues, lambda + i * mu, in 2-by-2 blocks, [lambda, mu; -mu, lambda].  The columns of V represent the eigenvectors in the sense that A*V = V*D, i.e. A*V equals V*D. The matrix V may be badly conditioned, or even singular, so the validity of the equation A = V*D*inverse(V) depends upon V.cond().</p>
+  <p class="module-desc"><p>If A is symmetric, then <tt class="docutils literal"><span class="pre">A = V*D*V'</span></tt> where the eigenvalue matrix D is diagonal and the eigenvector matrix V is orthogonal. I.e. <tt class="docutils literal"><span class="pre">A = V*D*V.transpose()</span></tt> and <tt class="docutils literal"><span class="pre">V*V.transpose()</span></tt> equals the identity matrix.</p>
+<p>If A is not symmetric, then the eigenvalue matrix D is block diagonal with the real eigenvalues in 1-by-1 blocks and any complex eigenvalues, <tt class="docutils literal"><span class="pre">lambda + i * mu</span></tt>, in 2-by-2 blocks, <tt class="docutils literal"><span class="pre">[lambda, mu; -mu, lambda]</span></tt>.  The columns of V represent the eigenvectors in the sense that <tt class="docutils literal"><span class="pre">A*V = V*D</span></tt>, i.e. <tt class="docutils literal"><span class="pre">A*V</span></tt> equals <tt class="docutils literal"><span class="pre">V*D</span></tt>. The matrix V may be badly conditioned, or even singular, so the validity of the equation <tt class="docutils literal"><span class="pre">A = V*D*inverse(V)</span></tt> depends upon <tt class="docutils literal"><span class="pre"><span class="Identifier">V</span><span class="Operator">.</span><span class="Identifier">cond</span><span class="Punctuation">(</span><span class="Punctuation">)</span></span></tt>.</p>
 </p>
   <div class="section" id="6">
 <h1><a class="toc-backref" href="#6">Imports</a></h1>
@@ -175,9 +181,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/eigen.nim#L18"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L20"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/eigen.nim#L18" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L20" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -194,46 +200,46 @@ Check for symmetry, then construct the eigenvalue decomposition.<ul class="simpl
 </ul>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/eigen.nim#L592"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L596"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/eigen.nim#L592" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L596" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getV,EigenvalueDecomposition[T]"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getV%2CEigenvalueDecomposition%5BT%5D"><span class="Identifier">getV</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">ei</span><span class="Other">:</span> <a href="eigen.html#EigenvalueDecomposition"><span class="Identifier">EigenvalueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#getV%2CEigenvalueDecomposition%5BT%5D"><span class="Identifier">getV</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">ei</span><span class="Other">:</span> <a href="eigen.html#EigenvalueDecomposition"><span class="Identifier">EigenvalueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 Return the eigenvector matrix
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/eigen.nim#L624"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L628"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/eigen.nim#L624" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L628" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getRealEigenvalues,EigenvalueDecomposition[T]"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getRealEigenvalues%2CEigenvalueDecomposition%5BT%5D"><span class="Identifier">getRealEigenvalues</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">ei</span><span class="Other">:</span> <a href="eigen.html#EigenvalueDecomposition"><span class="Identifier">EigenvalueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#getRealEigenvalues%2CEigenvalueDecomposition%5BT%5D"><span class="Identifier">getRealEigenvalues</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">ei</span><span class="Other">:</span> <a href="eigen.html#EigenvalueDecomposition"><span class="Identifier">EigenvalueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 <p>Return the real parts of the eigenvalues</p>
-<p><tt class="docutils literal"><span class="pre">return</span></tt>: real(diag(D))</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: <tt class="docutils literal"><span class="pre">real(diag(D))</span></tt></p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/eigen.nim#L628"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L632"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/eigen.nim#L628" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L632" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getImagEigenvalues,EigenvalueDecomposition[T]"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getImagEigenvalues%2CEigenvalueDecomposition%5BT%5D"><span class="Identifier">getImagEigenvalues</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">ei</span><span class="Other">:</span> <a href="eigen.html#EigenvalueDecomposition"><span class="Identifier">EigenvalueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#getImagEigenvalues%2CEigenvalueDecomposition%5BT%5D"><span class="Identifier">getImagEigenvalues</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">ei</span><span class="Other">:</span> <a href="eigen.html#EigenvalueDecomposition"><span class="Identifier">EigenvalueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 <p>Return the imaginary parts of the eigenvalues</p>
-<p><tt class="docutils literal"><span class="pre">return</span></tt>: imag(diag(D))</p>
+<p><tt class="docutils literal"><span class="pre">return</span></tt>: <tt class="docutils literal"><span class="pre">imag(diag(D))</span></tt></p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/eigen.nim#L634"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L638"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/eigen.nim#L634" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L638" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getD,EigenvalueDecomposition[T]"></a>
@@ -242,9 +248,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Return the block diagonal eigenvalue matrix
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/eigen.nim#L640"
+href="https://github.com/planetis-m/manu/tree/master/manu/eigen.nim#L644"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/eigen.nim#L640" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/eigen.nim#L644" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -257,7 +263,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2020-11-24 10:44:23 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-17 20:00:10 UTC</small>
       </div>
     </div>
   </div>

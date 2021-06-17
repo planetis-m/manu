@@ -17,7 +17,7 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
 
 <!-- CSS -->
-<title>manu/svd</title>
+<title>Singular Value Decomposition</title>
 <link rel="stylesheet" type="text/css" href="../nimdoc.out.css">
 
 <script type="text/javascript" src="../dochack.js"></script>
@@ -34,7 +34,6 @@ function main() {
     }
   }
 
-  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
   function switchTheme(e) {
       if (e.target.checked) {
           document.documentElement.setAttribute('data-theme', 'dark');
@@ -45,24 +44,32 @@ function main() {
       }
   }
 
-  toggleSwitch.addEventListener('change', switchTheme, false);
+  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+  if (toggleSwitch !== null) {
+    toggleSwitch.addEventListener('change', switchTheme, false);
+  }
 
-  const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+  var currentTheme = localStorage.getItem('theme');
+  if (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    currentTheme = 'dark';
+  }
   if (currentTheme) {
     document.documentElement.setAttribute('data-theme', currentTheme);
 
-    if (currentTheme === 'dark') {
+    if (currentTheme === 'dark' && toggleSwitch !== null) {
       toggleSwitch.checked = true;
     }
   }
 }
+
+window.addEventListener('DOMContentLoaded', main);
 </script>
 
 </head>
-<body onload="main()">
+<body>
 <div class="document" id="documentId">
   <div class="container">
-    <h1 class="title">manu/svd</h1>
+    <h1 class="title">Singular Value Decomposition</h1>
     <div class="row">
   <div class="three columns">
   <div class="theme-switch-wrapper">
@@ -112,42 +119,42 @@ function main() {
   <ul class="simple simple-toc-section">
       <ul class="simple nested-toc-section">getS
       <li><a class="reference" href="#getS%2CSingularValueDecomposition%5BT%5D"
-    title="getS[T](sv: SingularValueDecomposition[T]): Matrix[T]">getS,<wbr>SingularValueDecomposition[T]</a></li>
+    title="getS[T](sv: SingularValueDecomposition[T]): Matrix[T]">getS[T](sv: SingularValueDecomposition[T]): Matrix[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">svd
       <li><a class="reference" href="#svd%2CsinkMatrix%5BT%5D"
-    title="svd[T](a: sink Matrix[T]): SingularValueDecomposition[T]">svd,<wbr>sinkMatrix[T]</a></li>
+    title="svd[T](a: sink Matrix[T]): SingularValueDecomposition[T]">svd[T](a: sink Matrix[T]): SingularValueDecomposition[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">norm2
       <li><a class="reference" href="#norm2%2CSingularValueDecomposition%5BT%5D"
-    title="norm2[T](sv: SingularValueDecomposition[T]): T">norm2,<wbr>SingularValueDecomposition[T]</a></li>
+    title="norm2[T](sv: SingularValueDecomposition[T]): T">norm2[T](sv: SingularValueDecomposition[T]): T</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">getU
       <li><a class="reference" href="#getU%2CSingularValueDecomposition%5BT%5D"
-    title="getU[T](sv: SingularValueDecomposition[T]): lent Matrix[T]">getU,<wbr>SingularValueDecomposition[T]</a></li>
+    title="getU[T](sv: SingularValueDecomposition[T]): lent Matrix[T]">getU[T](sv: SingularValueDecomposition[T]): lent Matrix[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">rank
       <li><a class="reference" href="#rank%2CSingularValueDecomposition%5BT%5D"
-    title="rank[T](sv: SingularValueDecomposition[T]): int">rank,<wbr>SingularValueDecomposition[T]</a></li>
+    title="rank[T](sv: SingularValueDecomposition[T]): int">rank[T](sv: SingularValueDecomposition[T]): int</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">getV
       <li><a class="reference" href="#getV%2CSingularValueDecomposition%5BT%5D"
-    title="getV[T](sv: SingularValueDecomposition[T]): lent Matrix[T]">getV,<wbr>SingularValueDecomposition[T]</a></li>
+    title="getV[T](sv: SingularValueDecomposition[T]): lent Matrix[T]">getV[T](sv: SingularValueDecomposition[T]): lent Matrix[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">getSingularValues
       <li><a class="reference" href="#getSingularValues%2CSingularValueDecomposition%5BT%5D"
-    title="getSingularValues[T](sv: SingularValueDecomposition[T]): lent seq[T]">getSingularValues,<wbr>SingularValueDecomposition[T]</a></li>
+    title="getSingularValues[T](sv: SingularValueDecomposition[T]): lent seq[T]">getSingularValues[T](sv: SingularValueDecomposition[T]): lent seq[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">cond
       <li><a class="reference" href="#cond%2CSingularValueDecomposition%5BT%5D"
-    title="cond[T](sv: SingularValueDecomposition[T]): T">cond,<wbr>SingularValueDecomposition[T]</a></li>
+    title="cond[T](sv: SingularValueDecomposition[T]): T">cond[T](sv: SingularValueDecomposition[T]): T</a></li>
 
   </ul>
 
@@ -158,16 +165,15 @@ function main() {
 
   </div>
   &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/svd.nim#L1"
+href="https://github.com/planetis-m/manu/tree/master/manu/svd.nim#L1"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/svd.nim#L1" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/svd.nim#L1" class="link-seesrc" target="_blank" >Edit</a>
 
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
   
-  <p class="module-desc"><p>Singular Value Decomposition.</p>
-<p>For an m-by-n matrix A with m &gt;= n, the singular value decomposition is an m-by-n orthogonal matrix U, an n-by-n diagonal matrix S, and an n-by-n orthogonal matrix V so that A = U*S*V'.</p>
-<p>The singular values, sigma[k] = S[k, k], are ordered so that sigma[0] &gt;= sigma[1] &gt;= ... &gt;= sigma[n-1].</p>
+  <p class="module-desc"><p>For an m-by-n matrix A with m &gt;= n, the singular value decomposition is an m-by-n orthogonal matrix U, an n-by-n diagonal matrix S, and an n-by-n orthogonal matrix V so that <tt class="docutils literal"><span class="pre">A = U*S*V'</span></tt>.</p>
+<p>The singular values, <tt class="docutils literal"><span class="pre">sigma[k] = S[k, k]</span></tt>, are ordered so that <tt class="docutils literal"><span class="pre">sigma[0] &gt;= sigma[1] &gt;= ... &gt;= sigma[n-1]</span></tt>.</p>
 <p>The singular value decompostion always exists, so the constructor will never fail.  The matrix condition number and the effective numerical rank can be computed from this decomposition.</p>
 </p>
   <div class="section" id="6">
@@ -187,9 +193,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/svd.nim#L16"
+href="https://github.com/planetis-m/manu/tree/master/manu/svd.nim#L18"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/svd.nim#L16" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/svd.nim#L18" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -205,45 +211,45 @@ class="link-seesrc" target="_blank">Source</a>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: Structure to access U, S and V.</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/svd.nim#L20"
+href="https://github.com/planetis-m/manu/tree/master/manu/svd.nim#L22"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/svd.nim#L20" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/svd.nim#L22" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getU,SingularValueDecomposition[T]"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getU%2CSingularValueDecomposition%5BT%5D"><span class="Identifier">getU</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#getU%2CSingularValueDecomposition%5BT%5D"><span class="Identifier">getU</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 Return the left singular vectors
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/svd.nim#L315"
+href="https://github.com/planetis-m/manu/tree/master/manu/svd.nim#L317"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/svd.nim#L315" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/svd.nim#L317" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getV,SingularValueDecomposition[T]"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getV%2CSingularValueDecomposition%5BT%5D"><span class="Identifier">getV</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#getV%2CSingularValueDecomposition%5BT%5D"><span class="Identifier">getV</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <a href="matrix.html#Matrix"><span class="Identifier">Matrix</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 Return the right singular vectors
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/svd.nim#L319"
+href="https://github.com/planetis-m/manu/tree/master/manu/svd.nim#L321"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/svd.nim#L319" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/svd.nim#L321" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getSingularValues,SingularValueDecomposition[T]"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#getSingularValues%2CSingularValueDecomposition%5BT%5D"><span class="Identifier">getSingularValues</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma">
-    <span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#getSingularValues%2CSingularValueDecomposition%5BT%5D"><span class="Identifier">getSingularValues</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">lent</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span> {.
+    <span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 <p>Return the one-dimensional array of singular values.</p>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: diagonal of S</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/svd.nim#L323"
+href="https://github.com/planetis-m/manu/tree/master/manu/svd.nim#L325"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/svd.nim#L323" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/svd.nim#L325" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getS,SingularValueDecomposition[T]"></a>
@@ -252,35 +258,35 @@ class="link-seesrc" target="_blank">Source</a>
 
 Return the diagonal matrix of singular values.
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/svd.nim#L329"
+href="https://github.com/planetis-m/manu/tree/master/manu/svd.nim#L331"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/svd.nim#L329" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/svd.nim#L331" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="norm2,SingularValueDecomposition[T]"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#norm2%2CSingularValueDecomposition%5BT%5D"><span class="Identifier">norm2</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#norm2%2CSingularValueDecomposition%5BT%5D"><span class="Identifier">norm2</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 <p>Two norm.</p>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: max(S)</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/svd.nim#L337"
+href="https://github.com/planetis-m/manu/tree/master/manu/svd.nim#L339"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/svd.nim#L337" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/svd.nim#L339" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="cond,SingularValueDecomposition[T]"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#cond%2CSingularValueDecomposition%5BT%5D"><span class="Identifier">cond</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
+<dt><pre><span class="Keyword">proc</span> <a href="#cond%2CSingularValueDecomposition%5BT%5D"><span class="Identifier">cond</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">sv</span><span class="Other">:</span> <a href="svd.html#SingularValueDecomposition"><span class="Identifier">SingularValueDecomposition</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 <p>Two norm condition number.</p>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: max(S)/min(S)</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/svd.nim#L343"
+href="https://github.com/planetis-m/manu/tree/master/manu/svd.nim#L345"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/svd.nim#L343" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/svd.nim#L345" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="rank,SingularValueDecomposition[T]"></a>
@@ -291,9 +297,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: Number of nonnegligible singular values.</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/svd.nim#L349"
+href="https://github.com/planetis-m/manu/tree/master/manu/svd.nim#L351"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/svd.nim#L349" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/svd.nim#L351" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -306,7 +312,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2020-11-24 10:44:23 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-17 20:00:10 UTC</small>
       </div>
     </div>
   </div>

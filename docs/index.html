@@ -34,7 +34,6 @@ function main() {
     }
   }
 
-  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
   function switchTheme(e) {
       if (e.target.checked) {
           document.documentElement.setAttribute('data-theme', 'dark');
@@ -45,160 +44,168 @@ function main() {
       }
   }
 
-  toggleSwitch.addEventListener('change', switchTheme, false);
+  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+  if (toggleSwitch !== null) {
+    toggleSwitch.addEventListener('change', switchTheme, false);
+  }
 
-  const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+  var currentTheme = localStorage.getItem('theme');
+  if (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    currentTheme = 'dark';
+  }
   if (currentTheme) {
     document.documentElement.setAttribute('data-theme', currentTheme);
 
-    if (currentTheme === 'dark') {
+    if (currentTheme === 'dark' && toggleSwitch !== null) {
       toggleSwitch.checked = true;
     }
   }
 }
+
+window.addEventListener('DOMContentLoaded', main);
 </script>
 
 </head>
-<body onload="main()">
+<body>
 <div class="document" id="documentId">
   <div class="container">
     <h1 class="title">Index</h1>
-    Modules: <a href="manu.html">manu</a>, <a href="manu/cholesky.html">manu/cholesky</a>, <a href="manu/eigen.html">manu/eigen</a>, <a href="manu/lu.html">manu/lu</a>, <a href="manu/matrix.html">manu/matrix</a>, <a href="manu/qr.html">manu/qr</a>, <a href="manu/svd.html">manu/svd</a>.<br/><p /><h2>API symbols</h2>
+    Documents: <a href="manu/cholesky.html">Cholesky Decomposition</a>, <a href="manu/eigen.html">Eigenvalues and eigenvectors of a real matrix</a>, <a href="manu/lu.html">LU Decomposition</a>, <a href="manu.html">Manu - Nim Matrix library</a>, <a href="manu/qr.html">QR Decomposition</a>, <a href="manu/svd.html">Singular Value Decomposition</a>.<br/><p />Modules: <a href="manu/matrix.html">manu/matrix</a>.<br/><p /><h2>API symbols</h2>
 <dl><dt><a name="%60%24%60" href="#%60%24%60"><span>`$`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="matrix: `$`[T](m: Matrix[T]): string" href="manu/matrix.html#%24%2CMatrix%5BT%5D">matrix: `$`[T](m: Matrix[T]): string</a></li>
           </ul></dd>
 <dt><a name="%60%2A.%3D%60" href="#%60%2A.%3D%60"><span>`*.=`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: `*.=`[T](a`gensym80: var Matrix[T]; b`gensym80: Matrix[T])" href="manu/matrix.html#%2A.%3D%2C%2C">matrix: `*.=`[T](a`gensym80: var Matrix[T]; b`gensym80: Matrix[T])</a></li>
+          data-doc-search-tag="matrix: `*.=`[T](a`gensym118: var Matrix[T]; b`gensym118: Matrix[T])" href="manu/matrix.html#%2A.%3D%2C%2C">matrix: `*.=`[T](a`gensym118: var Matrix[T]; b`gensym118: Matrix[T])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `*.=`[T](a`gensym80: var Matrix[T]; b`gensym80: ColVector[T])" href="manu/matrix.html#%2A.%3D%2C%2C_2">matrix: `*.=`[T](a`gensym80: var Matrix[T]; b`gensym80: ColVector[T])</a></li>
+          data-doc-search-tag="matrix: `*.=`[T](a`gensym118: var Matrix[T]; b`gensym118: ColVector[T])" href="manu/matrix.html#%2A.%3D%2C%2C_2">matrix: `*.=`[T](a`gensym118: var Matrix[T]; b`gensym118: ColVector[T])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `*.=`[T](a`gensym80: var Matrix[T]; b`gensym80: RowVector[T])" href="manu/matrix.html#%2A.%3D%2C%2C_3">matrix: `*.=`[T](a`gensym80: var Matrix[T]; b`gensym80: RowVector[T])</a></li>
+          data-doc-search-tag="matrix: `*.=`[T](a`gensym118: var Matrix[T]; b`gensym118: RowVector[T])" href="manu/matrix.html#%2A.%3D%2C%2C_3">matrix: `*.=`[T](a`gensym118: var Matrix[T]; b`gensym118: RowVector[T])</a></li>
           </ul></dd>
 <dt><a name="%60%2A.%60" href="#%60%2A.%60"><span>`*.`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: `*.`[T](a`gensym79: ColVector[T]; b`gensym79: RowVector[T]): Matrix[T]" href="manu/matrix.html#%2A.%2C%2C">matrix: `*.`[T](a`gensym79: ColVector[T]; b`gensym79: RowVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `*.`[T](a`gensym117: ColVector[T]; b`gensym117: RowVector[T]): Matrix[T]" href="manu/matrix.html#%2A.%2C%2C">matrix: `*.`[T](a`gensym117: ColVector[T]; b`gensym117: RowVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `*.`[T](a`gensym79: sink Matrix[T]; b`gensym79: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2A.%2Csink%2C">matrix: `*.`[T](a`gensym79: sink Matrix[T]; b`gensym79: Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `*.`[T](b`gensym117: RowVector[T]; a`gensym117: ColVector[T]): Matrix[T]" href="manu/matrix.html#%2A.%2C%2C_2">matrix: `*.`[T](b`gensym117: RowVector[T]; a`gensym117: ColVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `*.`[T](a`gensym79: sink Matrix[T]; b`gensym79: ColVector[T]): Matrix[T]" href="manu/matrix.html#%2A.%2Csink%2C_2">matrix: `*.`[T](a`gensym79: sink Matrix[T]; b`gensym79: ColVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `*.`[T](b`gensym117: ColVector[T]; a`gensym117: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2A.%2C%2C_3">matrix: `*.`[T](b`gensym117: ColVector[T]; a`gensym117: Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `*.`[T](a`gensym79: sink Matrix[T]; b`gensym79: RowVector[T]): Matrix[T]" href="manu/matrix.html#%2A.%2Csink%2C_3">matrix: `*.`[T](a`gensym79: sink Matrix[T]; b`gensym79: RowVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `*.`[T](b`gensym117: RowVector[T]; a`gensym117: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2A.%2C%2C_4">matrix: `*.`[T](b`gensym117: RowVector[T]; a`gensym117: Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `*.`[T](b`gensym79: RowVector[T]; a`gensym79: ColVector[T]): Matrix[T]" href="manu/matrix.html#%2A..t%2C%2C">matrix: `*.`[T](b`gensym79: RowVector[T]; a`gensym79: ColVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `*.`[T](a`gensym117: sink Matrix[T]; b`gensym117: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2A.%2Csink%2C">matrix: `*.`[T](a`gensym117: sink Matrix[T]; b`gensym117: Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `*.`[T](b`gensym79: ColVector[T]; a`gensym79: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2A..t%2C%2C_2">matrix: `*.`[T](b`gensym79: ColVector[T]; a`gensym79: Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `*.`[T](a`gensym117: sink Matrix[T]; b`gensym117: ColVector[T]): Matrix[T]" href="manu/matrix.html#%2A.%2Csink%2C_2">matrix: `*.`[T](a`gensym117: sink Matrix[T]; b`gensym117: ColVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `*.`[T](b`gensym79: RowVector[T]; a`gensym79: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2A..t%2C%2C_3">matrix: `*.`[T](b`gensym79: RowVector[T]; a`gensym79: Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `*.`[T](a`gensym117: sink Matrix[T]; b`gensym117: RowVector[T]): Matrix[T]" href="manu/matrix.html#%2A.%2Csink%2C_3">matrix: `*.`[T](a`gensym117: sink Matrix[T]; b`gensym117: RowVector[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="%60%2A%3D%60" href="#%60%2A%3D%60"><span>`*=`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: `*=`[T](m`gensym78: var Matrix[T]; s`gensym78: T)" href="manu/matrix.html#%2A%3D%2C%2CT">matrix: `*=`[T](m`gensym78: var Matrix[T]; s`gensym78: T)</a></li>
+          data-doc-search-tag="matrix: `*=`[T](m`gensym116: var Matrix[T]; s`gensym116: T)" href="manu/matrix.html#%2A%3D%2C%2CT">matrix: `*=`[T](m`gensym116: var Matrix[T]; s`gensym116: T)</a></li>
           </ul></dd>
 <dt><a name="%60%2A%60" href="#%60%2A%60"><span>`*`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="matrix: `*`[T](a, b: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2A%2CMatrix%5BT%5D%2CMatrix%5BT%5D">matrix: `*`[T](a, b: Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `*`[T](m`gensym77: sink Matrix[T]; s`gensym77: T): Matrix[T]" href="manu/matrix.html#%2A%2Csink%2CT">matrix: `*`[T](m`gensym77: sink Matrix[T]; s`gensym77: T): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `*`[T](m`gensym115: sink Matrix[T]; s`gensym115: T): Matrix[T]" href="manu/matrix.html#%2A%2Csink%2CT">matrix: `*`[T](m`gensym115: sink Matrix[T]; s`gensym115: T): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `*`[T](s`gensym77: T; m`gensym77: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2A.t%2CT%2C">matrix: `*`[T](s`gensym77: T; m`gensym77: Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `*`[T](s`gensym115: T; m`gensym115: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2A%2CT%2C">matrix: `*`[T](s`gensym115: T; m`gensym115: Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="%60%2B%3D%60" href="#%60%2B%3D%60"><span>`+=`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: `+=`[T](a`gensym73: var Matrix[T]; b`gensym73: Matrix[T])" href="manu/matrix.html#%2B%3D%2C%2C">matrix: `+=`[T](a`gensym73: var Matrix[T]; b`gensym73: Matrix[T])</a></li>
+          data-doc-search-tag="matrix: `+=`[T](a`gensym111: var Matrix[T]; b`gensym111: Matrix[T])" href="manu/matrix.html#%2B%3D%2C%2C">matrix: `+=`[T](a`gensym111: var Matrix[T]; b`gensym111: Matrix[T])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `+=`[T](a`gensym73: var Matrix[T]; b`gensym73: ColVector[T])" href="manu/matrix.html#%2B%3D%2C%2C_2">matrix: `+=`[T](a`gensym73: var Matrix[T]; b`gensym73: ColVector[T])</a></li>
+          data-doc-search-tag="matrix: `+=`[T](a`gensym111: var Matrix[T]; b`gensym111: ColVector[T])" href="manu/matrix.html#%2B%3D%2C%2C_2">matrix: `+=`[T](a`gensym111: var Matrix[T]; b`gensym111: ColVector[T])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `+=`[T](a`gensym73: var Matrix[T]; b`gensym73: RowVector[T])" href="manu/matrix.html#%2B%3D%2C%2C_3">matrix: `+=`[T](a`gensym73: var Matrix[T]; b`gensym73: RowVector[T])</a></li>
+          data-doc-search-tag="matrix: `+=`[T](a`gensym111: var Matrix[T]; b`gensym111: RowVector[T])" href="manu/matrix.html#%2B%3D%2C%2C_3">matrix: `+=`[T](a`gensym111: var Matrix[T]; b`gensym111: RowVector[T])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `+=`[T](m`gensym74: var Matrix[T]; s`gensym74: T)" href="manu/matrix.html#%2B%3D%2C%2CT">matrix: `+=`[T](m`gensym74: var Matrix[T]; s`gensym74: T)</a></li>
+          data-doc-search-tag="matrix: `+=`[T](m`gensym112: var Matrix[T]; s`gensym112: T)" href="manu/matrix.html#%2B%3D%2C%2CT">matrix: `+=`[T](m`gensym112: var Matrix[T]; s`gensym112: T)</a></li>
           </ul></dd>
 <dt><a name="%60%2B%60" href="#%60%2B%60"><span>`+`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: `+`[T](a`gensym70: ColVector[T]; b`gensym70: RowVector[T]): Matrix[T]" href="manu/matrix.html#%2B%2C%2C">matrix: `+`[T](a`gensym70: ColVector[T]; b`gensym70: RowVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `+`[T](a`gensym108: ColVector[T]; b`gensym108: RowVector[T]): Matrix[T]" href="manu/matrix.html#%2B%2C%2C">matrix: `+`[T](a`gensym108: ColVector[T]; b`gensym108: RowVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `+`[T](a`gensym70: sink Matrix[T]; b`gensym70: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2B%2Csink%2C">matrix: `+`[T](a`gensym70: sink Matrix[T]; b`gensym70: Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `+`[T](b`gensym108: RowVector[T]; a`gensym108: ColVector[T]): Matrix[T]" href="manu/matrix.html#%2B%2C%2C_2">matrix: `+`[T](b`gensym108: RowVector[T]; a`gensym108: ColVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `+`[T](a`gensym70: sink Matrix[T]; b`gensym70: ColVector[T]): Matrix[T]" href="manu/matrix.html#%2B%2Csink%2C_2">matrix: `+`[T](a`gensym70: sink Matrix[T]; b`gensym70: ColVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `+`[T](b`gensym108: ColVector[T]; a`gensym108: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2B%2C%2C_3">matrix: `+`[T](b`gensym108: ColVector[T]; a`gensym108: Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `+`[T](a`gensym70: sink Matrix[T]; b`gensym70: RowVector[T]): Matrix[T]" href="manu/matrix.html#%2B%2Csink%2C_3">matrix: `+`[T](a`gensym70: sink Matrix[T]; b`gensym70: RowVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `+`[T](b`gensym108: RowVector[T]; a`gensym108: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2B%2C%2C_4">matrix: `+`[T](b`gensym108: RowVector[T]; a`gensym108: Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `+`[T](m`gensym71: sink Matrix[T]; s`gensym71: T): Matrix[T]" href="manu/matrix.html#%2B%2Csink%2CT">matrix: `+`[T](m`gensym71: sink Matrix[T]; s`gensym71: T): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `+`[T](a`gensym108: sink Matrix[T]; b`gensym108: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2B%2Csink%2C">matrix: `+`[T](a`gensym108: sink Matrix[T]; b`gensym108: Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `+`[T](b`gensym70: RowVector[T]; a`gensym70: ColVector[T]): Matrix[T]" href="manu/matrix.html#%2B.t%2C%2C">matrix: `+`[T](b`gensym70: RowVector[T]; a`gensym70: ColVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `+`[T](a`gensym108: sink Matrix[T]; b`gensym108: ColVector[T]): Matrix[T]" href="manu/matrix.html#%2B%2Csink%2C_2">matrix: `+`[T](a`gensym108: sink Matrix[T]; b`gensym108: ColVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `+`[T](b`gensym70: ColVector[T]; a`gensym70: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2B.t%2C%2C_2">matrix: `+`[T](b`gensym70: ColVector[T]; a`gensym70: Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `+`[T](a`gensym108: sink Matrix[T]; b`gensym108: RowVector[T]): Matrix[T]" href="manu/matrix.html#%2B%2Csink%2C_3">matrix: `+`[T](a`gensym108: sink Matrix[T]; b`gensym108: RowVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `+`[T](b`gensym70: RowVector[T]; a`gensym70: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2B.t%2C%2C_3">matrix: `+`[T](b`gensym70: RowVector[T]; a`gensym70: Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `+`[T](m`gensym109: sink Matrix[T]; s`gensym109: T): Matrix[T]" href="manu/matrix.html#%2B%2Csink%2CT">matrix: `+`[T](m`gensym109: sink Matrix[T]; s`gensym109: T): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `+`[T](s`gensym71: T; m`gensym71: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2B.t%2CT%2C">matrix: `+`[T](s`gensym71: T; m`gensym71: Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `+`[T](s`gensym109: T; m`gensym109: Matrix[T]): Matrix[T]" href="manu/matrix.html#%2B%2CT%2C">matrix: `+`[T](s`gensym109: T; m`gensym109: Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="%60-%3D%60" href="#%60-%3D%60"><span>`-=`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: `-=`[T](a`gensym67: var Matrix[T]; b`gensym67: Matrix[T])" href="manu/matrix.html#-%3D%2C%2C">matrix: `-=`[T](a`gensym67: var Matrix[T]; b`gensym67: Matrix[T])</a></li>
+          data-doc-search-tag="matrix: `-=`[T](a`gensym105: var Matrix[T]; b`gensym105: Matrix[T])" href="manu/matrix.html#-%3D%2C%2C">matrix: `-=`[T](a`gensym105: var Matrix[T]; b`gensym105: Matrix[T])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `-=`[T](a`gensym67: var Matrix[T]; b`gensym67: ColVector[T])" href="manu/matrix.html#-%3D%2C%2C_2">matrix: `-=`[T](a`gensym67: var Matrix[T]; b`gensym67: ColVector[T])</a></li>
+          data-doc-search-tag="matrix: `-=`[T](a`gensym105: var Matrix[T]; b`gensym105: ColVector[T])" href="manu/matrix.html#-%3D%2C%2C_2">matrix: `-=`[T](a`gensym105: var Matrix[T]; b`gensym105: ColVector[T])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `-=`[T](a`gensym67: var Matrix[T]; b`gensym67: RowVector[T])" href="manu/matrix.html#-%3D%2C%2C_3">matrix: `-=`[T](a`gensym67: var Matrix[T]; b`gensym67: RowVector[T])</a></li>
+          data-doc-search-tag="matrix: `-=`[T](a`gensym105: var Matrix[T]; b`gensym105: RowVector[T])" href="manu/matrix.html#-%3D%2C%2C_3">matrix: `-=`[T](a`gensym105: var Matrix[T]; b`gensym105: RowVector[T])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `-=`[T](m`gensym68: var Matrix[T]; s`gensym68: T)" href="manu/matrix.html#-%3D%2C%2CT">matrix: `-=`[T](m`gensym68: var Matrix[T]; s`gensym68: T)</a></li>
+          data-doc-search-tag="matrix: `-=`[T](m`gensym106: var Matrix[T]; s`gensym106: T)" href="manu/matrix.html#-%3D%2C%2CT">matrix: `-=`[T](m`gensym106: var Matrix[T]; s`gensym106: T)</a></li>
           </ul></dd>
 <dt><a name="%60-%60" href="#%60-%60"><span>`-`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: `-`[T](a`gensym64: ColVector[T]; b`gensym64: RowVector[T]): Matrix[T]" href="manu/matrix.html#-%2C%2C">matrix: `-`[T](a`gensym64: ColVector[T]; b`gensym64: RowVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `-`[T](a`gensym102: ColVector[T]; b`gensym102: RowVector[T]): Matrix[T]" href="manu/matrix.html#-%2C%2C">matrix: `-`[T](a`gensym102: ColVector[T]; b`gensym102: RowVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `-`[T](a`gensym64: RowVector[T]; b`gensym64: ColVector[T]): Matrix[T]" href="manu/matrix.html#-%2C%2C_2">matrix: `-`[T](a`gensym64: RowVector[T]; b`gensym64: ColVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `-`[T](a`gensym102: RowVector[T]; b`gensym102: ColVector[T]): Matrix[T]" href="manu/matrix.html#-%2C%2C_2">matrix: `-`[T](a`gensym102: RowVector[T]; b`gensym102: ColVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `-`[T](a`gensym64: ColVector[T]; b`gensym64: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#-%2C%2Csink">matrix: `-`[T](a`gensym64: ColVector[T]; b`gensym64: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `-`[T](a`gensym102: ColVector[T]; b`gensym102: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#-%2C%2Csink">matrix: `-`[T](a`gensym102: ColVector[T]; b`gensym102: sink Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `-`[T](a`gensym64: RowVector[T]; b`gensym64: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#-%2C%2Csink_2">matrix: `-`[T](a`gensym64: RowVector[T]; b`gensym64: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `-`[T](a`gensym102: RowVector[T]; b`gensym102: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#-%2C%2Csink_2">matrix: `-`[T](a`gensym102: RowVector[T]; b`gensym102: sink Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `-`[T](m`gensym62: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#-%2Csink">matrix: `-`[T](m`gensym62: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `-`[T](m`gensym100: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#-%2Csink">matrix: `-`[T](m`gensym100: sink Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `-`[T](a`gensym64: sink Matrix[T]; b`gensym64: Matrix[T]): Matrix[T]" href="manu/matrix.html#-%2Csink%2C">matrix: `-`[T](a`gensym64: sink Matrix[T]; b`gensym64: Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `-`[T](a`gensym102: sink Matrix[T]; b`gensym102: Matrix[T]): Matrix[T]" href="manu/matrix.html#-%2Csink%2C">matrix: `-`[T](a`gensym102: sink Matrix[T]; b`gensym102: Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `-`[T](a`gensym64: sink Matrix[T]; b`gensym64: ColVector[T]): Matrix[T]" href="manu/matrix.html#-%2Csink%2C_2">matrix: `-`[T](a`gensym64: sink Matrix[T]; b`gensym64: ColVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `-`[T](a`gensym102: sink Matrix[T]; b`gensym102: ColVector[T]): Matrix[T]" href="manu/matrix.html#-%2Csink%2C_2">matrix: `-`[T](a`gensym102: sink Matrix[T]; b`gensym102: ColVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `-`[T](a`gensym64: sink Matrix[T]; b`gensym64: RowVector[T]): Matrix[T]" href="manu/matrix.html#-%2Csink%2C_3">matrix: `-`[T](a`gensym64: sink Matrix[T]; b`gensym64: RowVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `-`[T](a`gensym102: sink Matrix[T]; b`gensym102: RowVector[T]): Matrix[T]" href="manu/matrix.html#-%2Csink%2C_3">matrix: `-`[T](a`gensym102: sink Matrix[T]; b`gensym102: RowVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `-`[T](m`gensym65: sink Matrix[T]; s`gensym65: T): Matrix[T]" href="manu/matrix.html#-%2Csink%2CT">matrix: `-`[T](m`gensym65: sink Matrix[T]; s`gensym65: T): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `-`[T](m`gensym103: sink Matrix[T]; s`gensym103: T): Matrix[T]" href="manu/matrix.html#-%2Csink%2CT">matrix: `-`[T](m`gensym103: sink Matrix[T]; s`gensym103: T): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `-`[T](s`gensym65: T; m`gensym65: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#-%2CT%2Csink">matrix: `-`[T](s`gensym65: T; m`gensym65: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `-`[T](s`gensym103: T; m`gensym103: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#-%2CT%2Csink">matrix: `-`[T](s`gensym103: T; m`gensym103: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="%60/.%3D%60" href="#%60/.%3D%60"><span>`/.=`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: `/.=`[T](a`gensym82: var Matrix[T]; b`gensym82: Matrix[T])" href="manu/matrix.html#/.%3D%2C%2C">matrix: `/.=`[T](a`gensym82: var Matrix[T]; b`gensym82: Matrix[T])</a></li>
+          data-doc-search-tag="matrix: `/.=`[T](a`gensym120: var Matrix[T]; b`gensym120: Matrix[T])" href="manu/matrix.html#/.%3D%2C%2C">matrix: `/.=`[T](a`gensym120: var Matrix[T]; b`gensym120: Matrix[T])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `/.=`[T](a`gensym82: var Matrix[T]; b`gensym82: ColVector[T])" href="manu/matrix.html#/.%3D%2C%2C_2">matrix: `/.=`[T](a`gensym82: var Matrix[T]; b`gensym82: ColVector[T])</a></li>
+          data-doc-search-tag="matrix: `/.=`[T](a`gensym120: var Matrix[T]; b`gensym120: ColVector[T])" href="manu/matrix.html#/.%3D%2C%2C_2">matrix: `/.=`[T](a`gensym120: var Matrix[T]; b`gensym120: ColVector[T])</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `/.=`[T](a`gensym82: var Matrix[T]; b`gensym82: RowVector[T])" href="manu/matrix.html#/.%3D%2C%2C_3">matrix: `/.=`[T](a`gensym82: var Matrix[T]; b`gensym82: RowVector[T])</a></li>
+          data-doc-search-tag="matrix: `/.=`[T](a`gensym120: var Matrix[T]; b`gensym120: RowVector[T])" href="manu/matrix.html#/.%3D%2C%2C_3">matrix: `/.=`[T](a`gensym120: var Matrix[T]; b`gensym120: RowVector[T])</a></li>
           </ul></dd>
 <dt><a name="%60/.%60" href="#%60/.%60"><span>`/.`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: `/.`[T](a`gensym81: ColVector[T]; b`gensym81: RowVector[T]): Matrix[T]" href="manu/matrix.html#/.%2C%2C">matrix: `/.`[T](a`gensym81: ColVector[T]; b`gensym81: RowVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `/.`[T](a`gensym119: ColVector[T]; b`gensym119: RowVector[T]): Matrix[T]" href="manu/matrix.html#/.%2C%2C">matrix: `/.`[T](a`gensym119: ColVector[T]; b`gensym119: RowVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `/.`[T](a`gensym81: RowVector[T]; b`gensym81: ColVector[T]): Matrix[T]" href="manu/matrix.html#/.%2C%2C_2">matrix: `/.`[T](a`gensym81: RowVector[T]; b`gensym81: ColVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `/.`[T](a`gensym119: RowVector[T]; b`gensym119: ColVector[T]): Matrix[T]" href="manu/matrix.html#/.%2C%2C_2">matrix: `/.`[T](a`gensym119: RowVector[T]; b`gensym119: ColVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `/.`[T](a`gensym81: ColVector[T]; b`gensym81: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#/.%2C%2Csink">matrix: `/.`[T](a`gensym81: ColVector[T]; b`gensym81: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `/.`[T](a`gensym119: ColVector[T]; b`gensym119: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#/.%2C%2Csink">matrix: `/.`[T](a`gensym119: ColVector[T]; b`gensym119: sink Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `/.`[T](a`gensym81: RowVector[T]; b`gensym81: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#/.%2C%2Csink_2">matrix: `/.`[T](a`gensym81: RowVector[T]; b`gensym81: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `/.`[T](a`gensym119: RowVector[T]; b`gensym119: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#/.%2C%2Csink_2">matrix: `/.`[T](a`gensym119: RowVector[T]; b`gensym119: sink Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `/.`[T](a`gensym81: sink Matrix[T]; b`gensym81: Matrix[T]): Matrix[T]" href="manu/matrix.html#/.%2Csink%2C">matrix: `/.`[T](a`gensym81: sink Matrix[T]; b`gensym81: Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `/.`[T](a`gensym119: sink Matrix[T]; b`gensym119: Matrix[T]): Matrix[T]" href="manu/matrix.html#/.%2Csink%2C">matrix: `/.`[T](a`gensym119: sink Matrix[T]; b`gensym119: Matrix[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `/.`[T](a`gensym81: sink Matrix[T]; b`gensym81: ColVector[T]): Matrix[T]" href="manu/matrix.html#/.%2Csink%2C_2">matrix: `/.`[T](a`gensym81: sink Matrix[T]; b`gensym81: ColVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `/.`[T](a`gensym119: sink Matrix[T]; b`gensym119: ColVector[T]): Matrix[T]" href="manu/matrix.html#/.%2Csink%2C_2">matrix: `/.`[T](a`gensym119: sink Matrix[T]; b`gensym119: ColVector[T]): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `/.`[T](a`gensym81: sink Matrix[T]; b`gensym81: RowVector[T]): Matrix[T]" href="manu/matrix.html#/.%2Csink%2C_3">matrix: `/.`[T](a`gensym81: sink Matrix[T]; b`gensym81: RowVector[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `/.`[T](a`gensym119: sink Matrix[T]; b`gensym119: RowVector[T]): Matrix[T]" href="manu/matrix.html#/.%2Csink%2C_3">matrix: `/.`[T](a`gensym119: sink Matrix[T]; b`gensym119: RowVector[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="%60/%3D%60" href="#%60/%3D%60"><span>`/=`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: `/=`[T](m`gensym76: var Matrix[T]; s`gensym76: T)" href="manu/matrix.html#/%3D%2C%2CT">matrix: `/=`[T](m`gensym76: var Matrix[T]; s`gensym76: T)</a></li>
+          data-doc-search-tag="matrix: `/=`[T](m`gensym114: var Matrix[T]; s`gensym114: T)" href="manu/matrix.html#/%3D%2C%2CT">matrix: `/=`[T](m`gensym114: var Matrix[T]; s`gensym114: T)</a></li>
           </ul></dd>
 <dt><a name="%60/%60" href="#%60/%60"><span>`/`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: `/`[T](m`gensym75: sink Matrix[T]; s`gensym75: T): Matrix[T]" href="manu/matrix.html#/%2Csink%2CT">matrix: `/`[T](m`gensym75: sink Matrix[T]; s`gensym75: T): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `/`[T](m`gensym113: sink Matrix[T]; s`gensym113: T): Matrix[T]" href="manu/matrix.html#/%2Csink%2CT">matrix: `/`[T](m`gensym113: sink Matrix[T]; s`gensym113: T): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: `/`[T](s`gensym75: T; m`gensym75: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#/%2CT%2Csink">matrix: `/`[T](s`gensym75: T; m`gensym75: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: `/`[T](s`gensym113: T; m`gensym113: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#/%2CT%2Csink">matrix: `/`[T](s`gensym113: T; m`gensym113: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="%60%3Dcopy%60" href="#%60%3Dcopy%60"><span>`=copy`:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -258,31 +265,23 @@ function main() {
           </ul></dd>
 <dt><a name="arccos" href="#arccos"><span>arccos:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: arccos[T](m`gensym44: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#arccos%2Csink">matrix: arccos[T](m`gensym44: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: arccos[T](m`gensym82: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#arccos%2Csink">matrix: arccos[T](m`gensym82: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="arcsin" href="#arcsin"><span>arcsin:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: arcsin[T](m`gensym45: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#arcsin%2Csink">matrix: arcsin[T](m`gensym45: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: arcsin[T](m`gensym83: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#arcsin%2Csink">matrix: arcsin[T](m`gensym83: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="arctan" href="#arctan"><span>arctan:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: arctan[T](m`gensym46: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#arctan%2Csink">matrix: arctan[T](m`gensym46: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: arctan[T](m`gensym84: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#arctan%2Csink">matrix: arctan[T](m`gensym84: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="cbrt" href="#cbrt"><span>cbrt:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: cbrt[T](m`gensym39: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#cbrt%2Csink">matrix: cbrt[T](m`gensym39: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: cbrt[T](m`gensym77: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#cbrt%2Csink">matrix: cbrt[T](m`gensym77: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="ceil" href="#ceil"><span>ceil:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: ceil[T](m`gensym59: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#ceil%2Csink">matrix: ceil[T](m`gensym59: sink Matrix[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="chol" href="#chol"><span>chol:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="cholesky: chol[T](a: Matrix[T]): CholeskyDecomposition[T]" href="manu/cholesky.html#chol%2CMatrix%5BT%5D">cholesky: chol[T](a: Matrix[T]): CholeskyDecomposition[T]</a></li>
-          </ul></dd>
-<dt><a name="CholeskyDecomposition" href="#CholeskyDecomposition"><span>CholeskyDecomposition:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="cholesky: CholeskyDecomposition" href="manu/cholesky.html#CholeskyDecomposition">cholesky: CholeskyDecomposition</a></li>
+          data-doc-search-tag="matrix: ceil[T](m`gensym97: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#ceil%2Csink">matrix: ceil[T](m`gensym97: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="columnDimension" href="#columnDimension"><span>columnDimension:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -300,73 +299,53 @@ function main() {
 <li><a class="reference external"
           data-doc-search-tag="matrix: ColVector64" href="manu/matrix.html#ColVector64">matrix: ColVector64</a></li>
           </ul></dd>
-<dt><a name="cond" href="#cond"><span>cond:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="manu: cond[T](m: sink Matrix[T]): T" href="manu.html#cond%2CsinkMatrix%5BT%5D">manu: cond[T](m: sink Matrix[T]): T</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="svd: cond[T](sv: SingularValueDecomposition[T]): T" href="manu/svd.html#cond%2CSingularValueDecomposition%5BT%5D">svd: cond[T](sv: SingularValueDecomposition[T]): T</a></li>
-          </ul></dd>
 <dt><a name="cos" href="#cos"><span>cos:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: cos[T](m`gensym47: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#cos%2Csink">matrix: cos[T](m`gensym47: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: cos[T](m`gensym85: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#cos%2Csink">matrix: cos[T](m`gensym85: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="cosh" href="#cosh"><span>cosh:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: cosh[T](m`gensym48: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#cosh%2Csink">matrix: cosh[T](m`gensym48: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: cosh[T](m`gensym86: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#cosh%2Csink">matrix: cosh[T](m`gensym86: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="degToRad" href="#degToRad"><span>degToRad:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: degToRad[T](m`gensym60: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#degToRad%2Csink">matrix: degToRad[T](m`gensym60: sink Matrix[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="det" href="#det"><span>det:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="manu: det[T](m: sink Matrix[T]): T" href="manu.html#det%2CsinkMatrix%5BT%5D">manu: det[T](m: sink Matrix[T]): T</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="lu: det[T](l: LUDecomposition[T]): T" href="manu/lu.html#det%2CLUDecomposition%5BT%5D">lu: det[T](l: LUDecomposition[T]): T</a></li>
+          data-doc-search-tag="matrix: degToRad[T](m`gensym98: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#degToRad%2Csink">matrix: degToRad[T](m`gensym98: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="dim" href="#dim"><span>dim:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="matrix: dim[T](m: Matrix[T]): (int, int)" href="manu/matrix.html#dim%2CMatrix%5BT%5D">matrix: dim[T](m: Matrix[T]): (int, int)</a></li>
           </ul></dd>
-<dt><a name="eig" href="#eig"><span>eig:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="eigen: eig[T](a: sink Matrix[T]): EigenvalueDecomposition[T]" href="manu/eigen.html#eig%2CsinkMatrix%5BT%5D">eigen: eig[T](a: sink Matrix[T]): EigenvalueDecomposition[T]</a></li>
-          </ul></dd>
-<dt><a name="EigenvalueDecomposition" href="#EigenvalueDecomposition"><span>EigenvalueDecomposition:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="eigen: EigenvalueDecomposition" href="manu/eigen.html#EigenvalueDecomposition">eigen: EigenvalueDecomposition</a></li>
-          </ul></dd>
 <dt><a name="erf" href="#erf"><span>erf:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: erf[T](m`gensym53: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#erf%2Csink">matrix: erf[T](m`gensym53: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: erf[T](m`gensym91: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#erf%2Csink">matrix: erf[T](m`gensym91: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="erfc" href="#erfc"><span>erfc:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: erfc[T](m`gensym54: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#erfc%2Csink">matrix: erfc[T](m`gensym54: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: erfc[T](m`gensym92: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#erfc%2Csink">matrix: erfc[T](m`gensym92: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="exp" href="#exp"><span>exp:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: exp[T](m`gensym43: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#exp%2Csink">matrix: exp[T](m`gensym43: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: exp[T](m`gensym81: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#exp%2Csink">matrix: exp[T](m`gensym81: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="eye" href="#eye"><span>eye:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: eye[T](m: int): Matrix[T]" href="manu/matrix.html#eye.t%2Cint">matrix: eye[T](m: int): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: eye[T](m: int): Matrix[T]" href="manu/matrix.html#eye%2Cint">matrix: eye[T](m: int): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="eye32" href="#eye32"><span>eye32:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: eye32(m: int): Matrix32" href="manu/matrix.html#eye32.t%2Cint">matrix: eye32(m: int): Matrix32</a></li>
+          data-doc-search-tag="matrix: eye32(m: int): Matrix32" href="manu/matrix.html#eye32%2Cint">matrix: eye32(m: int): Matrix32</a></li>
           </ul></dd>
 <dt><a name="eye64" href="#eye64"><span>eye64:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: eye64(m: int): Matrix64" href="manu/matrix.html#eye64.t%2Cint">matrix: eye64(m: int): Matrix64</a></li>
+          data-doc-search-tag="matrix: eye64(m: int): Matrix64" href="manu/matrix.html#eye64%2Cint">matrix: eye64(m: int): Matrix64</a></li>
           </ul></dd>
 <dt><a name="floor" href="#floor"><span>floor:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: floor[T](m`gensym58: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#floor%2Csink">matrix: floor[T](m`gensym58: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: floor[T](m`gensym96: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#floor%2Csink">matrix: floor[T](m`gensym96: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="gamma" href="#gamma"><span>gamma:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: gamma[T](m`gensym56: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#gamma%2Csink">matrix: gamma[T](m`gensym56: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: gamma[T](m`gensym94: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#gamma%2Csink">matrix: gamma[T](m`gensym94: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="getArray" href="#getArray"><span>getArray:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -376,115 +355,29 @@ function main() {
 <li><a class="reference external"
           data-doc-search-tag="matrix: getColumnPacked[T](m: Matrix[T]): seq[T]" href="manu/matrix.html#getColumnPacked%2CMatrix%5BT%5D">matrix: getColumnPacked[T](m: Matrix[T]): seq[T]</a></li>
           </ul></dd>
-<dt><a name="getD" href="#getD"><span>getD:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="eigen: getD[T](ei: EigenvalueDecomposition[T]): Matrix[T]" href="manu/eigen.html#getD%2CEigenvalueDecomposition%5BT%5D">eigen: getD[T](ei: EigenvalueDecomposition[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="getFloatPivot" href="#getFloatPivot"><span>getFloatPivot:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="lu: getFloatPivot[T](l: LUDecomposition[T]): seq[T]" href="manu/lu.html#getFloatPivot%2CLUDecomposition%5BT%5D">lu: getFloatPivot[T](l: LUDecomposition[T]): seq[T]</a></li>
-          </ul></dd>
-<dt><a name="getH" href="#getH"><span>getH:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="qr: getH[T](q: QRDecomposition[T]): Matrix[T]" href="manu/qr.html#getH%2CQRDecomposition%5BT%5D">qr: getH[T](q: QRDecomposition[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="getImagEigenvalues" href="#getImagEigenvalues"><span>getImagEigenvalues:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="eigen: getImagEigenvalues[T](ei: EigenvalueDecomposition[T]): lent seq[T]" href="manu/eigen.html#getImagEigenvalues%2CEigenvalueDecomposition%5BT%5D">eigen: getImagEigenvalues[T](ei: EigenvalueDecomposition[T]): lent seq[T]</a></li>
-          </ul></dd>
-<dt><a name="getL" href="#getL"><span>getL:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="cholesky: getL[T](c: CholeskyDecomposition[T]): lent Matrix[T]" href="manu/cholesky.html#getL%2CCholeskyDecomposition%5BT%5D">cholesky: getL[T](c: CholeskyDecomposition[T]): lent Matrix[T]</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="lu: getL[T](l: LUDecomposition[T]): Matrix[T]" href="manu/lu.html#getL%2CLUDecomposition%5BT%5D">lu: getL[T](l: LUDecomposition[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="getPivot" href="#getPivot"><span>getPivot:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="lu: getPivot[T](l: LUDecomposition[T]): lent seq[int]" href="manu/lu.html#getPivot%2CLUDecomposition%5BT%5D">lu: getPivot[T](l: LUDecomposition[T]): lent seq[int]</a></li>
-          </ul></dd>
-<dt><a name="getQ" href="#getQ"><span>getQ:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="qr: getQ[T](q: QRDecomposition[T]): Matrix[T]" href="manu/qr.html#getQ%2CQRDecomposition%5BT%5D">qr: getQ[T](q: QRDecomposition[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="getR" href="#getR"><span>getR:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="qr: getR[T](q: QRDecomposition[T]): Matrix[T]" href="manu/qr.html#getR%2CQRDecomposition%5BT%5D">qr: getR[T](q: QRDecomposition[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="getRealEigenvalues" href="#getRealEigenvalues"><span>getRealEigenvalues:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="eigen: getRealEigenvalues[T](ei: EigenvalueDecomposition[T]): lent seq[T]" href="manu/eigen.html#getRealEigenvalues%2CEigenvalueDecomposition%5BT%5D">eigen: getRealEigenvalues[T](ei: EigenvalueDecomposition[T]): lent seq[T]</a></li>
-          </ul></dd>
 <dt><a name="getRowPacked" href="#getRowPacked"><span>getRowPacked:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="matrix: getRowPacked[T](m: Matrix[T]): seq[T]" href="manu/matrix.html#getRowPacked%2CMatrix%5BT%5D">matrix: getRowPacked[T](m: Matrix[T]): seq[T]</a></li>
-          </ul></dd>
-<dt><a name="getS" href="#getS"><span>getS:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="svd: getS[T](sv: SingularValueDecomposition[T]): Matrix[T]" href="manu/svd.html#getS%2CSingularValueDecomposition%5BT%5D">svd: getS[T](sv: SingularValueDecomposition[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="getSingularValues" href="#getSingularValues"><span>getSingularValues:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="svd: getSingularValues[T](sv: SingularValueDecomposition[T]): lent seq[T]" href="manu/svd.html#getSingularValues%2CSingularValueDecomposition%5BT%5D">svd: getSingularValues[T](sv: SingularValueDecomposition[T]): lent seq[T]</a></li>
-          </ul></dd>
-<dt><a name="getU" href="#getU"><span>getU:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="lu: getU[T](l: LUDecomposition[T]): Matrix[T]" href="manu/lu.html#getU%2CLUDecomposition%5BT%5D">lu: getU[T](l: LUDecomposition[T]): Matrix[T]</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="svd: getU[T](sv: SingularValueDecomposition[T]): lent Matrix[T]" href="manu/svd.html#getU%2CSingularValueDecomposition%5BT%5D">svd: getU[T](sv: SingularValueDecomposition[T]): lent Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="getV" href="#getV"><span>getV:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="eigen: getV[T](ei: EigenvalueDecomposition[T]): lent Matrix[T]" href="manu/eigen.html#getV%2CEigenvalueDecomposition%5BT%5D">eigen: getV[T](ei: EigenvalueDecomposition[T]): lent Matrix[T]</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="svd: getV[T](sv: SingularValueDecomposition[T]): lent Matrix[T]" href="manu/svd.html#getV%2CSingularValueDecomposition%5BT%5D">svd: getV[T](sv: SingularValueDecomposition[T]): lent Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="identity" href="#identity"><span>identity:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="matrix: identity[T: SomeFloat](m: int): Matrix[T]" href="manu/matrix.html#identity%2Cint">matrix: identity[T: SomeFloat](m: int): Matrix[T]</a></li>
           </ul></dd>
-<dt><a name="inverse" href="#inverse"><span>inverse:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="manu: inverse[T](m: sink Matrix[T]): Matrix[T]" href="manu.html#inverse%2CsinkMatrix%5BT%5D">manu: inverse[T](m: sink Matrix[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="isFullRank" href="#isFullRank"><span>isFullRank:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="qr: isFullRank[T](q: QRDecomposition[T]): bool" href="manu/qr.html#isFullRank%2CQRDecomposition%5BT%5D">qr: isFullRank[T](q: QRDecomposition[T]): bool</a></li>
-          </ul></dd>
-<dt><a name="isNonsingular" href="#isNonsingular"><span>isNonsingular:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="lu: isNonsingular[T](l: LUDecomposition[T]): bool" href="manu/lu.html#isNonsingular%2CLUDecomposition%5BT%5D">lu: isNonsingular[T](l: LUDecomposition[T]): bool</a></li>
-          </ul></dd>
-<dt><a name="isSPD" href="#isSPD"><span>isSPD:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="cholesky: isSPD[T](c: CholeskyDecomposition[T]): bool" href="manu/cholesky.html#isSPD%2CCholeskyDecomposition%5BT%5D">cholesky: isSPD[T](c: CholeskyDecomposition[T]): bool</a></li>
-          </ul></dd>
 <dt><a name="lgamma" href="#lgamma"><span>lgamma:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: lgamma[T](m`gensym55: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#lgamma%2Csink">matrix: lgamma[T](m`gensym55: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: lgamma[T](m`gensym93: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#lgamma%2Csink">matrix: lgamma[T](m`gensym93: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="ln" href="#ln"><span>ln:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: ln[T](m`gensym42: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#ln%2Csink">matrix: ln[T](m`gensym42: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: ln[T](m`gensym80: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#ln%2Csink">matrix: ln[T](m`gensym80: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="log10" href="#log10"><span>log10:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: log10[T](m`gensym40: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#log10%2Csink">matrix: log10[T](m`gensym40: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: log10[T](m`gensym78: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#log10%2Csink">matrix: log10[T](m`gensym78: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="log2" href="#log2"><span>log2:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: log2[T](m`gensym41: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#log2%2Csink">matrix: log2[T](m`gensym41: sink Matrix[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="lu" href="#lu"><span>lu:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="lu: lu[T](a: sink Matrix[T]): LUDecomposition[T]" href="manu/lu.html#lu%2CsinkMatrix%5BT%5D">lu: lu[T](a: sink Matrix[T]): LUDecomposition[T]</a></li>
-          </ul></dd>
-<dt><a name="LUDecomposition" href="#LUDecomposition"><span>LUDecomposition:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="lu: LUDecomposition" href="manu/lu.html#LUDecomposition">lu: LUDecomposition</a></li>
-          </ul></dd>
-<dt><a name="luGauss" href="#luGauss"><span>luGauss:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="lu: luGauss[T](a: sink Matrix[T]): LUDecomposition[T]" href="manu/lu.html#luGauss%2CsinkMatrix%5BT%5D">lu: luGauss[T](a: sink Matrix[T]): LUDecomposition[T]</a></li>
+          data-doc-search-tag="matrix: log2[T](m`gensym79: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#log2%2Csink">matrix: log2[T](m`gensym79: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="m" href="#m"><span>m:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -496,11 +389,11 @@ function main() {
           </ul></dd>
 <dt><a name="makeUniversalBinary" href="#makeUniversalBinary"><span>makeUniversalBinary:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: makeUniversalBinary(fname: untyped; isCommutative = true)" href="manu/matrix.html#makeUniversalBinary.t%2Cuntyped">matrix: makeUniversalBinary(fname: untyped; isCommutative = true)</a></li>
+          data-doc-search-tag="matrix: makeUniversalBinary(fname: untyped; isCommutative = false)" href="manu/matrix.html#makeUniversalBinary.t%2Cuntyped">matrix: makeUniversalBinary(fname: untyped; isCommutative = false)</a></li>
           </ul></dd>
 <dt><a name="makeUniversalBinaryImpl" href="#makeUniversalBinaryImpl"><span>makeUniversalBinaryImpl:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: makeUniversalBinaryImpl(fname, opname: untyped; isCommutative = true)" href="manu/matrix.html#makeUniversalBinaryImpl.t%2Cuntyped%2Cuntyped">matrix: makeUniversalBinaryImpl(fname, opname: untyped; isCommutative = true)</a></li>
+          data-doc-search-tag="matrix: makeUniversalBinaryImpl(fname, opname: untyped; isCommutative = false)" href="manu/matrix.html#makeUniversalBinaryImpl.t%2Cuntyped%2Cuntyped">matrix: makeUniversalBinaryImpl(fname, opname: untyped; isCommutative = false)</a></li>
           </ul></dd>
 <dt><a name="makeUniversalBinaryInplace" href="#makeUniversalBinaryInplace"><span>makeUniversalBinaryInplace:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -552,12 +445,6 @@ function main() {
 <li><a class="reference external"
           data-doc-search-tag="matrix: norm1[T](m: Matrix[T]): T" href="manu/matrix.html#norm1%2CMatrix%5BT%5D">matrix: norm1[T](m: Matrix[T]): T</a></li>
           </ul></dd>
-<dt><a name="norm2" href="#norm2"><span>norm2:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="manu: norm2[T](m: sink Matrix[T]): T" href="manu.html#norm2%2CsinkMatrix%5BT%5D">manu: norm2[T](m: sink Matrix[T]): T</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="svd: norm2[T](sv: SingularValueDecomposition[T]): T" href="manu/svd.html#norm2%2CSingularValueDecomposition%5BT%5D">svd: norm2[T](sv: SingularValueDecomposition[T]): T</a></li>
-          </ul></dd>
 <dt><a name="normF" href="#normF"><span>normF:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="matrix: normF[T](m: Matrix[T]): T" href="manu/matrix.html#normF%2CMatrix%5BT%5D">matrix: normF[T](m: Matrix[T]): T</a></li>
@@ -568,63 +455,49 @@ function main() {
           </ul></dd>
 <dt><a name="ones" href="#ones"><span>ones:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: ones[T](m, n: int): Matrix[T]" href="manu/matrix.html#ones.t%2Cint%2Cint">matrix: ones[T](m, n: int): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: ones[T](m, n: int): Matrix[T]" href="manu/matrix.html#ones%2Cint%2Cint">matrix: ones[T](m, n: int): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="ones32" href="#ones32"><span>ones32:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: ones32(m, n: int): Matrix32" href="manu/matrix.html#ones32.t%2Cint%2Cint">matrix: ones32(m, n: int): Matrix32</a></li>
+          data-doc-search-tag="matrix: ones32(m, n: int): Matrix32" href="manu/matrix.html#ones32%2Cint%2Cint">matrix: ones32(m, n: int): Matrix32</a></li>
           </ul></dd>
 <dt><a name="ones64" href="#ones64"><span>ones64:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: ones64(m, n: int): Matrix64" href="manu/matrix.html#ones64.t%2Cint%2Cint">matrix: ones64(m, n: int): Matrix64</a></li>
-          </ul></dd>
-<dt><a name="qr" href="#qr"><span>qr:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="qr: qr[T](a: sink Matrix[T]): QRDecomposition[T]" href="manu/qr.html#qr%2CsinkMatrix%5BT%5D">qr: qr[T](a: sink Matrix[T]): QRDecomposition[T]</a></li>
-          </ul></dd>
-<dt><a name="QRDecomposition" href="#QRDecomposition"><span>QRDecomposition:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="qr: QRDecomposition" href="manu/qr.html#QRDecomposition">qr: QRDecomposition</a></li>
+          data-doc-search-tag="matrix: ones64(m, n: int): Matrix64" href="manu/matrix.html#ones64%2Cint%2Cint">matrix: ones64(m, n: int): Matrix64</a></li>
           </ul></dd>
 <dt><a name="radToDeg" href="#radToDeg"><span>radToDeg:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: radToDeg[T](m`gensym61: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#radToDeg%2Csink">matrix: radToDeg[T](m`gensym61: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: radToDeg[T](m`gensym99: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#radToDeg%2Csink">matrix: radToDeg[T](m`gensym99: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="randMatrix" href="#randMatrix"><span>randMatrix:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
+          data-doc-search-tag="matrix: randMatrix[T](m, n: int): Matrix[T]" href="manu/matrix.html#randMatrix%2Cint%2Cint">matrix: randMatrix[T](m, n: int): Matrix[T]</a></li>
+          <li><a class="reference external"
           data-doc-search-tag="matrix: randMatrix[T: SomeFloat](m, n: int; x: Slice[T]): Matrix[T]" href="manu/matrix.html#randMatrix%2Cint%2Cint%2CSlice%5BT%3A%20SomeFloat%5D">matrix: randMatrix[T: SomeFloat](m, n: int; x: Slice[T]): Matrix[T]</a></li>
           <li><a class="reference external"
           data-doc-search-tag="matrix: randMatrix[T: SomeFloat](m, n: int; max: T): Matrix[T]" href="manu/matrix.html#randMatrix%2Cint%2Cint%2CT">matrix: randMatrix[T: SomeFloat](m, n: int; max: T): Matrix[T]</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="matrix: randMatrix[T](m, n: int): Matrix[T]" href="manu/matrix.html#randMatrix.t%2Cint%2Cint">matrix: randMatrix[T](m, n: int): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="randMatrix32" href="#randMatrix32"><span>randMatrix32:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: randMatrix32(m, n: int): Matrix32" href="manu/matrix.html#randMatrix32.t%2Cint%2Cint">matrix: randMatrix32(m, n: int): Matrix32</a></li>
+          data-doc-search-tag="matrix: randMatrix32(m, n: int): Matrix32" href="manu/matrix.html#randMatrix32%2Cint%2Cint">matrix: randMatrix32(m, n: int): Matrix32</a></li>
           </ul></dd>
 <dt><a name="randMatrix64" href="#randMatrix64"><span>randMatrix64:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: randMatrix64(m, n: int): Matrix64" href="manu/matrix.html#randMatrix64.t%2Cint%2Cint">matrix: randMatrix64(m, n: int): Matrix64</a></li>
+          data-doc-search-tag="matrix: randMatrix64(m, n: int): Matrix64" href="manu/matrix.html#randMatrix64%2Cint%2Cint">matrix: randMatrix64(m, n: int): Matrix64</a></li>
           </ul></dd>
 <dt><a name="randNMatrix" href="#randNMatrix"><span>randNMatrix:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: randNMatrix[T: SomeFloat](m, n: int; mu, sigma: T): Matrix[T]" href="manu/matrix.html#randNMatrix%2Cint%2Cint%2CT%2CT">matrix: randNMatrix[T: SomeFloat](m, n: int; mu, sigma: T): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: randNMatrix[T](m, n: int): Matrix[T]" href="manu/matrix.html#randNMatrix%2Cint%2Cint">matrix: randNMatrix[T](m, n: int): Matrix[T]</a></li>
           <li><a class="reference external"
-          data-doc-search-tag="matrix: randNMatrix[T](m, n: int): Matrix[T]" href="manu/matrix.html#randNMatrix.t%2Cint%2Cint">matrix: randNMatrix[T](m, n: int): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: randNMatrix[T: SomeFloat](m, n: int; mu, sigma: T): Matrix[T]" href="manu/matrix.html#randNMatrix%2Cint%2Cint%2CT%2CT">matrix: randNMatrix[T: SomeFloat](m, n: int; mu, sigma: T): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="randNMatrix32" href="#randNMatrix32"><span>randNMatrix32:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: randNMatrix32(m, n: int): Matrix32" href="manu/matrix.html#randNMatrix32.t%2Cint%2Cint">matrix: randNMatrix32(m, n: int): Matrix32</a></li>
+          data-doc-search-tag="matrix: randNMatrix32(m, n: int): Matrix32" href="manu/matrix.html#randNMatrix32%2Cint%2Cint">matrix: randNMatrix32(m, n: int): Matrix32</a></li>
           </ul></dd>
 <dt><a name="randNMatrix64" href="#randNMatrix64"><span>randNMatrix64:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: randNMatrix64(m, n: int): Matrix64" href="manu/matrix.html#randNMatrix64.t%2Cint%2Cint">matrix: randNMatrix64(m, n: int): Matrix64</a></li>
-          </ul></dd>
-<dt><a name="rank" href="#rank"><span>rank:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="manu: rank[T](m: sink Matrix[T]): int" href="manu.html#rank%2CsinkMatrix%5BT%5D">manu: rank[T](m: sink Matrix[T]): int</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="svd: rank[T](sv: SingularValueDecomposition[T]): int" href="manu/svd.html#rank%2CSingularValueDecomposition%5BT%5D">svd: rank[T](sv: SingularValueDecomposition[T]): int</a></li>
+          data-doc-search-tag="matrix: randNMatrix64(m, n: int): Matrix64" href="manu/matrix.html#randNMatrix64%2Cint%2Cint">matrix: randNMatrix64(m, n: int): Matrix64</a></li>
           </ul></dd>
 <dt><a name="rowDimension" href="#rowDimension"><span>rowDimension:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -644,33 +517,15 @@ function main() {
           </ul></dd>
 <dt><a name="sin" href="#sin"><span>sin:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: sin[T](m`gensym49: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#sin%2Csink">matrix: sin[T](m`gensym49: sink Matrix[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="SingularValueDecomposition" href="#SingularValueDecomposition"><span>SingularValueDecomposition:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="svd: SingularValueDecomposition" href="manu/svd.html#SingularValueDecomposition">svd: SingularValueDecomposition</a></li>
+          data-doc-search-tag="matrix: sin[T](m`gensym87: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#sin%2Csink">matrix: sin[T](m`gensym87: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="sinh" href="#sinh"><span>sinh:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: sinh[T](m`gensym50: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#sinh%2Csink">matrix: sinh[T](m`gensym50: sink Matrix[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="solve" href="#solve"><span>solve:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="manu: solve[T](a: sink Matrix[T]; b: Matrix[T]): Matrix[T]" href="manu.html#solve%2CsinkMatrix%5BT%5D%2CMatrix%5BT%5D">manu: solve[T](a: sink Matrix[T]; b: Matrix[T]): Matrix[T]</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="cholesky: solve[T](c: CholeskyDecomposition[T]; b: sink Matrix[T]): Matrix[T]" href="manu/cholesky.html#solve%2CCholeskyDecomposition%5BT%5D%2CsinkMatrix%5BT%5D">cholesky: solve[T](c: CholeskyDecomposition[T]; b: sink Matrix[T]): Matrix[T]</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="lu: solve[T](l: LUDecomposition[T]; b: Matrix[T]): Matrix[T]" href="manu/lu.html#solve%2CLUDecomposition%5BT%5D%2CMatrix%5BT%5D">lu: solve[T](l: LUDecomposition[T]; b: Matrix[T]): Matrix[T]</a></li>
-          <li><a class="reference external"
-          data-doc-search-tag="qr: solve[T](q: QRDecomposition[T]; b: Matrix[T]): Matrix[T]" href="manu/qr.html#solve%2CQRDecomposition%5BT%5D%2CMatrix%5BT%5D">qr: solve[T](q: QRDecomposition[T]; b: Matrix[T]): Matrix[T]</a></li>
-          </ul></dd>
-<dt><a name="solveTranspose" href="#solveTranspose"><span>solveTranspose:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="manu: solveTranspose[T](a, b: Matrix[T]): Matrix[T]" href="manu.html#solveTranspose%2CMatrix%5BT%5D%2CMatrix%5BT%5D">manu: solveTranspose[T](a, b: Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: sinh[T](m`gensym88: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#sinh%2Csink">matrix: sinh[T](m`gensym88: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="sqrt" href="#sqrt"><span>sqrt:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: sqrt[T](m`gensym38: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#sqrt%2Csink">matrix: sqrt[T](m`gensym38: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: sqrt[T](m`gensym76: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#sqrt%2Csink">matrix: sqrt[T](m`gensym76: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="sum" href="#sum"><span>sum:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -684,17 +539,13 @@ function main() {
 <li><a class="reference external"
           data-doc-search-tag="matrix: sumRows[T](m: Matrix[T]): Matrix[T]" href="manu/matrix.html#sumRows%2CMatrix%5BT%5D">matrix: sumRows[T](m: Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
-<dt><a name="svd" href="#svd"><span>svd:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="svd: svd[T](a: sink Matrix[T]): SingularValueDecomposition[T]" href="manu/svd.html#svd%2CsinkMatrix%5BT%5D">svd: svd[T](a: sink Matrix[T]): SingularValueDecomposition[T]</a></li>
-          </ul></dd>
 <dt><a name="tan" href="#tan"><span>tan:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: tan[T](m`gensym51: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#tan%2Csink">matrix: tan[T](m`gensym51: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: tan[T](m`gensym89: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#tan%2Csink">matrix: tan[T](m`gensym89: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="tanh" href="#tanh"><span>tanh:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: tanh[T](m`gensym52: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#tanh%2Csink">matrix: tanh[T](m`gensym52: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: tanh[T](m`gensym90: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#tanh%2Csink">matrix: tanh[T](m`gensym90: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="trace" href="#trace"><span>trace:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -706,26 +557,26 @@ function main() {
           </ul></dd>
 <dt><a name="trunc" href="#trunc"><span>trunc:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: trunc[T](m`gensym57: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#trunc%2Csink">matrix: trunc[T](m`gensym57: sink Matrix[T]): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: trunc[T](m`gensym95: sink Matrix[T]): Matrix[T]" href="manu/matrix.html#trunc%2Csink">matrix: trunc[T](m`gensym95: sink Matrix[T]): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="zeros" href="#zeros"><span>zeros:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: zeros[T](m, n: int): Matrix[T]" href="manu/matrix.html#zeros.t%2Cint%2Cint">matrix: zeros[T](m, n: int): Matrix[T]</a></li>
+          data-doc-search-tag="matrix: zeros[T](m, n: int): Matrix[T]" href="manu/matrix.html#zeros%2Cint%2Cint">matrix: zeros[T](m, n: int): Matrix[T]</a></li>
           </ul></dd>
 <dt><a name="zeros32" href="#zeros32"><span>zeros32:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: zeros32(m, n: int): Matrix32" href="manu/matrix.html#zeros32.t%2Cint%2Cint">matrix: zeros32(m, n: int): Matrix32</a></li>
+          data-doc-search-tag="matrix: zeros32(m, n: int): Matrix32" href="manu/matrix.html#zeros32%2Cint%2Cint">matrix: zeros32(m, n: int): Matrix32</a></li>
           </ul></dd>
 <dt><a name="zeros64" href="#zeros64"><span>zeros64:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="matrix: zeros64(m, n: int): Matrix64" href="manu/matrix.html#zeros64.t%2Cint%2Cint">matrix: zeros64(m, n: int): Matrix64</a></li>
+          data-doc-search-tag="matrix: zeros64(m, n: int): Matrix64" href="manu/matrix.html#zeros64%2Cint%2Cint">matrix: zeros64(m, n: int): Matrix64</a></li>
           </ul></dd>
 </dl>
     <div class="row">
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2020-11-24 10:46:08 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-17 20:00:11 UTC</small>
       </div>
     </div>
   </div>

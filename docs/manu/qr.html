@@ -17,7 +17,7 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
 
 <!-- CSS -->
-<title>manu/qr</title>
+<title>QR Decomposition</title>
 <link rel="stylesheet" type="text/css" href="../nimdoc.out.css">
 
 <script type="text/javascript" src="../dochack.js"></script>
@@ -34,7 +34,6 @@ function main() {
     }
   }
 
-  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
   function switchTheme(e) {
       if (e.target.checked) {
           document.documentElement.setAttribute('data-theme', 'dark');
@@ -45,24 +44,32 @@ function main() {
       }
   }
 
-  toggleSwitch.addEventListener('change', switchTheme, false);
+  const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+  if (toggleSwitch !== null) {
+    toggleSwitch.addEventListener('change', switchTheme, false);
+  }
 
-  const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+  var currentTheme = localStorage.getItem('theme');
+  if (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    currentTheme = 'dark';
+  }
   if (currentTheme) {
     document.documentElement.setAttribute('data-theme', currentTheme);
 
-    if (currentTheme === 'dark') {
+    if (currentTheme === 'dark' && toggleSwitch !== null) {
       toggleSwitch.checked = true;
     }
   }
 }
+
+window.addEventListener('DOMContentLoaded', main);
 </script>
 
 </head>
-<body onload="main()">
+<body>
 <div class="document" id="documentId">
   <div class="container">
-    <h1 class="title">manu/qr</h1>
+    <h1 class="title">QR Decomposition</h1>
     <div class="row">
   <div class="three columns">
   <div class="theme-switch-wrapper">
@@ -112,32 +119,32 @@ function main() {
   <ul class="simple simple-toc-section">
       <ul class="simple nested-toc-section">isFullRank
       <li><a class="reference" href="#isFullRank%2CQRDecomposition%5BT%5D"
-    title="isFullRank[T](q: QRDecomposition[T]): bool">isFullRank,<wbr>QRDecomposition[T]</a></li>
+    title="isFullRank[T](q: QRDecomposition[T]): bool">isFullRank[T](q: QRDecomposition[T]): bool</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">solve
       <li><a class="reference" href="#solve%2CQRDecomposition%5BT%5D%2CMatrix%5BT%5D"
-    title="solve[T](q: QRDecomposition[T]; b: Matrix[T]): Matrix[T]">solve,<wbr>QRDecomposition[T],<wbr>Matrix[T]</a></li>
+    title="solve[T](q: QRDecomposition[T]; b: Matrix[T]): Matrix[T]">solve[T](q: QRDecomposition[T]; b: Matrix[T]): Matrix[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">getQ
       <li><a class="reference" href="#getQ%2CQRDecomposition%5BT%5D"
-    title="getQ[T](q: QRDecomposition[T]): Matrix[T]">getQ,<wbr>QRDecomposition[T]</a></li>
+    title="getQ[T](q: QRDecomposition[T]): Matrix[T]">getQ[T](q: QRDecomposition[T]): Matrix[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">qr
       <li><a class="reference" href="#qr%2CsinkMatrix%5BT%5D"
-    title="qr[T](a: sink Matrix[T]): QRDecomposition[T]">qr,<wbr>sinkMatrix[T]</a></li>
+    title="qr[T](a: sink Matrix[T]): QRDecomposition[T]">qr[T](a: sink Matrix[T]): QRDecomposition[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">getH
       <li><a class="reference" href="#getH%2CQRDecomposition%5BT%5D"
-    title="getH[T](q: QRDecomposition[T]): Matrix[T]">getH,<wbr>QRDecomposition[T]</a></li>
+    title="getH[T](q: QRDecomposition[T]): Matrix[T]">getH[T](q: QRDecomposition[T]): Matrix[T]</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">getR
       <li><a class="reference" href="#getR%2CQRDecomposition%5BT%5D"
-    title="getR[T](q: QRDecomposition[T]): Matrix[T]">getR,<wbr>QRDecomposition[T]</a></li>
+    title="getR[T](q: QRDecomposition[T]): Matrix[T]">getR[T](q: QRDecomposition[T]): Matrix[T]</a></li>
 
   </ul>
 
@@ -148,15 +155,14 @@ function main() {
 
   </div>
   &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/qr.nim#L1"
+href="https://github.com/planetis-m/manu/tree/master/manu/qr.nim#L1"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/qr.nim#L1" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/qr.nim#L1" class="link-seesrc" target="_blank" >Edit</a>
 
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
   
-  <p class="module-desc"><p>QR Decomposition.</p>
-<p>For an m-by-n matrix A with m &gt;= n, the QR decomposition is an m-by-n orthogonal matrix Q and an n-by-n upper triangular matrix R so that A = Q*R.</p>
+  <p class="module-desc"><p>For an m-by-n matrix A with m &gt;= n, the QR decomposition is an m-by-n orthogonal matrix Q and an n-by-n upper triangular matrix R so that <tt class="docutils literal"><span class="pre">A = Q*R</span></tt>.</p>
 <p>The QR decompostion always exists, even if the matrix does not have full rank, so the constructor will never fail. The primary use of the QR decomposition is in the least squares solution of nonsquare systems of simultaneous linear equations. This will fail if isFullRank() returns false.</p>
 </p>
   <div class="section" id="6">
@@ -176,9 +182,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/qr.nim#L15"
+href="https://github.com/planetis-m/manu/tree/master/manu/qr.nim#L17"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/qr.nim#L15" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/qr.nim#L17" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -194,9 +200,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>parameter <tt class="docutils literal"><span class="pre">a</span></tt>: Rectangular matrix</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/qr.nim#L19"
+href="https://github.com/planetis-m/manu/tree/master/manu/qr.nim#L21"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/qr.nim#L19" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/qr.nim#L21" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="isFullRank,QRDecomposition[T]"></a>
@@ -205,9 +211,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Is the matrix full rank?
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/qr.nim#L51"
+href="https://github.com/planetis-m/manu/tree/master/manu/qr.nim#L53"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/qr.nim#L51" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/qr.nim#L53" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getH,QRDecomposition[T]"></a>
@@ -218,9 +224,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p><tt class="docutils literal"><span class="pre">return</span></tt>: Lower trapezoidal matrix whose columns define the reflections.</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/qr.nim#L58"
+href="https://github.com/planetis-m/manu/tree/master/manu/qr.nim#L60"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/qr.nim#L58" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/qr.nim#L60" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getR,QRDecomposition[T]"></a>
@@ -229,9 +235,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Return the upper triangular factor.
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/qr.nim#L70"
+href="https://github.com/planetis-m/manu/tree/master/manu/qr.nim#L72"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/qr.nim#L70" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/qr.nim#L72" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="getQ,QRDecomposition[T]"></a>
@@ -240,9 +246,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Generate and return the (economy-sized) orthogonal factor.
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/qr.nim#L82"
+href="https://github.com/planetis-m/manu/tree/master/manu/qr.nim#L84"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/qr.nim#L82" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/qr.nim#L84" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="solve,QRDecomposition[T],Matrix[T]"></a>
@@ -254,9 +260,9 @@ Least squares solution of <tt class="docutils literal"><span class="pre">A*X = B
 </ul>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/manu/tree/devel/manu/qr.nim#L98"
+href="https://github.com/planetis-m/manu/tree/master/manu/qr.nim#L100"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/devel/manu/qr.nim#L98" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/manu/edit/master/manu/qr.nim#L100" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -269,7 +275,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2020-11-24 10:44:23 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-17 20:00:10 UTC</small>
       </div>
     </div>
   </div>
