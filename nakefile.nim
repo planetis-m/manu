@@ -3,9 +3,15 @@ import nake, std/strformat
 task "docs", "Generate documentation":
   # https://nim-lang.github.io/Nim/docgen.html
   let
-    src = "manu.nim"
+    manu = "manu"
+    src = [
+      manu.addFileExt(".nim"),
+      manu / "matrix.nim", manu / "cholesky.nim",
+      manu / "qr.nim", manu / "lu.nim",
+      manu / "eigen.nim", manu / "svd.nim"
+    ]
     dir = "docs/"
-    doc = dir / src.changeFileExt(".html")
+    doc = dir / manu.addFileExt(".html")
     url = "https://github.com/planetis-m/manu"
   if doc.needsRefresh(src):
     echo "Generating the docs..."

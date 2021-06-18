@@ -12,13 +12,13 @@ type
     data: ptr UncheckedArray[T] # Array for internal storage of elements.
   #All* = object
 
-template createData[T](size): ptr UncheckedArray[T] =
+template createData(size): untyped =
   when compileOption("threads"):
     cast[ptr UncheckedArray[T]](allocShared(size * sizeof(T)))
   else:
     cast[ptr UncheckedArray[T]](alloc(size * sizeof(T)))
 
-template createData0[T](size): ptr UncheckedArray[T] =
+template createData0(size): untyped =
   when compileOption("threads"):
     cast[ptr UncheckedArray[T]](allocShared0(size * sizeof(T)))
   else:
