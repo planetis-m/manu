@@ -25,8 +25,6 @@ proc main() =
   let avals = @[@[1'f32, 4, 7, 10], @[2'f32, 5, 8, 11], @[3'f32, 6, 9, 12]]
   let rankdef = avals
   let tvals = @[@[1'f32, 2, 3], @[4'f32, 5, 6], @[7'f32, 8, 9], @[10'f32, 11, 12]]
-  var rvals = @[@[2'f32, 5, 8, 11], @[3'f32, 6, 9, 12]]
-  rvals.add @[1'f32, 4, 7]
   let pvals = @[@[4'f32, 1, 1], @[1'f32, 2, 3], @[1'f32, 3, 6]]
   let evals =
     @[@[0'f32, 1, 0, 0], @[1'f32, 0, 2e-7, 0], @[0'f32, -2e-7, 0, 1], @[0'f32, 0, 1, 0]]
@@ -207,7 +205,7 @@ proc main() =
     tryFailure(errorCount, "EigenvalueDecomposition (hang)...",
                 "incorrect termination")
 
-  echo("\nTestMatrix completed.")
+  echo("\nTestLA completed.")
   echo("Total errors reported: ", errorCount)
   #echo("Total warnings reported: ", warningCount)
   if errorCount > 0: raise newException(ValueError, "")

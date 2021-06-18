@@ -16,7 +16,7 @@ task "docs", "Generate documentation":
   if doc.needsRefresh(src):
     echo "Generating the docs..."
     direShell(nimExe,
-        &"doc --project --verbosity:0 --git.url:{url} --git.devel:master --git.commit:master --out:{dir} {src}")
+        &"doc --project --verbosity:0 --git.url:{url} --git.devel:master --git.commit:master --out:{dir} {src[0]}")
     withDir(dir):
       moveFile("theindex.html", "index.html")
   else:
@@ -25,4 +25,4 @@ task "docs", "Generate documentation":
 task "test", "Run the tests":
   withDir("tests/"):
     for f in walkFiles("t*.nim"):
-      direShell(nimExe, &"c -r --verbosity:0 --path:../ {f}")
+      direShell(nimExe, &"c -r --hints:off -w:off --path:../ {f}")

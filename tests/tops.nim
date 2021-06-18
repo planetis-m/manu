@@ -6,8 +6,6 @@ proc main() =
   var errorCount = 0
   var warningCount = 0
   let columnwise = @[1'f32, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-  var rvals = @[@[2'f32, 5, 8, 11], @[3'f32, 6, 9, 12]]
-  rvals.add @[1'f32, 4, 7]
   let nonconformld = 4 # leading dimension which is valid, but nonconforming
   # Array-like methods:
   echo("\nTesting array-like methods...")
@@ -139,6 +137,11 @@ proc main() =
     trySuccess("arrayTimesEquals... ", "")
   except ValueError:
     tryFailure(errorCount, "arrayTimesEquals... ", "(A = R, A = A.*B, but A./B != R)")
+
+  echo("\nTestMatrixOps completed.")
+  echo("Total errors reported: ", errorCount)
+  #echo("Total warnings reported: ", warningCount)
+  if errorCount > 0: raise newException(ValueError, "")
 
 try:
   main()

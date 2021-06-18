@@ -4,7 +4,7 @@ import manu, utils
 proc main() =
   var A, B, C, I, SUB, M: Matrix[float32]
   var errorCount = 0
-  var warningCount = 1
+  var warningCount = 0
   var tmp: float32
   let columnwise = @[1'f32, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   let rowwise = @[1'f32, 4, 7, 10, 2, 5, 8, 11, 3, 6, 9, 12]
@@ -387,6 +387,11 @@ proc main() =
   except IndexDefect:
     tryFailure(errorCount, "setMatrix(int[],int[],Matrix)... ",
                 "Unexpected ArrayIndexOutOfBoundsException")
+
+  echo("\nTestBasic completed.")
+  echo("Total errors reported: ", errorCount)
+  #echo("Total warnings reported: ", warningCount)
+  if errorCount > 0: raise newException(ValueError, "")
 
 try:
   main()

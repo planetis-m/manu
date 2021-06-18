@@ -211,7 +211,7 @@ proc n*[T](m: Matrix[T]): int {.inline.} =
 proc rowDimension*[T](m: Matrix[T]): int {.inline.} = m.m
 proc columnDimension*[T](m: Matrix[T]): int {.inline.} = m.n
 
-proc `[]`*[T](m: Matrix[T], i, j: int): lent T {.inline.} =
+proc `[]`*[T](m: Matrix[T], i, j: int): T {.inline.} =
   ## Get a single element.
   checkBounds(i >= 0 and i < m.m)
   checkBounds(j >= 0 and j < m.n)
@@ -229,7 +229,7 @@ proc `[]=`*[T](m: var Matrix[T], i, j: int, s: T) {.inline.} =
   checkBounds(j >= 0 and j < m.n)
   m.data[i * m.n + j] = s
 
-proc `[]`*[T](v: ColVector[T], i: int): lent T {.inline.} =
+proc `[]`*[T](v: ColVector[T], i: int): T {.inline.} =
   ## Get a single element.
   checkBounds(i >= 0 and i < Matrix[T](v).m)
   Matrix[T](v).data[i]
@@ -244,7 +244,7 @@ proc `[]=`*[T](v: var ColVector[T], i: int, s: T) {.inline.} =
   checkBounds(i >= 0 and i < Matrix[T](v).m)
   Matrix[T](v).data[i] = s
 
-proc `[]`*[T](v: RowVector[T], j: int): lent T {.inline.} =
+proc `[]`*[T](v: RowVector[T], j: int): T {.inline.} =
   ## Get a single element.
   checkBounds(j >= 0 and j < Matrix[T](v).n)
   Matrix[T](v).data[j]
