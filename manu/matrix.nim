@@ -77,9 +77,9 @@ proc matrix*[T: SomeFloat](m, n: int, s: T): Matrix[T] =
   for i in 0 ..< len:
     result.data[i] = s
 
-proc ones*[T](m, n: int): Matrix[T] {.inline.} = matrix[T](m, n, T(1.0))
+proc ones*[T](m, n: int): Matrix[T] {.inline.} = matrix[T](m, n, T(1))
 proc zeros*[T](m, n: int): Matrix[T] {.inline.} = matrix[T](m, n)
-proc ones32*(m, n: int): Matrix32 {.inline.} = matrix(m, n, 1.0'f32)
+proc ones32*(m, n: int): Matrix32 {.inline.} = matrix(m, n, 1'f32)
 proc zeros32*(m, n: int): Matrix32 {.inline.} = matrix[float32](m, n)
 proc ones64*(m, n: int): Matrix64 {.inline.} = matrix(m, n, 1.0)
 proc zeros64*(m, n: int): Matrix64 {.inline.} = matrix[float64](m, n)
@@ -154,8 +154,8 @@ proc randMatrix*[T: SomeFloat](m, n: int, x: Slice[T]): Matrix[T] =
   for i in 0 ..< len:
     result.data[i] = rand(x)
 
-proc randMatrix*[T](m, n: int): Matrix[T] {.inline.} = randMatrix[T](m, n, T(1.0))
-proc randMatrix32*(m, n: int): Matrix32 {.inline.} = randMatrix(m, n, 1.0'f32)
+proc randMatrix*[T](m, n: int): Matrix[T] {.inline.} = randMatrix[T](m, n, T(1))
+proc randMatrix32*(m, n: int): Matrix32 {.inline.} = randMatrix(m, n, 1'f32)
 proc randMatrix64*(m, n: int): Matrix64 {.inline.} = randMatrix(m, n, 1.0)
 
 proc randNMatrix*[T: SomeFloat](m, n: int, mu, sigma: T): Matrix[T] =
@@ -379,7 +379,7 @@ proc `*`*[T](a, b: Matrix[T]): Matrix[T] =
     for k in 0 ..< a.n:
       bColj[k] = b[k, j]
     for i in 0 ..< a.m:
-      var s = 0.0
+      var s = T(0)
       for k in 0 ..< a.n:
         s += a[i, k] * bColj[k]
       result[i, j] = s
@@ -397,7 +397,7 @@ proc identity*[T: SomeFloat](m: int): Matrix[T] =
   ## ``return``: An m-by-m matrix with ones on the diagonal and zeros elsewhere.
   result = matrix[T](m, m)
   for i in 0 ..< m:
-    result[i, i] = T(1.0)
+    result[i, i] = T(1)
 
 proc eye*[T](m: int): Matrix[T] {.inline.} = identity[T](m)
 proc eye32*(m: int): Matrix32 {.inline.} = identity[float32](m)
@@ -415,7 +415,7 @@ proc sumColumns*[T](m: Matrix[T]): Matrix[T] =
   ## ``return``: An 1-by-n matrix with sum of the elements in each column.
   result = matrixUninit[T](1, m.n)
   for j in 0 ..< m.n:
-    var s = T(0.0)
+    var s = T(0)
     for i in 0 ..< m.m:
       s += m[i, j]
     RowVector[T](result)[j] = s
@@ -426,7 +426,7 @@ proc sumRows*[T](m: Matrix[T]): Matrix[T] =
   ## ``return``: An m-by-1 matrix with sum of the elements in each row.
   result = matrixUninit[T](m.m, 1)
   for i in 0 ..< m.m:
-    var s = T(0.0)
+    var s = T(0)
     for j in 0 ..< m.n:
       s += m[i, j]
     ColVector[T](result)[i] = s
@@ -436,7 +436,7 @@ proc norm1*[T](m: Matrix[T]): T =
   ##
   ## ``return``: maximum column sum
   for j in 0 ..< m.n:
-    var s = T(0.0)
+    var s = T(0)
     for i in 0 ..< m.m:
       s += abs(m[i, j])
     result = max(result, s)
@@ -446,7 +446,7 @@ proc normInf*[T](m: Matrix[T]): T =
   ##
   ## ``return``: maximum row sum
   for i in 0 ..< m.m:
-    var s = T(0.0)
+    var s = T(0)
     for j in 0 ..< m.n:
       s += abs(m[i, j])
     result = max(result, s)

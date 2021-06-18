@@ -100,6 +100,7 @@ proc main() =
   except ValueError:
     tryFailure(errorCount, "times(Matrix)...",
                 "incorrect Matrix-Matrix product calculation")
+  Z = matrix[A.T](A.m, A.n)
   try:
     check(A * 0, Z)
     trySuccess("times(double)...", "")
