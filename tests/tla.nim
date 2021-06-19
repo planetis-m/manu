@@ -34,7 +34,6 @@ proc main() =
   let condmat = @[@[1'f32, 3], @[7'f32, 9]]
   let badeigs = @[@[0'f32, 0, 0, 0, 0], @[0'f32, 0, 0, 0, 1], @[0'f32, 0, 0, 1, 0],
      @[1'f32, 1, 0, 0, 1], @[1'f32, 0, 1, 0, 1]]
-  let validld = 3 # leading dimension of intended test Matrices
   let columnsummax = 33'f32
   let rowsummax = 30'f32
   let sumofdiagonals = 15'f32
@@ -59,14 +58,10 @@ proc main() =
   #   lu
   #   qr
   #   svd
-  A = matrix(columnwise, validld)
-  R = randMatrix[float32](A.rowDimension, A.columnDimension)
-  A = R
-  SUB = matrix(subavals)
-  Z = matrix[float32](A.rowDimension, A.columnDimension)
-
   echo("\nTesting linear algebra methods...")
+  SUB = matrix(subavals)
   A = matrix(columnwise, 3)
+  Z = matrix[float32](A.rowDimension, A.columnDimension)
   T = matrix(tvals)
   T = A.transpose()
   try:
