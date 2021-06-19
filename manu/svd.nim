@@ -30,8 +30,8 @@ proc svd*[T](a: sink Matrix[T]): SingularValueDecomposition[T] =
   # assert(m >= n, "SVD only works for m >= n") and set nu = n
   let nu = min(m, n)
   result.s = newSeq[T](min(m + 1, n)) # n<=m so n is min
-  result.u = matrixUninit[T](m, nu)
-  result.v = matrixUninit[T](n, n)
+  result.u = matrix[T](m, nu)
+  result.v = matrix[T](n, n)
   var e = newSeq[T](n)
   var work = newSeq[T](m)
   var wantu = true
