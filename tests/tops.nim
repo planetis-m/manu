@@ -7,6 +7,9 @@ proc main() =
   var warningCount = 0
   let columnwise = @[1'f32, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   let nonconformld = 4 # leading dimension which is valid, but nonconforming
+  let validld = 3 # leading dimension of intended test Matrices
+
+  A = matrix(columnwise, validld)
   # Array-like methods:
   echo("\nTesting array-like methods...")
   S = matrix(columnwise, nonconformld)

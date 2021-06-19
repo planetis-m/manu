@@ -23,6 +23,7 @@ proc main() =
   var warningCount = 0
   let columnwise = @[1'f32, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   let avals = @[@[1'f32, 4, 7, 10], @[2'f32, 5, 8, 11], @[3'f32, 6, 9, 12]]
+  let subavals = @[@[5'f32, 8, 11], @[6'f32, 9, 12]]
   let rankdef = avals
   let tvals = @[@[1'f32, 2, 3], @[4'f32, 5, 6], @[7'f32, 8, 9], @[10'f32, 11, 12]]
   let pvals = @[@[4'f32, 1, 1], @[1'f32, 2, 3], @[1'f32, 3, 6]]
@@ -33,6 +34,7 @@ proc main() =
   let condmat = @[@[1'f32, 3], @[7'f32, 9]]
   let badeigs = @[@[0'f32, 0, 0, 0, 0], @[0'f32, 0, 0, 0, 1], @[0'f32, 0, 0, 1, 0],
      @[1'f32, 1, 0, 0, 1], @[1'f32, 0, 1, 0, 1]]
+  let validld = 3 # leading dimension of intended test Matrices
   let columnsummax = 33'f32
   let rowsummax = 30'f32
   let sumofdiagonals = 15'f32
@@ -57,6 +59,11 @@ proc main() =
   #   lu
   #   qr
   #   svd
+  A = matrix(columnwise, validld)
+  R = randMatrix[float32](A.rowDimension, A.columnDimension)
+  A = R
+  SUB = matrix(subavals)
+  Z = matrix[float32](A.rowDimension, A.columnDimension)
 
   echo("\nTesting linear algebra methods...")
   A = matrix(columnwise, 3)
@@ -100,7 +107,6 @@ proc main() =
   except ValueError:
     tryFailure(errorCount, "times(Matrix)...",
                 "incorrect Matrix-Matrix product calculation")
-  Z = matrix[A.T](A.m, A.n)
   try:
     check(A * 0, Z)
     trySuccess("times(double)...", "")
