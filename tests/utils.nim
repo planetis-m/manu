@@ -1,5 +1,4 @@
 import fenv, manu/matrix
-
 # private utility routines
 
 proc check*[T](x, y: T) =

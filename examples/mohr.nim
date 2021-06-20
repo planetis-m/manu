@@ -1,7 +1,5 @@
-import algorithm, os, math, strutils, strformat, "../manu"
-
-
 # From: https://csmbrannon.net/2011/04/25/stress-state-analysis-python-script/
+import std/[algorithm, os, math, strutils, strformat], manu
 
 # ------------------------------------------------------------
 # Helper functions for uniform printing throughout the script.
@@ -62,7 +60,7 @@ proc main() =
   # or if the user is asking for help, print the usage information.
   let params = commandLineParams()
   if "--help" in params or "-h" in params or
-        params.len != 3 and params.len != 6:
+      params.len != 3 and params.len != 6:
     usage()
 
   # load stress components from the command line in a temporary
@@ -78,9 +76,9 @@ proc main() =
   # deviatoric and isotropic stress matricies
   let
     sigma = matrix(@[
-       @[dum[0], dum[3], dum[4]],
-       @[dum[3], dum[1], dum[5]],
-       @[dum[4], dum[5], dum[2]]
+      @[dum[0], dum[3], dum[4]],
+      @[dum[3], dum[1], dum[5]],
+      @[dum[4], dum[5], dum[2]]
     ])
     sigmaIso = 1.0/3.0*trace(sigma)*eye64(sigma.m)
     sigmaDev = sigma - sigmaIso
