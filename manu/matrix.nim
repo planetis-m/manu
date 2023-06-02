@@ -44,6 +44,10 @@ proc `=copy`*[T](a: var Matrix[T]; b: Matrix[T]) =
         #a.data[i] = b.data[i]
       copyMem(a.data, b.data, len * sizeof(T))
 
+when defined(nimHasDup):
+  proc `=dup`*[T](a: Matrix[T]): Matrix[T] =
+    `=copy`[T](result, a)
+
 type
   Matrix64* = Matrix[float64]
     ## Alias for a ``Matrix`` of 64-bit floats.
