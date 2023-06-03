@@ -123,6 +123,8 @@ proc main =
   let c = a[1..3, 0..1]
   var d = c[0..2, 1..1]
   d = deepCopy(d)
+  var e = c[0..1, 0..0]
+  echo (e[0, 0], e[1, 0]) # need to make a copy!
   echo (a[1, 1], b[1, 1], c[0, 1], d[0, 0])
 
 main()
