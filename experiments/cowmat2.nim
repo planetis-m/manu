@@ -113,7 +113,8 @@ proc `[]`*[U, V, W, X](m: Matrix, r: HSlice[U, V], c: HSlice[W, X]): Matrix =
   let ca = m.n ^^ c.a
   let cb = m.n ^^ c.b
   checkBounds(ca >= 0 and cb < m.n, "Submatrix dimensions")
-  inc m.p.counter
+  if m.p != nil:
+    inc m.p.counter
   result = Matrix(m: rb - ra + 1, n: cb - ca + 1, p: m.p, offset: m.offset + ra * m.n + ca)
 
 proc main =

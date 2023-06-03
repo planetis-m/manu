@@ -317,16 +317,6 @@ proc `[]`*[T, U, V](m: Matrix[T], r: openarray[SomeInteger], c: HSlice[U,
     for j in 0 ..< result.n:
       result[i, j] = m[r[i], j + ca]
 
-#proc `[]`*[T, U, V](m: Matrix[T], r: HSlice[U, V], c: typedesc[All]): lent Matrix[T] =
-  # Get a submatrix, all columns
-  # ``m[i0 .. i1, 0 .. ^1]``
-  #let ra = m.m ^^ r.a
-  #let rb = m.m ^^ r.b
-  #checkBounds(ra >= 0 and rb < m.m, "Submatrix dimensions")
-  #result = m
-  #result.m = rb - ra + 1
-  #result.data = cast[ptr UncheckedArray[T]](result.data[ra].addr)
-
 proc `[]=`*[T, U, V, W, X](m: var Matrix[T], r: HSlice[U, V], c: HSlice[W, X],
     a: Matrix[T]) =
   ## Set a submatrix,
