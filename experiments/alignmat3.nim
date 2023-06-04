@@ -1,7 +1,7 @@
 import memallocs
 
 const
-  MemAlign = 32
+  MemAlign {.define: "manu.memalign".} = 32
 
 template checkBounds(cond: untyped, msg = "") =
   when compileOption("boundChecks"):
@@ -12,7 +12,7 @@ template checkBounds(cond: untyped, msg = "") =
 type
   Matrix*[T: SomeFloat] = object
     m, n: int                # Row and column dimensions.
-    p: ptr UncheckedArray[T] # Array for internal storage of elements.
+    p {.noalias.}: ptr UncheckedArray[T] # Array for internal storage of elements.
 
 template allocs(p, s) =
   let p = cast[ptr UncheckedArray[T]](alignedAlloc(s * sizeof(T), MemAlign))
@@ -49,8 +49,34 @@ proc matrix*[T: SomeFloat](m, n: int): Matrix[T] {.inline.} =
   allocs0(p, len)
   result = Matrix[T](m: m, n: n, p: p)
 
+proc `[]`*[T](m: Matrix[T], i, j: int): T {.inline.} =
+  ## Get a single element.
+  checkBounds(i >= 0 and i < m.m)
+  checkBounds(j >= 0 and j < m.n)
+  result = m.p[i * m.n + j]
+
+proc `[]`*[T](m: var Matrix[T], i, j: int): var T {.inline.} =
+  ## Get a single element.
+  checkBounds(i >= 0 and i < m.m)
+  checkBounds(j >= 0 and j < m.n)
+  m.p[i * m.n + j]
+
+proc `[]=`*[T](m: var Matrix[T], i, j: int, s: T) {.inline.} =
+  ## Set a single element.
+  checkBounds(i >= 0 and i < m.m)
+  checkBounds(j >= 0 and j < m.n)
+  m.p[i * m.n + j] = s
+
+proc `*`*[T](a: sink Matrix[T], b: Matrix[T]): Matrix[T] =
+  assert(b.m == a.m and b.n == a.n, "Matrix dimensions must agree.")
+  result = a
+  for i in 0 ..< result.m:
+    for j in 0 ..< result.n:
+      result[i, j] = result[i, j] * b[i, j]
+
 proc main =
-  let a = matrix[float32](2, 4)
-  echo a.m
+  let a, b = matrix[float32](96, 96)
+  let c = a * b
+  echo c.m
 
 main()
