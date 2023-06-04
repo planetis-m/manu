@@ -69,7 +69,7 @@ proc deepCopy*(y: Matrix): Matrix =
     # copyMem(addr p.data[0], addr y.p.data[y.offset], len * sizeof(float))
     var rx = 0
     for bx in countup(0, y.p.stride-1):
-      for ax in countup(0, len-1, y.p.stride):
+      for ax in countup(0, y.m*y.p.stride-1, y.p.stride):
         p.data[rx] = y.p.data[y.offset + ax + bx]
         inc rx
     result = Matrix(m: y.m, n: y.n, offset: 0, p: p)
@@ -91,9 +91,11 @@ proc matrix*(data: seq[float], m: int): Matrix =
   assert(len == data.len, "Array length must be a multiple of m.")
   allocs(contentSize(len))
   p.stride = n
-  for i in 0 ..< m:
-    for j in 0 ..< n:
-      p.data[i * n + j] = data[i + j * m]
+  var rx = 0
+  for bx in countup(0, m-1):
+    for ax in countup(0, high(data), m):
+      p.data[rx] = data[ax + bx]
+      inc rx
   result = Matrix(m: m, n: n, offset: 0, p: p)
 
 proc m*(m: Matrix): int {.inline.} =
@@ -133,6 +135,7 @@ proc main =
   var d = c[0..2, 1..1]
   d = deepCopy(d)
   var e = c[0..1, 0..0]
+  e = deepCopy(e)
   echo (e[0, 0], e[1, 0])
   echo (a[1, 1], b[1, 1], c[0, 1], d[0, 0])
 
