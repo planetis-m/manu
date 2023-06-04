@@ -64,12 +64,11 @@ proc deepCopy*(y: Matrix): Matrix =
   else:
     let len = y.m * y.n
     allocs(contentSize(len))
-    p.counter = 0
     p.stride = y.n
-    # copyMem(addr p.data[0], addr y.p.data[y.offset], len * sizeof(float))
+    p.counter = 0
     var rx = 0
-    for bx in countup(0, y.p.stride-1):
-      for ax in countup(0, y.m*y.p.stride-1, y.p.stride):
+    for ax in countup(0, y.m*y.p.stride-1, y.p.stride):
+      for bx in countup(0, y.n-1):
         p.data[rx] = y.p.data[y.offset + ax + bx]
         inc rx
     result = Matrix(m: y.m, n: y.n, offset: 0, p: p)
@@ -128,14 +127,21 @@ proc `[]`*[U, V, W, X](m: Matrix, r: HSlice[U, V], c: HSlice[W, X]): Matrix =
     inc m.p.counter
   result = Matrix(m: rb - ra + 1, n: cb - ca + 1, p: m.p, offset: m.offset + ra * m.n + ca)
 
+proc prepareMutation*(s: var Matrix) {.inline, nodestroy.} =
+  if s.p != nil and s.p.counter > 0:
+    dec s.p.counter
+    s = deepCopy(s)
+
 proc main =
   let a = matrix(@[1.0, 2, 3, 4, 5, 6, 7, 8], 4)
   let b = a[0..1, 0..1]
-  let c = a[1..3, 0..1]
+  var c = a[1..3, 0..1]
   var d = c[0..2, 1..1]
+  c = deepCopy(c)
   d = deepCopy(d)
   var e = c[0..1, 0..0]
   e = deepCopy(e)
+  prepareMutation(e)
   echo (e[0, 0], e[1, 0])
   echo (a[1, 1], b[1, 1], c[0, 1], d[0, 0])
 
