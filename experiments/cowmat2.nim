@@ -46,26 +46,27 @@ proc `=copy`*(a: var Matrix, b: Matrix) =
   `=destroy`(a)
   dups(a, b)
 
-template allocs(s) =
+template allocs(s, n) =
   when compileOption("threads"):
     let p {.inject.} = cast[ptr MatPayload](allocShared(s))
   else:
     let p {.inject.} = cast[ptr MatPayload](alloc(s))
+  p.stride = n
   p.counter = 0
 
-template allocs0(s) =
+template allocs0(s, n) =
   when compileOption("threads"):
     let p {.inject.} = cast[ptr MatPayload](allocShared0(s))
   else:
     let p {.inject.} = cast[ptr MatPayload](alloc0(s))
+  p.stride = n
 
 proc deepCopy*(y: Matrix): Matrix =
   if y.p == nil:
     result = Matrix(m: 0, n: 0, offset: 0, p: nil)
   else:
     let len = y.m * y.n
-    allocs(contentSize(len))
-    p.stride = y.n
+    allocs(contentSize(len), y.n)
     var rx = 0
     for ax in countup(0, y.m*y.p.stride-1, y.p.stride):
       for bx in countup(0, y.n-1):
@@ -76,8 +77,7 @@ proc deepCopy*(y: Matrix): Matrix =
 proc matrix*(m, n: int): Matrix {.inline.} =
   ## Construct an m-by-n matrix of zeros.
   let len = m * n
-  allocs0(contentSize(len))
-  p.stride = n
+  allocs0(contentSize(len), n)
   result = Matrix(m: m, n: n, offset: 0, p: p)
 
 proc matrix*(data: seq[float], m: int): Matrix =
@@ -88,8 +88,7 @@ proc matrix*(data: seq[float], m: int): Matrix =
   let n = if m != 0: data.len div m else: 0
   let len = m * n
   assert(len == data.len, "Array length must be a multiple of m.")
-  allocs(contentSize(len))
-  p.stride = n
+  allocs(contentSize(len), n)
   var rx = 0
   for bx in countup(0, m-1):
     for ax in countup(0, high(data), m):
