@@ -51,6 +51,7 @@ template allocs(s) =
     let p {.inject.} = cast[ptr MatPayload](allocShared(s))
   else:
     let p {.inject.} = cast[ptr MatPayload](alloc(s))
+  p.counter = 0
 
 template allocs0(s) =
   when compileOption("threads"):
@@ -65,7 +66,6 @@ proc deepCopy*(y: Matrix): Matrix =
     let len = y.m * y.n
     allocs(contentSize(len))
     p.stride = y.n
-    p.counter = 0
     var rx = 0
     for ax in countup(0, y.m*y.p.stride-1, y.p.stride):
       for bx in countup(0, y.n-1):
@@ -89,7 +89,6 @@ proc matrix*(data: seq[float], m: int): Matrix =
   let len = m * n
   assert(len == data.len, "Array length must be a multiple of m.")
   allocs(contentSize(len))
-  p.counter = 0
   p.stride = n
   var rx = 0
   for bx in countup(0, m-1):
@@ -130,7 +129,6 @@ proc `[]`*[U, V, W, X](m: Matrix, r: HSlice[U, V], c: HSlice[W, X]): Matrix =
 
 proc prepareMutation*(s: var Matrix) {.inline.} =
   if s.p != nil and s.p.counter > 0:
-    # dec s.p.counter
     s = deepCopy(s)
 
 proc main =
