@@ -89,6 +89,7 @@ proc matrix*(data: seq[float], m: int): Matrix =
   let len = m * n
   assert(len == data.len, "Array length must be a multiple of m.")
   allocs(contentSize(len))
+  p.counter = 0
   p.stride = n
   var rx = 0
   for bx in countup(0, m-1):
@@ -127,9 +128,9 @@ proc `[]`*[U, V, W, X](m: Matrix, r: HSlice[U, V], c: HSlice[W, X]): Matrix =
     inc m.p.counter
   result = Matrix(m: rb - ra + 1, n: cb - ca + 1, p: m.p, offset: m.offset + ra * m.n + ca)
 
-proc prepareMutation*(s: var Matrix) {.inline, nodestroy.} =
+proc prepareMutation*(s: var Matrix) {.inline.} =
   if s.p != nil and s.p.counter > 0:
-    dec s.p.counter
+    # dec s.p.counter
     s = deepCopy(s)
 
 proc main =
