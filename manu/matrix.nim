@@ -386,6 +386,7 @@ proc eye64*(m: int): Matrix64 {.inline.} = identity[float64](m)
 
 proc sum*[T](m: Matrix[T]): T =
   ## Sum of all elements.
+  result = T(0)
   for i in 0 ..< m.m:
     for j in 0 ..< m.n:
       result += m[i, j]
@@ -416,6 +417,7 @@ proc norm1*[T](m: Matrix[T]): T =
   ## One norm.
   ##
   ## ``return``: maximum column sum
+  result = T(0)
   for j in 0 ..< m.n:
     var s = T(0)
     for i in 0 ..< m.m:
@@ -426,6 +428,7 @@ proc normInf*[T](m: Matrix[T]): T =
   ## Infinity norm.
   ##
   ## ``return``: maximum row sum
+  result = T(0)
   for i in 0 ..< m.m:
     var s = T(0)
     for j in 0 ..< m.n:
@@ -436,6 +439,7 @@ proc normF*[T](m: Matrix[T]): T =
   ## Frobenius norm.
   ##
   ## ``return``: sqrt of sum of squares of all elements.
+  result = T(0)
   for i in 0 ..< m.m:
     for j in 0 ..< m.n:
       result = hypot(result, m[i, j])
@@ -444,6 +448,7 @@ proc trace*[T](m: Matrix[T]): T =
   ## Matrix trace.
   ##
   ## ``return``: the sum of the diagonal elements
+  result = T(0)
   for i in 0 ..< min(m.m, m.n):
     result += m[i, i]
 
