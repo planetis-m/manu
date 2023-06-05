@@ -287,7 +287,8 @@ proc hqr2[T](ei: var EigenvalueDecomposition[T]) =
   let high = nn - 1
   let eps = epsilon(T)
   var exshift = T(0)
-  var p, q, r, s, z, t, w, x, y: T
+  var p, q, r, s, z = T(0)
+  var t, w, x, y: T
   # Store roots isolated by balanc and compute matrix norm
   var norm = T(0)
   for i in 0 ..< nn:

@@ -51,10 +51,10 @@ proc qr*[T](a: sink Matrix[T]): QRDecomposition[T] =
 
 proc isFullRank*[T](q: QRDecomposition[T]): bool =
   ## Is the matrix full rank?
+  result = true
   for d in q.rDiag:
     if d == 0:
       return false
-  return true
 
 proc getH*[T](q: QRDecomposition[T]): Matrix[T] =
   ## Return the Householder vectors.
@@ -121,4 +121,4 @@ proc solve*[T](q: QRDecomposition[T], b: Matrix[T]): Matrix[T] =
     for i in 0 ..< k:
       for j in 0 ..< b.n:
         x[i, j] -= x[k, j] * q.qr[i, k]
-  x[0 ..< q.qr.n, 0 ..< b.n]
+  result = x[0 ..< q.qr.n, 0 ..< b.n]

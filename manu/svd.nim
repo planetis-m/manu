@@ -351,8 +351,9 @@ proc rank*[T](sv: SingularValueDecomposition[T]): int =
   ## Effective numerical matrix rank.
   ##
   ## ``return``: Number of nonnegligible singular values.
+  result = 0
   let eps = epsilon(T)
   let tol = T(max(sv.u.m, sv.v.m)) * sv.s[0] * eps
   for d in sv.s:
     if d > tol:
-      result.inc
+      inc result
