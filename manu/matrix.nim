@@ -553,7 +553,7 @@ template makeUniversalBinaryScalar(fname: untyped, isCommutative = false) =
     result = m
     for i in 0 ..< result.m:
       for j in 0 ..< result.n:
-        result[i, j] = fname(s, result[i, j])
+        result[i, j] = fname(result[i, j], s)
 
   when isCommutative:
     proc fname*[T](s: T, m: Matrix[T]): Matrix[T] {.inline.} = fname(m, s)
@@ -587,7 +587,7 @@ template makeUniversalBinaryScalarInplace*(fnameInplace, opname: untyped) =
   proc fnameInplace*[T](m: var Matrix[T], s: T) =
     for i in 0 ..< m.m:
       for j in 0 ..< m.n:
-        m[i, j] = opname(s, m[i, j])
+        m[i, j] = opname(m[i, j], s)
 
 template makeUniversalBinary*(fname: untyped, isCommutative = false) =
   makeUniversalBinaryImpl(fname, fname, isCommutative)
