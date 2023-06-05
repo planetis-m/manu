@@ -17,7 +17,7 @@ proc main =
     rate = 0.01'f32
   let
     X = matrix(2, @[0'f32, 0, 0, 1, 1, 0, 1, 1])
-    Y = matrix(1, @[0'f32, 1, 1, 0])
+    Y = matrix(1, @[0'f32, 1, 1, 1])
   var
     # Layer 1
     W1 = randMatrix(2, nodes, -1'f32..1'f32)
