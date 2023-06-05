@@ -1,7 +1,7 @@
 # Package
 
 packageName   = "manu"
-version       = "2.3"
+version       = "2.3.1"
 author        = "Antonis Geralis"
 description   = "Nim Matrix library"
 license       = "MIT"
