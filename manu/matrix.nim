@@ -521,9 +521,9 @@ template makeUniversalBinaryImpl*(fname, opname: untyped, isCommutative = false)
         result[i, j] = opname(a[i], b[j])
 
   when isCommutative:
-    template fname*[T](b: RowVector[T], a: ColVector[T]): Matrix[T] = fname(a, b)
-    template fname*[T](b: ColVector[T], a: Matrix[T]): Matrix[T] = fname(a, b)
-    template fname*[T](b: RowVector[T], a: Matrix[T]): Matrix[T] = fname(a, b)
+    proc fname*[T](b: RowVector[T], a: ColVector[T]): Matrix[T] {.inline.} = fname(a, b)
+    proc fname*[T](b: ColVector[T], a: sink Matrix[T]): Matrix[T] {.inline.} = fname(a, b)
+    proc fname*[T](b: RowVector[T], a: sink Matrix[T]): Matrix[T] {.inline.} = fname(a, b)
   else:
     proc fname*[T](a: ColVector[T], b: sink Matrix[T]): Matrix[T] =
       assert(Matrix[T](a).m == b.m and Matrix[T](a).n == 1, "Matrix-vector dimensions must agree.")
@@ -554,7 +554,7 @@ template makeUniversalBinaryScalar(fname: untyped, isCommutative = false) =
         result[i, j] = fname(result[i, j], s)
 
   when isCommutative:
-    template fname*[T](s: T, m: Matrix[T]): Matrix[T] = fname(m, s)
+    proc fname*[T](s: T, m: sink Matrix[T]): Matrix[T] {.inline.} = fname(m, s)
   else:
     proc fname*[T](s: T, m: sink Matrix[T]): Matrix[T] =
       result = m
