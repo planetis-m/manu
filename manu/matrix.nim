@@ -23,7 +23,7 @@ template allocs0(p, size) =
   else:
     let p = cast[ptr UncheckedArray[T]](alloc0(size * sizeof(T)))
 
-proc `=destroy`*[T](a: var Matrix[T]) =
+proc `=destroy`*[T](a: Matrix[T]) =
   if a.p != nil:
     when compileOption("threads"):
       deallocShared(a.p)
