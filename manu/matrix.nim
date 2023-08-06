@@ -30,6 +30,9 @@ proc `=destroy`*[T](a: Matrix[T]) =
     else:
       dealloc(a.p)
 
+proc `=wasMoved`*[T](a: var Matrix[T]) =
+  a.p = nil
+
 template dups(a, b) =
   a.m = b.m
   a.n = b.n
@@ -42,7 +45,7 @@ template dups(a, b) =
 proc `=copy`*[T](a: var Matrix[T]; b: Matrix[T]) =
   if a.p != b.p:
     `=destroy`(a)
-    wasMoved(a)
+    `=wasMoved`(a)
     dups(a, b)
 
 when defined(nimHasDup):
