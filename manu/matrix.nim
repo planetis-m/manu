@@ -6,29 +6,24 @@ template checkBounds(cond: untyped, msg = "") =
       if not cond:
         raise newException(IndexDefect, msg)
 
+include aligned_allocs
+
+const AvxMemAlign = 32 # 32 bytes (256 bits)
+
 type
   Matrix*[T: SomeFloat] = object
     m, n: int                   # Row and column dimensions.
     p {.noalias.}: ptr UncheckedArray[T] # Array for internal storage of elements.
 
 template allocs(p, size) =
-  when compileOption("threads"):
-    let p = cast[ptr UncheckedArray[T]](allocShared(size * sizeof(T)))
-  else:
-    let p = cast[ptr UncheckedArray[T]](alloc(size * sizeof(T)))
+  let p = cast[ptr UncheckedArray[T]](alignedAlloc(size * sizeof(T), AvxMemAlign))
 
 template allocs0(p, size) =
-  when compileOption("threads"):
-    let p = cast[ptr UncheckedArray[T]](allocShared0(size * sizeof(T)))
-  else:
-    let p = cast[ptr UncheckedArray[T]](alloc0(size * sizeof(T)))
+  let p = cast[ptr UncheckedArray[T]](alignedAlloc0(size * sizeof(T), AvxMemAlign))
 
 proc `=destroy`*[T](a: Matrix[T]) =
   if a.p != nil:
-    when compileOption("threads"):
-      deallocShared(a.p)
-    else:
-      dealloc(a.p)
+    alignedDealloc(a.p, AvxMemAlign)
 
 proc `=wasMoved`*[T](a: var Matrix[T]) =
   a.p = nil
