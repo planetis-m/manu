@@ -6,46 +6,10 @@ template checkBounds(cond: untyped, msg = "") =
       if not cond:
         raise newException(IndexDefect, msg)
 
-include aligned_allocs
-
-const AvxMemAlign = 32 # 32 bytes (256 bits)
-
 type
   Matrix*[T: SomeFloat] = object
-    m, n: int                   # Row and column dimensions.
-    p {.noalias.}: ptr UncheckedArray[T] # Array for internal storage of elements.
-
-template allocs(p, size) =
-  let p = cast[ptr UncheckedArray[T]](alignedAlloc(size * sizeof(T), AvxMemAlign))
-
-template allocs0(p, size) =
-  let p = cast[ptr UncheckedArray[T]](alignedAlloc0(size * sizeof(T), AvxMemAlign))
-
-proc `=destroy`*[T](a: Matrix[T]) =
-  if a.p != nil:
-    alignedDealloc(a.p, AvxMemAlign)
-
-proc `=wasMoved`*[T](a: var Matrix[T]) =
-  a.p = nil
-
-template dups(a, b) =
-  a.m = b.m
-  a.n = b.n
-  if b.p != nil:
-    let len = b.m * b.n
-    allocs(p, len)
-    a.p = p
-    copyMem(a.p, b.p, len * sizeof(T))
-
-proc `=copy`*[T](a: var Matrix[T]; b: Matrix[T]) =
-  if a.p != b.p:
-    `=destroy`(a)
-    `=wasMoved`(a)
-    dups(a, b)
-
-when defined(nimHasDup):
-  proc `=dup`*[T](b: Matrix[T]): Matrix[T] =
-    dups(result, b)
+    m, n: int # Row and column dimensions.
+    p: seq[T] # Array for internal storage of elements.
 
 type
   Matrix64* = Matrix[float64]
@@ -62,19 +26,17 @@ type
 proc matrix*[T: SomeFloat](m, n: int): Matrix[T] {.inline.} =
   ## Construct an m-by-n matrix of zeros.
   let len = m * n
-  allocs0(p, len)
-  result = Matrix[T](m: m, n: n, p: p)
+  result = Matrix[T](m: m, n: n, p: newSeq[T](len))
 
 proc matrixUninit*[T: SomeFloat](m, n: int): Matrix[T] {.inline.} =
   ## Construct an m-by-n matrix. Note that the matrix will be uninitialized.
   let len = m * n
-  allocs(p, len)
-  result = Matrix[T](m: m, n: n, p: p)
+  result = Matrix[T](m: m, n: n, p: newSeqUninit[T](len))
 
 proc matrix*[T: SomeFloat](m, n: int, s: T): Matrix[T] =
   ## Construct an m-by-n constant matrix.
   let len = m * n
-  allocs(p, len)
+  let p = newSeqUninit[T](len)
   for i in 0 ..< len:
     p[i] = s
   result = Matrix[T](m: m, n: n, p: p)
@@ -92,7 +54,7 @@ proc matrix*[T: SomeFloat](data: seq[seq[T]]): Matrix[T] =
   let n = data[0].len
   for i in 0 ..< m:
     assert(data[i].len == n, "All rows must have the same length.")
-  allocs(p, m * n)
+  let p = newSeqUninit[T](m * n)
   for i in 0 ..< m:
     for j in 0 ..< n:
       p[i * n + j] = data[i][j]
@@ -100,7 +62,7 @@ proc matrix*[T: SomeFloat](data: seq[seq[T]]): Matrix[T] =
 
 proc matrix*[T: SomeFloat](data: seq[seq[T]], m, n: int): Matrix[T] =
   ## Construct a matrix quickly without checking arguments.
-  allocs(p, m * n)
+  let p = newSeqUninit[T](m * n)
   for i in 0 ..< m:
     for j in 0 ..< n:
       p[i * n + j] = data[i][j]
@@ -113,29 +75,27 @@ proc matrix*[T: SomeFloat](data: seq[T], m: int): Matrix[T] =
   ## Array length must be a multiple of ``m``.
   let n = if m != 0: data.len div m else: 0
   assert(m * n == data.len, "Array length must be a multiple of m.")
-  allocs(p, data.len)
+  let p = newSeqUninit[T](data.len)
   for i in 0 ..< m:
     for j in 0 ..< n:
       p[i * n + j] = data[i + j * m]
   result = Matrix[T](m: m, n: n, p: p)
 
-proc matrix*[T: SomeFloat](n: int, data: seq[T]): Matrix[T] =
+proc matrix*[T: SomeFloat](n: int, data: sink seq[T]): Matrix[T] =
   ## Construct a matrix from a one-dimensional packed array.
   ##
   ## parameter ``data``: one-dimensional array of SomeFloat, packed by rows.
   ## Array length must be a multiple of ``n``.
   let m = if n != 0: data.len div n else: 0
   assert(m * n == data.len, "Array length must be a multiple of n.")
-  allocs(p, data.len)
-  copyMem(p, addr data[0], data.len * sizeof(T))
-  result = Matrix[T](m: m, n: n, p: p)
+  result = Matrix[T](m: m, n: n, p: data)
 
 proc randMatrix*[T: SomeFloat](m, n: int, max: T): Matrix[T] =
   ## Generate matrix with random elements.
   ##
   ## ``return``: an m-by-n matrix with uniformly distributed random elements.
   let len = m * n
-  allocs(p, len)
+  let p = newSeqUninit[T](len)
   for i in 0 ..< len:
     p[i] = rand(max)
   result = Matrix[T](m: m, n: n, p: p)
@@ -145,7 +105,7 @@ proc randMatrix*[T: SomeFloat](m, n: int, x: Slice[T]): Matrix[T] =
   ##
   ## ``return``: an m-by-n matrix with uniformly distributed random elements.
   let len = m * n
-  allocs(p, len)
+  let p = newSeqUninit[T](len)
   for i in 0 ..< len:
     p[i] = rand(x)
   result = Matrix[T](m: m, n: n, p: p)
@@ -161,7 +121,7 @@ proc randNMatrix*[T: SomeFloat](m, n: int, mu, sigma: T): Matrix[T] =
   ## parameter ``sigma``: the standard deviation
   ## ``return``: an m-by-n matrix with normally distributed random elements.
   let len = m * n
-  allocs(p, len)
+  let p = newSeqUninit[T](len)
   for i in 0 ..< len:
     p[i] = T(gauss(mu, sigma))
   result = Matrix[T](m: m, n: n, p: p)
